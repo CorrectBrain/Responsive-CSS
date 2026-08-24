@@ -1,7 +1,11 @@
 # Responsive CSS
 
-A public collection of LuaLaTeX visualizations explaining responsive CSS
-concepts, created and maintained by **CorrectBrain**.
+A graphical eBook about Responsive CSS, created and designed by multi-agent
+system using LuaLaTeX.
+
+The entire workflow—including question processing, LuaLaTeX generation, error
+handling, spatial analysis, accuracy checks, and compilation—is performed
+autonomously by agents without human intervention.
 
 ## Available Chapters
 
@@ -45,6 +49,3 @@ Copyright © 2026 CorrectBrain.
 - LuaLaTeX source files (`.tex`) are licensed under the MIT License.
 - Questions, documentation, and generated PDFs are licensed under the Creative
   Commons Attribution 4.0 International License (CC BY 4.0).
-
-See [LICENSE-CODE](LICENSE-CODE) and
-[LICENSE-CONTENT.md](LICENSE-CONTENT.md).
