@@ -1,7 +1,7 @@
 # Responsive CSS
 
-A graphical eBook about Responsive CSS, created and designed by multi-agent
-system using LuaLaTeX.
+A graphical eBook about Responsive CSS, created and designed using a
+multi-agent system and LuaLaTeX.
 
 The entire workflow—including question processing, LuaLaTeX generation, error
 handling, spatial analysis, accuracy checks, and compilation—is performed
