@@ -1,0 +1,372 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% ==========================================
+% LIGHT MODE HIGH-CONTRAST PALETTE
+% ==========================================
+\definecolor{bgmain}{HTML}{FFFFFF}     % Pure white background
+\definecolor{bgpanel}{HTML}{FFFFFF}    % Pure white for panels
+\definecolor{bgheader}{HTML}{F8F9FA}   % Window header fallback
+\definecolor{textmain}{HTML}{212529}   % Dark Charcoal main text
+\definecolor{textmuted}{HTML}{6C757D}  % Medium Gray subtitle & axes
+\definecolor{textcomment}{HTML}{6C757D}% Code comment gray
+
+% Code Syntax Colors (Light-Theme High-Contrast)
+\definecolor{cred}{HTML}{DC3545}       % Window control red
+\definecolor{cyellow}{HTML}{FFC107}    % Window control yellow
+\definecolor{cgreen}{HTML}{198754}     % Window control green / classes
+\definecolor{cpink}{HTML}{842029}      % Tags, keywords (Dark Magenta)
+\definecolor{cblue}{HTML}{084298}      % CSS Selectors, main accents (Dark Blue)
+\definecolor{corange}{HTML}{D9480F}    % Values, highlight accents, peak events
+\definecolor{cstring}{HTML}{0F5132}    % Deep green strings & values
+\definecolor{cteal}{HTML}{055160}      % CSS Properties (Dark Teal)
+\definecolor{cborder}{HTML}{CED4DA}    % Subtle component borders
+\definecolor{htmlborder}{HTML}{ADB5BD} % Architectural parent guide borders
+
+% Code Highlighting Macros
+\newcommand{\codecomment}[1]{\textcolor{textcomment}{#1}}
+\newcommand{\codetag}[1]{\textcolor{cpink}{#1}}
+\newcommand{\codeattr}[1]{\textcolor{cgreen}{#1}}
+\newcommand{\codestring}[1]{\textcolor{cstring}{#1}}
+\newcommand{\codecsssel}[1]{\textcolor{cblue}{#1}}
+\newcommand{\codecssprop}[1]{\textcolor{cteal}{#1}}
+\newcommand{\codecssval}[1]{\textcolor{cstring}{#1}}
+
+\begin{document}
+\begin{tikzpicture}[
+    % --- REUSABLE STYLES ---
+    panel/.style={
+        fill=bgpanel,
+        draw=cborder,
+        thick,
+        rounded corners=8pt,
+        outer sep=0pt,
+        blur shadow={shadow blur steps=10, shadow opacity=20, shadow yshift=-4pt, shadow xshift=0pt}
+    },
+    annotation/.style={
+        fill=bgpanel,
+        draw=gray!30,
+        text=textmain,
+        text width=4.5cm,
+        rounded corners=8pt,
+        inner sep=12pt,
+        outer sep=0pt,
+        blur shadow={shadow blur steps=10, shadow opacity=20, shadow yshift=-3pt, shadow xshift=0pt}
+    },
+    htmlparent/.style={
+        dashed,
+        draw=htmlborder,
+        line width=1.5pt,
+        rounded corners=8pt
+    },
+    connection/.style={
+        -Stealth=3mm,
+        line width=2.5pt,
+        draw=cblue,
+        blur shadow={shadow opacity=30, shadow blur steps=3, shadow blur radius=1mm}
+    }
+]
+
+% ==========================================
+% BACKGROUND (ALWAYS WHITE - GRID REMOVED)
+% ==========================================
+\fill[white] (-6, -2) rectangle (34, 29);
+
+% ==========================================
+% TITLES & HEADER
+% ==========================================
+\node[anchor=center, text=textmain, font=\Huge\bfseries] at (13.8154,26.4334) {Responsive SVG Art Direction via \texttt{\textcolor{cpink}{@container}} Queries};
+\node[anchor=center, text=textmuted, font=\Large] at (13.8154,25.1334) {Injecting responsive logic directly into vector graphics for infinite, DOM-independent scalability.};
+
+% ==========================================
+% LEFT COLUMN: THE CODE ("THE BRAIN")
+% ==========================================
+\begin{scope}
+  \clip (1, 0.5) [rounded corners=8pt] rectangle (12, 22);
+  \fill[bgpanel] (1, 0.5) rectangle (12, 22);
+  \shade[top color=gray!10, bottom color=gray!30] (1, 21) rectangle (12, 22);
+  \draw[cborder] (1, 21) -- (12, 21);
+\end{scope}
+\draw[cborder, thick, rounded corners=8pt, outer sep=0pt, blur shadow={shadow blur steps=10, shadow opacity=20, shadow yshift=-4pt, shadow xshift=0pt}] (1, 0.5) rectangle (12, 22);
+
+% Window Controls & Title
+\shade[shading=ball, ball color=cred] (1.6, 21.5) circle (4pt); % Red 3D Ball
+\shade[shading=ball, ball color=cyellow] (2.2, 21.5) circle (4pt); % Yellow 3D Ball
+\shade[shading=ball, ball color=cgreen] (2.8, 21.5) circle (4pt); % Green 3D Ball
+\node[anchor=center, text=textmuted, font=\small\bfseries\sffamily] at (6.5, 21.5) {\faFileCode \enspace chart-component.svg};
+
+% Code Text (Absolute Y positions spaced by 0.6)
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 20.3) { \codetag{<svg} \codeattr{class}=\codestring{"responsive-graph"} \codeattr{style}=\codestring{"container-type: inline-size;"}\codetag{>} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 19.7) { \codetag{  <style>} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 19.1) { \codecomment{    /* --- BASE: Minimal Icon (Width < 300px) --- */} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 18.5) { \codecsssel{    .grid, .axes, .labels, .data-nodes, .legend} \{ \codecssprop{display}: \codecssval{none}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 17.9) { \codecsssel{    .trend} \{ \codecssprop{stroke-width}: \codecssval{12px}; \codecssprop{stroke}: \codecssval{\#89b4fa}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 17.3) { \codecsssel{    .area-fill} \{ \codecssprop{display}: \codecssval{none}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 16.1) { \codecomment{    /* --- MEDIUM: Sidebar Chart (Width >= 300px) --- */} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 15.5) { \codecsssel{    @container} (\codecssprop{min-width}: \codecssval{300px}) \{ };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 14.9) { \codecsssel{      .axes} \{ \codecssprop{display}: \codecssval{block}; \codecssprop{stroke}: \codecssval{\#6c7086}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 14.3) { \codecsssel{      .trend} \{ \codecssprop{stroke-width}: \codecssval{6px}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 13.7) { \codecsssel{      .area-fill} \{ \codecssprop{display}: \codecssval{block}; \codecssprop{opacity}: \codecssval{0.2}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 13.1) {     \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 11.9) { \codecomment{    /* --- LARGE: Data Dashboard (Width >= 600px) --- */} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 11.3) { \codecsssel{    @container} (\codecssprop{min-width}: \codecssval{600px}) \{ };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 10.7) { \codecsssel{      .grid} \{ \codecssprop{display}: \codecssval{block}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 10.1) { \codecsssel{      .labels} \{ \codecssprop{display}: \codecssval{block}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 9.5) { \codecsssel{      .data-nodes} \{ \codecssprop{display}: \codecssval{block}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 8.9) { \codecsssel{      .legend} \{ \codecssprop{display}: \codecssval{block}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 8.3) { \codecsssel{      .axes} \{ \codecssprop{stroke}: \codecssval{\#a6adc8}; \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 7.7) {     \} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 7.1) { \codetag{  </style>} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 5.9) { \codecomment{  <!-- SVG DOM Structure -->} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 5.3) { \codetag{  <g} \codeattr{class}=\codestring{"grid"}\codetag{>} \codecomment{<!-- 10x Grid Lines -->} \codetag{</g>} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 4.7) { \codetag{  <g} \codeattr{class}=\codestring{"axes"}\codetag{>} \codecomment{<!-- X \& Y Axis paths -->} \codetag{</g>} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 4.1) { \codetag{  <g} \codeattr{class}=\codestring{"labels"}\codetag{>} \codecomment{<!-- Axis labels -->} \codetag{</g>} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 3.5) { \codetag{  <path} \codeattr{class}=\codestring{"area-fill"} \codeattr{d}=\codestring{"M10,50 L20,30..."} \codetag{/>} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 2.9) { \codetag{  <path} \codeattr{class}=\codestring{"trend"} \codeattr{d}=\codestring{"M10,50 L20,30..."} \codetag{/>} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 2.3) { \codetag{  <g} \codeattr{class}=\codestring{"data-nodes"}\codetag{>} \codecomment{<!-- Data point circles -->} \codetag{</g>} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 1.7) { \codetag{  <g} \codeattr{class}=\codestring{"legend"}\codetag{>} \codecomment{<!-- Text \& markers -->} \codetag{</g>} };
+\node[anchor=west, text=textmain, font=\ttfamily\scriptsize] at (1.5, 1.1) { \codetag{</svg>} };
+
+% ==========================================
+% ANNOTATIONS (FAR LEFT)
+% ==========================================
+\node[annotation] (anno1) at (-2.5, 21.5) {
+    \textbf{\textcolor{cgreen}{\faIcon{expand-arrows-alt}\ 1. Self-Aware Canvas}}\\[6pt]
+    \footnotesize The \texttt{inline-size} property turns the SVG itself into a queryable container context, completely independent of the DOM parent constraints.
+};
+\draw[->, -Stealth=3mm, line width=1.5pt, textmuted] (anno1.east) -- (1.0, 20.3);
+
+\node[annotation] (anno2) at (-2.5, 14.5) {
+    \textbf{\textcolor{corange}{\faCodeBranch\ 2. Internal Logic}}\\[6pt]
+    \footnotesize CSS \texttt{@container} queries read the SVG's measured width and selectively toggle internal layers, scales, and strokes dynamically.
+};
+\draw[->, -Stealth=3mm, line width=1.5pt, textmuted] (anno2.east) -- (1.0, 15.5);
+
+\node[annotation] (anno3) at (-2.5, 4.5) {
+    \textbf{\textcolor{cpink}{\faLayerGroup\ 3. Single Source of Truth}}\\[6pt]
+    \footnotesize One unified vector file contains all possible visual states simultaneously, eliminating duplicate image assets and framework conditionals.
+};
+\draw[->, -Stealth=3mm, line width=1.5pt, textmuted] (anno3.east) -- (1.0, 5.0);
+
+% ==========================================
+% RIGHT COLUMN: RENDERED VISUAL STATES
+% ==========================================
+
+% ------------------------------------------
+% STATE 1: SMALL / ICON (TOP RIGHT)
+% ------------------------------------------
+% Parent HTML Wrapper
+\draw[htmlparent] (23.5, 19.0) rectangle (31.5, 24.0);
+\node[anchor=south west, font=\footnotesize\ttfamily] at (22.9668,24.0308) {\codetag{<div} \codeattr{class}=\codestring{"metrics-card"}\codetag{>} \textcolor{textmuted}{(150px width)}};
+
+% SVG Render Box
+\begin{scope}
+  \clip (24, 19.5) [rounded corners=8pt] rectangle (31, 23.0);
+  \fill[bgpanel] (24, 19.5) rectangle (31, 23.0);
+  \shade[top color=gray!10, bottom color=gray!30] (24, 22.0) rectangle (31, 23.0);
+  \draw[cborder] (24, 22.0) -- (31, 22.0);
+\end{scope}
+\draw[cborder, thick, rounded corners=8pt, outer sep=0pt, blur shadow={shadow blur steps=10, shadow opacity=20, shadow yshift=-4pt, shadow xshift=0pt}] (24, 19.5) rectangle (31, 23.0);
+\node[anchor=west, text=textmuted, font=\small\bfseries\sffamily] at (24.2, 22.5) {\faChartLine \enspace SVG Rendered Output};
+\node[anchor=east, text=cblue, font=\small\ttfamily\bfseries] at (30.8, 22.5) {w < 300px};
+
+% Graphic (Small)
+\coordinate (S0) at (25.0, 20.3);
+\coordinate (S1) at (26.0, 20.15);
+\coordinate (S2) at (27.0, 20.75);
+\coordinate (S3) at (28.0, 20.6);
+\coordinate (S4) at (29.0, 21.2);
+\coordinate (S5) at (30.0, 21.05);
+
+% Icon Line with Glow Effect (Concentric paths with decreasing opacity)
+\draw[cblue, line width=10pt, opacity=0.15, line cap=round] plot [smooth] coordinates {(S0) (S1) (S2) (S3) (S4) (S5)};
+\draw[cblue, line width=7pt, opacity=0.35, line cap=round] plot [smooth] coordinates {(S0) (S1) (S2) (S3) (S4) (S5)};
+\draw[cblue, line width=4.5pt, opacity=0.95, line cap=round] plot [smooth] coordinates {(S0) (S1) (S2) (S3) (S4) (S5)};
+
+% Endpoint Circle with 3D Ball Shading
+\shade[shading=ball, ball color=corange, blur shadow={shadow opacity=40, shadow blur radius=1mm}] (S5) circle (5pt);
+
+% Connection Line (Base CSS -> Small Box)
+\draw[connection] (12, 18.5) to[out=0, in=180] node[pos=0.35, above=2pt, sloped, fill=white, inner sep=4pt, rounded corners=2pt, font=\footnotesize\bfseries\sffamily, text=black] {Applies to Icon} (23.5, 21.5);
+\fill[cblue, blur shadow={shadow blur steps=5, shadow opacity=50}] (12, 18.5) circle (4pt);
+
+% ------------------------------------------
+% STATE 2: MEDIUM / SIDEBAR (MIDDLE RIGHT)
+% ------------------------------------------
+% Parent HTML Wrapper
+\draw[htmlparent] (18.5, 11.0) rectangle (31.5, 18.0);
+\node[anchor=south west, font=\footnotesize\ttfamily] at (18.2744,17.9692) {\codetag{<aside} \codeattr{class}=\codestring{"sidebar-panel"}\codetag{>} \textcolor{textmuted}{(350px width)}};
+
+% SVG Render Box
+\begin{scope}
+  \clip (19, 11.5) [rounded corners=8pt] rectangle (31, 17.0);
+  \fill[bgpanel] (19, 11.5) rectangle (31, 17.0);
+  \shade[top color=gray!10, bottom color=gray!30] (19, 16.0) rectangle (31, 17.0);
+  \draw[cborder] (19, 16.0) -- (31, 16.0);
+\end{scope}
+\draw[cborder, thick, rounded corners=8pt, outer sep=0pt, blur shadow={shadow blur steps=10, shadow opacity=20, shadow yshift=-4pt, shadow xshift=0pt}] (19, 11.5) rectangle (31, 17.0);
+\node[anchor=west, text=textmuted, font=\small\bfseries\sffamily] at (19.2, 16.5) {\faChartArea \enspace SVG Rendered Output};
+\node[anchor=east, text=cblue, font=\small\ttfamily\bfseries] at (30.8, 16.5) {w > 300px};
+
+% Graphic (Medium)
+\coordinate (M0) at (20.0, 13.1);
+\coordinate (M1) at (22.1, 12.8);
+\coordinate (M2) at (24.2, 14.0);
+\coordinate (M3) at (26.3, 13.7);
+\coordinate (M4) at (28.4, 14.9);
+\coordinate (M5) at (30.5, 14.6);
+
+% Axes (Simple)
+\draw[thick, color=textmuted] (20.0, 15.5) -- (20.0, 12.5) -- (30.5, 12.5);
+
+% Area Fill with Realistic 20% Opacity Gradient
+\shade[top color=cblue, bottom color=white, opacity=0.2] plot [smooth] coordinates {(M0) (M1) (M2) (M3) (M4) (M5)} -- (30.5, 12.5) -- (20.0, 12.5) -- cycle;
+
+% Trend Line
+\draw[cblue, line width=3.5pt, line cap=round, blur shadow={shadow opacity=20, shadow blur steps=3}] plot [smooth] coordinates {(M0) (M1) (M2) (M3) (M4) (M5)};
+
+% Connection Line (Medium CSS -> Medium Box)
+\draw[connection] (12, 15.5) to[out=0, in=180] node[pos=0.35, above=2pt, sloped, fill=white, inner sep=4pt, rounded corners=2pt, font=\footnotesize\bfseries\sffamily, text=black] {Applies to Sidebar} (18.5, 14.5);
+\fill[cblue, blur shadow={shadow blur steps=5, shadow opacity=50}] (12, 15.5) circle (4pt);
+
+% ------------------------------------------
+% STATE 3: LARGE / DASHBOARD (BOTTOM RIGHT)
+% ------------------------------------------
+% Parent HTML Wrapper
+\draw[htmlparent] (14.5, 0.0) rectangle (31.5, 10.0);
+\node[anchor=south west, font=\footnotesize\ttfamily] at (14.582,9.9692) {\codetag{<main} \codeattr{class}=\codestring{"dashboard-layout"}\codetag{>} \textcolor{textmuted}{(800px width)}};
+
+% SVG Render Box
+\begin{scope}
+  \clip (15, 0.5) [rounded corners=8pt] rectangle (31, 9.0);
+  \fill[bgpanel] (15, 0.5) rectangle (31, 9.0);
+  \shade[top color=gray!10, bottom color=gray!30] (15, 8.0) rectangle (31, 9.0);
+  \draw[cborder] (15, 8.0) -- (31, 8.0);
+\end{scope}
+\draw[cborder, thick, rounded corners=8pt, outer sep=0pt, blur shadow={shadow blur steps=10, shadow opacity=20, shadow yshift=-4pt, shadow xshift=0pt}] (15, 0.5) rectangle (31, 9.0);
+\node[anchor=west, text=textmuted, font=\small\bfseries\sffamily] at (15.2, 8.5) {\faProjectDiagram \enspace SVG Rendered Output};
+\node[anchor=east, text=cblue, font=\small\ttfamily\bfseries] at (30.8, 8.5) {w > 600px};
+
+% Graphic (Large)
+\coordinate (P0) at (16.5, 3.0);
+\coordinate (P1) at (19.2, 2.5);
+\coordinate (P2) at (21.9, 4.5);
+\coordinate (P3) at (24.6, 4.0);
+\coordinate (P4) at (27.3, 6.0);
+\coordinate (P5) at (30.0, 5.5);
+
+% Grid Lines (Fully Detailed)
+\foreach \y in {3.0, 4.0, 5.0, 6.0, 7.0} {
+    \draw[color=cborder!70, dashed, line width=0.8pt] (16.5, \y) -- (30.5, \y);
+}
+\foreach \x in {19.2, 21.9, 24.6, 27.3, 30.0} {
+    \draw[color=cborder!70, dashed, line width=0.8pt] (\x, 2.0) -- (\x, 7.0);
+}
+
+% Axes
+\draw[very thick, color=textmuted] (16.5, 7.0) -- (16.5, 2.0) -- (30.5, 2.0);
+\foreach \y in {3.0, 4.0, 5.0, 6.0, 7.0} \draw[very thick, color=textmuted] (16.3, \y) -- (16.5, \y);
+\foreach \x in {19.2, 21.9, 24.6, 27.3, 30.0} \draw[very thick, color=textmuted] (\x, 1.8) -- (\x, 2.0);
+
+% X-Axis Labels (0.4cm Clearance from line at Y=1.8)
+\node[anchor=north, text=textmuted, font=\scriptsize\sffamily] at (19.2, 1.4) {Jan};
+\node[anchor=north, text=textmuted, font=\scriptsize\sffamily] at (21.9, 1.4) {Feb};
+\node[anchor=north, text=textmuted, font=\scriptsize\sffamily] at (24.6, 1.4) {Mar};
+\node[anchor=north, text=textmuted, font=\scriptsize\sffamily] at (27.3, 1.4) {Apr};
+\node[anchor=north, text=textmuted, font=\scriptsize\sffamily] at (30.0, 1.4) {May};
+
+% Y-Axis Labels (0.4cm Clearance from line at X=16.5)
+\node[anchor=east, text=textmuted, font=\scriptsize\sffamily] at (16.1, 3.0) {10k};
+\node[anchor=east, text=textmuted, font=\scriptsize\sffamily] at (16.1, 4.0) {20k};
+\node[anchor=east, text=textmuted, font=\scriptsize\sffamily] at (16.1, 5.0) {30k};
+\node[anchor=east, text=textmuted, font=\scriptsize\sffamily] at (16.1, 6.0) {40k};
+\node[anchor=east, text=textmuted, font=\scriptsize\sffamily] at (16.1, 7.0) {50k};
+
+% Area Fill (Mathematically closed without graphical bleeding)
+\shade[top color=cblue!40, bottom color=white!10] plot [smooth] coordinates {(P0) (P1) (P2) (P3) (P4) (P5)} -- (30.0, 2.0) -- (16.5, 2.0) -- cycle;
+
+% Trend Line
+\draw[cblue, line width=2.5pt, line cap=round, blur shadow={shadow opacity=20, shadow blur steps=3}] plot [smooth] coordinates {(P0) (P1) (P2) (P3) (P4) (P5)};
+
+% Data Nodes (Interactive points: solid white center, cblue/corange border, drop shadow)
+\foreach \p in {P0, P1, P2, P3, P4, P5} {
+    \fill[white, blur shadow={shadow opacity=30, shadow blur steps=3}] (\p) circle (4.5pt);
+    \draw[cblue, line width=1.5pt] (\p) circle (4.5pt);
+    \fill[corange] (\p) circle (2.5pt);
+}
+
+% Interactive Tooltip Callout at Peak Node P4
+\node[rectangle callout, callout absolute pointer={(27.3, 6.2)}, fill=black, text=white, font=\footnotesize\sffamily\bfseries, rounded corners, blur shadow, above=0.3cm of {(27.3, 6.0)}] {Rev: \$42,500};
+
+% Legend Element
+\begin{scope}[shift={(20.5, 6.2)}]
+    \fill[white, rounded corners=4pt, blur shadow={shadow opacity=15, shadow blur steps=4}] (0, 0) rectangle (3.8, 1.4);
+    \draw[cborder, rounded corners=4pt] (0, 0) rectangle (3.8, 1.4);
+
+    \fill[cblue] (0.5, 0.95) circle (3pt);
+    \node[anchor=west, text=textmain, font=\scriptsize\sffamily\bfseries] at (0.8, 0.95) {Total Revenue};
+
+    \fill[corange] (0.5, 0.45) circle (3pt);
+    \node[anchor=west, text=textmain, font=\scriptsize\sffamily\bfseries] at (0.8, 0.45) {Peak Events};
+\end{scope}
+
+% Connection Line (Large CSS -> Large Box)
+\draw[connection] (12, 11.3) to[out=0, in=180] node[pos=0.30, above=2pt, sloped, fill=white, inner sep=4pt, rounded corners=2pt, font=\footnotesize\bfseries\sffamily, text=black] {Applies to Dashboard} (14.5, 5.0);
+\fill[cblue, blur shadow={shadow blur steps=5, shadow opacity=50}] (12, 11.3) circle (4pt);
+
+\end{tikzpicture}
+\end{document}

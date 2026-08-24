@@ -1,0 +1,390 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,shapes.callouts,angles,quotes}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- ARCHITECTURAL COLOR PALETTE ---
+\definecolor{mainbg}{RGB}{240, 244, 248}
+\definecolor{spritebg}{RGB}{245, 246, 248}
+\definecolor{shadowbg}{RGB}{245, 238, 248}
+\definecolor{domblue}{RGB}{25, 118, 210}
+\definecolor{shadowpurple}{RGB}{123, 31, 162}
+\definecolor{cssmagenta}{RGB}{216, 27, 96}
+\definecolor{successgreen}{RGB}{46, 125, 50}
+\definecolor{barrierred}{RGB}{229, 57, 53}
+\definecolor{editorbg}{RGB}{30, 34, 42}
+\definecolor{tagblue}{RGB}{21, 101, 192}
+\definecolor{attributecyan}{RGB}{0, 137, 123}
+\definecolor{valuestring}{RGB}{216, 67, 21}
+
+\begin{document}
+\begin{tikzpicture}
+
+% ==========================================
+% 0. STRICT WHITE CANVAS BACKGROUND
+% ==========================================
+\fill[white] (-16.0874,-23.7561) rectangle (16.0192,23.5822);
+
+% ##############################################################################
+% TOP SECTION: THE SEMI-PERMEABLE BARRIER (SVG <use>)
+% ##############################################################################
+
+% ==========================================
+% 1. TOP ZONE BACKGROUND PANELS (GLASSMORPHIC)
+% ==========================================
+% Global Document Panel (Left Zone)
+\fill[top color=mainbg!30, bottom color=mainbg!90, draw=domblue!25, line width=1pt, rounded corners=20pt, blur shadow={shadow blur steps=6, shadow opacity=15}]
+    (-15.0, 4.0) rectangle (-6.0, 20.0);
+
+% Shadow DOM Zone Panel (Middle Zone)
+\fill[top color=shadowbg!30, bottom color=shadowbg!90, draw=shadowpurple!25, line width=1pt, rounded corners=20pt, blur shadow={shadow blur steps=6, shadow opacity=15}]
+    (-4.5, 4.0) rectangle (4.5, 20.0);
+
+% Sprite Asset Panel (Right Zone)
+\fill[top color=spritebg!40, bottom color=spritebg!95, draw=gray!30, line width=1pt, rounded corners=20pt, blur shadow={shadow blur steps=6, shadow opacity=15}]
+    (6.0, 4.0) rectangle (15.0, 20.0);
+
+% ==========================================
+% 2. SEMI-PERMEABLE SHADOW BOUNDARY "FORCE FIELDS"
+% ==========================================
+% Left Boundary at x = -4.5
+\draw[shadowpurple, line width=6pt, opacity=0.15] (-4.5, 4.0) -- (-4.5, 20.0);
+\draw[shadowpurple, line width=1.5pt, dashed] (-4.5, 4.0) -- (-4.5, 20.0);
+
+% Right Boundary at x = 4.5
+\draw[shadowpurple, line width=6pt, opacity=0.15] (4.5, 4.0) -- (4.5, 20.0);
+\draw[shadowpurple, line width=1.5pt, dashed] (4.5, 4.0) -- (4.5, 20.0);
+
+% ==========================================
+% 3. TOP TITLES & HEADERS
+% ==========================================
+\node[font=\Huge\bfseries, text=black, align=center] at (0, 22.8) {The Semi-Permeable Barrier: SVG \texttt{<use>}};
+\node[font=\Large, text=gray!70!black, align=center] at (0, 21.5) {Cross-Document Shadow Trees and Property Inheritance Loopholes};
+
+\node[font=\Large\bfseries, text=domblue] at (-10.5, 19.0) {\faGlobe\ Global Document};
+\node[font=\Large\bfseries, text=shadowpurple, align=center] at (0, 19.0) {\faGhost\ Closed Shadow Root\\[2pt]\normalsize (Semi-Permeable Boundary)};
+\node[font=\Large\bfseries, text=gray!60!black] at (10.5, 19.0) {\faIcon{file-alt}\ External Sprite Asset};
+
+% ==========================================
+% 4. TOP DOM TREE NODES (ELEVATED STRUCTURAL CHIPS)
+% ==========================================
+
+% --- GLOBAL DOM (x = -10.5) ---
+\node[fill=white, draw=domblue!30, line width=0.8pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (html) at (-10.5, 17.5) {
+    \textcolor{gray!60}{<}\textcolor{tagblue}{\textbf{html}}\textcolor{gray!60}{>}
+};
+\draw[domblue, line width=3.5pt, line cap=round] ($(html.north west)+(1.8pt,-3pt)$) -- ($(html.south west)+(1.8pt,3pt)$);
+
+\node[fill=white, draw=domblue!30, line width=0.8pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (svg) at (-10.5, 15.5) {
+    \textcolor{gray!60}{<}\textcolor{tagblue}{\textbf{svg}}\textcolor{gray!60}{>}
+};
+\draw[domblue, line width=3.5pt, line cap=round] ($(svg.north west)+(1.8pt,-3pt)$) -- ($(svg.south west)+(1.8pt,3pt)$);
+
+\node[fill=white, draw=domblue!40, line width=1pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=20}, inner sep=7pt, font=\ttfamily\small] (use) at (-10.5, 13.5) {
+    \textcolor{gray!60}{<}\textcolor{tagblue}{\textbf{use}} \textcolor{attributecyan}{href}=\textcolor{valuestring}{"spr.svg\#ic"} \textcolor{attributecyan}{class}=\textcolor{valuestring}{"btn"}\textcolor{gray!60}{>}
+};
+\draw[domblue, line width=3.5pt, line cap=round] ($(use.north west)+(1.8pt,-3pt)$) -- ($(use.south west)+(1.8pt,3pt)$);
+
+\draw[-Latex, domblue, very thick] (html) -- (svg);
+\draw[-Latex, domblue, very thick] (svg) -- (use);
+
+% --- SHADOW DOM GHOST NODES (x = 0) ---
+\node[fill=white, draw=shadowpurple!40, line width=1pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=20}, inner sep=7pt, font=\ttfamily\normalsize] (sroot) at (0, 15.5) {
+    \textcolor{shadowpurple}{\textbf{\#shadow-root}} \textcolor{gray!60}{(closed)}
+};
+\draw[shadowpurple, line width=3.5pt, line cap=round] ($(sroot.north west)+(1.8pt,-3pt)$) -- ($(sroot.south west)+(1.8pt,3pt)$);
+
+\node[fill=shadowpurple!6, draw=shadowpurple!60, dashed, line width=1.2pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (ghostg) at (0, 13.5) {
+    \textcolor{gray!60}{<}\textcolor{shadowpurple!90!black}{\textbf{g}} \textcolor{attributecyan}{id}=\textcolor{valuestring}{"ic"}\textcolor{gray!60}{>}
+};
+\draw[shadowpurple, line width=3.5pt, line cap=round] ($(ghostg.north west)+(1.8pt,-3pt)$) -- ($(ghostg.south west)+(1.8pt,3pt)$);
+
+\node[fill=shadowpurple!6, draw=shadowpurple!60, dashed, line width=1.2pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (ghostpath) at (0, 11.5) {
+    \textcolor{gray!60}{<}\textcolor{shadowpurple!90!black}{\textbf{path}}\textcolor{gray!60}{>}
+};
+\draw[shadowpurple, line width=3.5pt, line cap=round] ($(ghostpath.north west)+(1.8pt,-3pt)$) -- ($(ghostpath.south west)+(1.8pt,3pt)$);
+
+\draw[-Latex, shadowpurple, very thick] (sroot) -- (ghostg);
+\draw[-Latex, shadowpurple, very thick] (ghostg) -- (ghostpath);
+
+% --- SPRITE DOM (x = 10.5) ---
+\node[fill=white, draw=gray!30, line width=0.8pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (sprsvg) at (10.5, 17.5) {
+    \textcolor{gray!60}{<}\textcolor{gray!50!black}{\textbf{svg}}\textcolor{gray!60}{>}
+};
+\draw[gray!70, line width=3.5pt, line cap=round] ($(sprsvg.north west)+(1.8pt,-3pt)$) -- ($(sprsvg.south west)+(1.8pt,3pt)$);
+
+\node[fill=white, draw=gray!30, line width=0.8pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (defs) at (10.5, 15.5) {
+    \textcolor{gray!60}{<}\textcolor{gray!50!black}{\textbf{defs}}\textcolor{gray!60}{>}
+};
+\draw[gray!70, line width=3.5pt, line cap=round] ($(defs.north west)+(1.8pt,-3pt)$) -- ($(defs.south west)+(1.8pt,3pt)$);
+
+\node[fill=white, draw=gray!40, line width=1pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=20}, inner sep=7pt, font=\ttfamily\normalsize] (g) at (10.5, 13.5) {
+    \textcolor{gray!60}{<}\textcolor{gray!50!black}{\textbf{g}} \textcolor{attributecyan}{id}=\textcolor{valuestring}{"ic"}\textcolor{gray!60}{>}
+};
+\draw[gray!70, line width=3.5pt, line cap=round] ($(g.north west)+(1.8pt,-3pt)$) -- ($(g.south west)+(1.8pt,3pt)$);
+
+\node[fill=white, draw=gray!30, line width=0.8pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (path) at (10.5, 11.5) {
+    \textcolor{gray!60}{<}\textcolor{gray!50!black}{\textbf{path}}\textcolor{gray!60}{>}
+};
+\draw[gray!70, line width=3.5pt, line cap=round] ($(path.north west)+(1.8pt,-3pt)$) -- ($(path.south west)+(1.8pt,3pt)$);
+
+\draw[-Latex, gray!70!black, very thick] (sprsvg) -- (defs);
+\draw[-Latex, gray!70!black, very thick] (defs) -- (g);
+\draw[-Latex, gray!70!black, very thick] (g) -- (path);
+
+% ==========================================
+% 5. INSTANTIATION & CLONING BEZIER CURVES
+% ==========================================
+\draw[-Latex, domblue, thick, dashed] (use.east) to[out=0, in=180]
+    node[midway, above, fill=white, draw=domblue!20, line width=0.5pt, inner sep=3pt, rounded corners=4pt, font=\scriptsize\bfseries, text=domblue, blur shadow={shadow blur steps=2, shadow opacity=10}] {Hosts} (sroot.west);
+
+\draw[-Latex, gray!70!black, thick, dashed] (g.west) to[out=180, in=0]
+    node[midway, above, fill=white, draw=gray!20, line width=0.5pt, inner sep=3pt, rounded corners=4pt, font=\scriptsize\bfseries, text=gray!70!black, blur shadow={shadow blur steps=2, shadow opacity=10}] {Clones into} (sroot.east);
+
+% ==========================================
+% 6. GLOBAL CSSOM CODE EDITOR WINDOW & INTERACTIONS
+% ==========================================
+% Top CSSOM Window: Layer 1 - Background Base
+\fill[fill=editorbg, draw=gray!70!black, line width=0.8pt, rounded corners=8pt, blur shadow={shadow blur steps=6, shadow opacity=25}]
+    (-14.5, 4.5) rectangle (-6.5, 10.5);
+
+% Top CSSOM Window: Layer 2 - Title Bar
+\path[fill=gray!80!black, rounded corners=8pt]
+    (-14.5, 9.5) -- (-14.5, 10.5) -- (-6.5, 10.5) [sharp corners] -- (-6.5, 9.5) -- cycle;
+
+% Top CSSOM Window: Layer 3 - macOS Window Dots
+\fill[red!80!white] (-14.0, 10.0) circle (2.5pt);
+\fill[yellow!80!white] (-13.5, 10.0) circle (2.5pt);
+\fill[green!80!white] (-13.0, 10.0) circle (2.5pt);
+
+% Top CSSOM Window: Layer 4 - Title Text
+\node[font=\tiny\bfseries, text=gray!30, align=center] at (-10.5, 10.0) {styles.css \textemdash\ Global CSSOM};
+
+% Top CSSOM Window: Layer 5 - Code Content
+\node[align=left, text width=7.5cm, inner sep=0pt] at (-10.5, 7.0) {
+    {\color{cssmagenta}\faCss3\ \textbf{Global CSS Object Model}}\\[6pt]
+    \ttfamily\small
+    \color{successgreen}use.btn \{\\
+    \quad fill: \#4CAF50; \textcolor{gray!50}{\textit{/* Inheritable */}}\\
+    \}\\[5pt]
+    \color{barrierred}use.btn path:hover \{\\
+    \quad stroke: \#f00; \textcolor{gray!50}{\textit{/* Blocked! */}}\\
+    \}
+};
+
+% Style Match to Host Node
+\draw[-Latex, successgreen, line width=1.2pt, dashed] (-11.5, 10.5) -- (use.south west);
+
+% Blocked Selector Path & Security Shield Indicator
+\draw[-Latex, barrierred, line width=2.5pt] (-6.5, 6.0) -- (-4.5, 6.0);
+\draw[barrierred, line width=1.5pt, decoration={zigzag, segment length=3.5pt, amplitude=2.5pt}, decorate] (-4.5, 6.8) -- (-4.5, 5.2);
+
+\node[draw=barrierred, fill=barrierred, text=white, font=\bfseries\footnotesize, rounded corners=8pt, inner sep=4pt, blur shadow={shadow blur steps=4, shadow opacity=20}, anchor=west] at (-4.0, 6.0) {
+    \faIcon{shield-alt}\ CRASH!
+};
+
+% Successful Glowing Inheritance Cascade Data Stream
+\draw[successgreen, line width=6pt, opacity=0.25, rounded corners=4pt]
+    (use.south east) |- (-2.0, 12.0) |- (ghostpath.west);
+\draw[-Latex, successgreen, line width=2pt, dashed, rounded corners=4pt]
+    (use.south east) |- (-2.0, 12.0) |- (ghostpath.west);
+
+\node[fill=successgreen, text=white, font=\bfseries\footnotesize, rounded corners=4pt, inner sep=3.5pt, blur shadow={shadow blur steps=3, shadow opacity=20}, anchor=south] at (-4.7739,11.9425) {
+    \faStream\ Inheritance Cascade
+};
+
+
+% ##############################################################################
+% BOTTOM SECTION: THE IMPERMEABLE BARRIER (SVG <img>)
+% ##############################################################################
+
+% ==========================================
+% 7. BOTTOM ZONE BACKGROUND PANELS (GLASSMORPHIC)
+% ==========================================
+% Global Document Panel (Left Zone)
+\fill[top color=mainbg!30, bottom color=mainbg!90, draw=domblue!25, line width=1pt, rounded corners=20pt, blur shadow={shadow blur steps=6, shadow opacity=15}]
+    (-15.0, -13.0) rectangle (-6.0, 0.5);
+
+% Image Context Zone Panel (Middle Zone)
+\fill[top color=shadowbg!30, bottom color=shadowbg!90, draw=barrierred!30, line width=1pt, rounded corners=20pt, blur shadow={shadow blur steps=6, shadow opacity=15}]
+    (-4.5, -13.0) rectangle (4.5, 0.5);
+
+% Sprite Asset Panel (Right Zone)
+\fill[top color=spritebg!40, bottom color=spritebg!95, draw=gray!30, line width=1pt, rounded corners=20pt, blur shadow={shadow blur steps=6, shadow opacity=15}]
+    (6.0, -13.0) rectangle (15.0, 0.5);
+
+% ==========================================
+% 8. IMPERMEABLE BARRIER WALLS (SOLID DARK RED)
+% ==========================================
+% Left Hard Boundary at x = -4.5
+\draw[barrierred, line width=6pt, opacity=0.25] (-4.5, -13.0) -- (-4.5, 0.5);
+\draw[barrierred, line width=2.5pt] (-4.5, -13.0) -- (-4.5, 0.5);
+
+% Right Hard Boundary at x = 4.5
+\draw[barrierred, line width=6pt, opacity=0.25] (4.5, -13.0) -- (4.5, 0.5);
+\draw[barrierred, line width=2.5pt] (4.5, -13.0) -- (4.5, 0.5);
+
+% ==========================================
+% 9. BOTTOM TITLES & HEADERS
+% ==========================================
+\node[font=\Huge\bfseries, text=black, align=center] at (0, 2.7) {The Impermeable Barrier: SVG \texttt{<img>}};
+\node[font=\Large, text=gray!70!black, align=center] at (0, 1.6) {Isolated Image Contexts and Total Encapsulation};
+
+\node[font=\Large\bfseries, text=domblue] at (-10.5, -0.5) {\faGlobe\ Global Document};
+\node[font=\Large\bfseries, text=barrierred, align=center] at (0, -0.5) {\faBan\ Image Browsing Context\\[2pt]\normalsize (Impermeable Boundary)};
+\node[font=\Large\bfseries, text=gray!60!black] at (10.5, -0.5) {\faIcon{file-alt}\ External SVG File};
+
+% ==========================================
+% 10. BOTTOM DOM TREE NODES
+% ==========================================
+
+% --- GLOBAL DOM (x = -10.5) ---
+\node[fill=white, draw=domblue!30, line width=0.8pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (imghtml) at (-10.5, -2.5) {
+    \textcolor{gray!60}{<}\textcolor{tagblue}{\textbf{html}}\textcolor{gray!60}{>}
+};
+\draw[domblue, line width=3.5pt, line cap=round] ($(imghtml.north west)+(1.8pt,-3pt)$) -- ($(imghtml.south west)+(1.8pt,3pt)$);
+
+\node[fill=white, draw=domblue!30, line width=0.8pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (imgbody) at (-10.5, -4.5) {
+    \textcolor{gray!60}{<}\textcolor{tagblue}{\textbf{body}}\textcolor{gray!60}{>}
+};
+\draw[domblue, line width=3.5pt, line cap=round] ($(imgbody.north west)+(1.8pt,-3pt)$) -- ($(imgbody.south west)+(1.8pt,3pt)$);
+
+\node[fill=white, draw=domblue!40, line width=1pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=20}, inner sep=7pt, font=\ttfamily\normalsize] (imgtag) at (-10.5, -6.5) {
+    \textcolor{gray!60}{<}\textcolor{tagblue}{\textbf{img}} \textcolor{attributecyan}{src}=\textcolor{valuestring}{"sprite.svg"}\textcolor{gray!60}{>}
+};
+\draw[domblue, line width=3.5pt, line cap=round] ($(imgtag.north west)+(1.8pt,-3pt)$) -- ($(imgtag.south west)+(1.8pt,3pt)$);
+
+\draw[-Latex, domblue, very thick] (imghtml) -- (imgbody);
+\draw[-Latex, domblue, very thick] (imgbody) -- (imgtag);
+
+% --- IMAGE CONTEXT ISOLATED NODES (x = 0) ---
+\node[fill=gray!15, draw=gray!50, line width=1pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=20}, inner sep=7pt, font=\ttfamily\normalsize] (imgdoc) at (0, -2.5) {
+    \textcolor{gray!80!black}{\textbf{\#document}} \textcolor{gray!60}{(Image Context)}
+};
+\draw[gray!70!black, line width=3.5pt, line cap=round] ($(imgdoc.north west)+(1.8pt,-3pt)$) -- ($(imgdoc.south west)+(1.8pt,3pt)$);
+
+\node[fill=gray!10, draw=gray!40, line width=0.8pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (imgsvg) at (0, -4.5) {
+    \textcolor{gray!60}{<}\textcolor{gray!60!black}{\textbf{svg}}\textcolor{gray!60}{>}
+};
+\draw[gray!60, line width=3.5pt, line cap=round] ($(imgsvg.north west)+(1.8pt,-3pt)$) -- ($(imgsvg.south west)+(1.8pt,3pt)$);
+
+\node[fill=gray!10, draw=gray!40, line width=0.8pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (imgpath) at (0, -6.5) {
+    \textcolor{gray!60}{<}\textcolor{gray!60!black}{\textbf{path}}\textcolor{gray!60}{>}
+};
+\draw[gray!60, line width=3.5pt, line cap=round] ($(imgpath.north west)+(1.8pt,-3pt)$) -- ($(imgpath.south west)+(1.8pt,3pt)$);
+
+\draw[-Latex, gray!70!black, very thick] (imgdoc) -- (imgsvg);
+\draw[-Latex, gray!70!black, very thick] (imgsvg) -- (imgpath);
+
+% --- SPRITE ASSET (x = 10.5) ---
+\node[fill=white, draw=gray!40, line width=1pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=20}, inner sep=7pt, font=\ttfamily\normalsize] (assetsvg) at (10.5, -4.5) {
+    \textcolor{gray!60}{<}\textcolor{gray!50!black}{\textbf{svg}}\textcolor{gray!60}{>}
+};
+\draw[gray!70, line width=3.5pt, line cap=round] ($(assetsvg.north west)+(1.8pt,-3pt)$) -- ($(assetsvg.south west)+(1.8pt,3pt)$);
+
+\node[fill=white, draw=gray!30, line width=0.8pt, rounded corners=6pt, blur shadow={shadow blur steps=4, shadow opacity=15}, inner sep=7pt, font=\ttfamily\normalsize] (assetpath) at (10.5, -6.5) {
+    \textcolor{gray!60}{<}\textcolor{gray!50!black}{\textbf{path}}\textcolor{gray!60}{>}
+};
+\draw[gray!70, line width=3.5pt, line cap=round] ($(assetpath.north west)+(1.8pt,-3pt)$) -- ($(assetpath.south west)+(1.8pt,3pt)$);
+
+\draw[-Latex, gray!70!black, very thick] (assetsvg) -- (assetpath);
+
+% Connections for <img>
+\draw[-Latex, domblue, thick, dashed] (imgtag.east) to[out=0, in=180]
+    node[midway, above, fill=white, draw=domblue!20, line width=0.5pt, inner sep=3pt, rounded corners=4pt, font=\scriptsize\bfseries, text=domblue, blur shadow={shadow blur steps=2, shadow opacity=10}] {Embeds} (imgdoc.west);
+
+\draw[-Latex, gray!70!black, thick, dashed] (assetsvg.west) to[out=180, in=0]
+    node[midway, above, fill=white, draw=gray!20, line width=0.5pt, inner sep=3pt, rounded corners=4pt, font=\scriptsize\bfseries, text=gray!70!black, blur shadow={shadow blur steps=2, shadow opacity=10}] {Loads standalone} (imgdoc.east);
+
+% ==========================================
+% 11. CSSOM WINDOW & IMPERMEABLE CRASH LOGIC
+% ==========================================
+% Bottom CSSOM Window: Layer 1 - Background Base
+\fill[fill=editorbg, draw=gray!70!black, line width=0.8pt, rounded corners=8pt, blur shadow={shadow blur steps=6, shadow opacity=25}]
+    (-14.5, -12.5) rectangle (-6.5, -7.5);
+
+% Bottom CSSOM Window: Layer 2 - Title Bar
+\path[fill=gray!80!black, rounded corners=8pt]
+    (-14.5, -8.5) -- (-14.5, -7.5) -- (-6.5, -7.5) [sharp corners] -- (-6.5, -8.5) -- cycle;
+
+% Bottom CSSOM Window: Layer 3 - macOS Window Dots
+\fill[red!80!white] (-14.0, -8.0) circle (2.5pt);
+\fill[yellow!80!white] (-13.5, -8.0) circle (2.5pt);
+\fill[green!80!white] (-13.0, -8.0) circle (2.5pt);
+
+% Bottom CSSOM Window: Layer 4 - Title Text
+\node[font=\tiny\bfseries, text=gray!30, align=center] at (-10.5, -8.0) {styles.css \textemdash\ Global CSSOM};
+
+% Bottom CSSOM Window: Layer 5 - Code Content
+\node[align=left, text width=7.5cm, inner sep=0pt] at (-10.5, -10.0) {
+    {\color{cssmagenta}\faCss3\ \textbf{Global CSS Object Model}}\\[6pt]
+    \ttfamily\small
+    \color{barrierred}img \{\\
+    \quad fill: \#4CAF50; \textcolor{gray!50}{\textit{/* Inheritable \textemdash\ BLOCKED! */}}\\
+    \}\\[5pt]
+    \color{barrierred}img:hover path \{\\
+    \quad stroke: \#f00; \textcolor{gray!50}{\textit{/* BLOCKED! */}}\\
+    \}
+};
+
+% Style Application Crash 1: Inheritable Property Blocked
+\draw[-Latex, barrierred, line width=2.5pt] (-6.5, -9.5) -- (-4.5, -9.5);
+\draw[barrierred, line width=1.5pt, decoration={zigzag, segment length=3.5pt, amplitude=2.5pt}, decorate] (-4.5, -8.7) -- (-4.5, -10.3);
+\node[draw=barrierred, fill=barrierred, text=white, font=\bfseries\footnotesize, rounded corners=8pt, inner sep=4pt, blur shadow={shadow blur steps=4, shadow opacity=20}, anchor=west] at (-4.0, -9.5) {
+    \faIcon{shield-alt}\ CRASH! (Inheritance Denied)
+};
+
+% Style Application Crash 2: Deep Selector Blocked
+\draw[-Latex, barrierred, line width=2.5pt] (-6.5, -11.0) -- (-4.5, -11.0);
+\draw[barrierred, line width=1.5pt, decoration={zigzag, segment length=3.5pt, amplitude=2.5pt}, decorate] (-4.5, -10.3) -- (-4.5, -11.7);
+\node[draw=barrierred, fill=barrierred, text=white, font=\bfseries\footnotesize, rounded corners=8pt, inner sep=4pt, blur shadow={shadow blur steps=4, shadow opacity=20}, anchor=west] at (-4.0, -11.0) {
+    \faIcon{shield-alt}\ CRASH! (Selector Blocked)
+};
+
+
+% ##############################################################################
+% BOTTOM SECTION: 2x2 EXPLANATORY BUBBLES GRID
+% ##############################################################################
+
+% Bubble 1: Shadow Tree Instantiation
+\node[draw=gray!30, fill=white, rounded corners=10pt, blur shadow={shadow blur steps=5, shadow opacity=15}, inner sep=11pt, text width=13.5cm, minimum height=3.5cm, anchor=center] at (-7.5874,-15.2561) {
+    \textbf{\color{domblue}\faClone\ 1. Shadow Tree Instantiation}\\[4pt]
+    The \texttt{<use>} element instructs the browser to fetch an external SVG node and clone its entire tree structure into a \textbf{Closed Shadow Root} hosted directly by the \texttt{<use>} element.
+};
+
+% Bubble 2: The Permeable Inheritance Loophole
+\node[draw=gray!30, fill=white, rounded corners=10pt, blur shadow={shadow blur steps=5, shadow opacity=15}, inner sep=11pt, text width=13.5cm, minimum height=3.5cm, anchor=center] at (7.4126,-15.2561) {
+    \textbf{\color{shadowpurple}\faFilter\ 2. The Permeable Inheritance Loophole}\\[4pt]
+    While selectors like \texttt{use path} are blocked by the Shadow boundary, \textit{inheritable} CSS properties (\texttt{fill}, \texttt{color}, \texttt{stroke}) applied to the \texttt{<use>} tag will cascade downwards into the Ghost Nodes, enabling basic dynamic color theming.
+};
+
+% Bubble 3: The Strict Requirement
+\node[draw=gray!30, fill=white, rounded corners=10pt, blur shadow={shadow blur steps=5, shadow opacity=15}, inner sep=11pt, text width=13.5cm, minimum height=3.5cm, anchor=center] at (-7.5874,-19.7561) {
+    \textbf{\color{valuestring}\faExclamationTriangle\ 3. The Strict Requirement}\\[4pt]
+    For the CSS inheritance loophole to work, the elements inside the external Sprite Asset (\texttt{<path>}) \textbf{must not} have hard-coded \texttt{fill} or \texttt{stroke} attributes, otherwise the hard-coded values will override the cascaded CSS.
+};
+
+% Bubble 4: The Impermeable Image Context
+\node[draw=gray!30, fill=white, rounded corners=10pt, blur shadow={shadow blur steps=5, shadow opacity=15}, inner sep=11pt, text width=13.5cm, minimum height=3.5cm, anchor=center] at (7.4126,-19.7561) {
+    \textbf{\color{barrierred}\faBan\ 4. The Impermeable Image Context}\\[4pt]
+    Importing an SVG via \texttt{<img>} or \texttt{background-image} does not create a permeable Shadow DOM. It creates a completely isolated Image Browsing Context. The host document's CSSOM cannot penetrate this boundary at all\textemdash even inheritable properties like \texttt{fill} are strictly blocked.
+};
+
+\end{tikzpicture}
+\end{document}

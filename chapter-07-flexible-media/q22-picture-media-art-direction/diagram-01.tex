@@ -1,0 +1,261 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\usepackage{tikz}
+\usepackage{xcolor}
+
+% Custom Color Palette
+\definecolor{codebg}{RGB}{30, 30, 30}
+\definecolor{codefg}{RGB}{212, 212, 212}
+\definecolor{str}{RGB}{206, 145, 120}
+\definecolor{tag}{RGB}{78, 201, 176}
+\definecolor{attr}{RGB}{156, 220, 254}
+\definecolor{accentR}{RGB}{220, 53, 69}
+\definecolor{accentG}{RGB}{40, 167, 69}
+\definecolor{accentB}{RGB}{13, 110, 253}
+\definecolor{accentP}{RGB}{111, 66, 193}
+\definecolor{charcoal}{RGB}{38, 38, 38}
+
+\begin{document}
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    blade/.style={
+        path picture={
+            \fill[#1] (path picture bounding box.north west) rectangle ([xshift=4.5pt]path picture bounding box.south west);
+        }
+    },
+    bubble/.style={
+        draw=#1!50!black!30,
+        top color=white,
+        bottom color=#1!5,
+        rounded corners=8pt,
+        inner sep=14pt,
+        font=\small,
+        align=left,
+        text=charcoal,
+        line width=0.8pt,
+        blur shadow={shadow opacity=12, shadow yshift=-2pt, shadow blur radius=4pt}
+    },
+    codebox/.style={
+        fill=codebg,
+        text=codefg,
+        font=\ttfamily\small,
+        rounded corners=8pt,
+        inner sep=16pt,
+        align=left,
+        line width=0.8pt,
+        draw=black!70,
+        blur shadow={shadow opacity=20, shadow yshift=-2pt, shadow blur radius=5pt}
+    },
+    procbox/.style={
+        draw=#1!70!black!40,
+        top color=white,
+        bottom color=#1!5,
+        line width=1.1pt,
+        rounded corners=8pt,
+        inner sep=12pt,
+        font=\small,
+        align=center,
+        text=charcoal,
+        blur shadow={shadow opacity=14, shadow yshift=-2pt, shadow blur radius=4pt}
+    },
+    severbox/.style={
+        draw=accentP,
+        top color=white,
+        bottom color=accentP!8,
+        line width=1.8pt,
+        rounded corners=8pt,
+        inner sep=12pt,
+        font=\small,
+        align=center,
+        text=charcoal,
+        blur shadow={shadow opacity=28, shadow yshift=-2pt, shadow blur radius=7pt}
+    },
+    datapipe/.style={
+        -Stealth=3mm,
+        line width=2.5pt,
+        draw=#1,
+        shorten >= 3pt,
+        shorten <= 3pt
+    },
+    dashedarrow/.style={
+        -Stealth=3mm,
+        line width=1.5pt,
+        dashed,
+        color=#1,
+        shorten >= 3pt,
+        shorten <= 3pt
+    }
+]
+
+% Background Enforcement
+\begin{scope}[on background layer]
+    \fill[white] (-3, 0) rectangle (48, 27);
+\end{scope}
+
+% ---------------- TITLE SECTION ----------------
+\node[font=\Huge\bfseries, color=charcoal, align=center] at (22, 25.5) {Mechanics of the Preload Scanner Severing};
+\node[font=\Large, color=black!60, align=center] at (22, 24.5) {How \texttt{<source media="(max-width: 600px)">} mechanically halts the browser's greedy network queue.};
+
+% Center Structural Divider
+\draw[line width=1.5pt, dashed, black!20] (22, 23.5) -- (22, 1.0);
+
+
+% ---------------- LEFT COLUMN (Standard <img> Pipeline) ----------------
+\node[align=center] at (11, 22.5) {
+    {\LARGE\bfseries\color{charcoal} Standard \texttt{<img>} Pipeline}\\[2pt]
+    {\normalsize\color{black!50} (Unconditional Greedy Fetch)}
+};
+
+% Code Box
+\node[codebox, text width=9.5cm] (codeL) at (11, 18.5) {
+<\textcolor{tag}{img} \textcolor{attr}{src}=\textcolor{str}{"wide.jpg"}>\\
+\textcolor{black!50}{<!-- No media conditions present -->}
+};
+
+% Preload Scanner Thread
+\node[procbox=accentB, blade=accentB, text width=8.5cm] (scanL) at (11, 14.5) {
+\textbf{\color{accentB}\faSearch\ Preload Scanner Thread}\\
+\vspace{4pt}
+Scans the raw HTML byte stream solely for \texttt{src} strings. No viewport variables are queried.
+};
+
+% Unconditional Push
+\node[procbox=accentR, blade=accentR, text width=8.5cm] (pushL) at (11, 10.0) {
+\textbf{\color{accentR}\faBolt\ Unconditional Push}\\
+\vspace{4pt}
+Asset URL is instantly pushed to the Network Thread queue before DOM is even constructed.
+};
+
+% Network Thread
+\node[procbox=gray, blade=black!60, text width=8.5cm] (netL) at (11, 6.0) {
+\textbf{\faGlobe\ Network Thread}\\
+\vspace{4pt}
+\texttt{GET /wide.jpg}\\
+\textit{(Maximum payload dispatched blindly)}
+};
+
+% Left Vertical Data Pipes
+\draw[datapipe=accentB] (codeL.south) -- (scanL.north);
+\draw[datapipe=accentR] (scanL.south) -- (pushL.north);
+\draw[datapipe=black!60] (pushL.south) -- (netL.north);
+
+% Left Analytical Annotation (The Baseline Flaw)
+\node[bubble=accentR, blade=accentR, text width=6.5cm] (flawL) at (0.9149,10.036) {
+\textbf{\color{accentR}The Baseline Flaw:}\\
+On mobile endpoints, this algorithm forces the download of a massive \texttt{wide.jpg} file, consuming bandwidth for pixels that will ultimately be suppressed by CSS later.
+};
+
+\draw[dashedarrow=accentR] (flawL.east) -- (pushL.west);
+
+
+% ---------------- RIGHT COLUMN (<picture> + <source> Pipeline) ----------------
+\node[align=center] at (33, 22.5) {
+    {\LARGE\bfseries\color{charcoal} \texttt{<picture>} Art Direction Pipeline}\\[2pt]
+    {\normalsize\color{black!50} (Conditional Fetch via Severing)}
+};
+
+% Code Box
+\node[codebox, text width=11cm] (codeR) at (33, 18.5) {
+<\textcolor{tag}{picture}>\\
+\quad<\textcolor{tag}{source} \textcolor{attr}{media}=\textcolor{str}{"(max-width: 600px)"}\\
+\quad\quad\quad\quad\textcolor{attr}{srcset}=\textcolor{str}{"tight-crop.jpg"}>\\
+\quad<\textcolor{tag}{img} \textcolor{attr}{src}=\textcolor{str}{"wide.jpg"}>\\
+</\textcolor{tag}{picture}>
+};
+
+% Preload Scanner Thread
+\node[procbox=accentB, blade=accentB, text width=9.5cm] (scanR) at (33, 14.5) {
+\textbf{\color{accentB}\faSearch\ Preload Scanner Thread}\\
+\vspace{4pt}
+Identifies \texttt{<source>} tag and extracts the \texttt{media} query string.
+};
+
+% HALT Barrier Badge
+\node[draw=accentR, fill=accentR!10, text=accentR, font=\scriptsize\bfseries, rounded corners=3pt, line width=1.1pt, inner sep=4pt, blur shadow={shadow opacity=15, shadow yshift=-1pt, shadow blur radius=3pt}] (halt) at (33, 12.4) {\faBan\ HALT: GREEDY FETCH SEVERED};
+
+% The Mechanical Severing (Circuit Breaker Host)
+\node[severbox, blade=accentP, text width=10cm] (sevR) at (33, 10.0) {
+\textbf{\color{accentP}\faCut\ The Mechanical Severing}\\
+\vspace{4pt}
+The scanner evaluates the \texttt{media} query instantly against the browser's known environment viewport. It mechanically severs the greedy fetch queue, bypassing any dependency on the DOM or CSSOM.
+};
+
+% Viewport Engine Evaluator
+\node[procbox=accentG, blade=accentG, text width=9.5cm] (evalR) at (33, 6.0) {
+\textbf{\color{accentG}\faMicrochip\ Viewport Engine Evaluator}\\
+\vspace{4pt}
+Is internal viewport width $\le$ 600px?\\
+\textit{(Evaluated per Environment Viewport Metrics)}
+};
+
+% Right Column Flow & Circuit Breaker Mechanical Severing
+\draw[datapipe=accentB] (codeR.south) -- (scanR.north);
+\draw[datapipe=accentB] (scanR.south) -- (halt.north);
+\draw[datapipe=accentP, dashed] (halt.south) -- (sevR.north);
+\draw[datapipe=accentG] (sevR.south) -- (evalR.north);
+
+% Right Analytical Annotation (The Mechanical Impact)
+\node[bubble=accentP, blade=accentP, text width=6.5cm] (impactR) at (43.2925,9.964) {
+\textbf{\color{accentP}The Mechanical Impact:}\\
+The \texttt{media} attribute acts as a logical circuit breaker. It mathematically ties the network request to the physical endpoint parameters, successfully severing the standard unconditional HTML parsing algorithm.
+};
+
+\draw[dashedarrow=accentP] (impactR.west) -- (sevR.east);
+
+
+% ---------------- NETWORK OUTCOMES (Orthogonal Boolean Branching) ----------------
+\node[procbox=gray, blade=accentG, text width=5cm] (netMobile) at (27, 2.0) {
+\textbf{\faGlobe\ Network}\\
+\vspace{2pt}
+\texttt{GET /tight-crop.jpg}
+};
+
+\node[procbox=gray, blade=black!50, text width=5cm] (netDesktop) at (39, 2.0) {
+\textbf{\faGlobe\ Network}\\
+\vspace{2pt}
+\texttt{GET /wide.jpg}
+};
+
+% Orthogonal Branching Routes (Separated Distinct Boolean Paths)
+\draw[datapipe=accentG, rounded corners=6pt] ([xshift=-15pt]evalR.south) -- ([xshift=-15pt]33, 4.0) -- (27, 4.0) -- (netMobile.north);
+\node[above, font=\small\bfseries, color=accentG, yshift=2pt] at (30, 4.0) {TRUE (Mobile)};
+
+\draw[datapipe=black!50, rounded corners=6pt] ([xshift=15pt]evalR.south) -- ([xshift=15pt]33, 4.0) -- (39, 4.0) -- (netDesktop.north);
+\node[above, font=\small\bfseries, color=black!60, yshift=2pt] at (36, 4.0) {FALSE (Desktop)};
+
+\end{tikzpicture}
+\end{document}

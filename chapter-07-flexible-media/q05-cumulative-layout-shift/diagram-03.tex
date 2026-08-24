@@ -1,0 +1,261 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{slateblue}{RGB}{106,90,205}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\usepackage{xcolor}
+
+% --- CUSTOM COLORS ---
+\definecolor{themeblue}{RGB}{41, 128, 185}
+\definecolor{themered}{RGB}{231, 76, 60}
+\definecolor{themegreen}{RGB}{39, 174, 96}
+\definecolor{themeorange}{RGB}{230, 126, 34}
+\definecolor{textdark}{RGB}{44, 62, 80}
+\definecolor{codebg}{RGB}{40, 44, 52}
+\definecolor{codetext}{RGB}{171, 178, 191}
+\definecolor{codeattr}{RGB}{209, 154, 102}
+\definecolor{codeval}{RGB}{152, 195, 121}
+
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm]
+
+% Background fill to guarantee solid white canvas strictly spanning (-1, -2) to (26, 28)
+\fill[white] (-1, -2) rectangle (25.9655,27.2228);
+
+% --- MAIN TITLE ---
+\node[font=\Huge\bfseries, textdark, anchor=north west] at (0, 26.5) {Advanced Media: Art Direction \& CSS \texttt{aspect-ratio}};
+\node[font=\Large, textdark!70, anchor=north west] at (0.0863,25.2991) {Modern layout techniques for resilient, scalable, and beautifully cropped imagery.};
+
+% ---------------------------------------------------------
+% SECTION 1: THE HISTORICAL PROBLEM (Layout Thrashing & CLS)
+% ---------------------------------------------------------
+\filldraw[fill=white, draw=gray!40, rounded corners=8pt, thick, blur shadow={shadow blur steps=5}] (0, 16.0) rectangle (25, 24.5);
+\node[font=\Large\bfseries, textdark, anchor=north west] at (0.8, 23.8) {1. The Historical Problem: Layout Thrashing (Cumulative Layout Shift)};
+\node[font=\normalsize, textdark!80, anchor=north west, text width=23cm] at (0.8, 23.0) {Before modern CSS specs, flexible images (\texttt{width: 100\%; height: auto;}) collapsed to 0px height during HTML parsing because their intrinsic aspect ratio was unknown until the image data downloaded. Once loaded, they snapped to their true height, violently pushing down subsequent DOM elements.};
+
+% Browser A: Before Load (0px collapsed height)
+\filldraw[fill=gray!10, draw=gray!40, rounded corners=4pt, thick] (4, 17.5) rectangle (9, 20.5);
+\fill[gray!25, rounded corners=4pt] (4, 19.9) rectangle (9, 20.5);
+\fill[themered!80] (4.3, 20.2) circle (0.08);
+\fill[yellow!80!orange] (4.6, 20.2) circle (0.08);
+\fill[themegreen!80] (4.9, 20.2) circle (0.08);
+\node[font=\tiny\bfseries, textdark!60, anchor=west] at (4.4365,20.9082) {Browser Viewport (HTML Parsing)};
+
+% Collapsed image line (2pt height representation)
+\draw[themered, dashed, line width=1.5pt] (4.4, 19.3) -- (8.6, 19.3);
+\node[font=\tiny\bfseries, themered, fill=white, inner sep=2pt, rounded corners=1pt, align=center] at (6.5, 19.7) {\faTimesCircle\ 0px Collapsed Height\\(Pending Download)};
+
+% DOM elements directly underneath collapsed box starting from y=18.9
+\fill[gray!40, rounded corners=1.5pt] (4.4, 18.65) rectangle (8.6, 18.95);
+\fill[gray!30, rounded corners=1.5pt] (4.4, 18.25) rectangle (8.0, 18.5);
+\fill[gray!25, rounded corners=1.5pt] (4.4, 17.85) rectangle (7.5, 18.1);
+\fill[gray!20, rounded corners=1.5pt] (4.4, 17.55) rectangle (6.8, 17.75);
+
+% Timeline Arrow
+\draw[->, >=Latex, line width=2pt, themeorange] (9.5, 19.0) -- (15.5, 19.0);
+\node[font=\footnotesize\bfseries, themeorange!90!black, fill=white, inner sep=2.5pt, rounded corners=3pt, draw=themeorange!50, align=center] at (12.5, 19.7) {Image Payload\\Downloads \& Renders};
+
+% Browser B: After Load (Violent Layout Shift)
+\filldraw[fill=gray!10, draw=gray!40, rounded corners=4pt, thick] (16, 17.5) rectangle (21, 20.5);
+\fill[gray!25, rounded corners=4pt] (16, 19.9) rectangle (21, 20.5);
+\fill[themered!80] (16.3, 20.2) circle (0.08);
+\fill[yellow!80!orange] (16.6, 20.2) circle (0.08);
+\fill[themegreen!80] (16.9, 20.2) circle (0.08);
+\node[font=\tiny\bfseries, textdark!60, anchor=west] at (16.9719,20.96) {Browser Viewport (Post-Download)};
+
+% Image Snaps to full intrinsic height
+\filldraw[fill=themeblue!15, draw=themeblue, thick, rounded corners=2pt] (16.4, 18.2) rectangle (20.6, 19.7);
+\node[font=\scriptsize\bfseries, text=themeblue!90!black, align=center] at (18.5,19.3671) {\faImage\ Image Expands\\to Intrinsic Height};
+
+% Ghosted red shapes where the text used to be
+\draw[themered!70, dashed, fill=themered!10, rounded corners=1.5pt] (16.4, 18.85) rectangle (20.6, 19.15);
+\draw[themered!70, dashed, fill=themered!10, rounded corners=1.5pt] (16.4, 18.45) rectangle (20.0, 18.7);
+
+% Pushed down actual text blocks
+\fill[gray!40, rounded corners=1.5pt] (16.4, 18.0) rectangle (20.6, 18.3);
+\fill[gray!30, rounded corners=1.5pt] (16.4, 17.6) rectangle (20.0, 17.85);
+
+% Heavy Shift Arrow & Label
+\draw[->, >=Latex, line width=2pt, themered] (19.8, 18.0) -- (19.8, 17.3);
+\node[font=\scriptsize\bfseries, themered, fill=white, inner sep=1.5pt, rounded corners=2pt, draw=themered!60, anchor=north] at (18.5, 17.1) {\faExclamationTriangle\ Cumulative Layout Shift (CLS)};
+
+% ---------------------------------------------------------
+% SECTION 2: ART DIRECTION (<picture>)
+% ---------------------------------------------------------
+\filldraw[fill=white, draw=gray!40, rounded corners=8pt, thick, blur shadow={shadow blur steps=5}] (0, 7.5) rectangle (24.3843,15.7582);
+\node[font=\Large\bfseries, textdark, anchor=north west] at (1.3958,15.5746) {2. Art Direction (The \texttt{<picture>} Element)};
+\node[font=\normalsize, textdark!80, anchor=north west, text width=23cm] at (-0.0142,14.7945) {Art direction is not just about scaling; it's about altering the crop or swapping the image entirely based on CSS media queries to maintain subject focus and visual context across vast viewport differences.};
+
+% Code Block 1
+\node[anchor=north west, fill=codebg, rounded corners=6pt, text width=7.2cm, inner sep=8pt] (piccode) at (0.8, 12.0) {
+    \color{codetext}\small\ttfamily
+    <\textcolor{themered}{picture}>\\[4pt]
+    ~~<\textcolor{themered}{source} \textcolor{codeattr}{media}="\textcolor{codeval}{(min-width: 800px)}"\\[2pt]
+    ~~~~~~~~~~\textcolor{codeattr}{srcset}="\textcolor{codeval}{panoramic-landscape.jpg}">\\[6pt]
+    ~~<\textcolor{themegreen}{img} \textcolor{codeattr}{src}="\textcolor{codeval}{tight-crop-mobile.jpg}" \textcolor{codeattr}{alt}="\textcolor{codeval}{Subject}">\\[4pt]
+    </\textcolor{themered}{picture}>
+};
+
+% Mobile Device Mockup
+% Outer Bezel
+\filldraw[fill=gray!85!black, draw=black!80, thick, rounded corners=6pt, blur shadow={shadow blur steps=4}] (10.2, 8.5) rectangle (12.8, 12.5);
+% Inner Screen Bezel
+\filldraw[fill=black, rounded corners=4pt] (10.35, 8.65) rectangle (12.65, 12.35);
+% Speaker notch & sensor pill
+\fill[gray!40, rounded corners=1.5pt] (11.15, 12.15) rectangle (11.85, 12.27);
+\fill[gray!60] (12.05, 12.21) circle (0.05);
+
+% Screen Area & Landscape Tight Crop (Art Direction Focus)
+\begin{scope}
+    \clip[rounded corners=3pt] (10.45, 8.8) rectangle (12.55, 12.05);
+    % Sky Gradient
+    \shade[top color=skyblue!70!blue!60, bottom color=skyblue!25!white] (10.45, 8.8) rectangle (12.55, 12.05);
+    % Sun (Centered tight focus)
+    \fill[yellow!90!orange] (11.5, 11.0) circle (0.65);
+    \fill[yellow!60!white, opacity=0.4] (11.5, 11.0) circle (0.85);
+    % Distant Peak
+    \fill[gray!60!slateblue!50] (10.45, 8.8) -- (10.7, 9.9) -- (11.5, 11.2) -- (12.3, 9.8) -- (12.55, 10.2) -- (12.55, 8.8) -- cycle;
+    % Midground Mountain Peak
+    \fill[gray!75!teal!55] (10.45, 8.8) -- (10.9, 9.7) -- (11.5, 10.9) -- (12.1, 9.5) -- (12.55, 9.8) -- (12.55, 8.8) -- cycle;
+    % Foreground Hill
+    \fill[themegreen!75!black!70] (10.45, 8.8) to[out=25, in=165] (12.55, 9.2) -- (12.55, 8.8) -- cycle;
+    % Glossy Screen Overlay
+    \fill[white, opacity=0.08] (10.45, 8.8) rectangle (12.55, 12.05);
+\end{scope}
+
+% Mobile Image Overlay Badge & Label
+\node[font=\scriptsize\bfseries, fill=white!90, rounded corners=2pt, inner sep=2pt, text=textdark] at (11.5, 11.8) {Tight Crop};
+\node[font=\footnotesize\bfseries, textdark] at (11.5, 7.9) {Mobile (< 800px)};
+
+% Desktop Monitor Mockup
+% Stand Neck & Base
+\shade[top color=gray!40, bottom color=gray!70, draw=gray!80] (19.2, 8.7) rectangle (19.8, 9.5);
+\shade[top color=gray!30, bottom color=gray!60, draw=gray!70, rounded corners=1.5pt] (18.3, 8.5) rectangle (20.7, 8.75);
+
+% Monitor Bezel
+\filldraw[fill=gray!90!black, draw=black!90, thick, rounded corners=4pt, blur shadow={shadow blur steps=4}] (16.0, 9.5) rectangle (23.0, 13.5);
+% Inner Screen Area & Panoramic Landscape
+\begin{scope}
+    \clip[rounded corners=2pt] (16.2, 9.7) rectangle (22.8, 13.3);
+    % Sky Gradient
+    \shade[top color=skyblue!70!blue!60, bottom color=skyblue!25!white] (16.2, 9.7) rectangle (22.8, 13.3);
+    % Sun
+    \fill[yellow!90!orange] (19.5, 12.3) circle (0.45);
+    \fill[yellow!60!white, opacity=0.4] (19.5, 12.3) circle (0.6);
+    % Distant Mountain Range
+    \fill[gray!60!slateblue!50] (16.2, 9.7) -- (16.8, 10.8) -- (17.8, 11.6) -- (18.8, 10.7) -- (19.5, 12.1) -- (20.5, 11.0) -- (21.6, 11.7) -- (22.8, 10.6) -- (22.8, 9.7) -- cycle;
+    % Midground Mountains
+    \fill[gray!75!teal!55] (16.2, 9.7) -- (17.2, 10.5) -- (18.3, 11.7) -- (19.5, 10.6) -- (20.8, 11.4) -- (22.0, 10.2) -- (22.8, 10.8) -- (22.8, 9.7) -- cycle;
+    % Foreground Hills
+    \fill[themegreen!75!black!70] (16.2, 9.7) to[out=20, in=170] (19.5, 10.4) to[out=-10, in=165] (22.8, 10.1) -- (22.8, 9.7) -- cycle;
+    % Glossy Screen Overlay
+    \fill[white, opacity=0.08] (16.2, 9.7) rectangle (22.8, 13.3);
+\end{scope}
+
+% Desktop Image Overlay Badge & Label
+\node[font=\scriptsize\bfseries, fill=white!90, rounded corners=2pt, inner sep=2pt, text=textdark] at (19.5, 13.0) {Panoramic View (Full Context)};
+\node[font=\footnotesize\bfseries, textdark] at (19.5, 8.3) {Desktop ($\ge$ 800px)};
+
+% Rigid Orthogonal Routed Arrows (Zero Overlap)
+% Red Arrow: exits at (8.2, 11.6), right to (9.2, 11.6), up to (9.2, 14.2), right to (19.5, 14.2), down to (19.5, 13.5)
+\draw[->, >=Latex, line width=1.5pt, themered, rounded corners=6pt] (8.0808,11.1431) -- (9.0808,11.1431) -- (9.7958,13.8027) -- (19.5199,14.0411) -- (19.5, 13.5);
+% Green Arrow: exits at (8.2, 10.9) directly RIGHT to (10.2, 10.9)
+\draw[->, >=Latex, line width=1.5pt, themegreen] (8.1801,9.9664) -- (10.1801,9.9664);
+
+% ---------------------------------------------------------
+% SECTION 3: CSS ASPECT RATIO
+% ---------------------------------------------------------
+\filldraw[fill=white, draw=gray!40, rounded corners=8pt, thick, blur shadow={shadow blur steps=5}] (0, -1.5) rectangle (25, 6.5);
+\node[font=\Large\bfseries, textdark, anchor=north west] at (0.8,6.3959) {3. Scalable Graphics with CSS \texttt{aspect-ratio} \& \texttt{object-fit}};
+\node[font=\normalsize, textdark!80, anchor=north west, text width=23cm] at (0.5418,5.6356) {Today, the CSS \texttt{aspect-ratio} property forces an element to maintain a specific ratio entirely independent of HTML attributes. When combined with \texttt{object-fit: cover}, it guarantees zero CLS inside flexible grid or flexbox layouts.};
+
+% Section 3 Grid Container Text
+\node[font=\bfseries, textdark, anchor=center] at (19.4299,4.3034) {Fluid Grid Container (e.g. 1fr 1fr 1fr)};
+
+% Code Block 3
+\node[anchor=north west, fill=codebg, rounded corners=6pt, text width=7.8cm, inner sep=10pt] (csscode) at (0.2241,3.5) {
+    \color{codetext}\small\ttfamily
+    \textcolor{codeattr}{.card-image} \{\\
+    ~~width: 100\%;\\
+    ~~\textcolor{themeblue}{aspect-ratio: 16 / 9;}\\
+    ~~\textcolor{themegreen}{object-fit: cover;}\\
+    ~~border-radius: 8px;\\
+    \}
+};
+
+% Fully Separated Dimension Guides & Lock Badge (Zero Overlap)
+\draw[thick, dashed, themeblue, <->] (11.4, 3.8) -- (15.0, 3.8) node[midway, above=2pt, font=\small\bfseries] {Fluid $W$};
+\draw[thick, dashed, themeblue, <->] (10.4, 1.0) -- (10.4, 3.5);
+\node[font=\small\bfseries, themeblue, anchor=east] at (10.5575,1.7603) {Math $H$};
+\node[fill=themeblue!15, draw=themeblue, rounded corners=3pt, inner sep=3pt, font=\normalsize, text=themeblue, anchor=east] at (10.2, 2.5) {\faLock};
+
+% Card 1: (11.2, 1.0) to (15.2, 3.5)
+\filldraw[fill=gray!5, draw=gray!30, thick, rounded corners=6pt, blur shadow={shadow blur steps=3}] (11.2, 1.0) rectangle (15.2, 3.5);
+\filldraw[fill=themeblue!15, draw=themeblue, dashed, thick, rounded corners=4pt] (11.4, 2.1) rectangle (15.0, 3.3);
+\draw[themeblue!35, line width=0.8pt] (11.4, 2.1) -- (15.0, 3.3);
+\draw[themeblue!35, line width=0.8pt] (11.4, 3.3) -- (15.0, 2.1);
+\node[font=\footnotesize\bfseries, fill=white!90, rounded corners=2pt, inner sep=2pt, text=themeblue!90!black] at (13.2, 2.7) {16:9 Space Locked};
+\node[font=\small\bfseries, textdark, anchor=west] at (11.4, 1.8) {Article Title};
+\fill[gray!25, rounded corners=1.5pt] (11.4, 1.4) rectangle (14.3, 1.55);
+\fill[gray!20, rounded corners=1.5pt] (11.4, 1.15) rectangle (13.3, 1.3);
+
+% Card 2: (15.7, 1.0) to (19.7, 3.5)
+\filldraw[fill=gray!5, draw=gray!30, thick, rounded corners=6pt, blur shadow={shadow blur steps=3}] (15.7, 1.0) rectangle (19.7, 3.5);
+\filldraw[fill=themeblue!15, draw=themeblue, dashed, thick, rounded corners=4pt] (15.9, 2.1) rectangle (19.5, 3.3);
+\draw[themeblue!35, line width=0.8pt] (15.9, 2.1) -- (19.5, 3.3);
+\draw[themeblue!35, line width=0.8pt] (15.9, 3.3) -- (19.5, 2.1);
+\node[font=\footnotesize\bfseries, fill=white!90, rounded corners=2pt, inner sep=2pt, text=themeblue!90!black] at (17.7, 2.7) {16:9 Space Locked};
+\node[font=\small\bfseries, textdark, anchor=west] at (15.9, 1.8) {Article Title};
+\fill[gray!25, rounded corners=1.5pt] (15.9, 1.4) rectangle (18.8, 1.55);
+\fill[gray!20, rounded corners=1.5pt] (15.9, 1.15) rectangle (17.8, 1.3);
+
+% Card 3: (20.2, 1.0) to (24.2, 3.5)
+\filldraw[fill=gray!5, draw=gray!30, thick, rounded corners=6pt, blur shadow={shadow blur steps=3}] (20.2, 1.0) rectangle (24.2, 3.5);
+\filldraw[fill=themeblue!15, draw=themeblue, dashed, thick, rounded corners=4pt] (20.4, 2.1) rectangle (24.0, 3.3);
+\draw[themeblue!35, line width=0.8pt] (20.4, 2.1) -- (24.0, 3.3);
+\draw[themeblue!35, line width=0.8pt] (20.4, 3.3) -- (24.0, 2.1);
+\node[font=\footnotesize\bfseries, fill=white!90, rounded corners=2pt, inner sep=2pt, text=themeblue!90!black] at (22.2, 2.7) {16:9 Space Locked};
+\node[font=\small\bfseries, textdark, anchor=west] at (20.4, 1.8) {Article Title};
+\fill[gray!25, rounded corners=1.5pt] (20.4, 1.4) rectangle (23.3, 1.55);
+\fill[gray!20, rounded corners=1.5pt] (20.4, 1.15) rectangle (22.3, 1.3);
+
+% Bottom Explanation Text with Generous Margin
+\node[font=\footnotesize, text=themegreen!80!black, align=center, anchor=center] at (18.0, -0.3) {
+    \textbf{\faCrop \ object-fit: cover}\\[2pt]
+    Ensures the image safely crops itself to fill the pre-calculated 16:9 box\\without stretching or squashing the underlying pixels.
+};
+
+\end{tikzpicture}
+\end{document}

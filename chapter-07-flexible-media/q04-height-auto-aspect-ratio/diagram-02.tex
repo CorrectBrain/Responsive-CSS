@@ -1,0 +1,269 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+
+% --- DEFINE CUSTOM COLORS ---
+\definecolor{viewportgray}{RGB}{245, 247, 250}
+\definecolor{chromegray}{RGB}{225, 230, 236}
+\definecolor{windowborder}{RGB}{185, 195, 205}
+\definecolor{domblue}{RGB}{41, 128, 185}
+\definecolor{domimg}{RGB}{39, 174, 96}
+\definecolor{domtext}{RGB}{142, 68, 173}
+\definecolor{redalert}{RGB}{192, 57, 43}
+\definecolor{textdark}{RGB}{44, 62, 80}
+\definecolor{btnred}{RGB}{255, 95, 86}
+\definecolor{btnyellow}{RGB}{255, 189, 46}
+\definecolor{btngreen}{RGB}{39, 201, 63}
+
+\begin{document}
+\begin{tikzpicture}[
+    % --- COMPONENT STYLES ---
+    domcard/.style={
+        draw=black!25,
+        fill=white,
+        line width=0.8pt,
+        rounded corners=4pt,
+        align=center,
+        drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-3pt}
+    },
+    flowarrow/.style={
+        -Stealth=3mm,
+        line width=1.8pt,
+        dashed
+    },
+    leaderline/.style={
+        -Stealth=3mm,
+        line width=1.2pt,
+        shorten >=2pt
+    }
+]
+
+% ==========================================
+% STRICT PURE WHITE CANVAS BACKGROUND
+% ==========================================
+\begin{scope}[on background layer]
+    \fill[white] (-12.1102,-1.0275) rectangle (11.5485,15.2235);
+\end{scope}
+
+% ==========================================
+% TOP LEVEL HEADERS
+% ==========================================
+\node[font=\Huge\bfseries\sffamily\color{textdark}, anchor=center] at (0.0243,14.1846) {The Render Pipeline: Dynamic Y-Axis Reflow};
+\node[font=\Large\color{gray!80!black}, anchor=center] at (0.0243,13.1846) {How recalculating \texttt{height: auto} pulls the Document Flow upward, preventing layout breakage};
+
+
+% ==========================================
+% LEFT PANEL: WIDE VIEWPORT (DESKTOP)
+% Bounding Box: (-10.5, 0) to (-3.5, 11) | Width: 7.0cm, Height: 11.0cm
+% ==========================================
+\node[font=\Large\bfseries\color{textdark}, anchor=south] at (-7, 11.2) {\faDesktop\ Desktop Viewport};
+
+% Outer Window & Drop Shadow
+\filldraw[fill=white, draw=windowborder, line width=1pt, rounded corners=6pt,
+    drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-3pt}]
+    (-10.5, 0) rectangle (-3.5, 11);
+
+% Safari Window Chrome Title Bar (Gradient)
+\fill[top color=white, bottom color=chromegray, rounded corners=6pt] (-10.5, 10.2) rectangle (-3.5, 11);
+\fill[chromegray] (-10.5, 10.2) rectangle (-3.5, 10.4);
+\draw[windowborder, line width=0.8pt] (-10.5, 10.2) -- (-3.5, 10.2);
+
+% Window Controls (3D Spherical Buttons)
+\shade[inner color=btnred!50!white, outer color=btnred!90!black, draw=btnred!80!black, line width=0.3pt] (-10.0, 10.6) circle (3pt);
+\shade[inner color=btnyellow!50!white, outer color=btnyellow!90!black, draw=btnyellow!80!black, line width=0.3pt] (-9.6, 10.6) circle (3pt);
+\shade[inner color=btngreen!50!white, outer color=btngreen!90!black, draw=btngreen!80!black, line width=0.3pt] (-9.2, 10.6) circle (3pt);
+
+% Subtle Mock URL Bar
+\filldraw[fill=white, draw=black!15, rounded corners=3pt] (-8.5, 10.35) rectangle (-4.5, 10.85);
+\node[font=\tiny\sffamily\color{gray!80!black}] at (-6.5, 10.6) {\faLock\ https://developer.mozilla.org/layout};
+
+% Architectural Coordinate Ticks (Desktop X & Y Grid)
+\foreach \y in {0, 2, 4, 6, 8, 10} {
+    \draw[black!30, line width=0.6pt] (-10.65, \y) -- (-10.5, \y) node[left, font=\tiny\sffamily\color{black!40}] {\y00};
+}
+\foreach \x in {-10, -8, -6, -4} {
+    \draw[black!30, line width=0.6pt] (\x, -0.15) -- (\x, 0) node[below, font=\tiny\sffamily\color{black!40}] {\x};
+}
+
+% --- DESKTOP DOM NODES ---
+% 1. DOM Header (Center: (-7, 9.2), Size: 6cm x 1.2cm)
+\node[domcard, minimum width=6cm, minimum height=1.2cm] (headerL) at (-7.0, 9.2) {};
+\path[fill=domblue, rounded corners=2pt] ([xshift=0.8pt, yshift=-0.8pt]headerL.north west) rectangle ([xshift=4.5pt, yshift=0.8pt]headerL.south west);
+\node[font=\small\sffamily\bfseries\color{textdark}] at (-7.0, 9.2) {\faHeading\ \textless{}h1\textgreater{} Title};
+
+% 2. DOM Image (Full Size 800x600 -> True 4:3 Ratio, Center: (-7.0, 6.0), Size: 6cm x 4.5cm [Top: 8.25, Bottom: 3.75])
+\node[domcard, minimum width=6cm, minimum height=4.5cm] (imgL) at (-7.0, 6.0) {};
+\path[fill=domimg, rounded corners=2pt] ([xshift=0.8pt, yshift=-0.8pt]imgL.north west) rectangle ([xshift=4.5pt, yshift=0.8pt]imgL.south west);
+\node[align=center] at (-7.0, 6.0) {
+    {\small\sffamily\bfseries\color{domimg!90!black}\faImage\ \textless{}img\textgreater{} (800x600)}\\[5pt]
+    {\footnotesize\sffamily\color{textdark!80}Intrinsic Aspect Ratio (4:3)}\\[3pt]
+    {\scriptsize\sffamily\color{gray}\texttt{width: 800px; height: 600px;}}
+};
+
+% Desktop Bounding Box Y-Bottom Marker at y = 3.75
+\draw[dashed, domimg!80!black, line width=1pt] (-10.5, 3.75) -- (-3.5, 3.75);
+\node[font=\scriptsize\bfseries\sffamily\color{domimg!90!black}, fill=white, draw=domimg!40, rounded corners=2pt, inner sep=2pt] at (-7.0, 3.75) {Bounding Box Y-Bottom};
+
+% 3. DOM Text Block (Center: (-7.0, 2.5), Size: 6cm x 1.6cm [Top: 3.3 -> clean 0.45cm gap below image bottom 3.75])
+\node[domcard, minimum width=6cm, minimum height=1.6cm, text width=5.5cm, inner sep=4pt] (textL) at (-7.0, 2.5) {};
+\path[fill=domtext, rounded corners=2pt] ([xshift=0.8pt, yshift=-0.8pt]textL.north west) rectangle ([xshift=4.5pt, yshift=0.8pt]textL.south west);
+\node[align=center] at (-7.0, 2.5) {
+    {\small\sffamily\bfseries\color{domtext!90!black}\faAlignLeft\ \textless{}p\textgreater{} Content Block}\\[3pt]
+    {\footnotesize\sffamily\color{textdark!80}Follows normal document flow}\\[2pt]
+    {\scriptsize\sffamily\color{gray}\texttt{margin-top: 25px;}}
+};
+
+
+% ==========================================
+% RIGHT PANEL: NARROW VIEWPORT (MOBILE)
+% Bounding Box: (3.5, 0) to (7.5, 11) | Width: 4.0cm, Height: 11.0cm
+% ==========================================
+\node[font=\Large\bfseries\color{textdark}, anchor=south] at (5.5, 11.2) {\faIcon{mobile-alt}\ Mobile Viewport};
+
+% Outer Window & Drop Shadow
+\filldraw[fill=white, draw=windowborder, line width=1pt, rounded corners=6pt,
+    drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-3pt}]
+    (3.5, 0) rectangle (7.5, 11);
+
+% Safari Window Chrome Title Bar (Gradient)
+\fill[top color=white, bottom color=chromegray, rounded corners=6pt] (3.5, 10.2) rectangle (7.5, 11);
+\fill[chromegray] (3.5, 10.2) rectangle (7.5, 10.4);
+\draw[windowborder, line width=0.8pt] (3.5, 10.2) -- (7.5, 10.2);
+
+% Window Controls (3D Spherical Buttons)
+\shade[inner color=btnred!50!white, outer color=btnred!90!black, draw=btnred!80!black, line width=0.3pt] (3.9, 10.6) circle (2.6pt);
+\shade[inner color=btnyellow!50!white, outer color=btnyellow!90!black, draw=btnyellow!80!black, line width=0.3pt] (4.25, 10.6) circle (2.6pt);
+\shade[inner color=btngreen!50!white, outer color=btngreen!90!black, draw=btngreen!80!black, line width=0.3pt] (4.6, 10.6) circle (2.6pt);
+
+% Subtle Mock URL Bar
+\filldraw[fill=white, draw=black!15, rounded corners=3pt] (5.1, 10.35) rectangle (7.1, 10.85);
+\node[font=\tiny\sffamily\color{gray!80!black}] at (6.1, 10.6) {\faLock\ m.site.org};
+
+% Architectural Coordinate Ticks (Mobile X & Y Grid)
+\foreach \y in {0, 2, 4, 6, 8, 10} {
+    \draw[black!30, line width=0.6pt] (7.5, \y) -- (7.65, \y) node[right, font=\tiny\sffamily\color{black!40}] {\y00};
+}
+\foreach \x in {4, 5, 6, 7} {
+    \draw[black!30, line width=0.6pt] (\x, -0.15) -- (\x, 0) node[below, font=\tiny\sffamily\color{black!40}] {\x};
+}
+
+% --- MOBILE DOM NODES ---
+% 1. Scaled DOM Header (Center: (5.5, 9.2), Size: 3.2cm x 1.2cm)
+\node[domcard, minimum width=3.2cm, minimum height=1.2cm] (headerR) at (5.5, 9.2) {};
+\path[fill=domblue, rounded corners=2pt] ([xshift=0.8pt, yshift=-0.8pt]headerR.north west) rectangle ([xshift=4.5pt, yshift=0.8pt]headerR.south west);
+\node[font=\small\sffamily\bfseries\color{textdark}] at (5.5, 9.2) {\faHeading\ \textless{}h1\textgreater{}};
+
+% 2. Scaled DOM Image (400x300 -> True 4:3 Ratio, Center: (5.5, 7.05), Size: 3.2cm x 2.4cm [Top: 8.25, Bottom: 5.85])
+\node[domcard, minimum width=3.2cm, minimum height=2.4cm] (imgR) at (5.5, 7.05) {};
+\path[fill=domimg, rounded corners=2pt] ([xshift=0.8pt, yshift=-0.8pt]imgR.north west) rectangle ([xshift=4.5pt, yshift=0.8pt]imgR.south west);
+\node[align=center] at (5.5, 7.05) {
+    {\small\sffamily\bfseries\color{domimg!90!black}\faImage\ \textless{}img\textgreater{}}\\[3pt]
+    {\footnotesize\sffamily\color{textdark!80}(400x300)}\\[2pt]
+    {\tiny\sffamily\color{gray}\texttt{max-width: 100\%}}
+};
+
+% Mobile New Y-Bottom Marker at y = 5.85
+\draw[dashed, domimg!80!black, line width=1pt] (3.5, 5.85) -- (7.5, 5.85);
+\node[font=\scriptsize\bfseries\sffamily\color{domimg!90!black}, fill=white, draw=domimg!40, rounded corners=2pt, inner sep=1.5pt] at (5.5, 5.85) {New Y-Bottom};
+
+% 3. Layout Vacuum & Ghost Node (Chronological Shift Visualization)
+% Ghost Text Node (Old position before reflow: Center (5.5, 2.5), Size: 3.2cm x 1.6cm [Top: 3.3, Bottom: 1.7])
+\node[domcard, minimum width=3.2cm, minimum height=1.6cm, text width=2.8cm, draw=black!20, dashed, fill=black!2, drop shadow={opacity=0}] (ghostTextR) at (5.5, 2.5) {};
+\path[fill=domtext!30, rounded corners=2pt] ([xshift=0.8pt, yshift=-0.8pt]ghostTextR.north west) rectangle ([xshift=4.5pt, yshift=0.8pt]ghostTextR.south west);
+\node[align=center, opacity=0.3] at (5.5, 2.5) {
+    {\small\sffamily\bfseries\color{domtext!90!black}\faAlignLeft\ \textless{}p\textgreater{} Content Block}\\[3pt]
+    {\footnotesize\sffamily\color{textdark!80}Follows normal document flow}\\[2pt]
+    {\scriptsize\sffamily\color{gray}\texttt{margin-top: 25px;}}
+};
+
+% Upward Kinetic Vector connecting Ghost Node to New Node (Layout Vacuum / Reclaimed Space)
+\draw[-Stealth, line width=1.5pt, redalert, dashed] (5.5, 3.35) -- (5.5, 3.75);
+\draw[-Stealth, line width=1.2pt, redalert, dashed] (7.7, 3.55) -- (6.8, 3.55);
+\node[anchor=west, align=left, font=\scriptsize\bfseries\color{redalert}] at (7.8, 3.55) {Layout Vacuum\\[-1pt](Reclaimed Space)};
+
+% 4. Scaled Text Block (Pulled UP along Y-axis, Center: (5.5, 4.6), Size: 3.2cm x 1.6cm [Top: 5.4, Bottom: 3.8])
+\node[domcard, minimum width=3.2cm, minimum height=1.6cm, text width=2.8cm, fill opacity=0.96, text opacity=1] (textR) at (5.5, 4.6) {};
+\path[fill=domtext, rounded corners=2pt] ([xshift=0.8pt, yshift=-0.8pt]textR.north west) rectangle ([xshift=4.5pt, yshift=0.8pt]textR.south west);
+\node[align=center] at (5.5, 4.6) {
+    {\small\sffamily\bfseries\color{domtext!90!black}\faAlignLeft\ \textless{}p\textgreater{} Content Block}\\[3pt]
+    {\footnotesize\sffamily\color{textdark!80}Position shifted UP}\\[2pt]
+    {\scriptsize\sffamily\color{gray}\texttt{$\Delta y = -2.10$cm}}\\[-1pt]
+    {\scriptsize\sffamily\color{gray}\texttt{(CSS DOM shift)}}
+};
+
+
+% ==========================================
+% CENTRAL BRIDGE: ZERO-OVERLAP EXPLANATORY ANNOTATIONS
+% Centered precisely at x = 0.0 in the negative space [-3.5, 3.5]
+% ==========================================
+% Annotation 1: Constraint Event (Center: (0, 9.0))
+\node[domcard, fill=white, draw=redalert!50, line width=0.9pt, rounded corners=6pt, text width=5.3cm, inner sep=6pt] (anno1) at (0, 9.0) {
+    \textbf{\color{redalert}1. Constraint Event}\\[3pt]
+    \footnotesize Viewport narrows. \texttt{max-width: 100\%} limits the image's X-boundary to the new container width.
+};
+
+% Annotation 2: Dynamic Y-Axis (Center: (0, 6.8))
+\node[domcard, fill=white, draw=domimg!50, line width=0.9pt, rounded corners=6pt, text width=5.3cm, inner sep=6pt] (anno2) at (-0.0551,6.4514) {
+    \textbf{\color{domimg}2. Dynamic Y-Axis}\\[3pt]
+    \footnotesize \texttt{height: auto} dynamically shrinks the bounding box vertically, creating an empty layout ``vacuum''.
+};
+
+% Annotation 3: Layout Reflow (Center: (0, 4.6))
+\node[domcard, fill=white, draw=domtext!50, line width=0.9pt, rounded corners=6pt, text width=5.3cm, inner sep=6pt] (anno3) at (0.0551,3.5541) {
+    \textbf{\color{domtext}3. Layout Reflow}\\[3pt]
+    \footnotesize The CSS Layout Engine automatically shifts all subsequent nodes UP along the Y-axis to fill the vacuum, ensuring a seamless UI flow.
+};
+
+
+% ==========================================
+% PRECISION VECTOR CONNECTIONS & LEADER LINES
+% ==========================================
+% Leader Line 1: Constraint -> Anchors to Desktop Image & Mobile Image
+\draw[leaderline, redalert] (anno1.west) to[out=180, in=45] (imgL.north east);
+\draw[leaderline, redalert, dashed] (anno1.east) to[out=0, in=135] (imgR.north west);
+
+% Leader Line 2: Dynamic Y -> Anchors to Mobile Image Bottom Edge / New Y-Bottom
+\draw[leaderline, domimg] (anno2.east) to[out=0, in=180] (3.5, 5.85);
+
+% Leader Line 3: Layout Reflow -> Anchors to Mobile <p> node
+\draw[leaderline, domtext] (anno3.east) to[out=0, in=180] (textR.west);
+
+% Reflow Pull Kinetic Vector (Far Right of Mobile Viewport)
+\draw[flowarrow, line width=2.2pt, domblue] (10.648,1.2) -- (10.648,4.8)
+    node[midway, right, font=\bfseries\small\sffamily\color{domblue}, align=left] {Reflow\\Pull};
+
+\end{tikzpicture}
+\end{document}

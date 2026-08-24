@@ -1,0 +1,198 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,shapes.callouts,angles,quotes,fadings,shadows.blur,patterns,patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+
+% --- COLOR PALETTE DEFINITIONS ---
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+\definecolor{cntBox}{RGB}{30, 41, 59}       % Slate
+\definecolor{imgBox}{RGB}{14, 165, 233}     % Cyan
+\definecolor{crimson}{RGB}{225, 29, 72}     % Crimson Collision
+\definecolor{emerald}{RGB}{16, 185, 129}    % Emerald Timeline/Success
+\definecolor{darkText}{RGB}{51, 65, 85}
+
+% --- FADING DEFINITIONS ---
+\tikzfading[name=fade out, inner color=transparent!0, outer color=transparent!100]
+
+\begin{document}
+\begin{tikzpicture}[
+    background rectangle/.style={fill=white, draw=none},
+    show background rectangle,
+    every node/.style={font=\sffamily, text=darkText},
+    panel/.style={
+        fill=white,
+        draw=black!10,
+        rounded corners=8pt,
+        blur shadow={shadow opacity=10, shadow yshift=-2pt}
+    },
+    badge/.style={
+        font=\bfseries\small,
+        text=white,
+        rounded corners=3pt,
+        inner sep=5pt
+    },
+    domNode/.style={
+        thick,
+        dashed,
+        draw=cntBox,
+        fill=cntBox!4,
+        rounded corners=2pt
+    },
+    cssTag/.style={
+        anchor=south west,
+        fill=cntBox,
+        text=white,
+        font=\tiny\ttfamily,
+        rounded corners=1.5pt,
+        inner sep=2.5pt
+    }
+]
+
+% ==========================================
+% 1. GLOBAL UI LAYER (TITLE & TIMELINE)
+% ==========================================
+\node[font=\Huge\bfseries, text=black] at (0, 11) {Boundary Collision Dynamics: \texttt{object-fit: contain}};
+\node[font=\Large, text=gray] at (0, 10.2) {Real-time visualization of the interpolation engine explicitly halting upon edge contact};
+
+\node[font=\Large\bfseries, text=black!30] at (0.0761,9.2507) {INTERPOLATION TIMELINE ($t_0 \to t_{collision}$)};
+\draw[-Stealth, line width=4pt, emerald!40] (-10, 8.8) -- (10, 8.8);
+\node[font=\small\ttfamily\bfseries, text=cntBox!80, anchor=south] at (0.0507,8.1465) {Source Raster: 1600x900px (Aspect 16:9)};
+
+% ==========================================
+% 2. PANEL 1: EARLY INTERPOLATION (t = 0.25)
+% ==========================================
+\draw[panel] (-11.5, -2.5) rectangle (-4.5, 7.5);
+\node[badge, fill=emerald] at (-8, 7.5) {\faPlay\ $t = 0.25$ (Early Interpolation)};
+
+% Layout Bounding Box (800x1000)
+\draw[domNode] (-10, 1) rectangle (-6, 6);
+\node[cssTag, anchor=south west] at (-10, 6) {.container};
+\node[font=\footnotesize, text=gray, anchor=south] at (-7.8225,6.276) {Layout Bounding Box ($800 \times 1000\text{px}$)};
+
+% Glassmorphic Image Placeholder (25% Scale: 400x225px -> 2.0x1.125 units)
+\fill[imgBox!10, rounded corners=1pt] (-9, 2.9375) rectangle (-7, 4.0625);
+\draw[imgBox, thick, rounded corners=1pt] (-9, 2.9375) rectangle (-7, 4.0625);
+\node[text=imgBox!25, font=\Large] at (-8, 3.65) {\faImage};
+\node[font=\scriptsize\bfseries, text=imgBox!80!black, align=center] at (-8, 3.25) {$S = 25\%$\\\texttt{400x225px}};
+
+% Velocity Arrows (Diagonal from Corners - 16:9 Corrected)
+\draw[-Stealth, imgBox, thick] (-9, 4.0625) -- (-9.4, 4.2875);
+\draw[-Stealth, imgBox, thick] (-7, 4.0625) -- (-6.6, 4.2875);
+\draw[-Stealth, imgBox, thick] (-9, 2.9375) -- (-9.4, 2.7125);
+\draw[-Stealth, imgBox, thick] (-7, 2.9375) -- (-6.6, 2.7125);
+
+% Status Description Box
+\node[text width=6.5cm, align=center, font=\small, anchor=north] at (-8, 0) {
+    \textbf{Status:} Expanding freely.\\
+    Both X and Y dimensions are uniformly interpolated outward, processing pixels independently of container bounds.
+};
+
+% ==========================================
+% 3. PANEL 2: MID INTERPOLATION (t = 0.40)
+% ==========================================
+\draw[panel] (-3.5, -2.5) rectangle (3.5, 7.5);
+\node[badge, fill=emerald] at (0, 7.5) {\faForward\ $t = 0.40$ (Mid Interpolation)};
+
+% Layout Bounding Box (800x1000)
+\draw[domNode] (-2, 1) rectangle (2, 6);
+\node[cssTag, anchor=south west] at (-2, 6) {.container};
+\node[font=\footnotesize, text=gray, anchor=south] at (0.1775,6.276) {Layout Bounding Box ($800 \times 1000\text{px}$)};
+
+% Glassmorphic Image Placeholder (40% Scale: 640x360px -> 3.2x1.8 units)
+\fill[imgBox!15, rounded corners=1pt] (-1.6, 2.6) rectangle (1.6, 4.4);
+\draw[imgBox, very thick, rounded corners=1pt] (-1.6, 2.6) rectangle (1.6, 4.4);
+\node[text=imgBox!25, font=\huge] at (0, 3.8) {\faImage};
+\node[font=\footnotesize\bfseries, text=imgBox!80!black, align=center] at (0, 3.1) {$S = 40\%$\\\texttt{640x360px}};
+
+% Velocity Arrows (Diagonal from Corners - 16:9 Corrected)
+\draw[-Stealth, imgBox, very thick] (-1.6, 4.4) -- (-1.92, 4.58);
+\draw[-Stealth, imgBox, very thick] (1.6, 4.4) -- (1.92, 4.58);
+\draw[-Stealth, imgBox, very thick] (-1.6, 2.6) -- (-1.92, 2.42);
+\draw[-Stealth, imgBox, very thick] (1.6, 2.6) -- (1.92, 2.42);
+
+% Precision Delta Tracking Lines (Dimension line between image & container, label outside)
+\draw[|<->|, >=stealth, thick, crimson] (1.6, 3.5) -- (2.0, 3.5);
+\node[font=\scriptsize\ttfamily\bfseries, text=crimson, anchor=west] at (2.1, 3.5) {$\Delta x = 80\text{px}$};
+\draw[|<->|, >=stealth, thick, crimson] (0, 4.4) -- (0, 6.0) node[midway, left=4pt, font=\scriptsize\ttfamily\bfseries, text=crimson] {$\Delta y = 320\text{px}$};
+
+% Status Description Box
+\node[text width=6.5cm, align=center, font=\small, anchor=north] at (0, 0) {
+    \textbf{Status:} Approaching boundaries.\\
+    The hardware acceleration calculates the remaining pixel delta to the Y-axis edge ($\Delta y$) and X-axis edge ($\Delta x$).
+};
+
+% ==========================================
+% 4. PANEL 3: HARD HALT (t = 0.50)
+% ==========================================
+\draw[panel] (4.5, -2.5) rectangle (11.5, 7.5);
+\node[badge, fill=crimson] at (8, 7.5) {\faStop\ $t = 0.50$ ($t_{collision}$ : Hard Halt)};
+
+% Technical Hatch Letterbox Voids (275px -> 1.375 units top & bottom)
+\fill[pattern=north east lines, pattern color=cntBox!20] (6, 4.625) rectangle (10, 6);
+\node[font=\footnotesize\bfseries, text=cntBox!60, fill=white, fill opacity=0.9, text opacity=1, inner sep=4pt, rounded corners=2pt] at (8, 5.3125) {Letterbox Space (275px)};
+
+\fill[pattern=north east lines, pattern color=cntBox!20] (6, 1) rectangle (10, 2.375);
+\node[font=\footnotesize\bfseries, text=cntBox!60, fill=white, fill opacity=0.9, text opacity=1, inner sep=4pt, rounded corners=2pt] at (8, 1.6875) {Letterbox Space (275px)};
+
+% Layout Bounding Box (800x1000)
+\draw[domNode] (6, 1) rectangle (10, 6);
+\node[cssTag, anchor=south west] at (6, 6) {.container};
+\node[font=\footnotesize, text=gray, anchor=south] at (8.3296,6.4028) {Layout Bounding Box ($800 \times 1000\text{px}$)};
+
+% Glassmorphic Image Placeholder (50% Scale: 800x450px -> 4.0x2.25 units)
+\fill[imgBox!20] (6, 2.375) rectangle (10, 4.625);
+\draw[imgBox, thick] (6, 4.625) -- (10, 4.625);
+\draw[imgBox, thick] (6, 2.375) -- (10, 2.375);
+\node[text=imgBox!30, font=\huge] at (8, 3.85) {\faImage};
+\node[font=\normalsize\bfseries, text=cntBox, align=center] at (8, 3.0) {$S_{final} = 50\%$\\\footnotesize\texttt{800x450px}};
+
+% Physics-Based Energy Dispersion & Collision Glow
+\fill[path fading=fade out, crimson] (6, 3.5) circle (0.8);
+\fill[path fading=fade out, crimson] (10, 3.5) circle (0.8);
+
+% Hard Halt Glowing Edge Lines
+\draw[crimson, line width=2pt, blur shadow={shadow blur steps=5, shadow blur radius=1.5mm, shadow opacity=80, fill=crimson}] (6, 2.375) -- (6, 4.625);
+\draw[crimson, line width=2pt, blur shadow={shadow blur steps=5, shadow blur radius=1.5mm, shadow opacity=80, fill=crimson}] (10, 2.375) -- (10, 4.625);
+
+% Status Description Box
+\node[text width=6.5cm, align=center, font=\small, anchor=north] at (8, 0) {
+    \textbf{Status:} Edge boundary touched!\\
+    The X-axis collides with the container. The engine fires an immediate hard halt, preventing Y from filling the space, birthing the letterbox void.
+};
+
+% ==========================================
+% 5. INTER-PANEL FLOW ARROWS
+% ==========================================
+\draw[-Stealth, line width=2pt, cntBox!30] (-4.5, 3.5) -- (-3.5, 3.5);
+\draw[-Stealth, line width=2pt, cntBox!30] (3.5, 3.5) -- (4.5, 3.5);
+
+% ==========================================
+% 6. BOTTOM EQUATION PANEL
+% ==========================================
+\draw[fill=cntBox, draw=cntBox, rounded corners=8pt, blur shadow={shadow opacity=20, shadow yshift=-3pt}] (-7, -6.5) rectangle (7, -3.5);
+\node[badge, fill=crimson] at (0.0254,-3.1198) {\faExclamationTriangle\ THE MATHEMATICAL DERIVATIVE OF HALT};
+\node[text width=13cm, align=center, font=\Large, text=white] at (0, -4.6) {
+    $\displaystyle \frac{d}{dt} \text{Scale}(t) = 0 \quad \text{if} \quad W_{img}(t) = W_{cnt} \lor H_{img}(t) = H_{cnt}$
+};
+\node[text width=13cm, align=center, font=\normalsize, text=cntBox!20, anchor=north] at (0, -5.6) {
+    The engine evaluates a strict logical OR operator. The exact processor cycle that \textit{either} dimensional boundary is mathematically matched, scaling velocity drops to zero.
+};
+
+\end{tikzpicture}
+\end{document}

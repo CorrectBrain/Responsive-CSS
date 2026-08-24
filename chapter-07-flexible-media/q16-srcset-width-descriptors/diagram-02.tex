@@ -1,0 +1,235 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% --- COLOR SYSTEM & DESIGN TOKENS ---
+\definecolor{hwred}{HTML}{D32F2F}
+\definecolor{hwredbg}{HTML}{FDF0F0}
+\definecolor{hwreddark}{HTML}{B71C1C}
+
+\definecolor{wgreen}{HTML}{2E7D32}
+\definecolor{wgreenbg}{HTML}{F0F9F1}
+\definecolor{wgreendark}{HTML}{1B5E20}
+
+\definecolor{textdark}{HTML}{212529}
+\definecolor{textmuted}{HTML}{495057}
+\definecolor{idedark}{HTML}{1E1E1E}
+\definecolor{uilight}{HTML}{F5F5F7}
+\definecolor{silverline}{HTML}{D1D5DB}
+
+\begin{document}
+\begin{tikzpicture}
+
+% --- GLOBAL CANVAS BACKGROUND ---
+\fill[white] (-11, -2.5) rectangle (10.9541,15.4872);
+
+% --- GLOBAL HEADER ---
+\node[font=\Huge\bfseries, text=textdark] at (-0.0459,14.4872) {Hardware Commands vs. Data Arrays};
+\node[font=\Large, text=textmuted, text width=18cm, align=center] at (-0.0459,13.4872) {Why \texttt{w} descriptors are fundamentally different from rigid \texttt{x} descriptors.};
+
+% --- CENTRAL SEPARATOR & VS BADGE ---
+\draw[dashed, line width=2pt, silverline] (0, -2.0) -- (0, 12);
+\node[circle, fill=white, draw=silverline, line width=1.5pt, blur shadow={shadow opacity=15, shadow yshift=-1pt, shadow blur radius=3pt}, font=\Large\bfseries, text=textmuted, inner sep=7pt] at (0, 6.0) {VS};
+
+% =========================================================================
+% LEFT PANEL: The Rigid Command (x Descriptors)
+% =========================================================================
+
+% Main Panel Container
+\filldraw[fill=hwredbg, draw=hwred, line width=1.5pt, rounded corners=15pt, blur shadow={shadow opacity=12, shadow yshift=-2pt, shadow blur radius=4pt}] (-10, -2.0) rectangle (-0.5, 12);
+
+% Panel Header & Subtitle
+\node[font=\LARGE\bfseries, text=hwreddark] at (-5.25, 11.2) {\faBan\ The Old Way: \texttt{x} Descriptors};
+\node[font=\large\bfseries, text=hwred!85] at (-5.25, 10.6) {(Rigid Hardware Commands)};
+
+% --- Section 1: IDE Card (Y = 8.2 to 10.0) ---
+\filldraw[fill=idedark, draw=gray!70, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=20, shadow yshift=-2pt, shadow blur radius=4pt}] (-9.5, 8.2) rectangle (-1.0, 10.0);
+% Window Title Bar
+\fill[hwred!90] (-9.1, 9.7) circle (3pt);
+\fill[yellow!80!black] (-8.7, 9.7) circle (3pt);
+\fill[green!75!black] (-8.3, 9.7) circle (3pt);
+\node[font=\scriptsize\ttfamily, text=white!60, anchor=east] at (-1.3, 9.7) {\faCode\ index.html};
+\draw[white!15, line width=0.5pt] (-9.5, 9.45) -- (-1.0, 9.45);
+% Code Content
+\node[font=\large\ttfamily, text=white, anchor=center] at (-5.25, 9.2) {srcset="img.jpg \textcolor{hwred!80}{\textbf{2x}}"};
+\node[font=\small\sffamily, text=white!85, text width=8.2cm, align=center] at (-5.25, 8.6) {Directive: If the screen DPR is 2,\\you \textbf{must} use this image.};
+
+% Downward Flow Arrow 1
+\draw[-Stealth=3mm, line width=2pt, hwred!70] (-5.25, 8.2) -- (-5.25, 7.8);
+
+% --- Section 2: Browser Knowledge (Y = 5.4 to 7.8) ---
+\filldraw[fill=white, draw=hwred!50, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=12, shadow yshift=-2pt, shadow blur radius=4pt}] (-9.5, 5.4) rectangle (-1.0, 7.8);
+\node[font=\large\bfseries, text=hwreddark] at (-5.25, 7.5) {\faDatabase\ What the browser knows};
+\draw[hwred!20, line width=0.5pt] (-9.5, 7.1) -- (-1.0, 7.1);
+
+% Knowledge Card (Unified Node)
+\node[fill=hwredbg, draw=hwred!60, line width=1pt, rounded corners=5pt, blur shadow={shadow opacity=10, shadow yshift=-1pt, shadow blur radius=2pt}, align=center, inner sep=6pt] at (-5.25, 6.25) {
+    {\small\ttfamily\color{textdark} img.jpg}\\[1mm]
+    {\footnotesize\itshape\color{textmuted} Width: Unknown}\\[0.5mm]
+    {\small\bfseries\color{hwreddark} Target: 2x Displays}
+};
+
+% Downward Flow Arrow 2
+\draw[-Stealth=3mm, line width=2pt, hwred!70] (-5.25, 5.4) -- (-5.25, 5.0);
+
+% --- Section 3: Action / Pipeline (Y = 2.6 to 5.0) ---
+\filldraw[fill=white, draw=hwred!35, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=10, shadow yshift=-1pt, shadow blur radius=3pt}] (-9.5, 2.6) rectangle (-1.0, 5.0);
+
+% Oversized 2x Asset Card (Unified Node)
+\node[fill=hwred!10, draw=hwred!50, rounded corners=4pt, align=center, inner sep=6pt, text width=2.4cm] (asset_box) at (-7.5, 3.8) {
+    {\small\bfseries\color{hwreddark} \faFileImage\ \textbf{2x Asset}}\\[1mm]
+    {\scriptsize\color{textmuted} Huge size (2000px)}
+};
+
+% Tiny Viewport Display Card (Unified Node)
+\node[fill=gray!10, draw=textdark!70, line width=1pt, rounded corners=4pt, align=center, inner sep=6pt, text width=2.4cm] (display_box) at (-3.0, 3.8) {
+    {\small\bfseries\color{textdark} \faIcon{mobile-alt}\ \textbf{Display}}\\[1mm]
+    {\scriptsize\bfseries\color{hwreddark} Only 50px Wide}
+};
+
+% Forced Transmission Vector
+\draw[-Stealth=3mm, line width=2pt, hwred] (asset_box.east) -- (display_box.west)
+    node[midway, above, font=\scriptsize\bfseries, text=hwreddark, yshift=6pt] {\faBolt\ Forced}
+    node[midway, below, font=\tiny, text=hwred, yshift=-6pt] {Ignores CSS};
+
+% Downward Flow Arrow 3
+\draw[-Stealth=3mm, line width=2pt, hwred!70] (-5.25, 2.6) -- (-5.25, 2.2);
+
+% --- Section 4: Explanation Flaw (Y = -0.5 to 1.7) ---
+\node[fill=white, draw=hwred, line width=1.5pt, rounded corners=8pt, blur shadow={shadow opacity=15, shadow yshift=-2pt, shadow blur radius=4pt}, text width=7.5cm, align=center, inner sep=12pt] at (-5.25, 0.6) {
+    {\Large\bfseries\color{hwreddark}\faExclamationTriangle\ The Flaw}\\[1.2ex]
+    {\large\color{textdark} The browser ignores CSS layout. A 2x screen always downloads the 2x image, even if the image is displayed at a tiny 50px width!}
+};
+
+% =========================================================================
+% RIGHT PANEL: The Data Array (w Descriptors)
+% =========================================================================
+
+% Main Panel Container
+\filldraw[fill=wgreenbg, draw=wgreen, line width=1.5pt, rounded corners=15pt, blur shadow={shadow opacity=12, shadow yshift=-2pt, shadow blur radius=4pt}] (0.5, -2.0) rectangle (10, 12);
+
+% Panel Header & Subtitle
+\node[font=\LARGE\bfseries, text=wgreendark] at (5.25, 11.2) {\faCheckCircle\ The Modern Way: \texttt{w} Descriptors};
+\node[font=\large\bfseries, text=wgreen!85] at (5.25, 10.6) {(Flexible Asset Inventories)};
+
+% --- Section 1: IDE Card (Y = 8.2 to 10.0) ---
+\filldraw[fill=idedark, draw=gray!70, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=20, shadow yshift=-2pt, shadow blur radius=4pt}] (1.0, 8.2) rectangle (9.5, 10.0);
+% Window Title Bar
+\fill[hwred!90] (1.4, 9.7) circle (3pt);
+\fill[yellow!80!black] (1.8, 9.7) circle (3pt);
+\fill[green!75!black] (2.2, 9.7) circle (3pt);
+\node[font=\scriptsize\ttfamily, text=white!60, anchor=east] at (9.2, 9.7) {\faCode\ index.html};
+\draw[white!15, line width=0.5pt] (1.0, 9.45) -- (9.5, 9.45);
+% Code Content
+\node[font=\small\ttfamily, text=white, anchor=center] at (5.25, 9.2) {srcset="sm.jpg \textcolor{wgreen!80}{\textbf{400w}}, md.jpg \textcolor{wgreen!80}{\textbf{800w}}"};
+\node[font=\small\sffamily, text=white!85, text width=8.5cm, align=center] at (5.25, 8.6) {Data: purely documents the native pixel widths\\of available assets.};
+
+% Downward Flow Arrow 1
+\draw[-Stealth=3mm, line width=2pt, wgreen!70] (5.25, 8.2) -- (5.25, 7.8);
+
+% --- Section 2: Browser Knowledge (Expanded Arrays) (Y = 5.4 to 7.8) ---
+\filldraw[fill=white, draw=wgreen!50, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=12, shadow yshift=-2pt, shadow blur radius=4pt}] (1.0, 5.4) rectangle (9.5, 7.8);
+\node[font=\large\bfseries, text=wgreendark] at (5.25, 7.5) {\faImages\ Array of Available Assets};
+\draw[wgreen!20, line width=0.5pt] (1.0, 7.1) -- (9.5, 7.1);
+
+% File 1 (400w) (Unified Node)
+\node[fill=wgreenbg, draw=wgreen!60, line width=1pt, rounded corners=5pt, blur shadow={shadow opacity=10, shadow yshift=-1pt, shadow blur radius=2pt}, text width=2.1cm, align=center, inner sep=4pt] at (2.5, 6.25) {
+    {\scriptsize\ttfamily\color{textmuted} small.jpg}\\[0.5mm]
+    {\small\bfseries\color{textdark} 400w}\\[0.5mm]
+    {\fontsize{6.5pt}{7.5pt}\bfseries\color{wgreendark} Native Width:\\ 400px}
+};
+
+% File 2 (800w) (Unified Node)
+\node[fill=wgreenbg, draw=wgreen!60, line width=1pt, rounded corners=5pt, blur shadow={shadow opacity=10, shadow yshift=-1pt, shadow blur radius=2pt}, text width=2.1cm, align=center, inner sep=4pt] at (5.25, 6.25) {
+    {\scriptsize\ttfamily\color{textmuted} med.jpg}\\[0.5mm]
+    {\small\bfseries\color{textdark} 800w}\\[0.5mm]
+    {\fontsize{6.5pt}{7.5pt}\bfseries\color{wgreendark} Native Width:\\ 800px}
+};
+
+% File 3 (1200w) (Unified Node)
+\node[fill=wgreenbg, draw=wgreen!60, line width=1pt, rounded corners=5pt, blur shadow={shadow opacity=10, shadow yshift=-1pt, shadow blur radius=2pt}, text width=2.1cm, align=center, inner sep=4pt] at (8.0, 6.25) {
+    {\scriptsize\ttfamily\color{textmuted} lrg.jpg}\\[0.5mm]
+    {\small\bfseries\color{textdark} 1200w}\\[0.5mm]
+    {\fontsize{6.5pt}{7.5pt}\bfseries\color{wgreendark} Native Width:\\ 1200px}
+};
+
+% Downward Flow Arrow 2
+\draw[-Stealth=3mm, line width=2pt, wgreen!70] (5.25, 5.4) -- (5.25, 5.0);
+
+% --- Section 3: Logic Engine (Y = 2.6 to 5.0) ---
+\filldraw[fill=white, draw=wgreen!35, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=10, shadow yshift=-1pt, shadow blur radius=3pt}] (1.0, 2.6) rectangle (9.5, 5.0);
+
+% Logic Inputs Card (Unified Node)
+\node[fill=wgreen!10, draw=wgreen!40, rounded corners=4pt, align=left, inner sep=6pt, text width=3.0cm] (inputs) at (2.9928,3.8) {
+    {\scriptsize\bfseries\color{wgreendark} Layout Width: 50px}\\
+    {\scriptsize\bfseries\color{textdark} \textbf{\color{wgreendark}$\boldsymbol{\times}$} Screen DPR: 2}\\
+    {\scriptsize\bfseries\color{wgreendark} = 100px Needed}
+};
+
+% Browser Logic Gate / Math Engine (Unified Node)
+\node[fill=idedark, draw=wgreen, line width=1pt, rounded corners=4pt, align=center, inner sep=4pt] (math_gate) at (5.4917,3.8) {
+    {\color{white}\small \faCogs}\\[0.5mm]
+    {\color{white!80}\tiny\ttfamily Math}
+};
+
+% Optimal Asset Selection Card (Unified Node)
+\node[fill=wgreenbg, draw=wgreen, line width=1pt, rounded corners=4pt, align=center, inner sep=5pt, text width=2.2cm] (optimal) at (7.9, 3.8) {
+    {\scriptsize\bfseries\color{wgreendark} \faCheckCircle\ \textbf{Optimal}}\\[0.5mm]
+    {\footnotesize\bfseries\color{wgreendark} Chooses 400w!}\\[0.5mm]
+    {\tiny\color{textmuted} (Smallest $\ge$ 100px)}
+};
+
+% Calculation Input Arrow
+\draw[-Stealth=3mm, line width=1.5pt, wgreen!80] (inputs.east) -- (math_gate.west);
+
+% Calculation Output Arrow
+\draw[-Stealth=3mm, line width=1.5pt, wgreen!80] (math_gate.east) -- (optimal.west);
+
+% Downward Flow Arrow 3
+\draw[-Stealth=3mm, line width=2pt, wgreen!70] (5.25, 2.6) -- (5.25, 2.2);
+
+% --- Section 4: Explanation Solution (Y = -0.5 to 1.7) ---
+\node[fill=white, draw=wgreen, line width=1.5pt, rounded corners=8pt, blur shadow={shadow opacity=15, shadow yshift=-2pt, shadow blur radius=4pt}, text width=7.5cm, align=center, inner sep=12pt] at (5.25, 0.6) {
+    {\Large\bfseries\color{wgreendark}\faLightbulb\ The Solution}\\[1.2ex]
+    {\large\color{textdark} The \texttt{w} descriptor dictates \textit{nothing}. It just lists facts. The browser decides which asset to use based on Layout Width \textbf{AND} Screen Density.}
+};
+
+\end{tikzpicture}
+\end{document}

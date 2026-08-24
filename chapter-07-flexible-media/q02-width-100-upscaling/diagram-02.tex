@@ -1,0 +1,248 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes,fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+\definecolor{cssblue}{RGB}{20, 100, 180}
+\definecolor{nativeteal}{RGB}{0, 150, 136}
+\definecolor{containergray}{RGB}{240, 240, 245}
+\definecolor{successgreen}{RGB}{46, 125, 50}
+\definecolor{warnred}{RGB}{211, 47, 47}
+
+\begin{document}
+\begin{tikzpicture}[
+    font=\sffamily,
+    bubble/.style={draw=black!25, fill=white, rounded corners=8pt, blur shadow={shadow opacity=12, shadow blur steps=5}, inner sep=10pt},
+]
+
+% ==============================================================================
+% GLOBAL TITLES
+% ==============================================================================
+\node[font=\Huge\bfseries, color=black!80] at (0, 14.5) {The Fix: \texttt{max-width: 100\%} vs \texttt{width: 100\%}};
+\node[font=\Large, color=black!60] at (0, 13.5) {Controlling image scaling in Responsive Web Design};
+
+% ==============================================================================
+% SCENARIO 1: CONTAINER < NATIVE IMAGE
+% ==============================================================================
+\node[font=\huge\bfseries, cssblue] at (0, 12.0) {Scenario 1: Container < Native Image};
+\node[font=\large, color=black] at (0, 11.0) {Both properties behave exactly the same: they scale the image down proportionally.};
+
+% ------------------------------------------------------------------------------
+% 1A: width: 100% (Downscale)
+% ------------------------------------------------------------------------------
+% Property Label
+\node[font=\ttfamily\bfseries, fill=white, draw=cssblue, rounded corners, inner sep=5pt] at (-5, 10.0) {width: 100\%};
+
+% Ghost Outline (Native size representation behind container)
+\draw[dashed, thick, gray!50] (-9, 4.5) rectangle (-1, 8.5);
+
+% Browser Window Frame (400px = 4 units wide)
+\fill[containergray, rounded corners=4pt] (-7, 4.5) rectangle (-3, 9.0);
+
+% High-Res Vector Landscape Image (Downscaled, 4:2 Ratio)
+\begin{scope}
+    \clip (-7, 6.5) rectangle (-3, 8.5);
+    \fill[skyblue] (-7, 6.5) rectangle (-3, 8.5);
+    \fill[gold] (-4.2, 7.9) circle (0.35);
+    \fill[darkgreen] (-7, 6.5) -- (-5.2, 8.2) -- (-3.4, 6.5) -- cycle;
+    \fill[darkgreen!85!black] (-7, 6.5) -- (-5.2, 8.2) -- (-5.2, 6.5) -- cycle;
+    \fill[successgreen] (-5.5, 6.5) -- (-4.0, 7.7) -- (-2.5, 6.5) -- cycle;
+    \fill[successgreen!80!black] (-5.5, 6.5) -- (-4.0, 7.7) -- (-4.0, 6.5) -- cycle;
+\end{scope}
+
+% Browser Top Bar & Controls
+\fill[gray!30, rounded corners=4pt] (-7, 8.5) rectangle (-3, 9.0);
+\fill[gray!30] (-7, 8.5) rectangle (-3, 8.6);
+\draw[thick, cssblue] (-7, 8.5) -- (-3, 8.5);
+\draw[thick, cssblue, rounded corners=4pt] (-7, 4.5) rectangle (-3, 9.0);
+\fill[warnred] (-6.7, 8.75) circle (2.5pt);
+\fill[gold] (-6.4, 8.75) circle (2.5pt);
+\fill[successgreen] (-6.1, 8.75) circle (2.5pt);
+
+% Inner Browser Text Label
+\node[fill=black!60, text=white, font=\bfseries, rounded corners=4pt, text width=3.5cm, align=center, inner sep=4pt] at (-5, 5.5) {Downscaled Image\\(400px)};
+
+% Native Size Label
+\node[gray!60, font=\bfseries\small, fill=white, inner sep=4pt, below=2pt] at (-5, 4.5) {Native Size (>400px)};
+
+% Dimension Line
+\draw[<->, >=Stealth, thick, cssblue] (-7, 3.5) -- (-3, 3.5);
+\node[cssblue, font=\bfseries, below=2pt] at (-5, 3.5) {Container (400px)};
+
+% ------------------------------------------------------------------------------
+% 1B: max-width: 100% (Downscale)
+% ------------------------------------------------------------------------------
+% Property Label
+\node[font=\ttfamily\bfseries, fill=white, draw=successgreen, rounded corners, inner sep=5pt] at (5, 10.0) {max-width: 100\%};
+
+% Ghost Outline (Native size representation behind container)
+\draw[dashed, thick, gray!50] (1, 4.5) rectangle (9, 8.5);
+
+% Browser Window Frame (400px = 4 units wide)
+\fill[containergray, rounded corners=4pt] (3, 4.5) rectangle (7, 9.0);
+
+% High-Res Vector Landscape Image (Downscaled, 4:2 Ratio)
+\begin{scope}
+    \clip (3, 6.5) rectangle (7, 8.5);
+    \fill[skyblue] (3, 6.5) rectangle (7, 8.5);
+    \fill[gold] (5.8, 7.9) circle (0.35);
+    \fill[darkgreen] (3, 6.5) -- (4.8, 8.2) -- (6.6, 6.5) -- cycle;
+    \fill[darkgreen!85!black] (3, 6.5) -- (4.8, 8.2) -- (4.8, 6.5) -- cycle;
+    \fill[successgreen] (4.5, 6.5) -- (6.0, 7.7) -- (7.5, 6.5) -- cycle;
+    \fill[successgreen!80!black] (4.5, 6.5) -- (6.0, 7.7) -- (6.0, 6.5) -- cycle;
+\end{scope}
+
+% Browser Top Bar & Controls
+\fill[gray!30, rounded corners=4pt] (3, 8.5) rectangle (7, 9.0);
+\fill[gray!30] (3, 8.5) rectangle (7, 8.6);
+\draw[thick, cssblue] (3, 8.5) -- (7, 8.5);
+\draw[thick, cssblue, rounded corners=4pt] (3, 4.5) rectangle (7, 9.0);
+\fill[warnred] (3.3, 8.75) circle (2.5pt);
+\fill[gold] (3.6, 8.75) circle (2.5pt);
+\fill[successgreen] (3.9, 8.75) circle (2.5pt);
+
+% Inner Browser Text Label
+\node[fill=black!60, text=white, font=\bfseries, rounded corners=4pt, text width=3.5cm, align=center, inner sep=4pt] at (5, 5.5) {Downscaled Image\\(400px)};
+
+% Native Size Label
+\node[gray!60, font=\bfseries\small, fill=white, inner sep=4pt, below=2pt] at (5, 4.5) {Native Size (>400px)};
+
+% Dimension Line
+\draw[<->, >=Stealth, thick, cssblue] (3, 3.5) -- (7, 3.5);
+\node[cssblue, font=\bfseries, below=2pt] at (5, 3.5) {Container (400px)};
+
+% ==============================================================================
+% DIVIDER
+% ==============================================================================
+\draw[thick, black!20] (-10, 2.0) -- (10, 2.0);
+
+% ==============================================================================
+% SCENARIO 2: CONTAINER > NATIVE IMAGE (THE DANGER ZONE)
+% ==============================================================================
+\node[font=\huge\bfseries, warnred] at (0, 0.5) {Scenario 2: Container > Native Image (The Danger Zone)};
+\node[font=\large, color=black] at (0, -0.5) {Native Image Size: 300px. Container Size: 800px.};
+
+% ------------------------------------------------------------------------------
+% 2A: width: 100% (Upscale / Interpolation Failure)
+% ------------------------------------------------------------------------------
+% Property Label
+\node[font=\ttfamily\bfseries, fill=white, draw=warnred, rounded corners, inner sep=5pt] at (-5, -1.5) {width: 100\%};
+
+% Browser Window Frame (800px = 8 units wide)
+\fill[containergray, rounded corners=4pt] (-9, -9.0) rectangle (-1, -2.5);
+
+% True Coarse Block Pixelated Landscape (8x4 units)
+\begin{scope}
+    \clip (-9, -7.0) rectangle (-1, -3.0);
+    \fill[skyblue] (-9, -7.0) rectangle (-1, -3.0);
+    \fill[gold] (-4, -5.0) rectangle (-2, -3.0);
+    % Back Mountain (Right/Left)
+    \fill[darkgreen] (-6, -7.0) rectangle (-2, -6.0);
+    \fill[darkgreen] (-6, -6.0) rectangle (-4, -5.0);
+    \fill[darkgreen] (-6, -5.0) rectangle (-5, -4.0);
+    \fill[darkgreen!85!black] (-9, -7.0) rectangle (-6, -6.0);
+    \fill[darkgreen!85!black] (-8, -6.0) rectangle (-6, -5.0);
+    \fill[darkgreen!85!black] (-7, -5.0) rectangle (-6, -4.0);
+    % Front Mountain (Right/Left)
+    \fill[successgreen] (-3, -7.0) rectangle (-1, -6.0);
+    \fill[successgreen] (-3, -6.0) rectangle (-1, -5.0);
+    \fill[successgreen] (-2, -5.0) rectangle (-1, -4.0);
+    \fill[successgreen!80!black] (-5, -7.0) rectangle (-3, -6.0);
+    \fill[successgreen!80!black] (-4, -6.0) rectangle (-3, -5.0);
+    \fill[successgreen!80!black] (-3, -5.0) rectangle (-2, -4.0);
+    \draw[white, thin, opacity=0.3, step=1] (-9, -7.0) grid (-1, -3.0);
+\end{scope}
+
+% Browser Top Bar & Controls
+\fill[gray!30, rounded corners=4pt] (-9, -3.0) rectangle (-1, -2.5);
+\fill[gray!30] (-9, -3.0) rectangle (-1, -2.9);
+\draw[thick, cssblue] (-9, -3.0) -- (-1, -3.0);
+\draw[thick, cssblue, rounded corners=4pt] (-9, -9.0) rectangle (-1, -2.5);
+\fill[warnred] (-8.7, -2.75) circle (2.5pt);
+\fill[gold] (-8.4, -2.75) circle (2.5pt);
+\fill[successgreen] (-8.1, -2.75) circle (2.5pt);
+
+% Inner Browser Text Label
+\node[fill=black!60, text=white, font=\bfseries\large, rounded corners=4pt, text width=4.5cm, align=center, inner sep=6pt] at (-5, -8.0) {Upscaled Image\\(800px)\\[2pt]\faBug\ Heavily Pixelated};
+
+% Dimension Line
+\draw[<->, >=Stealth, thick, cssblue] (-9, -9.8) -- (-1, -9.8);
+\node[cssblue, font=\bfseries, below=2pt] at (-5, -9.8) {Container (800px)};
+
+% Explanation Bubble
+\node[bubble, text width=6cm, align=left, anchor=north] at (-5, -10.8) {
+    \textbf{\color{warnred}Why it fails:}\\[3pt]
+    \texttt{width: 100\%} is an absolute command. It forces the 300px image to stretch across 800px, causing severe interpolation.
+};
+
+% ------------------------------------------------------------------------------
+% 2B: max-width: 100% (Safeguard / Native Size Maintained)
+% ------------------------------------------------------------------------------
+% Property Label
+\node[font=\ttfamily\bfseries, fill=white, draw=successgreen, rounded corners, inner sep=5pt] at (5, -1.5) {max-width: 100\%};
+
+% Browser Window Frame (800px = 8 units wide)
+\fill[containergray, rounded corners=4pt] (1, -9.0) rectangle (9, -2.5);
+\fill[gray!30, rounded corners=4pt] (1, -3.0) rectangle (9, -2.5);
+\fill[gray!30] (1, -3.0) rectangle (9, -2.9);
+\draw[thick, cssblue] (1, -3.0) -- (9, -3.0);
+
+% Native 300px Image (High-Res Vector Landscape, 3:1.5 Ratio)
+\begin{scope}
+    \clip (1, -4.5) rectangle (4, -3.0);
+    \fill[skyblue] (1, -4.5) rectangle (4, -3.0);
+    \fill[gold] (3.1, -3.45) circle (0.26);
+    \fill[darkgreen] (1.0, -4.5) -- (2.35, -3.225) -- (3.7, -4.5) -- cycle;
+    \fill[darkgreen!85!black] (1.0, -4.5) -- (2.35, -3.225) -- (2.35, -4.5) -- cycle;
+    \fill[successgreen] (2.125, -4.5) -- (3.25, -3.6) -- (4.375, -4.5) -- cycle;
+    \fill[successgreen!80!black] (2.125, -4.5) -- (3.25, -3.6) -- (3.25, -4.5) -- cycle;
+\end{scope}
+\draw[thick, successgreen] (1, -4.5) rectangle (4, -3.0);
+
+% Browser Window Outer Border & Controls
+\draw[thick, cssblue, rounded corners=4pt] (1, -9.0) rectangle (9, -2.5);
+\fill[warnred] (1.3, -2.75) circle (2.5pt);
+\fill[gold] (1.6, -2.75) circle (2.5pt);
+\fill[successgreen] (1.9, -2.75) circle (2.5pt);
+
+% Center Text & Arrow
+\node[fill=black!60, text=white, font=\bfseries\small, rounded corners=4pt, text width=2.4cm, align=center, inner sep=3pt] (nativeLabel) at (6.5, -3.75) {Native Image\\(300px)};
+\draw[->, >=Stealth, thick, cssblue] (nativeLabel.west) -- (4.0, -3.75);
+
+% Dimension Lines
+\draw[<->, >=Stealth, thick, successgreen] (1, -4.8) -- (4, -4.8);
+\node[successgreen, font=\bfseries\small, below=2pt] at (2.5, -4.8) {Native (300px)};
+
+\draw[<->, >=Stealth, thick, cssblue] (1, -9.8) -- (9, -9.8);
+\node[cssblue, font=\bfseries, below=2pt] at (5, -9.8) {Container (800px)};
+
+% Explanation Bubble
+\node[bubble, text width=6cm, align=left, anchor=north] at (5, -10.8) {
+    \textbf{\color{successgreen}Why it succeeds:}\\[3pt]
+    \texttt{max-width: 100\%} acts as a safety limit. It says: ``Grow to fit the container, \textbf{BUT} do not exceed your native file size.''
+};
+
+% ==============================================================================
+% CANVAS BACKGROUND
+% ==============================================================================
+\begin{scope}[on background layer]
+    \fill[white] (current bounding box.south west) rectangle (current bounding box.north east);
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

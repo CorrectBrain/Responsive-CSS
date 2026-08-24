@@ -1,0 +1,407 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+
+
+% --- COLOR DEFINITIONS ---
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- CUSTOM REFINED PALETTE ---
+\definecolor{themered}{RGB}{231, 76, 60}
+\definecolor{themegreen}{RGB}{39, 174, 96}
+\definecolor{textdark}{RGB}{44, 62, 80}
+\definecolor{codebg}{RGB}{40, 44, 52}
+\definecolor{codeheader}{RGB}{33, 37, 43}
+\definecolor{codetext}{RGB}{171, 178, 191}
+\definecolor{codeattr}{RGB}{209, 154, 102}
+\definecolor{codeval}{RGB}{152, 195, 121}
+\definecolor{dotred}{RGB}{255, 95, 86}
+\definecolor{dotyellow}{RGB}{255, 189, 46}
+\definecolor{dotgreen}{RGB}{39, 201, 63}
+\definecolor{browserbg}{RGB}{245, 247, 250}
+\definecolor{browserbar}{RGB}{230, 235, 241}
+\definecolor{skeletonline}{RGB}{209, 213, 219}
+
+\begin{document}
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    show background rectangle,
+    background rectangle/.style={fill=white},
+    glassnode/.style={
+        draw=textdark!20,
+        fill=white,
+        rounded corners=8pt,
+        inner sep=9pt,
+        align=center,
+        font=\large,
+        text width=10.5cm,
+        blur shadow={shadow blur steps=4, shadow yshift=-0.5ex, shadow opacity=15}
+    },
+    pipearrow/.style={
+        -Stealth=3mm,
+        line width=1.6pt,
+        draw=textdark!70
+    }
+]
+
+% =========================================================
+% GLOBAL HEADER (Y = 20.0 to 21.0)
+% =========================================================
+\node[font=\Huge\bfseries, text=textdark, align=center] at (14, 21.0) {The Fix: Intrinsic Aspect-Ratio Attribute Mapping};
+\node[font=\Large, text=textdark!75, align=center] at (14, 20.0) {How modern browsers bypassed the CSS override problem to reserve layout space.};
+
+% =========================================================
+% LEFT SIDE: PRE-2020 ENGINE LOGIC (CENTER AXIS X = 6)
+% =========================================================
+% 1. Background Panel
+\filldraw[
+    top color=white,
+    bottom color=themered!6,
+    draw=themered!40,
+    line width=1.2pt,
+    rounded corners=12pt
+] (0, -6.5) rectangle (12, 19.0);
+
+% 2. Header Badge
+\node[
+    fill=themered,
+    text=white,
+    font=\Large\bfseries,
+    rounded corners=6pt,
+    inner sep=8pt,
+    blur shadow={shadow blur steps=4, shadow yshift=-1.5pt, shadow opacity=25}
+] at (6, 18.0) {\faBan\enspace Pre-2020: HTML Attributes Destroyed};
+
+% 3. Code Window 1 (Outline: (0.4, 13.0) rectangle (11.6, 17.0))
+\filldraw[
+    fill=codebg,
+    draw=codeheader,
+    line width=1pt,
+    rounded corners=8pt,
+    blur shadow={shadow blur steps=4, shadow yshift=-0.5ex, shadow opacity=15}
+] (0.4, 13.0) rectangle (11.6, 17.0);
+
+% Code Window 1 Absolute Title Bar
+\fill[codeheader, rounded corners=4pt] (0.45, 16.5) rectangle (11.55, 17.0);
+\fill[dotred] (0.85, 16.75) circle (2.5pt);
+\fill[dotyellow] (1.15, 16.75) circle (2.5pt);
+\fill[dotgreen] (1.45, 16.75) circle (2.5pt);
+\node[font=\scriptsize\ttfamily\color{codetext!70}, align=center] at (6, 16.75) {index.html \& style.css};
+
+% Code Window 1 Code Text
+\node[
+    anchor=north,
+    align=left,
+    text width=10.4cm,
+    font=\small\ttfamily,
+    color=codetext,
+    inner sep=0pt
+] at (6, 16.2) {
+    <\textcolor{themered}{\textbf{img}} \textcolor{codeattr}{src}="\textcolor{codeval}{img.jpg}"\\
+    \hspace*{0.5cm}\textcolor{codeattr}{width}="\textcolor{codeval}{800}" \textcolor{codeattr}{height}="\textcolor{codeval}{400}">\\[4pt]
+    \textcolor{themered}{\textbf{img}} \{\\
+    \hspace*{0.5cm}width: 100\%;\\
+    \hspace*{0.5cm}height: auto;\\
+    \}
+};
+
+% 4. Logic Nodes Left (Width = 10.5cm, inner sep = 9pt)
+\node[
+    glassnode
+] (l1) at (6, 11.0) {
+    \faSitemap\enspace \textbf{1. HTML DOM tree generated.}\\
+    Intrinsic attributes: 800\texttimes 400
+};
+
+\node[
+    glassnode,
+    draw=themered,
+    line width=1.3pt
+] (l2) at (6, 8.0) {
+    \faFileCode\enspace \textbf{2. CSS Box Model completely overrides HTML}\\
+    \texttt{width: 100\%} nullifies \texttt{width=800}\\
+    \texttt{height: auto} nullifies \texttt{height=400}
+};
+
+\node[
+    glassnode,
+    draw=themered,
+    line width=1.5pt
+] (l3) at (6, 5.0) {
+    \faExclamationTriangle\enspace \textbf{3. Aspect Ratio is OBLITERATED.}\\
+    Browser renders a 0px high line.\\
+    (CLS is guaranteed upon load)
+};
+
+% Connecting Arrows Left
+\draw[pipearrow] (6, 13.0) -- (l1.north);
+\draw[pipearrow] (l1.south) -- (l2.north);
+\draw[pipearrow, draw=themered] (l2.south) -- (l3.north);
+\draw[pipearrow, draw=themered] (l3.south) -- (6, 3.5);
+
+% 5. Left Browser Mockup (Y = -2.5 to 3.5)
+\filldraw[
+    fill=browserbg,
+    draw=textdark!30,
+    line width=1pt,
+    rounded corners=8pt,
+    blur shadow={shadow blur steps=4, shadow yshift=-1ex, shadow opacity=15}
+] (0.5, -2.5) rectangle (11.5, 3.5);
+
+% Browser Mockup Title Bar
+\fill[browserbar, rounded corners=6pt] (0.5, 3.0) rectangle (11.5, 3.5);
+\fill[dotred] (0.85, 3.25) circle (2.5pt);
+\fill[dotyellow] (1.15, 3.25) circle (2.5pt);
+\fill[dotgreen] (1.45, 3.25) circle (2.5pt);
+\filldraw[fill=white, draw=textdark!20, rounded corners=3pt] (1.9, 3.08) rectangle (11.1, 3.42);
+\node[font=\tiny\ttfamily\color{textdark!70}] at (6, 3.25) {\faLock\enspace https://example.com/gallery};
+
+% Browser Mockup Internal Visuals
+\draw[line width=4.5pt, line cap=round, color=skeletonline] (1.0, 2.6) -- (4.8, 2.6);
+
+% The 0px Collapsed Line Placeholder with Dashed Line Split
+\node[
+    fill=white,
+    draw=themered,
+    line width=0.8pt,
+    rounded corners=3pt,
+    inner sep=2.5pt,
+    font=\scriptsize\bfseries,
+    text=themered
+] (zeronode) at (6, 1.8) {\faTimes\ 0px Height (No space allocated before download)};
+\draw[line width=2.5pt, dashed, themered, shorten >=2pt] (1.0, 1.8) -- (zeronode.west);
+\draw[line width=2.5pt, dashed, themered, shorten <=2pt] (zeronode.east) -- (11.0, 1.8);
+
+% Pre-Load Ghost State
+\draw[line width=2.5pt, line cap=round, color=skeletonline!40] (1.0, 1.2) -- (11.0, 1.2);
+\draw[line width=2.5pt, line cap=round, color=skeletonline!40] (1.0, 0.8) -- (7.8, 0.8);
+
+% Layout Thrashing Push Action with Arrow Split
+\node[
+    fill=white,
+    draw=themered!40,
+    rounded corners=2pt,
+    inner sep=2pt,
+    font=\tiny\bfseries,
+    text=themered
+] (thrashnode) at (6, -0.2) {Layout Thrashing (300px Shift)};
+\draw[line width=2pt, themered] (6, 0.6) -- (thrashnode.north);
+\draw[-Stealth=3mm, line width=2pt, themered] (thrashnode.south) -- (6, -1.0);
+
+% Post-Load Solid State (Text Lines pushed downward) - Exact Y = -1.4 and Y = -1.8
+\draw[line width=2.5pt, line cap=round, color=skeletonline!80] (1.0, -1.4) -- (11.0, -1.4);
+\draw[line width=2.5pt, line cap=round, color=skeletonline!80] (1.0, -1.8) -- (7.8, -1.8);
+
+% 6. Output Badges Left
+\node[font=\large\bfseries, themered, align=center, text width=11cm] at (6, -3.5) {Image placeholder rendered at 0px height};
+\node[
+    fill=themered!12,
+    draw=themered,
+    line width=1pt,
+    rounded corners=6pt,
+    inner sep=6pt,
+    font=\large\bfseries,
+    text=themered
+] at (6, -5.0) {\faTimesCircle\enspace Severe Layout Shift Guaranteed};
+
+% =========================================================
+% RIGHT SIDE: POST-2020 ENGINE LOGIC (CENTER AXIS X = 22)
+% =========================================================
+% 1. Background Panel
+\filldraw[
+    top color=white,
+    bottom color=themegreen!6,
+    draw=themegreen!40,
+    line width=1.2pt,
+    rounded corners=12pt
+] (16, -6.5) rectangle (28, 19.0);
+
+% 2. Header Badge
+\node[
+    fill=themegreen,
+    text=white,
+    font=\Large\bfseries,
+    rounded corners=6pt,
+    inner sep=8pt,
+    blur shadow={shadow blur steps=4, shadow yshift=-1.5pt, shadow opacity=25}
+] at (22, 18.0) {\faCheck\enspace Post-2020: The Silent UA Stylesheet Mapping};
+
+% 3. Code Window 2 (Outline: (16.4, 13.0) rectangle (27.6, 17.0))
+\filldraw[
+    fill=codebg,
+    draw=codeheader,
+    line width=1pt,
+    rounded corners=8pt,
+    blur shadow={shadow blur steps=4, shadow yshift=-0.5ex, shadow opacity=15}
+] (16.4, 13.0) rectangle (27.6, 17.0);
+
+% Code Window 2 Absolute Title Bar
+\fill[codeheader, rounded corners=4pt] (16.45, 16.5) rectangle (27.55, 17.0);
+\fill[dotred] (16.85, 16.75) circle (2.5pt);
+\fill[dotyellow] (17.15, 16.75) circle (2.5pt);
+\fill[dotgreen] (17.45, 16.75) circle (2.5pt);
+\node[font=\scriptsize\ttfamily\color{codetext!70}, align=center] at (22, 16.75) {index.html \& style.css};
+
+% Code Window 2 Code Text
+\node[
+    anchor=north,
+    align=left,
+    text width=10.4cm,
+    font=\small\ttfamily,
+    color=codetext,
+    inner sep=0pt
+] at (22, 16.2) {
+    <\textcolor{themegreen}{\textbf{img}} \textcolor{codeattr}{src}="\textcolor{codeval}{img.jpg}"\\
+    \hspace*{0.5cm}\textcolor{codeattr}{width}="\textcolor{codeval}{800}" \textcolor{codeattr}{height}="\textcolor{codeval}{400}">\\[4pt]
+    \textcolor{themegreen}{\textbf{img}} \{\\
+    \hspace*{0.5cm}width: 100\%;\\
+    \hspace*{0.5cm}height: auto;\\
+    \}
+};
+
+% 4. Logic Nodes Right (Width = 10.5cm, inner sep = 9pt)
+\node[
+    glassnode
+] (r1) at (22, 11.0) {
+    \faSitemap\enspace \textbf{1. HTML DOM tree generated.}\\
+    Intrinsic attributes: 800\texttimes 400
+};
+
+\node[
+    glassnode,
+    draw=themegreen,
+    line width=1.3pt
+] (r2) at (22, 8.0) {
+    \faMagic\enspace \textbf{2. User Agent Stylesheet maps a ratio:}\\
+    \texttt{aspect-ratio: attr(width) / attr(height)}\\
+    \texttt{aspect-ratio: 800 / 400 (Ratio 2:1)}
+};
+
+\node[
+    glassnode,
+    draw=themegreen,
+    line width=1.5pt
+] (r3) at (22, 5.0) {
+    \faCalculator\enspace \textbf{3. CSS computes layout mathematically.}\\
+    Fluid viewport width = 600px.\\
+    $\text{Height} = 600\text{px} / 2 = \mathbf{300px}$
+};
+
+% Connecting Arrows Right
+\draw[pipearrow] (22, 13.0) -- (r1.north);
+\draw[pipearrow] (r1.south) -- (r2.north);
+\draw[pipearrow, draw=themegreen] (r2.south) -- (r3.north);
+\draw[pipearrow, draw=themegreen] (r3.south) -- (22, 3.5);
+
+% 5. Right Browser Mockup (Y = -2.5 to 3.5)
+\filldraw[
+    fill=browserbg,
+    draw=textdark!30,
+    line width=1pt,
+    rounded corners=8pt,
+    blur shadow={shadow blur steps=4, shadow yshift=-1ex, shadow opacity=15}
+] (16.5, -2.5) rectangle (27.5, 3.5);
+
+% Browser Mockup Title Bar
+\fill[browserbar, rounded corners=6pt] (16.5, 3.0) rectangle (27.5, 3.5);
+\fill[dotred] (16.85, 3.25) circle (2.5pt);
+\fill[dotyellow] (17.15, 3.25) circle (2.5pt);
+\fill[dotgreen] (17.45, 3.25) circle (2.5pt);
+\filldraw[fill=white, draw=textdark!20, rounded corners=3pt] (17.9, 3.08) rectangle (27.1, 3.42);
+\node[font=\tiny\ttfamily\color{textdark!70}] at (22, 3.25) {\faLock\enspace https://example.com/gallery};
+
+% Browser Mockup Internal Visuals
+\draw[line width=4.5pt, line cap=round, color=skeletonline] (17.0, 2.6) -- (20.8, 2.6);
+
+% Exact 6cm x 2.2cm Reserved 2:1 Aspect Ratio Box ((19, -0.2) rectangle (25, 2.0))
+\filldraw[
+    fill=themegreen!15,
+    draw=themegreen,
+    line width=1.5pt,
+    dashed,
+    rounded corners=4pt
+] (19, -0.2) rectangle (25, 2.0);
+
+% Content inside Reserved Placeholder Box
+\node[themegreen, font=\normalsize\bfseries, align=center] at (22, 1.2) {
+    \faImage\enspace 2:1 Ratio Space Reserved\\[3pt]
+    \small\mdseries Fluid: 600px $\rightarrow$ Height: \textbf{300px}
+};
+\node[
+    fill=themegreen,
+    text=white,
+    font=\tiny\bfseries,
+    rounded corners=3pt,
+    inner sep=2.5pt
+] at (22, 0.1) {\faLock\enspace Layout Space Locked};
+
+% Stable Text Lines directly below reserved box (Zero shift) - Exact Y = -1.4 and Y = -1.8
+\draw[line width=2.5pt, line cap=round, color=skeletonline!80] (17.0, -1.4) -- (27.0, -1.4);
+\draw[line width=2.5pt, line cap=round, color=skeletonline!80] (17.0, -1.8) -- (23.8, -1.8);
+
+% 6. Output Badges Right
+\node[font=\large\bfseries, themegreen, align=center, text width=11cm] at (22, -3.5) {Placeholder rendered perfectly at 300px height\\BEFORE network request finishes};
+\node[
+    fill=themegreen!12,
+    draw=themegreen,
+    line width=1pt,
+    rounded corners=6pt,
+    inner sep=6pt,
+    font=\large\bfseries,
+    text=themegreen
+] at (22, -5.0) {\faCheckCircle\enspace Zero Cumulative Layout Shift (CLS = 0)};
+
+% =========================================================
+% CENTER TRANSITION: EVOLUTION CHEVRON (CENTER AXIS X = 14)
+% =========================================================
+\node[
+    single arrow,
+    draw=textdark!35,
+    line width=1pt,
+    top color=gray!10,
+    bottom color=gray!25,
+    text=textdark,
+    font=\Large\bfseries,
+    inner sep=7pt,
+    single arrow head extend=3.5mm,
+    blur shadow={shadow blur steps=4, shadow xshift=1.5pt, shadow yshift=-2pt, shadow opacity=25}
+] at (14, 8.0) {Evolution};
+
+\node[font=\scriptsize\bfseries, text=textdark!60, align=center] at (14, 6.5) {
+    CSS Sizing 4\\
+    Spec Update
+};
+
+\end{tikzpicture}
+\end{document}

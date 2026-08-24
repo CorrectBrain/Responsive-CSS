@@ -1,0 +1,323 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+% --- COLOR DEFINITIONS ---
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- CUSTOM COLOR PALETTE ---
+\definecolor{srcColor}{RGB}{233, 30, 99}    % Pink/Crimson for Media intrinsic
+\definecolor{cntColor}{RGB}{33, 150, 243}   % Blue for CSS Box
+\definecolor{mathColor}{RGB}{103, 58, 183}  % Purple for Engine
+\definecolor{accentColor}{RGB}{255, 152, 0} % Orange for Logic/Halt
+\definecolor{outColor}{RGB}{76, 175, 80}    % Green for Final Render
+\definecolor{darkText}{RGB}{31, 41, 55}     % Deep Slate Text
+
+\begin{document}
+\begin{tikzpicture}[
+    every node/.style={font=\sffamily, text=darkText},
+    panel/.style={
+        fill=white,
+        draw=black!12,
+        line width=0.8pt,
+        rounded corners=8pt,
+        blur shadow={shadow opacity=18, shadow yshift=-3pt, shadow blur radius=5pt}
+    },
+    lbl/.style={
+        font=\bfseries\sffamily\small,
+        text=white,
+        rounded corners=4pt,
+        inner sep=6pt
+    },
+    txt/.style={
+        font=\sffamily\small,
+        text=black!85,
+        align=left
+    },
+    datastream/.style={
+        line width=2.5pt,
+        -Stealth=3mm,
+        rounded corners=8pt
+    }
+]
+
+% ==============================================================================
+% 1. TITLE & HEADER SECTION
+% ==============================================================================
+\node[font=\Huge\bfseries, text=darkText] at (0, 0) {Algorithmic Engine of \texttt{object-fit: contain}};
+\node[font=\Large, text=gray] at (0, -1.0) {Evaluating Disparate Dimensional Variables \& Boundary Calculations};
+
+% ==============================================================================
+% 2. SOURCE MEDIA PANEL (Top Left)
+% ==============================================================================
+\draw[panel] (-12.0, -12.5) rectangle (-1.0, -2.5);
+\node[lbl, fill=srcColor] at (-6.5, -2.5) {\faImage\ SOURCE MEDIA ($X_s, Y_s$)};
+
+% Realistic Landscape Graphic (5 x 2.8125 unit frame: 16:9 ratio, bounds [-9.0, -7.5] to [-4.0, -4.6875])
+\begin{scope}
+    % Outer Frame Shadow / Background
+    \fill[black!80, rounded corners=2pt] (-9.02, -7.52) rectangle (-3.98, -4.6675);
+    \clip[rounded corners=1.5pt] (-9.0, -7.5) rectangle (-4.0, -4.6875);
+
+    % Atmospheric Sky Gradient
+    \shade[top color=SkyBlue!90!NavyBlue, bottom color=white] (-9.0, -7.5) rectangle (-4.0, -4.6875);
+
+    % Radiant Sun
+    \shade[inner color=Yellow!95!Orange, outer color=Orange!90] (-7.7, -5.5) circle (0.45);
+
+    % Distant Layer Mountain (with lighting gradient)
+    \shade[left color=SlateGray!70!white, right color=DarkSlateGray!90!black]
+        (-9.0, -7.5) -- (-8.1, -5.7) -- (-7.1, -6.8) -- (-5.6, -5.3) -- (-4.0, -7.5) -- cycle;
+    \fill[white!90!SkyBlue, opacity=0.85] (-8.1, -5.7) -- (-8.3, -6.1) -- (-7.9, -6.1) -- cycle;
+    \fill[white!90!SkyBlue, opacity=0.85] (-5.6, -5.3) -- (-5.85, -5.8) -- (-5.35, -5.8) -- cycle;
+
+    % Mid-ground Mountain Layer
+    \shade[left color=DarkSlateGray!80!LightSteelBlue, right color=DarkSlateGray!95!black]
+        (-9.0, -7.5) -- (-7.4, -6.3) -- (-6.2, -7.5) -- cycle;
+
+    % Foreground Ridge Layer
+    \shade[left color=DarkSlateGray!90!black, right color=black!85]
+        (-6.9, -7.5) -- (-5.1, -5.9) -- (-4.0, -7.5) -- cycle;
+\end{scope}
+
+% Frame border
+\draw[DarkSlateGray!80!black, line width=1.2pt, rounded corners=1.5pt] (-9.0, -7.5) rectangle (-4.0, -4.6875);
+
+% Source Dimensions (Shifted left by 0.5 units)
+\draw[srcColor, thick, <->] (-9.0, -7.9) -- (-4.0, -7.9)
+    node[midway, below, font=\bfseries\small] {Intrinsic Width ($W_s = 1600px$)};
+\draw[srcColor, thick, <->] (-9.5, -7.5) -- (-9.5, -4.6875)
+    node[midway, above, sloped, font=\bfseries\small] {Intrinsic Height ($H_s = 900px$)};
+
+% Source Descriptive Text Block
+\node[txt, anchor=north, align=left] at (-6.5, -9.0) {
+    \textbf{Aspect Ratio ($R_s$):} $W_s \div H_s = 1.77$ (16:9)
+};
+\node[txt, anchor=north, text width=10cm, align=left] at (-6.5, -10.5) {
+    The media's raw, unconstrained pixel dimensions mapped directly from the file buffer.
+};
+
+% ==============================================================================
+% 3. CSS LAYOUT CONTAINER PANEL (Top Right)
+% ==============================================================================
+\draw[panel] (1.0, -12.5) rectangle (12.0, -2.5);
+\node[lbl, fill=cntColor] at (6.5, -2.5) {\faBox\ CSS LAYOUT CONTAINER ($X_c, Y_c$)};
+
+% DOM Inspector Grid Container (4 x 5 unit frame: 4:5 ratio, bounds [4.5, -8.5] to [8.5, -3.5])
+\fill[pattern={Lines[distance=2mm, angle=45]}, pattern color=cntColor!15] (4.5, -8.5) rectangle (8.5, -3.5);
+\draw[cntColor, very thick, dashed] (4.5, -8.5) rectangle (8.5, -3.5);
+
+% Container Dimensions (Shifted right by 0.5 units)
+\draw[cntColor, thick, <->] (4.5, -8.9) -- (8.5, -8.9)
+    node[midway, below, font=\bfseries\small] {Layout Width ($W_c = 800px$)};
+\draw[cntColor, thick, <->] (3.9, -8.5) -- (3.9, -3.5)
+    node[midway, above, sloped, font=\bfseries\small] {Layout Height ($H_c = 1000px$)};
+
+% Container Descriptive Text Block
+\node[txt, anchor=north, align=left] at (6.5, -10.0) {
+    \textbf{Aspect Ratio ($R_c$):} $W_c \div H_c = 0.8$ (4:5)
+};
+\node[txt, anchor=north, text width=10cm, align=left] at (6.5, -11.0) {
+    The rigid DOM bounding box computed by the CSS engine layout algorithm.
+};
+
+% ==============================================================================
+% 4. DIMENSIONAL EVALUATION ENGINE (Center Panel)
+% ==============================================================================
+\draw[panel, draw=mathColor!50, line width=1pt] (-6.0, -21.5) rectangle (6.0, -14.5);
+\node[lbl, fill=mathColor] at (0, -14.5) {\faCogs\ DIMENSIONAL EVALUATION ENGINE};
+
+% Mechanical Background Gears (Repositioned to x=-4.5 and x=4.5 to clear equations)
+\begin{scope}[opacity=0.13]
+    % Left Gear at (-4.5, -18.0)
+    \foreach \a in {0,30,...,330} {
+        \fill[gray!80] ($(-4.5, -18.0)+(\a:0.88)$) circle (0.16);
+    }
+    \shade[inner color=silver!90, outer color=gray!80] (-4.5, -18.0) circle (0.8);
+    \fill[white] (-4.5, -18.0) circle (0.32);
+    \draw[gray!70, thick] (-4.5, -18.0) circle (0.32);
+
+    % Right Gear at (4.5, -18.0)
+    \foreach \a in {15,45,...,345} {
+        \fill[gray!80] ($(4.5, -18.0)+(\a:0.88)$) circle (0.16);
+    }
+    \shade[inner color=silver!90, outer color=gray!80] (4.5, -18.0) circle (0.8);
+    \fill[white] (4.5, -18.0) circle (0.32);
+    \draw[gray!70, thick] (4.5, -18.0) circle (0.32);
+\end{scope}
+
+\node[font=\Large\bfseries, text=mathColor] at (0, -15.5) {Step 1: Calculate Axis Scale Constraints};
+
+\node[txt, anchor=north, align=center] at (0, -17.0) {
+    \Large $S_x = \dfrac{W_c}{W_s} = \dfrac{800}{1600} = \mathbf{0.50}$
+};
+
+\node[txt, anchor=north, align=center] at (0, -18.5) {
+    \Large $S_y = \dfrac{H_c}{H_s} = \dfrac{1000}{900} = \mathbf{1.11}$
+};
+
+\node[txt, anchor=north, text width=11cm, align=center] at (0, -20.5) {
+    The engine computes the required scaling multipliers to individually span the $X$ and $Y$ layout bounds.
+};
+
+% ==============================================================================
+% 5. THE INTERPOLATION HALT (Bottom Left)
+% ==============================================================================
+\draw[panel, draw=accentColor!50, line width=1pt] (-12.0, -33.5) rectangle (-1.0, -23.5);
+\node[lbl, fill=accentColor] at (-6.5, -23.5) {\faHandPaper\ THE INTERPOLATION HALT};
+\node[font=\Large\bfseries, text=accentColor] at (-6.5, -24.5) {Step 2: The Collision Threshold};
+
+% Comparative Scale Progress Bars (Base: x=-10.5, 100% scale = 8 units)
+\begin{scope}
+    % S_x Bar (50% scale -> length 4 units: [-10.5, -6.5])
+    \node[left, font=\bfseries\footnotesize, text=darkText] at (-10.6, -26.0) {$S_x$};
+    \fill[black!10, rounded corners=2pt] (-10.5, -26.15) rectangle (-2.5, -25.85);
+    \fill[srcColor!85, rounded corners=2pt] (-10.5, -26.15) rectangle (-6.5, -25.85);
+    \node[left, font=\bfseries\scriptsize, text=white] at (-6.6, -26.0) {0.50 (50\%)};
+
+    % S_y Bar (111% scale -> length 8.88 units: [-10.5, -1.62])
+    \node[left, font=\bfseries\footnotesize, text=darkText] at (-10.6, -27.0) {$S_y$};
+    \fill[black!10, rounded corners=2pt] (-10.5, -27.15) rectangle (-2.5, -26.85);
+    \fill[cntColor!85, rounded corners=2pt] (-10.5, -27.15) rectangle (-1.62, -26.85);
+    \node[left, font=\bfseries\scriptsize, text=white] at (-1.72, -27.0) {1.11 (111\%)};
+
+    % Collision Limit Line & Tag (at x = -6.5, anchored south at y = -25.2)
+    \node[anchor=south, font=\bfseries\scriptsize, fill=white, draw=accentColor!40, rounded corners=2pt, inner sep=1.5pt, text=accentColor] at (-6.5, -25.2) {Limit (0.50) [HALT]};
+    \draw[accentColor, ultra thick, dashed] (-6.5, -25.2) -- (-6.5, -27.5);
+\end{scope}
+
+\node[txt, anchor=north, align=center] at (-6.5, -28.8) {
+    \textbf{Engine Logic:} \Large $\mathbf{S_{final} = \min(S_x, S_y)}$
+};
+
+\node[txt, anchor=north, text width=10.5cm, align=left] at (-6.5, -30.5) {
+    The rendering engine expands the matrix uniformly. It evaluates the bounds and explicitly \textbf{halts interpolation} the moment the lowest boundary scale is met.\\[3pt]
+    Here, $\min(0.50, 1.11) = 0.50$. The X-axis boundary is struck first.
+};
+
+% ==============================================================================
+% 6. FINAL RENDERED OUTPUT (Bottom Right)
+% ==============================================================================
+\draw[panel, draw=outColor!50, line width=1pt] (1.0, -33.5) rectangle (12.0, -23.5);
+\node[lbl, fill=outColor] at (6.5, -23.5) {\faDesktop\ FINAL RENDERED OUTPUT};
+\node[font=\Large\bfseries, text=outColor] at (6.5, -24.5) {Step 3: Computed Box Dimensions};
+
+\node[txt, anchor=north, text width=10.5cm, align=left] at (6.5, -27.0) {
+    \textbf{Final Width:} $W_{out} = W_s \times S_{final} = 1600 \times 0.5 = \mathbf{800px}$ \\[6pt]
+    \textbf{Final Height:} $H_{out} = H_s \times S_{final} = 900 \times 0.5 = \mathbf{450px}$
+};
+
+\node[txt, anchor=north, text width=10.5cm, align=left] at (6.5, -30.5) {
+    The object perfectly spans the container's width (800px), generating a residual void of $1000 - 450 = 550px$ on the Y-axis.
+};
+
+% ==============================================================================
+% 7. VISUAL RESULT (LETTERBOXING) (Bottom Center)
+% ==============================================================================
+\draw[panel] (-6.5, -45.0) rectangle (6.5, -35.5);
+\node[lbl, fill=darkText] at (0, -35.5) {\faEye\ VISUAL RESULT (LETTERBOXING)};
+
+% Letterbox Void Areas (Top and Bottom Shading)
+\fill[pattern={Lines[distance=1.5mm, angle=45]}, pattern color=black!40] (-2, -38.375) rectangle (2, -37.0);
+\fill[pattern={Lines[distance=1.5mm, angle=45]}, pattern color=black!40] (-2, -42.0) rectangle (2, -40.625);
+
+% Scaled Replica of Vector Landscape Graphic (bounds: [-2, -40.625] to [2, -38.375])
+\begin{scope}
+    \clip (-2, -40.625) rectangle (2, -38.375);
+
+    % Scaled Sky
+    \shade[top color=SkyBlue!90!NavyBlue, bottom color=white] (-2, -40.625) rectangle (2, -38.375);
+
+    % Scaled Sun
+    \shade[inner color=Yellow!95!Orange, outer color=Orange!90] (-0.96, -39.025) circle (0.36);
+
+    % Scaled Distant Mountain
+    \shade[left color=SlateGray!70!white, right color=DarkSlateGray!90!black]
+        (-2, -40.625) -- (-1.28, -39.185) -- (-0.48, -40.065) -- (0.72, -38.865) -- (2, -40.625) -- cycle;
+    \fill[white!90!SkyBlue, opacity=0.85] (-1.28, -39.185) -- (-1.44, -39.505) -- (-1.12, -39.505) -- cycle;
+    \fill[white!90!SkyBlue, opacity=0.85] (0.72, -38.865) -- (0.52, -39.265) -- (0.92, -39.265) -- cycle;
+
+    % Scaled Mid-ground Ridge
+    \shade[left color=DarkSlateGray!80!LightSteelBlue, right color=DarkSlateGray!95!black]
+        (-2, -40.625) -- (-0.72, -39.665) -- (0.24, -40.625) -- cycle;
+
+    % Scaled Foreground Ridge
+    \shade[left color=DarkSlateGray!90!black, right color=black!85]
+        (-0.32, -40.625) -- (1.12, -39.345) -- (2, -40.625) -- cycle;
+\end{scope}
+
+% Content Frame
+\draw[DarkSlateGray!90!black, line width=1pt] (-2, -40.625) rectangle (2, -38.375);
+
+% CSS Container Outline (4x5, bounds: [-2, -42.0] to [2, -37.0])
+\draw[cntColor, very thick, dashed] (-2, -42.0) rectangle (2, -37.0);
+
+% Void Annotations (External Callouts at x=2.5 to prevent overlap)
+\draw[accentColor, thick, <->] (2.5, -37.0) -- (2.5, -38.375);
+\node[anchor=west, font=\bfseries\small, text=accentColor] at (2.7, -37.6875) {Void (275px)};
+
+\draw[accentColor, thick, <->] (2.5, -40.625) -- (2.5, -42.0);
+\node[anchor=west, font=\bfseries\small, text=accentColor] at (2.7, -41.3125) {Void (275px)};
+
+% Computed Rendered Output Dimensions (Resolved clearance: H_out moved to x=-3.0, W_out at y=-42.5)
+\draw[outColor, thick, <->] (-2, -42.5) -- (2, -42.5)
+    node[midway, below, font=\bfseries\small] {$W_{out} = 800px$};
+\draw[outColor, thick, <->] (-3.0, -40.625) -- (-3.0, -38.375)
+    node[midway, left, font=\bfseries\small] {$H_{out} = 450px$};
+
+% ==============================================================================
+% 8. MATHEMATICAL ROUTING (DATA STREAM ARROWS)
+% ==============================================================================
+% Source Media to Evaluation Engine
+\draw[datastream, draw=srcColor] (-6.5, -12.5) -- (-6.5, -13.5) -- (-4.0, -13.5) -- (-4.0, -14.5);
+
+% CSS Container to Evaluation Engine
+\draw[datastream, draw=cntColor] (6.5, -12.5) -- (6.5, -13.5) -- (4.0, -13.5) -- (4.0, -14.5);
+
+% Engine to Step 2 (Interpolation Halt)
+\draw[datastream, draw=mathColor] (-4.0, -21.5) -- (-4.0, -23.5);
+
+% Engine to Step 3 (Final Rendered Output)
+\draw[datastream, draw=mathColor] (4.0, -21.5) -- (4.0, -23.5);
+
+% Halt to Final Output Trigger Connector
+\draw[datastream, draw=accentColor] (-1.0, -28.5) -- (1.0, -28.5)
+    node[midway, fill=white, draw=black!20, rounded corners=4pt, inner sep=4pt, font=\bfseries\footnotesize, text=darkText] {triggers};
+
+% Final Output to Visual Result
+\draw[datastream, draw=outColor] (6.5, -33.5) -- (6.5, -34.5) -- (4.0, -34.5) -- (4.0, -35.5);
+
+\end{tikzpicture}
+\end{document}

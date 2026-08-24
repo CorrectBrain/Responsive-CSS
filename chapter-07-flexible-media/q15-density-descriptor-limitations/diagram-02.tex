@@ -1,0 +1,272 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+% --- COLOR PALETTE (LIGHT THEME & ACCENTS) ---
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+\definecolor{canvasBg}{RGB}{255, 255, 255}
+\definecolor{panelBg}{RGB}{248, 250, 252}
+\definecolor{panelBorder}{RGB}{226, 232, 240}
+\definecolor{subPanelBg}{RGB}{241, 245, 249}
+
+\definecolor{deepSlate}{RGB}{15, 23, 42}
+\definecolor{textDark}{RGB}{30, 41, 59}
+\definecolor{textMuted}{RGB}{71, 85, 105}
+
+\definecolor{darkbg}{RGB}{15, 23, 42}
+\definecolor{editorBar}{RGB}{30, 41, 59}
+
+\definecolor{accentRed}{RGB}{225, 29, 72}
+\definecolor{accentBlue}{RGB}{2, 132, 199}
+\definecolor{accentGreen}{RGB}{22, 163, 74}
+\definecolor{accentPurple}{RGB}{126, 34, 206}
+\definecolor{accentAmber}{RGB}{217, 119, 6}
+
+\definecolor{cyanCode}{RGB}{56, 189, 248}
+\definecolor{purpleCode}{RGB}{192, 132, 252}
+\definecolor{greenCode}{RGB}{74, 222, 128}
+\definecolor{yellowCode}{RGB}{253, 224, 71}
+
+\definecolor{redDot}{RGB}{248, 113, 113}
+\definecolor{yellowDot}{RGB}{251, 191, 36}
+\definecolor{greenDot}{RGB}{52, 211, 153}
+
+\definecolor{badgeGreenBg}{RGB}{236, 253, 245}
+\definecolor{badgeGreenBorder}{RGB}{167, 243, 208}
+\definecolor{badgeGreenText}{RGB}{6, 95, 70}
+
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm, >=Stealth]
+
+    % =========================================================================
+    % 0. CANVAS BACKGROUND
+    % =========================================================================
+    \fill[white] (0, 0) rectangle (28, 30);
+
+    % =========================================================================
+    % 1. HEADER SECTION (Y: 28 to 30)
+    % =========================================================================
+    \node[text=deepSlate, font=\Huge\bfseries, align=center] at (14, 29) {The Mathematical Solution: $w$-Descriptors \& \texttt{sizes}};
+    \node[text=accentGreen, font=\Large\bfseries, align=center, text width=26cm] at (14, 28) {Decoupling from pure DPR and binding mathematically to the Layout Viewport};
+
+    % =========================================================================
+    % 2. PANEL 1: THE PRELOADER ARCHITECTURE (Y: 18 to 27)
+    % =========================================================================
+    % Main Container Card
+    \fill[panelBg, draw=panelBorder, line width=1pt, rounded corners=12pt, blur shadow={shadow blur steps=5, shadow xshift=2pt, shadow yshift=-2pt}] (1, 18) rectangle (27, 27);
+    \node[text=deepSlate, font=\Large\bfseries, align=center] at (14, 26) {\faCheckCircle\ Restoring the Connection: Predicting Layout Width};
+
+    % -------------------------------------------------------------------------
+    % Component A: macOS-Style IDE Code Window (Left)
+    % -------------------------------------------------------------------------
+    % Window Frame & Editor Background
+    \fill[darkbg, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow xshift=2pt, shadow yshift=-2pt}] (1.5, 18.5) rectangle (11.5, 25.5);
+
+    % Window Title Bar
+    \fill[editorBar, rounded corners=6pt] (1.5, 24.9) rectangle (11.5, 25.5);
+    \fill[editorBar] (1.5, 24.9) rectangle (11.5, 25.2); % Square bottom corners of title bar
+
+    % macOS Window Control Dots
+    \fill[redDot] (2.0, 25.2) circle (0.1);
+    \fill[yellowDot] (2.35, 25.2) circle (0.1);
+    \fill[greenDot] (2.7, 25.2) circle (0.1);
+    \node[text=gray!40, font=\scriptsize\ttfamily, anchor=east] at (11.0, 25.2) {index.html};
+
+    % Code Block Syntax Highlighting (Unified Node)
+    \node[anchor=north west, align=left, font=\footnotesize\ttfamily, text width=9.5cm, inner sep=8pt] at (1.5, 24.5) {
+        \textbf{<img} \textcolor{cyanCode}{src}=\textcolor{yellowCode}{"img-600.jpg"}\\
+        [0.2cm]
+        \textcolor{white}{srcset}=\textcolor{yellowCode}{"img-600.jpg} \textcolor{greenCode}{\textbf{600w}},\\
+        \hspace*{1cm}img-1200.jpg \textcolor{greenCode}{\textbf{1200w}},\\
+        \hspace*{1cm}img-1800.jpg \textcolor{greenCode}{\textbf{1800w}"}\\
+        [0.2cm]
+        \textcolor{white}{sizes}=\textcolor{yellowCode}{"(max-width: 600px)} \textcolor{cyanCode}{\textbf{33vw}}, \textcolor{cyanCode}{\textbf{100vw}"} \textcolor{white}{\textbf{/>}}
+    };
+
+    % -------------------------------------------------------------------------
+    % Component B: Data Flow Connector
+    % -------------------------------------------------------------------------
+    \draw[-Stealth=3mm, line width=2.5pt, accentBlue, shorten >=1pt] (11.5, 22) -- (14.8, 22);
+    \node[above=6pt, font=\scriptsize\bfseries, text=accentBlue] at (13.25, 22) {Parses sizes \& srcset};
+    \node[below=6pt, font=\tiny\bfseries, text=textMuted] at (13.25, 22) {Injects Viewport \& DPR};
+
+    % -------------------------------------------------------------------------
+    % Component C: Preloader Math Engine (CPU Architecture)
+    % -------------------------------------------------------------------------
+    % CPU Container
+    \fill[subPanelBg, draw=accentBlue!50, line width=1.2pt, rounded corners=8pt] (15, 18.5) rectangle (26.5, 25.5);
+
+    % Decorative Microchip IC Pins
+    \foreach \y in {19.5, 20.5, 21.5, 22.5, 23.5, 24.5} {
+        \fill[accentBlue!40, rounded corners=1pt] (14.8, \y-0.15) rectangle (15.2, \y+0.15);
+        \fill[accentBlue!40, rounded corners=1pt] (26.3, \y-0.15) rectangle (26.7, \y+0.15);
+    }
+
+    % Math Engine Header
+    \node[text=deepSlate, font=\normalsize\bfseries, align=center] at (20.75, 24.5) {\faMicrochip\ The Preloader Math Engine:};
+
+    % Step-by-Step Mathematical Flow
+    \node[text=textMuted, font=\footnotesize, anchor=west, text width=10.5cm, align=left] at (15.5, 23.5) {1. Evaluate \texttt{sizes} $\rightarrow$ \textcolor{accentPurple}{\textbf{Expected Layout Width (px)}}};
+    \node[text=textMuted, font=\footnotesize, anchor=west, text width=10.5cm, align=left] at (15.5, 22.5) {2. Calculate \textcolor{accentBlue}{\textbf{Effective Density}} for every image in \texttt{srcset}:};
+
+    % Math Formula Display Sub-panel (Unified Node)
+    \node[fill=white, draw=accentBlue!30, line width=0.8pt, rounded corners=4pt, minimum width=9.5cm, minimum height=1.5cm, text=accentGreen, font=\small, align=center] at (20.75, 21.25) {
+        $\mathbf{\text{Density}} = \dfrac{\text{\textcolor{accentBlue}{\textbf{Intrinsic Width (\texttt{w})}}}}{\text{\textcolor{accentPurple}{\textbf{Expected Layout Width (px)}}}}$
+    };
+
+    \node[text=deepSlate, font=\footnotesize\bfseries, anchor=west, text width=10.5cm, align=left] at (15.5, 19.5) {3. Select smallest image where $\mathbf{\text{Density} \ge \text{DPR}}$ (or largest available)};
+
+
+    % =========================================================================
+    % 3. PANEL 2: SCENARIO A (MOBILE) (Y: 1 to 17.5)
+    % =========================================================================
+    % Container Card
+    \fill[panelBg, draw=panelBorder, line width=1pt, rounded corners=12pt, blur shadow={shadow blur steps=5, shadow xshift=2pt, shadow yshift=-2pt}] (1, 1) rectangle (13.5, 17.5);
+
+    % Panel Header
+    \node[text=accentGreen, font=\Large\bfseries, align=center] at (7.25, 16.5) {\faIcon{mobile-alt}\ Scenario A Solved: Payload Slashed!};
+
+    % -------------------------------------------------------------------------
+    % Component A: Contextual Diagram (Mobile)
+    % -------------------------------------------------------------------------
+    % Outer Phone Body
+    \fill[gray!85!black, rounded corners=9pt] (4.75, 10.5) rectangle (9.75, 15.5);
+    % Inner Screen
+    \fill[white, draw=gray!30, line width=0.6pt, rounded corners=4pt] (4.9, 10.7) rectangle (9.6, 15.1);
+    % Speaker Notch & Camera
+    \fill[black] (6.9, 15.25) rectangle (7.6, 15.35);
+    \fill[black] (7.25, 15.0) circle (0.05);
+    % Home Bar
+    \fill[gray!40, rounded corners=1pt] (6.85, 10.55) rectangle (7.65, 10.63);
+
+    % Internal 3-Column CSS Grid Layout (33vw each)
+    \fill[accentPurple!12, draw=accentPurple, dashed, line width=0.6pt, rounded corners=2pt] (5.05, 11.2) rectangle (6.45, 14.6);
+    \fill[accentPurple!6, draw=accentPurple!50, dashed, line width=0.6pt, rounded corners=2pt] (6.55, 11.2) rectangle (7.95, 14.6);
+    \fill[accentPurple!6, draw=accentPurple!50, dashed, line width=0.6pt, rounded corners=2pt] (8.05, 11.2) rectangle (9.45, 14.6);
+
+    \node[text=accentPurple, font=\scriptsize\bfseries, align=center] at (5.75, 12.9) {\faImage\\[2pt] \textbf{33vw}\\\tiny (Col 1)};
+    \node[text=accentPurple!60, font=\scriptsize\bfseries, align=center] at (7.25, 12.9) {\faImage\\[2pt] \textbf{33vw}\\\tiny (Col 2)};
+    \node[text=accentPurple!60, font=\scriptsize\bfseries, align=center] at (8.75, 12.9) {\faImage\\[2pt] \textbf{33vw}\\\tiny (Col 3)};
+
+    % Dimension Arrow: 400px Viewport
+    \draw[Stealth-Stealth, line width=0.8pt, textMuted] (4.75, 10.1) -- (9.75, 10.1);
+    \node[font=\scriptsize\bfseries, text=textDark, align=center] at (7.25, 9.75) {400px Viewport (DPR 3.0)};
+
+    % -------------------------------------------------------------------------
+    % Component B: Logical Calculations
+    % -------------------------------------------------------------------------
+    \node[text=textDark, font=\small, anchor=west, text width=11.0cm, align=left] at (1.5, 9.1) {\textbf{Device:} Mobile (Viewport $400\text{px}$, DPR $3.0$)};
+    \node[text=textDark, font=\small, anchor=west, text width=11.0cm, align=left] at (1.5, 8.6) {\textbf{Grid:} 3 columns (\texttt{sizes="33vw"})};
+
+    % Step 1
+    \node[text=accentPurple, font=\small\bfseries, anchor=west, text width=11.0cm, align=left] at (1.5, 7.9) {\faCalculator\ \textbf{Step 1: Predict Layout Width}};
+    \node[text=textDark, font=\small, anchor=west, text width=10.5cm, align=left] at (2.0, 7.35) {$400\text{px viewport} \times 33\% = \mathbf{132\text{px expected layout width}}$};
+
+    % Step 2
+    \node[text=accentBlue, font=\small\bfseries, anchor=west, text width=11.0cm, align=left] at (1.5, 6.5) {\faTasks\ \textbf{Step 2: Calculate Effective Densities}};
+    \node[text=textMuted, font=\footnotesize, anchor=west, text width=10.5cm, align=left] at (2.0, 5.9) {For \texttt{600w}: $600 / 132 = \mathbf{4.5\text{ density}}$ \textcolor{accentGreen}{\faCheckCircle\ ($\ge 3.0$)}};
+    \node[text=textMuted, font=\footnotesize, anchor=west, text width=10.5cm, align=left] at (2.0, 5.3) {For \texttt{1200w}: $1200 / 132 = \mathbf{9.1\text{ density}}$};
+    \node[text=textMuted, font=\footnotesize, anchor=west, text width=10.5cm, align=left] at (2.0, 4.7) {For \texttt{1800w}: $1800 / 132 = \mathbf{13.6\text{ density}}$};
+
+    % Step 3
+    \node[text=accentGreen, font=\small\bfseries, anchor=west, text width=11.0cm, align=left] at (1.5, 3.9) {\faCheck\ \textbf{Step 3: Make the Choice}};
+    \node[text=textDark, font=\footnotesize, anchor=west, text width=10.5cm, align=left] at (2.0, 3.25) {Target device DPR is $3.0$. The \texttt{600w} image provides a layout density of $4.5$, which covers the DPR completely.};
+
+    % Component C: Result Badge (Unified Node)
+    \node[fill=badgeGreenBg, draw=badgeGreenBorder, line width=1pt, rounded corners=6pt, text width=11cm, align=center, inner sep=10pt, text=badgeGreenText, font=\footnotesize] at (7.25, 2.0) {
+        \textbf{Result:} Browser dynamically downloads \texttt{img-600.jpg}.\\
+        Pixels downloaded = $360,000\text{px}$. (Down from 3.2M!)\\
+        \textbf{${\sim}90\%$ Payload Saved from wasted bandwidth!}
+    };
+
+
+    % =========================================================================
+    % 4. PANEL 3: SCENARIO B (DESKTOP) (Y: 1 to 17.5)
+    % =========================================================================
+    % Container Card
+    \fill[panelBg, draw=panelBorder, line width=1pt, rounded corners=12pt, blur shadow={shadow blur steps=5, shadow xshift=2pt, shadow yshift=-2pt}] (14.5, 1) rectangle (27, 17.5);
+
+    % Panel Header
+    \node[text=accentGreen, font=\Large\bfseries, align=center] at (20.75, 16.5) {\faDesktop\ Scenario B Solved: Crisp at any size!};
+
+    % -------------------------------------------------------------------------
+    % Component A: Contextual Diagram (Desktop)
+    % -------------------------------------------------------------------------
+    % Monitor Neck & Stand
+    \fill[gray!80, rounded corners=2pt] (19.25, 10.6) rectangle (22.25, 10.8);
+    \fill[gray!60] (20.35, 10.8) rectangle (21.15, 11.0);
+
+    % Outer Monitor Frame
+    \fill[gray!85!black, rounded corners=6pt] (16, 11) rectangle (25.5, 15.5);
+    % Inner Screen
+    \fill[white, draw=gray!30, line width=0.6pt, rounded corners=2pt] (16.2, 11.2) rectangle (25.3, 15.3);
+
+    % Internal 1-Column CSS Grid Layout (100vw Full Width)
+    \fill[accentBlue!10, draw=accentBlue, dashed, line width=0.8pt, rounded corners=3pt] (16.4, 11.4) rectangle (25.1, 15.1);
+    \node[text=accentBlue, font=\small\bfseries, align=center] at (20.75, 13.25) {\faImage\ \texttt{sizes="100vw"}\\ \footnotesize (Full Width Single-Column Layout)};
+
+    % Dimension Arrow: 1920px Viewport
+    \draw[Stealth-Stealth, line width=0.8pt, textMuted] (16, 10.5) -- (25.5, 10.5);
+    \node[font=\scriptsize\bfseries, text=textDark, align=center] at (20.75, 10.15) {1920px Viewport (DPR 1.0)};
+
+    % -------------------------------------------------------------------------
+    % Component B: Logical Calculations
+    % -------------------------------------------------------------------------
+    \node[text=textDark, font=\small, anchor=west, text width=11.0cm, align=left] at (15.0, 9.1) {\textbf{Device:} Desktop (Viewport $1920\text{px}$, DPR $1.0$)};
+    \node[text=textDark, font=\small, anchor=west, text width=11.0cm, align=left] at (15.0, 8.6) {\textbf{Grid:} 1 column (\texttt{sizes="100vw"})};
+
+    % Step 1
+    \node[text=accentPurple, font=\small\bfseries, anchor=west, text width=11.0cm, align=left] at (15.0, 7.9) {\faCalculator\ \textbf{Step 1: Predict Layout Width}};
+    \node[text=textDark, font=\small, anchor=west, text width=10.5cm, align=left] at (15.5, 7.35) {$1920\text{px viewport} \times 100\% = \mathbf{1920\text{px expected layout width}}$};
+
+    % Step 2
+    \node[text=accentBlue, font=\small\bfseries, anchor=west, text width=11.0cm, align=left] at (15.0, 6.5) {\faTasks\ \textbf{Step 2: Calculate Effective Densities}};
+    \node[text=textMuted, font=\footnotesize, anchor=west, text width=10.5cm, align=left] at (15.5, 5.9) {For \texttt{600w}: $600 / 1920 = \mathbf{0.31\text{ density}}$ \textcolor{accentRed}{\faTimesCircle\ (Fails 1.0 DPR!)}};
+    \node[text=textMuted, font=\footnotesize, anchor=west, text width=10.5cm, align=left] at (15.5, 5.3) {For \texttt{1200w}: $1200 / 1920 = \mathbf{0.63\text{ density}}$ \textcolor{accentRed}{\faTimesCircle\ (Fails 1.0 DPR!)}};
+    \node[text=textMuted, font=\footnotesize, anchor=west, text width=10.5cm, align=left] at (15.5, 4.7) {For \texttt{1800w}: $1800 / 1920 = \mathbf{0.94\text{ density}}$ \textcolor{accentGreen}{\faCheckCircle\ ($\sim 1.0\text{ DPR}$)}};
+
+    % Step 3
+    \node[text=accentGreen, font=\small\bfseries, anchor=west, text width=11.0cm, align=left] at (15.0, 3.9) {\faCheck\ \textbf{Step 3: Make the Choice}};
+    \node[text=textDark, font=\footnotesize, anchor=west, text width=10.5cm, align=left] at (15.5, 3.25) {Target device DPR is $1.0$. The browser selects the \texttt{1800w} image to provide the closest density without massive shortfall.};
+
+    % Component C: Result Badge (Unified Node)
+    \node[fill=badgeGreenBg, draw=badgeGreenBorder, line width=1pt, rounded corners=6pt, text width=11cm, align=center, inner sep=10pt, text=badgeGreenText, font=\footnotesize] at (20.75, 2.0) {
+        \textbf{Result:} Browser dynamically downloads \texttt{img-1800.jpg}.\\
+        The image perfectly fills the massive stretched CSS grid.\\
+        \textbf{Zero Pixelation!} \textmd{\scriptsize (Visually; 0.94 density causes minimal 6\% upscale)}
+    };
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,265 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- CUSTOM COLOR PALETTE ---
+\definecolor{htmlcol}{RGB}{227, 79, 38}      % HTML5 Orange
+\definecolor{csscol}{RGB}{21, 114, 182}      % CSS3 Blue
+\definecolor{imgcol}{RGB}{240, 173, 78}      % Image Gold
+\definecolor{darktext}{RGB}{40, 44, 52}      % Deep Gray for text
+\definecolor{warncol}{RGB}{211, 47, 47}      % Error/Warning Red
+\definecolor{successcol}{RGB}{46, 125, 50}   % Success Green
+\definecolor{purplecol}{RGB}{123, 31, 162}   % Render Engine Purple
+\definecolor{bgcol}{RGB}{255, 255, 255}      % Pure White background
+\definecolor{chipbg}{RGB}{35, 39, 46}        % Metallic CPU dark background
+\definecolor{chipborder}{RGB}{68, 74, 87}    % CPU border
+\definecolor{macred}{RGB}{255, 95, 86}       % Mac window red
+\definecolor{macyellow}{RGB}{255, 189, 46}   % Mac window yellow
+\definecolor{macgreen}{RGB}{39, 201, 63}     % Mac window green
+
+\begin{document}
+\begin{tikzpicture}[
+    % --- REFINED STYLES ---
+    netbox/.style={
+        draw=gray!30,
+        fill=white,
+        line width=0.8pt,
+        rounded corners=6pt,
+        minimum width=4.5cm,
+        minimum height=1.25cm,
+        align=center,
+        font=\small\bfseries,
+        blur shadow={shadow blur steps=6, shadow opacity=20, shadow xshift=2pt, shadow yshift=-2pt},
+        path picture={
+            \fill[#1] (path picture bounding box.north west) rectangle ([xshift=6pt]path picture bounding box.south west);
+        }
+    },
+    chipbox/.style={
+        draw=chipborder,
+        top color=chipbg!90,
+        bottom color=chipbg,
+        line width=1pt,
+        rounded corners=4pt,
+        minimum width=4.6cm,
+        minimum height=1.15cm,
+        align=center,
+        text=white,
+        font=\small\bfseries,
+        blur shadow={shadow blur steps=8, shadow opacity=25, shadow xshift=2pt, shadow yshift=-2.5pt}
+    },
+    browserbox/.style={
+        draw=gray!35,
+        fill=white,
+        line width=1pt,
+        rounded corners=6pt,
+        minimum width=5.0cm,
+        minimum height=1.35cm,
+        align=center,
+        font=\small\bfseries,
+        blur shadow={shadow blur steps=8, shadow opacity=20, shadow xshift=2pt, shadow yshift=-3pt},
+        path picture={
+            \fill[gray!12] (path picture bounding box.north west) rectangle ([yshift=-9pt]path picture bounding box.north east);
+            \fill[macred] ([xshift=8pt, yshift=-4.5pt]path picture bounding box.north west) circle (1.8pt);
+            \fill[macyellow] ([xshift=14pt, yshift=-4.5pt]path picture bounding box.north west) circle (1.8pt);
+            \fill[macgreen] ([xshift=20pt, yshift=-4.5pt]path picture bounding box.north west) circle (1.8pt);
+        }
+    },
+    treenode/.style={
+        draw=#1!70,
+        top color=white,
+        bottom color=#1!8,
+        line width=1.2pt,
+        rounded corners=6pt,
+        minimum width=2.8cm,
+        minimum height=0.9cm,
+        align=center,
+        font=\small\bfseries,
+        blur shadow={shadow blur steps=5, shadow opacity=15, shadow xshift=1.5pt, shadow yshift=-1.5pt}
+    },
+    codebox/.style={
+        draw=gray!30,
+        fill=gray!5,
+        line width=0.8pt,
+        rounded corners=5pt,
+        align=left,
+        text width=6.5cm,
+        font=\ttfamily\scriptsize,
+        inner sep=8pt,
+        blur shadow={shadow blur steps=5, shadow opacity=15, shadow xshift=1.5pt, shadow yshift=-1.5pt}
+    },
+    warnbox/.style={
+        draw=warncol!80,
+        fill=warncol!5,
+        line width=1.5pt,
+        rounded corners=8pt,
+        align=center,
+        text width=7.5cm,
+        inner sep=10pt,
+        blur shadow={shadow blur steps=10, shadow opacity=30, shadow xshift=3pt, shadow yshift=-4pt},
+        font=\footnotesize
+    },
+    arr/.style={-Stealth=3mm, thick, darktext!75},
+    netarr/.style={-Stealth=3mm, thick, dashed}
+]
+
+% Background canvas and structural dividers (guaranteed to render behind all foreground content)
+\begin{scope}[on background layer]
+    \fill[bgcol] (-13.5,13.0564) rectangle (14.5, -8.0);
+    \draw[thick, dotted, darktext!25] (-3.75, 9.5) -- (-3.75, -7.5);
+    \draw[thick, dotted, darktext!25] (3.75, 9.5) -- (3.75, -7.5);
+\end{scope}
+
+% --- 1. TITLE & SUBTITLE ---
+\node[font=\Huge\bfseries, text=darktext] at (0,12.0564) {The Render-Blocking Paradox of CSS \texttt{background-image}};
+\node[font=\Large, text=darktext!70] at (0,11.2564) {Why Responsive Media Queries in CSS Severely Delay Mobile LCP (Largest Contentful Paint)};
+
+% --- 2. ARCHITECTURE COLUMNS ---
+% Column Headers
+\node[font=\Large\bfseries, text=darktext] at (-8.0486,9.5556) {\faCloud\ Network Layer};
+\node[font=\Large\bfseries, text=darktext] at (0,9.6113) {\faMicrochip\ Main Thread (Parser)};
+\node[font=\Large\bfseries, text=darktext] at (7.8181,9.5) {\faPaintBrush\ Rendering Engine};
+
+% --- 3. THE TIME AXIS (LEFT) ---
+\draw[ultra thick, -Stealth=3mm, darktext!60] (-11.5, 9.5) -- (-11.5, -7.5) node[below=4pt, font=\bfseries\small, text=darktext] {Time (Latency)};
+
+% Realistic Timeline Millisecond Ticks
+\foreach \y/\t in {8.5/{$t=0$ (0 ms)}, 7.0/{+30 ms}, 6.2/{+50 ms}, 5.0/{+150 ms}, 3.5/{+250 ms}, 2.5/{+300 ms}, 0.5/{+360 ms}, -1.5/{+370 ms}, -3.5/{+380 ms}, -4.5/{+500 ms}, -6.5/{+900 ms}} {
+    \draw[thick, darktext!40] (-11.7, \y) -- (-11.3, \y);
+    \node[left=3pt, font=\scriptsize\bfseries, text=darktext!70] at (-11.7, \y) {\t};
+}
+
+% --- 4. TIMELINE FLOW ---
+
+% Step 1: Initial HTML Request / Response & HTML Parsing
+\node[netbox=htmlcol] (hres) at (-7.8817,8.5) {\hspace*{6pt}\color{htmlcol}\faHtml5\ \color{darktext} HTML Document};
+\node[chipbox] (hparse) at (0, 8.5) {\faMicrochip\ Parse HTML \& Build DOM};
+
+\draw[netarr, htmlcol] ([yshift=5pt]hparse.west) -- node[above, font=\scriptsize\bfseries, text=htmlcol!85!black] {Request HTML} ([yshift=5pt]hres.east);
+\draw[netarr, htmlcol] ([yshift=-5pt]hres.east) -- node[below, font=\scriptsize\bfseries, text=htmlcol!85!black] {HTML Stream} ([yshift=-5pt]hparse.west);
+
+% Step 2: DOM Tree Generated (Far Right of Rendering Engine Column at x=9.5, y=6.5)
+\node[treenode=htmlcol] (dom) at (9.5, 6.5) {\color{htmlcol}\faSitemap\ \color{darktext} DOM Tree};
+\draw[arr, htmlcol, line width=1.1pt, rounded corners=6pt] (hparse.east) -- (9.5, 8.5) -- (dom.north);
+
+% Step 3: Parser encounters CSS and BLOCKS
+\node[chipbox, draw=csscol!70] (findcss) at (0, 7.0) {Discover \texttt{<link rel="stylesheet">}};
+\draw[arr, darktext!70] (hparse.south) -- (findcss.north);
+
+% Hazard Barricade Centered at (0, 6.2)
+\begin{scope}
+    \clip[rounded corners=2pt] (-1.8, 6.05) rectangle (1.8, 6.35);
+    \fill[yellow!90!orange] (-1.8, 6.05) rectangle (1.8, 6.35);
+    \foreach \x in {-2.2,-1.85,...,2.2} {
+        \fill[warncol!90!black] (\x, 6.0) -- (\x+0.18, 6.0) -- (\x+0.32, 6.4) -- (\x+0.14, 6.4) -- cycle;
+    }
+\end{scope}
+\draw[darktext!80, line width=0.8pt, rounded corners=2pt] (-1.8, 6.05) rectangle (1.8, 6.35);
+\node[font=\footnotesize\bfseries, text=warncol, anchor=west] at (2.0, 6.2) {\faPauseCircle\ Parser Blocked!};
+\draw[arr, darktext!70] (findcss.south) -- (0, 6.35);
+
+% Step 4: CSS Stylesheet Network Fetch & CSS Parsing
+\node[netbox=csscol] (cres) at (-7.8817,5) {\hspace*{6pt}\color{csscol}\faIcon{css3-alt}\ \color{darktext} CSS Stylesheet};
+\node[chipbox] (cparse) at (0, 5.0) {\faMicrochip\ Parse CSS \& Build CSSOM};
+\draw[arr, darktext!70] (0, 6.05) -- (cparse.north);
+
+\draw[netarr, csscol] ([yshift=5pt]cparse.west) -- node[above, font=\scriptsize\bfseries, text=csscol!85!black] {Request CSS} ([yshift=5pt]cres.east);
+\draw[netarr, csscol] ([yshift=-5pt]cres.east) -- node[below, font=\scriptsize\bfseries, text=csscol!85!black] {CSS Response} ([yshift=-5pt]cparse.west);
+
+% Step 5: CSSOM Tree Generated (Inner Left of Rendering Engine Column at x=5.5, y=3.5)
+\node[treenode=csscol] (cssom) at (5.5, 3.5) {\color{csscol}\faTree\ \color{darktext} CSSOM Tree};
+\draw[arr, csscol, line width=1.1pt, rounded corners=6pt] (cparse.east) -- (5.5, 5.0) -- (cssom.north);
+
+% Step 6: The Hidden URL Code Box (Main Thread Column at x=0, y=2.5)
+\node[codebox] (code) at (0, 2.5) {
+@media (max-width: 600px) \{ \\
+\hspace*{1em}.hero \{ \\
+\hspace*{2em}background-image: url('mob.jpg'); \\
+\hspace*{1em}\} \\
+\}
+};
+\node[font=\scriptsize, text=darktext!80, align=center] (urltext) at (0, 3.8) {\textit{Image URL hidden inside CSS logic} \faArrowDown};
+\draw[arr, csscol!70, dashed] (cparse.south) -- (urltext.north);
+
+% Step 7: Render Tree Construction (Rendering Engine Column at x=7.5, y=0.5)
+\node[browserbox, draw=purplecol!60] (rtree) at (7.5, 0.5) {
+    \vspace{0.18cm}\\
+    \color{purplecol}\faLayerGroup\ \color{darktext} Render Tree Construction
+};
+
+% Non-Crossing Orthogonal Paths into Render Tree with Smooth 6pt Rounded Corners
+\draw[arr, htmlcol, line width=1.2pt, rounded corners=6pt] (dom.south) -- (9.5, 1.5) -- (8.2, 1.5) -- (8.2, 1.2);
+\draw[arr, csscol, line width=1.2pt, rounded corners=6pt] (cssom.south) -- (5.5, 1.5) -- (6.8, 1.5) -- (6.8, 1.2);
+
+% Step 8: THE PARADOX (Floating Explanatory Callout Panel at x=1.0, y=-1.5)
+\node[warnbox] (paradox) at (-0.8079,-1.3053) {
+    \textbf{\color{warncol}\faExclamationTriangle\ THE PARADOX}\\[5pt]
+    The browser \textbf{cannot} request the image until it mathematically combines the DOM and CSSOM to answer:\\[4pt]
+    1. Does the node \texttt{.hero} exist? (DOM)\\
+    2. Is the viewport currently $< 600\text{px}$? (CSSOM)\\[4pt]
+    \textit{Only then does it realize it needs the image!}
+};
+\draw[dashed, thick, warncol!90!black, -Stealth=2.5mm] (paradox.east) -- (7.5, -1.5);
+
+% Step 9: Main Downward Execution Flow to Image Discovery (x=7.5, y=-3.5)
+\node[browserbox, draw=imgcol!80] (needimg) at (7.5, -3.5) {
+    \vspace{0.18cm}\\
+    \color{imgcol!90!black}\faSearch\ \color{darktext} Image Finally Discovered!
+};
+\draw[arr, warncol, ultra thick] (rtree.south) -- (needimg.north);
+
+% Step 10: Late Image Fetch Cycle
+\node[netbox=imgcol] (ires) at (-7.5, -4.5) {\hspace*{6pt}\color{imgcol}\faImage\ \color{darktext} Image Resource};
+
+\draw[netarr, imgcol, line width=1pt, rounded corners=6pt] (needimg.west) -- (4.85, -3.5) -- (4.2937,-4.2274) -- node[above, font=\scriptsize\bfseries, text=imgcol!90!black] {Late Request (Image URL)} ([yshift=3pt]ires.east);
+
+% Step 11: Final Paint (LCP) at x=7.5, y=-6.5
+\node[browserbox, draw=successcol!80, fill=successcol!5] (paint) at (7.5, -6.5) {
+    \vspace{0.18cm}\\
+    \color{successcol}\faCheckCircle\ \color{darktext} Final Paint (LCP)
+};
+
+\draw[netarr, imgcol, line width=1pt, rounded corners=6pt] ([yshift=-3pt]ires.east) -- (-4.85, -4.6) -- (-4.85, -6.5) -- node[above, font=\scriptsize\bfseries, text=imgcol!90!black] {Return Image Bytes} (paint.west);
+\draw[arr, successcol, ultra thick] (needimg.south) -- (paint.north);
+
+% --- 5. LATENCY INDICATOR (Positioned at x = 11.5) ---
+\draw[warncol, dashed, thick] (rtree.east) -- (11.5, 0.5);
+\draw[warncol, dashed, thick] (paint.east) -- (11.5, -6.5);
+\draw[{Stealth[length=3.5mm]}-Stealth=3mm, line width=2pt, warncol] (11.5, 0.5) -- (11.5, -6.5)
+    node[midway, right=4mm, align=left, font=\small\bfseries, text=warncol] {Critical\\Latency\\Penalty};
+
+\end{tikzpicture}
+\end{document}

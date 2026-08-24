@@ -1,0 +1,560 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\usepackage{fontspec}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+
+% --- COLOR PALETTE ---
+\definecolor{desktopColor}{RGB}{142, 68, 173} % Purple / Indigo
+\definecolor{mobileColor}{RGB}{39, 174, 96}   % Green
+\definecolor{imageColor}{RGB}{41, 128, 185}   % Blue
+\definecolor{cropColor}{RGB}{231, 76, 60}     % Red
+\definecolor{textColor}{RGB}{44, 62, 80}
+\definecolor{slate}{RGB}{30, 41, 59}
+
+\providecolor{gold}{RGB}{245, 166, 35}
+\providecolor{navy}{RGB}{15, 32, 67}
+\providecolor{lightblue}{RGB}{135, 206, 250}
+\providecolor{DarkGreen}{RGB}{19, 78, 42}
+\providecolor{MidnightBlue}{RGB}{25, 35, 75}
+\providecolor{NavyBlue}{RGB}{16, 44, 87}
+\providecolor{SkyBlue}{RGB}{125, 185, 232}
+\providecolor{LightBlue}{RGB}{185, 220, 245}
+\providecolor{ForestGreen}{RGB}{34, 115, 50}
+\providecolor{Brown}{RGB}{115, 65, 35}
+
+% Realistic Portrait Bust Palette
+\definecolor{skinTone}{RGB}{238, 195, 165}
+\definecolor{skinShadow}{RGB}{210, 155, 125}
+\definecolor{hairDark}{RGB}{40, 28, 24}
+\definecolor{clothColor}{RGB}{214, 69, 41}
+\definecolor{clothShadow}{RGB}{160, 45, 25}
+\definecolor{bgStudio}{RGB}{222, 234, 246}
+
+\begin{document}
+\sffamily
+\begin{tikzpicture}[
+    box/.style={
+        draw=black!15,
+        fill=white,
+        rounded corners=6pt,
+        blur shadow={shadow opacity=10, shadow blur steps=4},
+        inner sep=12pt,
+        line width=0.8pt
+    },
+    annot/.style={font=\footnotesize, text=textColor, align=center},
+    clippedBadge/.style={
+        fill=slate!90,
+        text=white,
+        font=\small\bfseries,
+        rounded corners=3pt,
+        inner sep=5pt,
+        align=center,
+        drop shadow={opacity=0.2}
+    },
+    anchorBadge/.style={
+        fill=white,
+        draw=red!80,
+        line width=0.8pt,
+        rounded corners=3pt,
+        inner sep=4pt,
+        font=\scriptsize\bfseries,
+        text=red!90!black,
+        drop shadow={opacity=0.2}
+    },
+    pinetree/.pic={
+        \fill[DarkGreen!50!black] (-0.18, 0) -- (0, 0.7) -- (0.18, 0) -- cycle;
+        \fill[DarkGreen!65!black] (-0.25, -0.3) -- (0, 0.45) -- (0.25, -0.3) -- cycle;
+        \fill[DarkGreen!80!black] (-0.32, -0.6) -- (0, 0.2) -- (0.32, -0.6) -- cycle;
+        \fill[Brown!80!black] (-0.05, -0.85) rectangle (0.05, -0.6);
+    }
+]
+
+% =============================================================
+% GLOBAL TITLES
+% =============================================================
+\node[font=\Huge\bfseries, text=slate!90!black, align=center] at (0, 25) {Flexible Media \& Art Direction};
+\node[font=\Large, text=gray!80!black, align=center] at (0, 24) {How \texttt{object-fit} and \texttt{object-position} handle fluid responsive layouts};
+
+% =============================================================
+% TOP SECTION: Desktop (Landscape Container, Portrait Image)
+% =============================================================
+\node[font=\LARGE\bfseries, text=desktopColor] at (0, 22) {\faDesktop\ Desktop Viewport (16:9 Container)};
+
+% -------------------------------------------------------------
+% TOP LEFT: Desktop Default (50% 50%)
+% -------------------------------------------------------------
+\begin{scope}[shift={(-12, 15)}]
+    % Step 1: Base Scaled Image (3:4 aspect ratio scaled to cover 16:9 container)
+    % Bounds: (-4, -5.33) to (4, 5.33)
+    \begin{scope}
+        \clip (-4, -5.33) rectangle (4, 5.33);
+
+        % Studio Backdrop
+        \shade[top color=bgStudio, bottom color=bgStudio!40!white] (-4, -5.33) rectangle (4, 5.33);
+        \shade[inner color=white, outer color=bgStudio, opacity=0.75] (0, 2.0) circle (2.8);
+
+        % Shaded Vector Bust (Clothing)
+        \shade[top color=clothColor, bottom color=clothShadow]
+            (-3.0, -5.33) -- (-2.8, -1.8) .. controls (-2.5, -0.2) and (-1.2, 0.5) .. (-0.4, 0.7)
+            -- (0, -0.8) -- (0.4, 0.7) .. controls (1.2, 0.5) and (2.5, -0.2) .. (2.8, -1.8)
+            -- (3.0, -5.33) -- cycle;
+
+        % Shirt Collar
+        \fill[white] (-0.7, 0.9) -- (0, -0.6) -- (0.7, 0.9) -- (0.4, 0.7) -- (-0.4, 0.7) -- cycle;
+        \fill[gray!25] (-0.05, -0.6) -- (0, -0.6) -- (0.7, 0.9) -- (0.5, 0.9) -- cycle;
+
+        % Neck
+        \shade[top color=skinTone, bottom color=skinShadow]
+            (-0.48, 1.5) -- (-0.48, 0.7) .. controls (-0.2, 0.4) and (0.2, 0.4) .. (0.48, 0.7) -- (0.48, 1.5) -- cycle;
+
+        % Head & Ears
+        \fill[skinShadow] (-1.1, 2.1) circle [x radius=0.18, y radius=0.32];
+        \fill[skinShadow] (1.1, 2.1) circle [x radius=0.18, y radius=0.32];
+        \shade[top color=skinTone!95!white, bottom color=skinShadow] (0, 2.2) circle [x radius=1.1, y radius=1.3];
+
+        % Facial Features
+        \draw[hairDark, line width=1.6pt, line cap=round] (-0.6, 2.5) .. controls (-0.4, 2.58) .. (-0.2, 2.48);
+        \draw[hairDark, line width=1.6pt, line cap=round] (0.2, 2.48) .. controls (0.4, 2.58) .. (0.6, 2.5);
+        \fill[textColor] (-0.38, 2.3) circle (0.08);
+        \fill[textColor] (0.38, 2.3) circle (0.08);
+        \draw[skinShadow!70!black, line width=1.1pt, line cap=round] (0, 2.35) -- (0.06, 2.05) -- (-0.08, 1.98);
+        \draw[clothColor!80!black, line width=1.3pt, line cap=round] (-0.26, 1.65) .. controls (0, 1.58) .. (0.26, 1.65);
+
+        % Glasses
+        \draw[textColor, line width=1.2pt] (-0.4, 2.3) circle [x radius=0.3, y radius=0.24];
+        \draw[textColor, line width=1.2pt] (0.4, 2.3) circle [x radius=0.3, y radius=0.24];
+        \draw[textColor, line width=1.2pt] (-0.1, 2.32) -- (0.1, 2.32);
+
+        % Hair
+        \shade[top color=hairDark!80!black, bottom color=hairDark]
+            (-1.12, 2.2) .. controls (-1.2, 3.3) and (-0.5, 3.7) .. (0, 3.7)
+            .. controls (0.75, 3.7) and (1.25, 3.1) .. (1.12, 2.1)
+            .. controls (0.9, 2.8) and (0.6, 3.25) .. (0.1, 3.15)
+            .. controls (-0.4, 3.05) and (-0.8, 2.65) .. (-1.12, 2.2) -- cycle;
+    \end{scope}
+
+    % Step 2: Developer Blueprint Frosted Glass Clipping Regions (Top and Bottom)
+    % Top Crop: (-4, 2.25) to (4, 5.33)
+    \fill[black, opacity=0.75] (-4, 2.25) rectangle (4, 5.33);
+    \fill[pattern={Lines[angle=45,distance=4pt]}, pattern color=red!30, opacity=0.5] (-4, 2.25) rectangle (4, 5.33);
+    \draw[red!80, dashed, line width=1.5pt] (-4, 2.25) rectangle (4, 5.33);
+
+    % Bottom Crop: (-4, -5.33) to (4, -2.25)
+    \fill[black, opacity=0.75] (-4, -5.33) rectangle (4, -2.25);
+    \fill[pattern={Lines[angle=45,distance=4pt]}, pattern color=red!30, opacity=0.5] (-4, -5.33) rectangle (4, -2.25);
+    \draw[red!80, dashed, line width=1.5pt] (-4, -5.33) rectangle (4, -2.25);
+
+    % Step 3: macOS Browser Window Frame & Shadow (Punched window using even odd rule)
+    \fill[gray!20, even odd rule, blur shadow={shadow opacity=20, shadow blur steps=5}]
+        [rounded corners=6pt] (-4.15, -2.4) rectangle (4.15, 2.9)
+        [sharp corners] (-4, -2.25) rectangle (4, 2.25);
+    \fill[gray!25, rounded corners=6pt] (-4.15, 2.25) rectangle (4.15, 2.9);
+    \fill[gray!25] (-4.15, 2.25) rectangle (4.15, 2.5);
+    \draw[gray!40, line width=1pt, rounded corners=6pt] (-4.15, -2.4) rectangle (4.15, 2.9);
+
+    % Window Traffic Lights
+    \fill[red!80!black] (-3.7, 2.58) circle (0.12);
+    \fill[orange!90!black] (-3.35, 2.58) circle (0.12);
+    \fill[green!70!black] (-3.0, 2.58) circle (0.12);
+
+    % URL Bar
+    \fill[white, rounded corners=3pt, draw=gray!35, line width=0.6pt] (-1.5, 2.38) rectangle (2.8, 2.78);
+    \node[font=\tiny\ttfamily, text=gray!70!black, anchor=west] at (-1.4, 2.58) {\faLock\ https://example.com/art-direction};
+
+    % Step 4 & 5: Container Viewport Bounds (16:9) & Matrix Crosshair
+    \draw[desktopColor, line width=2.5pt] (-4, -2.25) rectangle (4, 2.25);
+
+    % Helper Axes Matrix & Anchor Crosshair (50% 50% = Dead Center)
+    \draw[gray!60, densely dotted, line width=0.8pt] (-4, 0) -- (4, 0);
+    \draw[gray!60, densely dotted, line width=0.8pt] (0, -5.33) -- (0, 5.33);
+
+    \draw[red!90!black, line width=1.2pt] (0, 0) circle (0.35);
+    \draw[red!90!black, line width=1.2pt] (-0.5, 0) -- (0.5, 0);
+    \draw[red!90!black, line width=1.2pt] (0, -0.5) -- (0, 0.5);
+    \fill[red!90!black] (0, 0) circle (0.07);
+    \node[anchorBadge] (anchorTL) at (5.8, 0) {Anchor: (50\%, 50\%)};
+    \draw[-Stealth=3mm, red!90!black, line width=1pt] (anchorTL.west) -- (0.2, 0);
+
+    % Clipped Labels
+    \node[clippedBadge] at (0, 3.79) {\faCut\ Clipped (Top)};
+    \node[clippedBadge] at (0, -3.79) {\faCut\ Clipped (Bottom)};
+\end{scope}
+
+\node[box, text width=8.5cm, anchor=north] at (-12, 7.5) {
+    \textbf{Default: \texttt{object-position: 50\% 50\%}}\\[4pt]
+    The browser automatically centers the image. However, the critical focal point (the subject's face) is dangerously close to being cropped off on ultra-wide screens.
+};
+
+% -------------------------------------------------------------
+% TOP RIGHT: Desktop with Art Direction (50% 20%)
+% -------------------------------------------------------------
+\begin{scope}[shift={(12, 15)}]
+    % Step 1: Art-Directed Scaled Image: Exact bounds shifted to (-4, -7.18) to (4, 3.48)
+    \begin{scope}
+        \clip (-4, -7.18) rectangle (4, 3.48);
+
+        \begin{scope}[shift={(0, -1.85)}]
+            % Studio Backdrop
+            \shade[top color=bgStudio, bottom color=bgStudio!40!white] (-4, -5.33) rectangle (4, 5.33);
+            \shade[inner color=white, outer color=bgStudio, opacity=0.75] (0, 2.0) circle (2.8);
+
+            % Shaded Vector Bust (Clothing)
+            \shade[top color=clothColor, bottom color=clothShadow]
+                (-3.0, -5.33) -- (-2.8, -1.8) .. controls (-2.5, -0.2) and (-1.2, 0.5) .. (-0.4, 0.7)
+                -- (0, -0.8) -- (0.4, 0.7) .. controls (1.2, 0.5) and (2.5, -0.2) .. (2.8, -1.8)
+                -- (3.0, -5.33) -- cycle;
+
+            % Shirt Collar
+            \fill[white] (-0.7, 0.9) -- (0, -0.6) -- (0.7, 0.9) -- (0.4, 0.7) -- (-0.4, 0.7) -- cycle;
+            \fill[gray!25] (-0.05, -0.6) -- (0, -0.6) -- (0.7, 0.9) -- (0.5, 0.9) -- cycle;
+
+            % Neck
+            \shade[top color=skinTone, bottom color=skinShadow]
+                (-0.48, 1.5) -- (-0.48, 0.7) .. controls (-0.2, 0.4) and (0.2, 0.4) .. (0.48, 0.7) -- (0.48, 1.5) -- cycle;
+
+            % Head & Ears
+            \fill[skinShadow] (-1.1, 2.1) circle [x radius=0.18, y radius=0.32];
+            \fill[skinShadow] (1.1, 2.1) circle [x radius=0.18, y radius=0.32];
+            \shade[top color=skinTone!95!white, bottom color=skinShadow] (0, 2.2) circle [x radius=1.1, y radius=1.3];
+
+            % Facial Features
+            \draw[hairDark, line width=1.6pt, line cap=round] (-0.6, 2.5) .. controls (-0.4, 2.58) .. (-0.2, 2.48);
+            \draw[hairDark, line width=1.6pt, line cap=round] (0.2, 2.48) .. controls (0.4, 2.58) .. (0.6, 2.5);
+            \fill[textColor] (-0.38, 2.3) circle (0.08);
+            \fill[textColor] (0.38, 2.3) circle (0.08);
+            \draw[skinShadow!70!black, line width=1.1pt, line cap=round] (0, 2.35) -- (0.06, 2.05) -- (-0.08, 1.98);
+            \draw[clothColor!80!black, line width=1.3pt, line cap=round] (-0.26, 1.65) .. controls (0, 1.58) .. (0.26, 1.65);
+
+            % Glasses
+            \draw[textColor, line width=1.2pt] (-0.4, 2.3) circle [x radius=0.3, y radius=0.24];
+            \draw[textColor, line width=1.2pt] (0.4, 2.3) circle [x radius=0.3, y radius=0.24];
+            \draw[textColor, line width=1.2pt] (-0.1, 2.32) -- (0.1, 2.32);
+
+            % Hair
+            \shade[top color=hairDark!80!black, bottom color=hairDark]
+                (-1.12, 2.2) .. controls (-1.2, 3.3) and (-0.5, 3.7) .. (0, 3.7)
+                .. controls (0.75, 3.7) and (1.25, 3.1) .. (1.12, 2.1)
+                .. controls (0.9, 2.8) and (0.6, 3.25) .. (0.1, 3.15)
+                .. controls (-0.4, 3.05) and (-0.8, 2.65) .. (-1.12, 2.2) -- cycle;
+        \end{scope}
+    \end{scope}
+
+    % Step 2: Developer Blueprint Frosted Glass Clipping Regions (Shifted Exact Bounds)
+    % Top Crop: (-4, 2.25) to (4, 3.48)
+    \fill[black, opacity=0.75] (-4, 2.25) rectangle (4, 3.48);
+    \fill[pattern={Lines[angle=45,distance=4pt]}, pattern color=red!30, opacity=0.5] (-4, 2.25) rectangle (4, 3.48);
+    \draw[red!80, dashed, line width=1.5pt] (-4, 2.25) rectangle (4, 3.48);
+
+    % Bottom Crop: (-4, -7.18) to (4, -2.25)
+    \fill[black, opacity=0.75] (-4, -7.18) rectangle (4, -2.25);
+    \fill[pattern={Lines[angle=45,distance=4pt]}, pattern color=red!30, opacity=0.5] (-4, -7.18) rectangle (4, -2.25);
+    \draw[red!80, dashed, line width=1.5pt] (-4, -7.18) rectangle (4, -2.25);
+
+    % Step 3: macOS Browser Window Frame & Shadow (Punched window using even odd rule)
+    \fill[gray!20, even odd rule, blur shadow={shadow opacity=20, shadow blur steps=5}]
+        [rounded corners=6pt] (-4.15, -2.4) rectangle (4.15, 2.9)
+        [sharp corners] (-4, -2.25) rectangle (4, 2.25);
+    \fill[gray!25, rounded corners=6pt] (-4.15, 2.25) rectangle (4.15, 2.9);
+    \fill[gray!25] (-4.15, 2.25) rectangle (4.15, 2.5);
+    \draw[gray!40, line width=1pt, rounded corners=6pt] (-4.15, -2.4) rectangle (4.15, 2.9);
+
+    % Window Traffic Lights
+    \fill[red!80!black] (-3.7, 2.58) circle (0.12);
+    \fill[orange!90!black] (-3.35, 2.58) circle (0.12);
+    \fill[green!70!black] (-3.0, 2.58) circle (0.12);
+
+    % URL Bar
+    \fill[white, rounded corners=3pt, draw=gray!35, line width=0.6pt] (-1.5, 2.38) rectangle (2.8, 2.78);
+    \node[font=\tiny\ttfamily, text=gray!70!black, anchor=west] at (-1.4, 2.58) {\faLock\ https://example.com/art-direction};
+
+    % Step 4 & 5: Container Viewport Bounds (16:9) & Matrix Crosshair
+    \draw[desktopColor, line width=2.5pt] (-4, -2.25) rectangle (4, 2.25);
+
+    % Helper Axes Matrix & Anchor Crosshair (50% 20% = Y at 1.35)
+    \draw[gray!60, densely dotted, line width=0.8pt] (-4, 1.35) -- (4, 1.35);
+    \draw[gray!60, densely dotted, line width=0.8pt] (0, -7.18) -- (0, 3.48);
+
+    \draw[red!90!black, line width=1.2pt] (0, 1.35) circle (0.35);
+    \draw[red!90!black, line width=1.2pt] (-0.5, 1.35) -- (0.5, 1.35);
+    \draw[red!90!black, line width=1.2pt] (0, 0.85) -- (0, 1.85);
+    \fill[red!90!black] (0, 1.35) circle (0.07);
+    \node[anchorBadge] (anchorTR) at (5.8, 1.35) {Anchor: (50\%, 20\%)};
+    \draw[-Stealth=3mm, red!90!black, line width=1pt] (anchorTR.west) -- (0.2, 1.35);
+
+    % Clipped Labels
+    \node[clippedBadge] at (0, 3.2) {\faCut\ Clipped (Top)};
+    \node[clippedBadge] at (0, -4.715) {\faCut\ Clipped (Bottom)};
+\end{scope}
+
+\node[box, text width=8.5cm, anchor=north] at (12, 7.5) {
+    \textbf{Art Direction: \texttt{object-position: 50\% 20\%}}\\[4pt]
+    By shifting the coordinate matrix relative to the container, we explicitly anchor the image to the subject's face, ensuring it survives the aggressive 16:9 vertical crop.
+};
+
+% Separator Line
+\draw[thick, dashed, gray!50] (-18, 4.0) -- (18, 4.0);
+
+% =============================================================
+% BOTTOM SECTION: Mobile (Portrait Container, Landscape Image)
+% =============================================================
+\node[font=\LARGE\bfseries, text=mobileColor] at (-0.6511,1.1484) {\faIcon{mobile-alt}\ Mobile Viewport (9:16 Container)};
+
+% -------------------------------------------------------------
+% BOTTOM LEFT: Mobile Default Center Crop (50% 50%)
+% -------------------------------------------------------------
+\begin{scope}[shift={(-12, -8)}]
+    % Step 1: Base Scaled Landscape Image: (-7.11, -4) to (7.11, 4)
+    \begin{scope}
+        \clip (-7.11, -4) rectangle (7.11, 4);
+
+        % Sky Gradient & Radial Gradient Sun
+        \shade[top color=NavyBlue!90!black, bottom color=SkyBlue!45!white] (-7.11, -4) rectangle (7.11, 4);
+        \shade[inner color=white, outer color=gold, opacity=0.95] (4.0, 1.8) circle (1.2);
+        \shade[inner color=gold!50!white, outer color=SkyBlue!10!white, opacity=0.4] (4.0, 1.8) circle (2.2);
+
+        % Distant Haze Mountain Range
+        \shade[top color=NavyBlue!45!slate, bottom color=SkyBlue!25!white, opacity=0.65]
+            (-7.11, -4) -- (-7.11, -0.5) -- (-5.5, 1.8) -- (-3.5, 0.5) -- (-1.5, 2.4)
+            -- (1.0, 0.2) -- (3.0, 2.0) -- (5.5, -0.2) -- (7.11, 1.0) -- (7.11, -4) -- cycle;
+
+        % Photorealistic Main Mountain Range
+        \shade[top color=MidnightBlue, bottom color=LightBlue!40!slate]
+            (-7.11, -4) -- (-6.5, -1.5) -- (-5, 1.0) -- (-3, 2.5) -- (-2, 0.2)
+            -- (-0.5, 3.2) -- (0.8, 1.0) -- (2.2, 2.6) -- (4.5, -0.8) -- (6, 0.8)
+            -- (7.11, -1.2) -- (7.11, -4) -- cycle;
+
+        % Mountain Snow Caps
+        \fill[white, opacity=0.92] (-3, 2.5) -- (-3.5, 1.6) -- (-3.2, 1.3) -- (-2.8, 1.7) -- (-2.4, 1.4) -- cycle;
+        \fill[white, opacity=0.92] (-0.5, 3.2) -- (-1.1, 2.1) -- (-0.8, 1.7) -- (-0.3, 2.2) -- (0.2, 1.8) -- (0.5, 2.3) -- cycle;
+        \fill[white, opacity=0.92] (2.2, 2.6) -- (1.6, 1.8) -- (2.0, 1.5) -- (2.5, 1.9) -- cycle;
+
+        % Mid-ground Forest Ridge
+        \shade[top color=DarkGreen!65!black, bottom color=DarkGreen!35!black]
+            (-7.11, -4) -- (-6, -2.5) -- (-4.5, -1.2) -- (-2.5, -2.2) -- (0, -1.0)
+            -- (2.5, -2.5) -- (4.5, -1.5) -- (7.11, -3.0) -- (7.11, -4) -- cycle;
+
+        % Foreground Silhouette & Pine Trees
+        \fill[DarkGreen!90!black]
+            (-7.11, -4) .. controls (-4, -2.8) and (-1, -3.2) .. (2, -2.8)
+            .. controls (4, -2.4) and (6, -3.5) .. (7.11, -4) -- cycle;
+
+        \pic[scale=0.9] at (-6.0, -2.4) {pinetree};
+        \pic[scale=1.1] at (-4.8, -2.6) {pinetree};
+        \pic[scale=1.3] at (-2.0, -2.5) {pinetree};
+        \pic[scale=0.9] at (-0.8, -2.6) {pinetree};
+        \pic[scale=1.2] at (0.8, -2.5) {pinetree};
+        \pic[scale=1.0] at (1.8, -2.4) {pinetree};
+        \pic[scale=1.4] at (3.8, -2.4) {pinetree};
+        \pic[scale=1.1] at (5.5, -2.7) {pinetree};
+    \end{scope}
+
+    % Step 2: Developer Blueprint Frosted Glass Clipping Regions (Left and Right)
+    % Left Crop: (-7.11, -4) to (-2.25, 4)
+    \fill[black, opacity=0.75] (-7.11, -4) rectangle (-2.25, 4);
+    \fill[pattern={Lines[angle=45,distance=4pt]}, pattern color=red!30, opacity=0.5] (-7.11, -4) rectangle (-2.25, 4);
+    \draw[red!80, dashed, line width=1.5pt] (-7.11, -4) rectangle (-2.25, 4);
+
+    % Right Crop: (2.25, -4) to (7.11, 4)
+    \fill[black, opacity=0.75] (2.25, -4) rectangle (7.11, 4);
+    \fill[pattern={Lines[angle=45,distance=4pt]}, pattern color=red!30, opacity=0.5] (2.25, -4) rectangle (7.11, 4);
+    \draw[red!80, dashed, line width=1.5pt] (2.25, -4) rectangle (7.11, 4);
+
+    % Step 3: Smartphone Chassis Bezel (Punched window using even odd rule)
+    \fill[black!88, even odd rule, blur shadow={shadow opacity=25, shadow blur steps=5}]
+        [rounded corners=16pt] (-2.5, -4.35) rectangle (2.5, 4.35)
+        [sharp corners] (-2.25, -4) rectangle (2.25, 4);
+
+    % Side Buttons
+    \fill[black!70] (2.5, 1.2) rectangle (2.56, 2.0);
+    \fill[black!70] (-2.56, 1.8) rectangle (-2.5, 2.5);
+    \fill[black!70] (-2.56, 0.9) rectangle (-2.5, 1.6);
+
+    % Dynamic Island / Camera Cutout & Home Bar
+    \fill[black!95, rounded corners=4pt] (-0.65, 3.65) rectangle (0.65, 3.9);
+    \fill[blue!40!black] (0.35, 3.77) circle (0.05);
+    \fill[white!70!gray, rounded corners=1.5pt] (-0.75, -4.18) rectangle (0.75, -4.12);
+
+    % Step 4 & 5: Container Viewport Bounds (9:16) & Matrix Crosshair
+    \draw[mobileColor, line width=2.5pt] (-2.25, -4) rectangle (2.25, 4);
+
+    % Helper Axes Matrix & Anchor Crosshair (50% 50% = Dead Center)
+    \draw[gray!60, densely dotted, line width=0.8pt] (-7.11, 0) -- (7.11, 0);
+    \draw[gray!60, densely dotted, line width=0.8pt] (0, -4) -- (0, 4);
+
+    \draw[red!90!black, line width=1.2pt] (0, 0) circle (0.35);
+    \draw[red!90!black, line width=1.2pt] (-0.5, 0) -- (0.5, 0);
+    \draw[red!90!black, line width=1.2pt] (0, -0.5) -- (0, 0.5);
+    \fill[red!90!black] (0, 0) circle (0.07);
+    \node[anchorBadge] (anchorBL) at (8.5, 0) {Anchor: (50\%, 50\%)};
+    \draw[-Stealth=3mm, red!90!black, line width=1pt] (anchorBL.west) -- (0.2, 0);
+
+    % Clipped Labels
+    \node[clippedBadge, rotate=90] at (-4.68, -2.0) {\faCut\ Clipped};
+    \node[clippedBadge, rotate=-90] at (4.68, 2.0) {\faCut\ Clipped};
+\end{scope}
+
+\node[box, text width=8.5cm, anchor=north] at (-12, -13.5) {
+    \textbf{Default Center Crop}\\[4pt]
+    The container shrinks horizontally. The rendering engine maintains scale based on the container's height, mercilessly cropping the left and right peripheral data.
+};
+
+% -------------------------------------------------------------
+% BOTTOM RIGHT: Mobile Art Direction (100% 50%)
+% -------------------------------------------------------------
+\begin{scope}[shift={(12, -8)}]
+    % Step 1: Art-Directed Landscape Image: Exact bounds shifted to (-11.97, -4) to (2.25, 4)
+    \begin{scope}
+        \clip (-11.97, -4) rectangle (2.25, 4);
+
+        \begin{scope}[shift={(-4.86, 0)}]
+            % Sky Gradient & Radial Gradient Sun (Sun is now perfectly centered at X = -0.86)
+            \shade[top color=NavyBlue!90!black, bottom color=SkyBlue!45!white] (-7.11, -4) rectangle (7.11, 4);
+            \shade[inner color=white, outer color=gold, opacity=0.95] (4.0, 1.8) circle (1.2);
+            \shade[inner color=gold!50!white, outer color=SkyBlue!10!white, opacity=0.4] (4.0, 1.8) circle (2.2);
+
+            % Distant Haze Mountain Range
+            \shade[top color=NavyBlue!45!slate, bottom color=SkyBlue!25!white, opacity=0.65]
+                (-7.11, -4) -- (-7.11, -0.5) -- (-5.5, 1.8) -- (-3.5, 0.5) -- (-1.5, 2.4)
+                -- (1.0, 0.2) -- (3.0, 2.0) -- (5.5, -0.2) -- (7.11, 1.0) -- (7.11, -4) -- cycle;
+
+            % Photorealistic Main Mountain Range
+            \shade[top color=MidnightBlue, bottom color=LightBlue!40!slate]
+                (-7.11, -4) -- (-6.5, -1.5) -- (-5, 1.0) -- (-3, 2.5) -- (-2, 0.2)
+                -- (-0.5, 3.2) -- (0.8, 1.0) -- (2.2, 2.6) -- (4.5, -0.8) -- (6, 0.8)
+                -- (7.11, -1.2) -- (7.11, -4) -- cycle;
+
+            % Mountain Snow Caps
+            \fill[white, opacity=0.92] (-3, 2.5) -- (-3.5, 1.6) -- (-3.2, 1.3) -- (-2.8, 1.7) -- (-2.4, 1.4) -- cycle;
+            \fill[white, opacity=0.92] (-0.5, 3.2) -- (-1.1, 2.1) -- (-0.8, 1.7) -- (-0.3, 2.2) -- (0.2, 1.8) -- (0.5, 2.3) -- cycle;
+            \fill[white, opacity=0.92] (2.2, 2.6) -- (1.6, 1.8) -- (2.0, 1.5) -- (2.5, 1.9) -- cycle;
+
+            % Mid-ground Forest Ridge
+            \shade[top color=DarkGreen!65!black, bottom color=DarkGreen!35!black]
+                (-7.11, -4) -- (-6, -2.5) -- (-4.5, -1.2) -- (-2.5, -2.2) -- (0, -1.0)
+                -- (2.5, -2.5) -- (4.5, -1.5) -- (7.11, -3.0) -- (7.11, -4) -- cycle;
+
+            % Foreground Silhouette & Pine Trees
+            \fill[DarkGreen!90!black]
+                (-7.11, -4) .. controls (-4, -2.8) and (-1, -3.2) .. (2, -2.8)
+                .. controls (4, -2.4) and (6, -3.5) .. (7.11, -4) -- cycle;
+
+            \pic[scale=0.9] at (-6.0, -2.4) {pinetree};
+            \pic[scale=1.1] at (-4.8, -2.6) {pinetree};
+            \pic[scale=1.3] at (-2.0, -2.5) {pinetree};
+            \pic[scale=0.9] at (-0.8, -2.6) {pinetree};
+            \pic[scale=1.2] at (0.8, -2.5) {pinetree};
+            \pic[scale=1.0] at (1.8, -2.4) {pinetree};
+            \pic[scale=1.4] at (3.8, -2.4) {pinetree};
+            \pic[scale=1.1] at (5.5, -2.7) {pinetree};
+        \end{scope}
+    \end{scope}
+
+    % Step 2: Developer Blueprint Frosted Glass Clipping Region (Left-hand side only)
+    % Left Crop: (-11.97, -4) to (-2.25, 4)
+    \fill[black, opacity=0.75] (-11.97, -4) rectangle (-2.25, 4);
+    \fill[pattern={Lines[angle=45,distance=4pt]}, pattern color=red!30, opacity=0.5] (-11.97, -4) rectangle (-2.25, 4);
+    \draw[red!80, dashed, line width=1.5pt] (-11.97, -4) rectangle (-2.25, 4);
+
+    % Step 3: Smartphone Chassis Bezel (Punched window using even odd rule)
+    \fill[black!88, even odd rule, blur shadow={shadow opacity=25, shadow blur steps=5}]
+        [rounded corners=16pt] (-2.5, -4.35) rectangle (2.5, 4.35)
+        [sharp corners] (-2.25, -4) rectangle (2.25, 4);
+
+    % Side Buttons
+    \fill[black!70] (2.5, 1.2) rectangle (2.56, 2.0);
+    \fill[black!70] (-2.56, 1.8) rectangle (-2.5, 2.5);
+    \fill[black!70] (-2.56, 0.9) rectangle (-2.5, 1.6);
+
+    % Dynamic Island / Camera Cutout & Home Bar
+    \fill[black!95, rounded corners=4pt] (-0.65, 3.65) rectangle (0.65, 3.9);
+    \fill[blue!40!black] (0.35, 3.77) circle (0.05);
+    \fill[white!70!gray, rounded corners=1.5pt] (-0.75, -4.18) rectangle (0.75, -4.12);
+
+    % Step 4 & 5: Container Viewport Bounds (9:16) & Matrix Crosshair
+    \draw[mobileColor, line width=2.5pt] (-2.25, -4) rectangle (2.25, 4);
+
+    % Helper Axes Matrix & Anchor Crosshair (100% 50% = Right Edge X = 2.25)
+    \draw[gray!60, densely dotted, line width=0.8pt] (-11.97, 0) -- (2.25, 0);
+    \draw[gray!60, densely dotted, line width=0.8pt] (2.25, -4) -- (2.25, 4);
+
+    \draw[red!90!black, line width=1.2pt] (2.25, 0) circle (0.35);
+    \draw[red!90!black, line width=1.2pt] (1.75, 0) -- (2.75, 0);
+    \draw[red!90!black, line width=1.2pt] (2.25, -0.5) -- (2.25, 0.5);
+    \fill[red!90!black] (2.25, 0) circle (0.07);
+    \node[anchorBadge] (anchorBR) at (4.5, 0) {Anchor: (100\%, 50\%)};
+    \draw[-Stealth=3mm, red!90!black, line width=1pt] (anchorBR.west) -- (2.45, 0);
+
+    % Clipped Label
+    \node[clippedBadge, rotate=90] at (-7.11, 0) {\faCut\ Clipped};
+\end{scope}
+
+\node[box, text width=8.5cm, anchor=north] at (12, -13.5) {
+    \textbf{Contextual Focus: \texttt{object-position: 100\% 50\%}}\\[4pt]
+    By anchoring the coordinate system to the right edge (100\% X), we override the default center-cut, directing the composition to focus on the sun rather than the mountain.
+};
+
+% =============================================================
+% BACKGROUND LAYER (Pure White Canvas Enforcer)
+% =============================================================
+\begin{scope}[on background layer]
+    \fill[white] ([xshift=-15pt, yshift=-15pt]current bounding box.south west) rectangle ([xshift=15pt, yshift=15pt]current bounding box.north east);
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

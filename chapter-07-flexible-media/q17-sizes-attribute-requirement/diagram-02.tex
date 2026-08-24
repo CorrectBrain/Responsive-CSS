@@ -1,0 +1,157 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usetikzlibrary{
+    arrows.meta,
+    positioning,
+    calc,
+    shapes,
+    shadows,
+    decorations.pathmorphing,
+    shapes.geometric,
+    backgrounds,
+    decorations.markings,
+    decorations.pathreplacing,
+    decorations.text,
+    fit,
+    shapes.misc,
+    shapes.arrows,
+    matrix,
+    bending,
+    3d,
+    chains,
+    intersections,
+    shapes.symbols,
+    svg.path,
+    shapes.multipart,
+    snakes,
+    shapes.callouts,
+    angles,
+    quotes,
+    fadings,
+    shadows.blur,
+    patterns,
+    patterns.meta
+}
+% Color Definitions for Architectural Precision & High Contrast
+\definecolor{darkslate}{RGB}{30, 41, 59}
+\definecolor{codebg}{RGB}{24, 30, 42}
+\definecolor{htmlcolor}{RGB}{227, 79, 38}
+\definecolor{tagorange}{RGB}{251, 146, 60}
+\definecolor{attrcyan}{RGB}{147, 197, 253}
+\definecolor{valgreen}{RGB}{187, 247, 208}
+\definecolor{glowgreen}{RGB}{74, 222, 128}
+\definecolor{successgreen}{RGB}{34, 160, 88}
+\definecolor{accentblue}{RGB}{37, 99, 235}
+\definecolor{macred}{RGB}{255, 95, 86}
+\definecolor{macyellow}{RGB}{255, 189, 46}
+\definecolor{macgreen}{RGB}{39, 201, 63}
+\definecolor{chassisbg}{RGB}{248, 250, 252}
+\definecolor{bordergray}{RGB}{203, 213, 225}
+\begin{document}
+\begin{tikzpicture}[
+    conduit/.style={-Stealth=3mm, line width=3pt, rounded corners=6pt},
+    chassis/.style={draw=bordergray, fill=chassisbg, rounded corners=12pt, line width=1.5pt, blur shadow={shadow opacity=12, shadow blur steps=6}},
+    regbox/.style={draw=accentblue!50, fill=white, rounded corners=8pt, line width=1.5pt, inner sep=12pt, align=center, blur shadow={shadow opacity=10, shadow blur steps=4}},
+    alubox/.style={draw=successgreen, fill=white, rounded corners=8pt, line width=2pt, inner sep=12pt, align=center, blur shadow={shadow opacity=15, shadow blur steps=5}},
+    consequencebox/.style={draw=successgreen, fill=successgreen!8, rounded corners=10pt, line width=2pt, inner sep=14pt, align=center, blur shadow={shadow opacity=15, shadow blur steps=5}},
+    injhub/.style={draw=successgreen, fill=chassisbg, rounded corners=6pt, inner sep=6pt, align=center, line width=1pt}
+]
+% -------------------------------------------------------------
+% 1. CANVAS BOUNDARY & TYPOGRAPHY
+% -------------------------------------------------------------
+\fill[white] (-1, -1) rectangle (25, 26);
+% Title & Subtitle
+\node[font=\Huge\bfseries\color{darkslate}] at (12.1441,25.0287) {The Mathematical Illumination: Deploying \texttt{sizes}};
+\node[font=\Large\color{darkslate!80}, text width=20cm, align=center] at (12.1441,22.971) {How the \texttt{sizes} attribute injects the missing layout variable directly into HTML, allowing the Preload Scanner to perform exact mathematical resolution immediately.};
+% -------------------------------------------------------------
+% 2. BROWSER PRELOAD SCANNER CONTAINER (CHASSIS)
+% -------------------------------------------------------------
+\draw[chassis] (0.4279,-0.5809) rectangle (23.5, 21.5);
+% Hardware/Software Header Bar
+\fill[top color=successgreen!25, bottom color=successgreen!10, rounded corners=10pt] (0.6, 20.5) rectangle (23.4, 21.5);
+\draw[draw=successgreen!40, line width=1pt, rounded corners=10pt] (0.6, 20.5) rectangle (23.4, 21.5);
+\node[font=\Large\bfseries\color{successgreen!90!black}] at (12, 21.0) {\faCheckCircle\ Browser Preload Scanner (Mathematically Empowered)};
+% -------------------------------------------------------------
+% 3. HTML INPUT (IDE / CODE EDITOR NODE)
+% -------------------------------------------------------------
+\node[draw=darkslate!70, fill=codebg, rounded corners=8pt, line width=1.5pt, inner xsep=12pt, inner ysep=24pt, text width=16cm, minimum height=3.5cm, align=left, blur shadow={shadow opacity=25, shadow blur steps=6}] (htmlcode) at (12, 18.2) {
+    \textcolor{tagorange}{\textbf{<img}} \\
+    \quad \textcolor{attrcyan}{src}=\textcolor{valgreen}{"fallback.jpg"}\\
+    \quad \textcolor{attrcyan}{srcset}=\textcolor{valgreen}{"small.jpg 400w, med.jpg 800w, large.jpg 1200w"}\\
+    \quad \textcolor{glowgreen}{\textbf{sizes="(min-width: 800px) 33vw, 100vw"}}\\
+    \textcolor{tagorange}{\textbf{>}}
+};
+% macOS Window Controls
+\fill[macred] ($(htmlcode.north west) + (16pt, -12pt)$) circle (3.5pt);
+\fill[macyellow] ($(htmlcode.north west) + (28pt, -12pt)$) circle (3.5pt);
+\fill[macgreen] ($(htmlcode.north west) + (40pt, -12pt)$) circle (3.5pt);
+\node[font=\sffamily\scriptsize\bfseries\color{gray!50}, anchor=north] at ($(htmlcode.north) + (0, -6pt)$) {index.html};
+% -------------------------------------------------------------
+% 4. INJECTION HUB (PARSER)
+% -------------------------------------------------------------
+\node[injhub, text width=10cm, scale=0.8] (inj_hub) at (11.9588,14.8914) {
+    \faArrowDown\ \textbf{\color{successgreen!90!black}The Missing Variable Injected!}\\[2pt]
+    \color{darkslate}\small Tells the browser: ``If viewport $\ge$ 800px, image layout width is 33vw.''
+};
+% -------------------------------------------------------------
+% 5. MEMORY REGISTER (LEFT BRAIN - KNOWN VARIABLES)
+% -------------------------------------------------------------
+\node[regbox, text width=9cm, minimum height=6.5cm, scale=0.8] (knowledge) at (6.0, 9.0) {
+    \textbf{\color{accentblue}\Large\faDatabase\ Known Variables}\\[8pt]
+    \color{darkslate}
+    \faImages\ \textbf{Intrinsic Widths ($W_{img}$)}\\
+    \texttt{[400, 800, 1200]}\\[6pt]
+    \faDesktop\ \textbf{Viewport ($V_w$)}\\
+    \texttt{1000px}\\[6pt]
+    \faIcon{compress-arrows-alt}\ \textbf{Device Pixel Ratio ($DPR$)}\\
+    \texttt{2.0x} (High Density)\\[6pt]
+    \color{successgreen!85!black}\faRulerCombined\ \textbf{Layout Width ($W_{layout}$)}\\
+    Condition Met: \texttt{1000px} $\ge$ \texttt{800px}\\
+    \texttt{33vw} of \texttt{1000px} = \textbf{330px}
+};
+% -------------------------------------------------------------
+% 6. PROCESSING ALU (RIGHT BRAIN - THE SELECTION EQUATION)
+% -------------------------------------------------------------
+\node[alubox, text width=9cm, minimum height=6.5cm, scale=0.8] (equation) at (18.0, 9.0) {
+    \textbf{\color{successgreen!90!black}\Large\faCalculator\ The Selection Equation}\\[8pt]
+    \color{darkslate}\large To calculate required intrinsic resolution ($W_{req}$):\\[6pt]
+    {\Large $W_{req} = W_{layout} \times DPR$}\\[8pt]
+    {\Large $W_{req} = \textbf{\color{successgreen!90!black}330px} \times \textbf{2.0}$}\\[10pt]
+    {\Large\color{successgreen!90!black}\faCheck\ \textbf{$W_{req} = 660px$}}
+};
+% -------------------------------------------------------------
+% 7. THE OUTPUT (CONSEQUENCE SELECTION)
+% -------------------------------------------------------------
+\node[consequencebox, text width=21.5cm, minimum height=3.5cm, scale=0.8] (consequence) at (12, 2.5) {
+    \textbf{\color{successgreen!90!black}\Large\faTrophy\ Architectural Victory: Flawless Art Direction \& Performance}\\[6pt]
+    \color{darkslate}\large
+    With $W_{req}$ precisely calculated as \textbf{660px} during the preload phase, the browser evaluates the \texttt{srcset} array: \texttt{[400w, \textbf{800w}, 1200w]}.\\[3pt]
+    It instantly selects \textbf{\texttt{med.jpg (800w)}} because it is the smallest image that satisfies the 660px requirement without upscaling blur.\\[6pt]
+    \textbf{Result:} Perfect image downloaded \textit{before} CSS is even parsed, achieving ultimate performance, minimal bandwidth waste, and razor-sharp graphics!
+};
+% -------------------------------------------------------------
+% 8. PRECISION DATA ROUTING & DATA CONDUITS
+% -------------------------------------------------------------
+% 1. Code to Hub (Data Extraction)
+\draw[conduit, draw=accentblue] (htmlcode.south) -- (inj_hub.north);
+% 2. Hub to Register (Storing Variables)
+\draw[conduit, draw=accentblue] (inj_hub.west) -| (knowledge.north)
+    node[pos=0.25, above=4pt] {\scriptsize\color{accentblue} Extracts Variables};
+% 3. Hub to ALU (Initiating Math)
+\draw[conduit, draw=successgreen] (inj_hub.east) -| (equation.north)
+    node[pos=0.25, above=4pt] {\scriptsize\color{successgreen!90!black} Triggers Engine};
+% 4. Register to ALU (The Internal Bus)
+\draw[conduit, draw=successgreen] (knowledge.east) -- (equation.west)
+    node[midway, above=6pt, align=center] {\small\bfseries\color{successgreen!90!black} Sends $W_{layout}$ \& DPR};
+% 5. Register to Consequence (Providing the Array for Selection)
+\draw[conduit, draw=accentblue] (knowledge.south) -- (knowledge.south |- consequence.north)
+    node[midway, left=8pt, anchor=east, align=right] {\small\color{accentblue} Provides Array\\[2pt]\texttt{[400, 800, 1200]}};
+% 6. ALU to Consequence (Providing the Target Width for Selection)
+\draw[conduit, draw=successgreen] (equation.south) -- (equation.south |- consequence.north)
+    node[midway, right=8pt, anchor=west, align=left] {\small\color{successgreen!90!black} Provides required\\[2pt]width: \textbf{660px}};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,381 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{xcolor}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- COLOR DEFINITIONS ---
+\definecolor{successcol}{RGB}{46, 125, 50}     % Emerald green for solution headers
+\definecolor{codebg}{RGB}{30, 30, 30}          % VS Code Dark background
+\definecolor{codefg}{RGB}{220, 220, 220}       % Default code foreground
+\definecolor{keyword}{RGB}{86, 156, 214}       % CSS properties & keywords
+\definecolor{string}{RGB}{206, 145, 120}       % HTML strings
+\definecolor{commentcol}{RGB}{106, 153, 85}    % VS Code green comments
+\definecolor{macred}{RGB}{255, 95, 86}         % macOS traffic light red
+\definecolor{macyellow}{RGB}{255, 189, 46}     % macOS traffic light yellow
+\definecolor{macgreen}{RGB}{39, 201, 63}       % macOS traffic light green
+\definecolor{devicebody}{RGB}{38, 41, 46}      % Device chassis dark gray
+\definecolor{rulercol}{RGB}{100, 116, 139}     % Slate gray for architectural callipers
+
+\begin{document}
+\begin{tikzpicture}[
+    font=\sffamily,
+    % --- STYLES ---
+    bubble/.style={
+        draw=gray!30,
+        fill=white,
+        rounded corners=8pt,
+        inner sep=12pt,
+        font=\sffamily,
+        blur shadow={shadow opacity=12, shadow blur steps=5, shadow yshift=-2pt, shadow xshift=1pt},
+        align=left,
+        line width=0.7pt
+    },
+    snippet/.style={
+        fill=codebg,
+        text=codefg,
+        font=\ttfamily\small,
+        inner sep=12pt,
+        rounded corners=8pt,
+        align=left,
+        blur shadow={shadow opacity=18, shadow blur steps=5, shadow yshift=-2pt, shadow xshift=1pt},
+        draw=gray!70!black,
+        line width=0.6pt
+    }
+]
+
+% ==========================================
+% PURE WHITE CANVAS BACKGROUND
+% ==========================================
+\fill[white] (-2.1735,-32.9398) rectangle (22.0, 28.0);
+
+% ==========================================
+% TITLE HEADER SECTION (Y: 25.8 to 27.0)
+% ==========================================
+\node[font=\Huge\bfseries\sffamily, text=black!85, anchor=north] at (9.9791,27.6884) {Taming the Image: Responsive Strategies};
+\node[font=\sffamily\large, text=gray!80!black, anchor=north] at (9.9791,26.4884) {Architectural Constraints, Layout Cropping, and Art Direction in Modern HTML/CSS};
+
+% ==========================================
+% SECTION 1: The Universal Constraint (Y: 25.0 to 7.0)
+% ==========================================
+\node[font=\sffamily\Large\bfseries, text=successcol, anchor=west] at (-0.6674,24.1447) {\faIcon{shield-alt} \ 1. The Universal Constraint Formula};
+
+% Code Snippet
+\node[snippet, anchor=north, text width=7.5cm] at (4.5, 23.5) {
+img, video, svg \{\\
+\quad {\color{keyword}max-width}: 100\%;\\
+\quad {\color{keyword}height}: auto;\\
+\}
+};
+
+% Explanation Bubble
+\node[bubble, anchor=north, text width=9cm] at (14.8957,24.2093) {
+    \textbf{The Mechanism:}\\
+    \texttt{max-width: 100\%} changes the rule of engagement. It commands the replaced element: \textit{"Your physical pixels may never force the CSS container to expand beyond its own layout width."}\\
+    \vspace{1.5mm}
+    \texttt{height: auto} recalculates the mathematical height synchronously based on the newly constrained width and the asset's original intrinsic aspect ratio, preventing distortion.
+};
+
+% --- VISUALIZATION 1: Responsive Scaling within Browser Window ---
+\begin{scope}
+    % Architectural Measurement / Callipers
+    % Original 4000px Intrinsic Width
+    \draw[{Bar[width=4pt] Stealth[length=4pt]}-Stealth=3mm, dashed, red!70, thick] (6.0, 18.0) -- (20.0, 18.0);
+    \node[above=2pt, font=\sffamily\tiny\bfseries, text=red!80!black] at (13.0, 18.0) {Original 4000px Intrinsic Width};
+
+    % CSS Grid Track (600px)
+    \draw[{Bar[width=5pt] Stealth[length=5pt]}-Stealth=3mm, thick, rulercol] (6.0, 16.5) -- (14.0, 16.5);
+    \node[above=2pt, font=\sffamily\footnotesize\bfseries, text=rulercol!90!black] at (10, 16.5) {CSS Grid Track (600px)};
+
+    % The "Ghost" of the original 4000px blowout extending outside (2D blowout)
+    \draw[red!65, dashed, thick, fill=red!5, fill opacity=0.35] (6.0, 8.0) rectangle (20.0, 15.0);
+    \begin{scope}
+        \clip (14.0, 15.0) -- (20.0, 15.0) -- (20.0, 8.0) -- (6.0, 8.0) -- (6.0, 11.0) -- (14.0, 11.0) -- cycle;
+        % Faded continuation of the 4000px asset
+        \shade[top color=SkyBlue!40, bottom color=orange!15, opacity=0.4] (6.0, 8.0) rectangle (20.0, 15.0);
+        \fill[MidnightBlue!30, opacity=0.3] (14.0, 12.6) -- (15.5, 13.6) -- (17.0, 12.4) -- (18.5, 13.8) -- (20.0, 12.5) -- (20.0, 8.0) -- (6.0, 8.0) -- (6.0, 11.0) -- (14.0, 11.0) -- cycle;
+        \draw[red!15, step=0.5, line width=0.2pt] (6.0, 8.0) grid (20.0, 15.0);
+    \end{scope}
+
+    % Browser Window Frame
+    \draw[fill=white, draw=gray!40, rounded corners=6pt, line width=0.8pt, blur shadow={shadow opacity=16, shadow blur steps=4, shadow yshift=-2pt}] (6.0, 11.0) rectangle (14.0, 15.0);
+    % Window Titlebar
+    \fill[gray!12, rounded corners=5pt] (6.0, 14.4) rectangle (14.0, 15.0);
+    % Traffic Lights
+    \fill[macred] (6.3, 14.7) circle (2.2pt);
+    \fill[macyellow] (6.55, 14.7) circle (2.2pt);
+    \fill[macgreen] (6.8, 14.7) circle (2.2pt);
+    % URL Bar
+    \fill[white, rounded corners=2pt, draw=gray!25, line width=0.4pt] (8.0, 14.5) rectangle (12.0, 14.9);
+    \node[font=\sffamily\tiny, text=gray!70] at (10, 14.7) {\faLock \ \texttt{https://example.com/gallery}};
+
+    % Viewport / Constrained Scaled Vector Image
+    \begin{scope}
+        \clip (6.05, 11.05) rectangle (13.95, 14.35);
+        % Vector Landscape Photograph
+        \shade[top color=SkyBlue!80!DodgerBlue, bottom color=orange!25] (6.05, 11.05) rectangle (13.95, 14.35);
+        % Sun
+        \fill[yellow!30, opacity=0.45] (12.5, 13.6) circle (0.6);
+        \fill[orange!90!yellow] (12.5, 13.6) circle (0.38);
+        \fill[white!90!yellow] (12.5, 13.6) circle (0.2);
+        % Distant Mountain Range
+        \fill[MidnightBlue!60!SlateGray] (6.05, 11.9) -- (7.2, 13.3) -- (8.3, 12.5) -- (9.8, 13.8) -- (11.2, 12.4) -- (12.6, 13.3) -- (13.95, 12.6) -- (13.95, 11.4) -- (6.05, 11.4) -- cycle;
+        % Snow Caps
+        \fill[white!95!Azure] (7.2, 13.3) -- (7.5, 12.9) -- (6.9, 12.9) -- cycle;
+        \fill[white!95!Azure] (9.8, 13.8) -- (10.2, 13.2) -- (9.4, 13.2) -- cycle;
+        % Midground Dark Mountains
+        \fill[DarkSlateGray!90!black] (6.05, 11.4) -- (6.8, 12.4) -- (8.0, 11.6) -- (9.2, 12.7) -- (10.8, 11.4) -- (12.4, 12.2) -- (13.95, 11.5) -- (13.95, 11.05) -- (6.05, 11.05) -- cycle;
+        % Foreground Water / Lake
+        \shade[top color=SteelBlue!85!RoyalBlue, bottom color=MidnightBlue!95] (6.05, 11.05) rectangle (13.95, 11.5);
+        \draw[white!60, line width=0.4pt] (7.5, 11.28) -- (10.5, 11.28);
+        \draw[white!50, line width=0.4pt] (11.5, 11.18) -- (13.2, 11.18);
+
+        % Scaled Overlay Badge
+        \node[fill=successcol!90, text=white, font=\sffamily\scriptsize\bfseries, rounded corners=3pt, inner sep=3.5pt, blur shadow={shadow opacity=20}] at (10, 11.6) {\faCheckCircle \ Image safely scales down to 600px};
+    \end{scope}
+
+    % Alert Callout Node positioned outside graphics area with straight downward pointer
+    \node[bubble, draw=red!50, fill=white, text=red!85!black, font=\sffamily\footnotesize\bfseries, inner sep=6pt] (overflowalert) at (18.0, 16.5) {\faExclamationTriangle \ Original 4000px physical width truncated};
+    \draw[-Stealth=3mm, thick, red!65] (overflowalert.south) -- (18.0, 15.0);
+\end{scope}
+
+% --- DIVIDER 1 ---
+\draw[thick, gray!25] (0, 7.0) -- (20, 7.0);
+
+% ==========================================
+% SECTION 2: Object-Fit / Architectural Cropping (Y: 5.5 to -9.5)
+% ==========================================
+\node[font=\sffamily\Large\bfseries, text=successcol, anchor=west] at (0, 5.5) {\faCrop \ 2. Architectural Cropping (\texttt{object-fit})};
+
+% Code Snippet
+\node[snippet, anchor=north, text width=7cm] at (4.5, 4.0) {
+.card-image \{\\
+\quad {\color{keyword}width}: 100\%;\\
+\quad {\color{keyword}height}: 250px; {\color{commentcol}/* Fixed */}\\
+\quad {\color{keyword}object-fit}: cover;\\
+\}
+};
+
+% Explanation Bubble
+\node[bubble, anchor=north, text width=9cm] at (14.9791,4.6467) {
+    \textbf{The Mechanism:}\\
+    If you force \textit{both} width and height via CSS, a standard image will violently squish to fit. \\
+    \vspace{1.5mm}
+    \texttt{object-fit: cover} commands the rendering engine to treat the \texttt{<img>} tag like a window frame. It scales the intrinsic pixel grid to fill the box completely, preserving the aspect ratio, and \textbf{crops the physical overflow} mathematically.
+};
+
+% --- VISUALIZATION 2: Mathematical object-fit Cropping ---
+\begin{scope}
+    % Strict CSS Box Window Dimension Callipers
+    \draw[{Bar[width=4pt] Stealth[length=4pt]}-Stealth=3mm, thick, rulercol] (5.0204,-5.5) -- (5.0204,-3);
+    \node[font=\sffamily\scriptsize\bfseries, text=rulercol!90!black, anchor=east] at (4.8204,-4.25) {250px};
+    \draw[{Bar[width=4pt] Stealth[length=4pt]}-Stealth=3mm, thick, rulercol] (6.0, -1.0) -- (14.0, -1.0);
+    \node[above=2pt, font=\sffamily\scriptsize\bfseries, text=rulercol!90!black] at (10, -1.0) {600px CSS Container};
+
+    % Top Cropped Overflow Region (Y = -3.0 to -2.0)
+    \begin{scope}
+        \clip (6.0, -3.0) rectangle (14.0, -2.0);
+        \shade[top color=SkyBlue!80!DodgerBlue, bottom color=orange!25, opacity=0.35] (6.0, -6.5) rectangle (14.0, -2.0);
+        \fill[yellow!30, opacity=0.25] (12.2, -3.2) circle (0.8);
+        \fill[orange!80!yellow, opacity=0.35] (12.2, -3.2) circle (0.5);
+    \end{scope}
+    \fill[RoyalBlue!10, fill opacity=0.6] (6.0, -3.0) rectangle (14.0, -2.0);
+    \draw[dashed, RoyalBlue!70, thick] (6.0, -3.0) rectangle (14.0, -2.0);
+    \draw[densely dashed, red!70, thick] (5.7, -3.0) -- (14.3, -3.0);
+    % Top Overflow Label Extracted Outside Column
+    \node[fill=white, draw=RoyalBlue!60, rounded corners=3pt, font=\sffamily\scriptsize\bfseries, text=RoyalBlue!90!black, inner sep=3.5pt, anchor=west] at (15.0, -2.5) {\faCut \ Cropped Overflow (Top)};
+    \draw[-Stealth=3mm, thick, rulercol] (15.0, -2.5) -- (14.0, -2.5);
+
+    % Bottom Cropped Overflow Region (Y = -6.5 to -5.5)
+    \begin{scope}
+        \clip (6.0, -6.5) rectangle (14.0, -5.5);
+        \shade[top color=SteelBlue!85!RoyalBlue, bottom color=MidnightBlue!95, opacity=0.35] (6.0, -6.5) rectangle (14.0, -2.0);
+    \end{scope}
+    \fill[RoyalBlue!10, fill opacity=0.6] (6.0, -6.5) rectangle (14.0, -5.5);
+    \draw[dashed, RoyalBlue!70, thick] (6.0, -6.5) rectangle (14.0, -5.5);
+    \draw[densely dashed, red!70, thick] (5.7, -5.5) -- (14.3, -5.5);
+    % Bottom Overflow Label Extracted Outside Column
+    \node[fill=white, draw=RoyalBlue!60, rounded corners=3pt, font=\sffamily\scriptsize\bfseries, text=RoyalBlue!90!black, inner sep=3.5pt, anchor=west] at (15.0, -6.0) {\faCut \ Cropped Overflow (Bottom)};
+    \draw[-Stealth=3mm, thick, rulercol] (15.0, -6.0) -- (14.0, -6.0);
+
+    % Strict 600x250 CSS Box (Clipped Viewport)
+    \draw[ultra thick, black, fill=white] (6.0, -5.5) rectangle (14.0, -3.0);
+    \begin{scope}
+        \clip (6.0, -5.5) rectangle (14.0, -3.0);
+        % Inner Vector Landscape perfectly filling the box (Aspect preserved)
+        \shade[top color=SkyBlue!80!DodgerBlue, bottom color=orange!25] (6.0, -6.5) rectangle (14.0, -2.0);
+        % Sun
+        \fill[yellow!30, opacity=0.45] (12.2, -3.2) circle (0.8);
+        \fill[orange!90!yellow] (12.2, -3.2) circle (0.5);
+        \fill[white!90!yellow] (12.2, -3.2) circle (0.25);
+        % Mountain Range
+        \fill[MidnightBlue!60!SlateGray] (6.0, -4.7) -- (7.3, -3.3) -- (8.4, -4.1) -- (9.8, -3.0) -- (11.2, -4.3) -- (12.6, -3.6) -- (14.0, -4.1) -- (14.0, -5.3) -- (6.0, -5.3) -- cycle;
+        \fill[white!95!Azure] (7.3, -3.3) -- (7.6, -3.65) -- (7.0, -3.65) -- cycle;
+        \fill[white!95!Azure] (9.8, -3.0) -- (10.2, -3.5) -- (9.4, -3.5) -- cycle;
+        % Midground Dark Mountains
+        \fill[DarkSlateGray!90!black] (6.0, -5.1) -- (7.0, -4.0) -- (8.2, -4.7) -- (9.4, -3.7) -- (10.8, -4.9) -- (12.2, -4.2) -- (14.0, -4.9) -- (14.0, -5.5) -- (6.0, -5.5) -- cycle;
+        % Lake Area
+        \shade[top color=SteelBlue!85!RoyalBlue, bottom color=MidnightBlue!95] (6.0, -5.5) rectangle (14.0, -5.0);
+        \draw[white!60, line width=0.4pt] (7.5, -5.25) -- (10.5, -5.25);
+    \end{scope}
+
+    % Bottom Label
+    \node[below=3pt, font=\sffamily\footnotesize\bfseries, text=black!85] at (10, -6.6) {Strict 600x250px CSS Box};
+
+    % Central Indicator Badge moved completely below graphic
+    \node[fill=black!75, text=white, font=\sffamily\footnotesize\bfseries, rounded corners=3pt, inner sep=3.5pt, blur shadow={shadow opacity=25}] at (10, -7.5) {\faCheck \ Pixel Grid perfectly fills box (No distortion)};
+\end{scope}
+
+% --- DIVIDER 2 ---
+\draw[thick, gray!25] (0, -9.5) -- (20, -9.5);
+
+% ==========================================
+% SECTION 3: HTML Art Direction (<picture>) (Y: -11.0 to -33.5)
+% ==========================================
+\node[font=\sffamily\Large\bfseries, text=successcol, anchor=west] at (0, -11.0) {\faIcon{mobile-alt} \ 3. HTML Art Direction (The \texttt{<picture>} Element)};
+
+% Code Snippet
+\node[snippet, anchor=north, text width=18cm] at (10.0, -12.5) {
+<picture>\\
+\quad {\color{commentcol}<!-- Desktop breakpoint: Preloader fetches Wide Panorama binary -->}\\
+\quad <source media="({\color{keyword}min-width}: 1024px)" srcset="{\color{string}hero-landscape.jpg}">\\
+\quad \\
+\quad {\color{commentcol}<!-- Tablet breakpoint: Preloader fetches Squarish crop binary -->}\\
+\quad <source media="({\color{keyword}min-width}: 768px)" srcset="{\color{string}hero-square.jpg}">\\
+\quad \\
+\quad {\color{commentcol}<!-- Mobile Default: Preloader fetches Portrait binary -->}\\
+\quad <img src="{\color{string}hero-portrait.jpg}" alt="Hero" style="max-width: 100\%; height: auto;">\\
+</picture>
+};
+
+% Explanation Bubble
+\node[bubble, anchor=north, text width=18cm] at (10.0, -17.5) {
+    \textbf{Why not just use \texttt{object-fit} for everything?}\\
+    \texttt{object-fit} algorithmically crops from the mathematical center. If your subject is on the far left, a centered crop on a mobile screen will chop their head off!\\
+    \vspace{2mm}
+    \textbf{Art Direction} solves this at the network and HTML layer. The browser evaluates media queries \textit{before downloading assets}. It downloads \textbf{only the specific binary file} optimized for that breakpoint. This provides a completely different intrinsic aspect ratio with the subject manually cropped into focus, saving massive amounts of bandwidth compared to loading a 4000px image on a mobile device.
+};
+
+% --- DIVIDER 3 ---
+\draw[thick, gray!25] (-0.1735,-22.2806) -- (19.8265,-22.2806);
+
+% --- VISUALIZATION 3: Art Direction Multi-Device Vector Models (Base Screen Y = -31.0, Device Base Y = -31.5) ---
+\begin{scope}
+    % ==========================================
+    % DEVICE 1: DESKTOP MONITOR (Left, Anchor X=4.0)
+    % Math: Width 5.0, True 16:9 Height = 2.8125
+    % ==========================================
+    % Stand
+    \fill[gray!50] (3.7211,-29.6812) rectangle (4.1211,-29.1812);
+    \fill[gray!65, rounded corners=2pt] (2.9211,-29.6812) rectangle (4.9211,-29.5312);
+    % Monitor Chassis
+    \fill[fill=devicebody, draw=gray!60, rounded corners=4pt, line width=0.8pt, blur shadow={shadow opacity=20, shadow blur steps=4, shadow yshift=-2pt}] (0.9211,-29.1812) rectangle (6.9211,-25.1812);
+    % Screen Viewport (Wide Panorama 16:9)
+    \begin{scope}
+        \clip (1.4211,-28.6812) rectangle (6.4211,-25.8687);
+        % Wide Panorama Vector Art
+        \shade[top color=SkyBlue!80!DodgerBlue, bottom color=orange!25] (1.4211,-28.6812) rectangle (6.4211,-25.8687);
+        \fill[yellow!30, opacity=0.45] (4.5803,-26.5074) circle (0.45);
+        \fill[orange!90!yellow] (4.5803,-26.5074) circle (0.28);
+        % Distant Wide Mountain Chain
+        \fill[MidnightBlue!60!SlateGray] (1.4211,-27.5812) -- (2.2211,-26.7812) -- (3.0211,-27.2812) -- (3.9211,-26.5812) -- (4.8211,-27.1812) -- (5.7211,-26.6812) -- (6.4211,-27.1812) -- (6.4211,-28.2812) -- (1.4211,-28.2812) -- cycle;
+        \fill[white!95!Azure] (2.2211,-26.7812) -- (2.4211,-27.0312) -- (2.0211,-27.0312) -- cycle;
+        \fill[white!95!Azure] (3.9211,-26.5812) -- (4.2211,-26.8812) -- (3.6211,-26.8812) -- cycle;
+        % Foreground Mountains & Wide Water Lake
+        \fill[DarkSlateGray!90!black] (1.4211,-27.7812) -- (2.0211,-27.1812) -- (2.9211,-27.5812) -- (3.7211,-26.9812) -- (4.7211,-27.6812) -- (5.6211,-27.0812) -- (6.4211,-27.5812) -- (6.4211,-28.6812) -- (1.4211,-28.6812) -- cycle;
+        \shade[top color=SteelBlue!85!RoyalBlue, bottom color=MidnightBlue!95] (1.4211,-28.6812) rectangle (6.4211,-28.1812);
+        \node[fill=black!65, text=white, font=\sffamily\tiny\bfseries, rounded corners=2pt, inner sep=1.5pt, anchor=south west] at (1.6211,-28.4812) {16:9 Wide};
+    \end{scope}
+    % Labels
+    \node[font=\sffamily\small\bfseries, text=black!85] at (3.9369,-30.4131) {\faDesktop \ Desktop (> 1024px)};
+    \node[font=\footnotesize\ttfamily, text=successcol!90!black] at (3.9369,-30.9131) {hero-landscape.jpg};
+
+    % ==========================================
+    % DEVICE 2: TABLET (Center, Anchor X=10.0)
+    % Math: Width 3.6, True 1:1 Height = 3.6
+    % ==========================================
+    % Tablet Chassis
+    \fill[fill=devicebody, draw=gray!60, rounded corners=8pt, line width=0.8pt, blur shadow={shadow opacity=20, shadow blur steps=4, shadow yshift=-2pt}] (7.7211,-29.1812) rectangle (12.1211,-24.1812);
+    % Front Camera
+    \fill[gray!40] (9.9211,-24.4312) circle (1.2pt);
+    % Screen Viewport (Squarish 1:1 Crop)
+    \begin{scope}
+        \clip (8.1211,-28.6812) rectangle (11.7211,-25.0812);
+        % Focused Squarish Vector Art
+        \shade[top color=SkyBlue!80!DodgerBlue, bottom color=orange!25] (8.1211,-28.6812) rectangle (11.7211,-25.0812);
+        \fill[yellow!30, opacity=0.45] (10.9211,-25.5812) circle (0.55);
+        \fill[orange!90!yellow] (10.9211,-25.5812) circle (0.35);
+        % Centered Mountain Peak Subject
+        \fill[MidnightBlue!60!SlateGray] (8.1211,-26.9812) -- (9.7211,-25.4812) -- (10.8211,-26.4812) -- (11.7211,-25.8812) -- (11.7211,-28.0812) -- (8.1211,-28.0812) -- cycle;
+        \fill[white!95!Azure] (9.7211,-25.4812) -- (10.1211,-25.8812) -- (9.3211,-25.8812) -- cycle;
+        \fill[DarkSlateGray!90!black] (8.1211,-27.4812) -- (9.2211,-26.1812) -- (10.3211,-27.0812) -- (11.7211,-26.2812) -- (11.7211,-28.6812) -- (8.1211,-28.6812) -- cycle;
+        \shade[top color=SteelBlue!85!RoyalBlue, bottom color=MidnightBlue!95] (8.1211,-28.6812) rectangle (11.7211,-28.1812);
+        \node[fill=black!65, text=white, font=\sffamily\tiny\bfseries, rounded corners=2pt, inner sep=1.5pt, anchor=south west] at (8.3211,-28.4812) {1:1 Square};
+    \end{scope}
+    % Labels
+    \node[font=\sffamily\small\bfseries, text=black!85] at (10.0473,-29.9873) {\faIcon{tablet-alt} \ Tablet (> 768px)};
+    \node[font=\footnotesize\ttfamily, text=successcol!90!black] at (10.0473,-30.4873) {hero-square.jpg};
+
+    % ==========================================
+    % DEVICE 3: SMARTPHONE (Right, Anchor X=16.0)
+    % Math: Width 2.4, True 9:16 Height = 4.26
+    % ==========================================
+    % Phone Chassis
+    \fill[fill=devicebody, draw=gray!60, rounded corners=10pt, line width=0.8pt, blur shadow={shadow opacity=20, shadow blur steps=4, shadow yshift=-2pt}] (14.4211,-29.1812) rectangle (17.4211,-23.6812);
+    % Dynamic Island Pill
+    \fill[black, rounded corners=2.5pt] (15.5211,-24.0312) rectangle (16.3211,-23.9312);
+    % Screen Viewport (Portrait 9:16 Crop)
+    \begin{scope}
+        \clip (14.7211,-28.6812) rectangle (17.1211,-24.4212);
+        % Tight Portrait Vector Art
+        \shade[top color=SkyBlue!80!DodgerBlue, bottom color=orange!25] (14.7211,-28.6812) rectangle (17.1211,-24.4212);
+        \fill[yellow!30, opacity=0.45] (16.5211,-25.0812) circle (0.4);
+        \fill[orange!90!yellow] (16.5211,-25.0812) circle (0.25);
+        % Prominent Mountain Silhouette & Lake
+        \fill[MidnightBlue!60!SlateGray] (14.7211,-26.4812) -- (15.7211,-25.0812) -- (17.1211,-26.1812) -- (17.1211,-28.0812) -- (14.7211,-28.0812) -- cycle;
+        \fill[white!95!Azure] (15.7211,-25.0812) -- (16.0711,-25.4812) -- (15.3711,-25.4812) -- cycle;
+        \fill[DarkSlateGray!90!black] (14.7211,-27.1812) -- (15.4211,-25.8812) -- (16.6211,-26.8812) -- (17.1211,-26.5812) -- (17.1211,-28.6812) -- (14.7211,-28.6812) -- cycle;
+        \shade[top color=SteelBlue!85!RoyalBlue, bottom color=MidnightBlue!95] (14.7211,-28.6812) rectangle (17.1211,-28.1812);
+        \node[fill=black!65, text=white, font=\sffamily\tiny\bfseries, rounded corners=2pt, inner sep=1.5pt, anchor=south west] at (14.9211,-28.4812) {9:16 Portrait};
+    \end{scope}
+    % Labels
+    \node[font=\sffamily\small\bfseries, text=black!85] at (16.205,-29.9084) {\faIcon{mobile-alt} \ Mobile (< 768px)};
+    \node[font=\footnotesize\ttfamily, text=successcol!90!black] at (16.205,-30.4084) {hero-portrait.jpg};
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

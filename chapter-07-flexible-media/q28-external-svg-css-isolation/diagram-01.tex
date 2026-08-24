@@ -1,0 +1,201 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% Architectural & Theme Palette
+\definecolor{canvasbg}{RGB}{255, 255, 255}
+\definecolor{mainbg}{RGB}{240, 244, 248}
+\definecolor{svgbg}{RGB}{253, 243, 224}
+\definecolor{domblue}{RGB}{33, 150, 243}
+\definecolor{svgorange}{RGB}{230, 81, 0}
+\definecolor{cssmagenta}{RGB}{233, 30, 99}
+\definecolor{barrierred}{RGB}{211, 47, 47}
+\definecolor{textdark}{RGB}{30, 33, 40}
+\definecolor{termbg}{RGB}{24, 26, 32}
+\definecolor{termborder}{RGB}{48, 54, 66}
+
+\begin{document}
+\begin{tikzpicture}
+
+% ============================================================================
+% 1. GLOBAL CANVAS & SECURITY CONTEXT ZONES
+% ============================================================================
+% Pure white canvas
+\fill[canvasbg] (-13.5, -11.5) rectangle (13.5, 12);
+
+% Left: Global Document Context (Main Window)
+\fill[mainbg!70, rounded corners=12pt] (-13.0, -10.5) rectangle (-0.5, 9.5);
+\draw[domblue!30, line width=1pt, rounded corners=12pt] (-13.0, -10.5) rectangle (-0.5, 9.5);
+\fill[pattern={Lines[angle=45,distance=8pt]}, pattern color=domblue!7, rounded corners=12pt] (-13.0, -10.5) rectangle (-0.5, 9.5);
+
+% Right: Isolated SVG Context
+\fill[svgbg!80, rounded corners=12pt] (0.5, -10.5) rectangle (13.0, 9.5);
+\draw[svgorange!30, line width=1pt, rounded corners=12pt] (0.5, -10.5) rectangle (13.0, 9.5);
+\fill[pattern={Lines[angle=45,distance=8pt]}, pattern color=svgorange!7, rounded corners=12pt] (0.5, -10.5) rectangle (13.0, 9.5);
+
+% ============================================================================
+% 2. TITLES & CONTEXT HEADERS
+% ============================================================================
+% Main Document Title
+\node[font=\Huge\bfseries, text=textdark, align=center] at (0, 11.0) {Architectural Encapsulation: SVG via \texttt{<img>}};
+\node[font=\Large, text=gray!80!black, align=center] at (0, 10.3) {Why the Global CSSOM is Blocked by the Replaced Element Boundary};
+
+% Zone Headers
+\node[font=\Large\bfseries, text=domblue!90!black, scale=0.8] at (-8.3334,8.8961) {\faGlobe\ Global Document Context (Main Window)};
+\node[font=\Large\bfseries, text=svgorange!90!black] at (8.7502,8.8) {\faFileImage\ Isolated SVG Document Context \quad \faIcon{shield-alt}};
+
+% ============================================================================
+% 3. HYPER-REALISTIC 3D GLOWING ENERGY BARRIER
+% ============================================================================
+% Glowing gradient energy core
+\fill[left color=barrierred!15, right color=barrierred!5, middle color=barrierred!70, fill opacity=0.85] (-0.5, -10.5) rectangle (0.5, 9.5);
+
+% Segmented Central Barrier Line (Disconnects around badges & laser impact)
+\draw[barrierred!90!black, line width=1.5pt] (0, 9.5) -- (0, 5.4);
+\draw[barrierred!90!black, line width=1.5pt] (0, 4.2) -- (0, -2.1);
+\draw[barrierred!90!black, line width=1.5pt] (0, -3.9) -- (0, -4.9);
+\draw[barrierred!90!black, line width=1.5pt] (0, -6.1) -- (0, -10.5);
+
+% Glass reflection highlights
+\fill[white, opacity=0.40] (-0.4, -10.5) rectangle (-0.05, 9.5);
+\fill[white, opacity=0.15] (0.05, -10.5) rectangle (0.4, 9.5);
+
+% Barrier Security Badges
+\node[fill=barrierred, draw=white, line width=1.2pt, text=white, font=\bfseries\small, rounded corners=5pt, inner sep=6pt, blur shadow={shadow blur steps=5, shadow opacity=0.25}] at (0, 4.8) {\faIcon{shield-alt}\ ENCAPSULATION BARRIER};
+\node[fill=barrierred, draw=white, line width=1.2pt, text=white, font=\bfseries\small, rounded corners=5pt, inner sep=6pt, blur shadow={shadow blur steps=5, shadow opacity=0.25}] at (0, -5.5) {\faIcon{shield-alt}\ ISOLATED BROWSING CONTEXT};
+
+% ============================================================================
+% 4. DOM TREES (GLASSMORPHIC DATA CARDS)
+% ============================================================================
+% --- Left: Main DOM Tree ---
+\node[draw=domblue!70, top color=white, bottom color=domblue!5, line width=1.2pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=0.15}, text width=6cm, align=center, inner sep=8pt, font=\ttfamily\bfseries\large, text=domblue!90!black] (html) at (-7.5, 6.5) {<html>};
+
+\node[draw=domblue!70, top color=white, bottom color=domblue!5, line width=1.2pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=0.15}, text width=6cm, align=center, inner sep=8pt, font=\ttfamily\bfseries\large, text=domblue!90!black] (body) at (-7.5, 4.5) {<body>};
+
+\node[draw=domblue, fill=domblue!15, line width=1.8pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=0.20}, text width=6cm, align=center, inner sep=8pt, font=\ttfamily\bfseries\large, text=domblue!95!black] (img) at (-7.5, 2.5) {<img src="graphic.svg">};
+
+% Left Fiber-Optic Data Buses (Strict Dynamic Node Anchors)
+\draw[domblue!30, line width=4.5pt] (html.south) -- (body.north);
+\draw[domblue, line width=1.5pt, -Stealth=3mm] (html.south) -- (body.north);
+
+\draw[domblue!30, line width=4.5pt] (body.south) -- (img.north);
+\draw[domblue, line width=1.5pt, -Stealth=3mm] (body.south) -- (img.north);
+
+% --- Right: Isolated SVG DOM Tree ---
+\node[draw=svgorange!70, top color=white, bottom color=svgorange!5, line width=1.2pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=0.15}, text width=6cm, align=center, inner sep=8pt, font=\ttfamily\bfseries\large, text=svgorange!90!black] (svgdoc) at (7.5, 6.5) {\#document (XML)};
+
+\node[draw=svgorange!70, top color=white, bottom color=svgorange!5, line width=1.2pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=0.15}, text width=6cm, align=center, inner sep=8pt, font=\ttfamily\bfseries\large, text=svgorange!90!black] (svg) at (7.5, 4.5) {<svg>};
+
+\node[draw=svgorange, fill=svgorange!15, line width=1.8pt, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=0.20}, text width=6cm, align=center, inner sep=8pt, font=\ttfamily\bfseries\large, text=svgorange!95!black] (path) at (7.5, 2.5) {<path id="logo">};
+
+% Right Fiber-Optic Data Buses (Strict Dynamic Node Anchors)
+\draw[svgorange!30, line width=4.5pt] (svgdoc.south) -- (svg.north);
+\draw[svgorange, line width=1.5pt, -Stealth=3mm] (svgdoc.south) -- (svg.north);
+
+\draw[svgorange!30, line width=4.5pt] (svg.south) -- (path.north);
+\draw[svgorange, line width=1.5pt, -Stealth=3mm] (svg.south) -- (path.north);
+
+% ============================================================================
+% 5. ZERO-OVERLAP MATHEMATICAL INSTANTIATION PIPELINE
+% ============================================================================
+% Outer conduit
+\draw[gray!40, line width=3.5pt, rounded corners=8pt]
+    (img.east) -- (-3.5, 2.5) -- (-3.5, 8.0) -- (3.5, 8.0) -- (3.5, 6.5) -- (svgdoc.west);
+
+% Active fiber-optic transmission core with label cleanly above
+\draw[domblue!80!cyan, line width=1.5pt, rounded corners=8pt, -Stealth=3mm]
+    (img.east) -- (-3.5, 2.5) -- (-3.5, 8.0) -- (0, 8.0)
+    node[above, yshift=4pt, font=\footnotesize\bfseries, text=gray!80!black, fill=white, draw=gray!30, line width=0.8pt, rounded corners=4pt, inner sep=4pt, blur shadow={shadow blur steps=3, shadow opacity=0.12}] {\faCogs\ Browser Instantiates Separate Tree}
+    -- (3.5, 8.0) -- (3.5, 6.5) -- (svgdoc.west);
+
+% ============================================================================
+% 6. CSSOM TERMINAL CONSOLE & LASER ATTACK VECTOR
+% ============================================================================
+% Code Terminal Window
+\node[draw=termborder, fill=termbg, line width=1.2pt, rounded corners=8pt, blur shadow={shadow blur steps=6, shadow opacity=0.25}, inner sep=12pt, text width=9.5cm] (cssom) at (-7.5, -3.0) {
+    {\color{cssmagenta}\bfseries\large\faPaintBrush\ Global CSS Object Model}\\[6pt]
+    \ttfamily\small
+    {\color{gray!70}/* Trying to art-direct the SVG */}\\[4pt]
+    {\color{yellow!90!white}\bfseries img path:hover} {\color{white}\{}\\
+    \quad {\color{cyan!85!white}fill}: {\color{barrierred!40!red!90!white}\#ff0000};\\
+    \quad {\color{cyan!85!white}transform}: {\color{green!85!white}scale(1.1)};\\
+    {\color{white}\}}
+};
+
+% Laser Attack Vector (originates strictly from CSSOM terminal right edge)
+\draw[cssmagenta!35, line width=5.5pt] (cssom.east) -- (-0.5, -3.0);
+\draw[cssmagenta, line width=2.5pt] (cssom.east) -- (-0.5, -3.0);
+\draw[white, line width=1pt, -Stealth=3mm] (cssom.east) -- (-0.5, -3.0);
+
+% Energy Barrier Ripple / Impact
+\fill[barrierred, opacity=0.25] (0, -3.0) circle (0.75);
+\draw[barrierred!80!white, line width=1.5pt, opacity=0.7] (0, -3.0) circle (0.75);
+\fill[barrierred, opacity=0.55] (0, -3.0) circle (0.45);
+\draw[barrierred!90!white, line width=2pt] (0, -3.0) circle (0.45);
+\fill[white] (0, -3.0) circle (0.16);
+
+% Ghost Trajectory towards targeted SVG <path> node (Rigid Manhattan / Orthogonal Route)
+\draw[-Stealth=3mm, cssmagenta!70, line width=1.5pt, dashed, opacity=0.35, rounded corners=6pt] (0.5, -3.0) -- (1.5, -3.0) -- (1.5, 2.5) -- (path.west);
+
+% Impact Badge (Safely positioned above incoming laser attack vector)
+\node[fill=barrierred, draw=white, line width=1.5pt, rounded corners=4pt, font=\bfseries\small, text=white, blur shadow={shadow blur steps=4, shadow opacity=0.3}, inner sep=5pt] at (-1.2365,-2) {\faBan\ BLOCKED!};
+
+% ============================================================================
+% 7. EXPLANATORY PANELS (BOXES 1, 2, 3)
+% ============================================================================
+% Box 1: Replaced Element (Left Bottom)
+\node[draw=domblue!40, top color=white, bottom color=domblue!3, line width=1pt, rounded corners=8pt, blur shadow={shadow blur steps=5, shadow opacity=0.15}, inner sep=12pt, text width=9.5cm] at (-7.5, -8.0) {
+    {\bfseries\color{domblue!90!black}\large\faFileCode\ 1. Replaced Element \& The Render Tree}\\[5pt]
+    \small\color{textdark}
+    An \texttt{<img>} or \texttt{background-image} is a \textit{replaced element}. The HTML parser treats it as a black box that yields visual output. Its internal vector geometry is completely excluded from the Global DOM tree.
+};
+
+% Box 2: Security & Barrier (Right Middle)
+\node[draw=svgorange!40, top color=white, bottom color=svgorange!3, line width=1pt, rounded corners=8pt, blur shadow={shadow blur steps=5, shadow opacity=0.15}, inner sep=12pt, text width=9.5cm] at (7.5, -3.0) {
+    {\bfseries\color{svgorange!90!black}\large\faUserSecret\ 2. Security \& Encapsulation Barrier}\\[5pt]
+    \small\color{textdark}
+    The browser constructs a distinct, hidden Document Object Model for the external SVG. This strict scoping prevents malicious SVG scripts from accessing the parent window, and prevents parent CSS from leaking privacy data (like \texttt{:visited} link colors) into the image.
+};
+
+% Box 3: Traversal Failure (Right Bottom)
+\node[draw=barrierred!40, top color=white, bottom color=barrierred!3, line width=1pt, rounded corners=8pt, blur shadow={shadow blur steps=5, shadow opacity=0.15}, inner sep=12pt, text width=9.5cm] at (7.5, -8.0) {
+    {\bfseries\color{barrierred!90!black}\large\faBan\ 3. The CSSOM Traversal Failure}\\[5pt]
+    \small\color{textdark}
+    The Global CSSOM is mapped exclusively to the Global DOM. When the CSS selector engine evaluates \texttt{img path}, it stops at the \texttt{<img>} boundary. It physically lacks traversal access into the SVG's isolated document tree, making dynamic restyling impossible.
+};
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,220 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+
+\usepackage{xcolor}
+
+% --- COLOR PALETTE ---
+\definecolor{bglight}{RGB}{245, 247, 250}
+\definecolor{borderc}{RGB}{200, 205, 212}
+\definecolor{textc}{RGB}{50, 60, 70}
+
+\definecolor{cameragray}{RGB}{149, 165, 166}
+\definecolor{cameralens}{RGB}{44, 62, 80}
+\definecolor{cameraaccent}{RGB}{231, 76, 60}
+\definecolor{camerabody}{RGB}{236, 240, 241}
+
+\definecolor{keyword}{RGB}{198, 120, 221}
+\definecolor{property}{RGB}{97, 175, 239}
+\definecolor{value}{RGB}{152, 195, 121}
+
+\begin{document}
+\begin{tikzpicture}
+
+% --- ABSOLUTE CANVAS BACKGROUND ---
+\fill[white] (-12.3211,-8.6836) rectangle (11.8395,12.7155);
+
+% --- TITLE SECTION ---
+\node[font=\sffamily\Huge\bfseries, text=black!80, align=center] at (0, 11.5) {Responsive Art Direction in Scalable Media};
+\node[font=\sffamily\Large, text=black!60, align=center] at (0, 10.6) {Transforming structural topology \& coordinate geometry via Media Queries};
+
+% --- MOBILE VIEWPORT (LEFT) ---
+\draw[fill=bglight, draw=borderc, line width=2pt, rounded corners=12pt, blur shadow={shadow opacity=20, shadow yshift=-2pt, shadow xshift=0pt}] (-9.5, -3.5) rectangle (-0.5, 9);
+\draw[fill=textc, draw=none, rounded corners=12pt] (-9.5, 8) rectangle (-0.5, 9);
+\node[font=\sffamily\large\bfseries, text=white] at (-5, 8.5) {\faIcon{mobile-alt}\ Mobile Viewport ($<$600px)};
+
+% Mobile SVG Coordinate Box
+\draw[fill=white, draw=borderc, dashed, thick] (-8.5, 2.5) rectangle (-1.5, 7.5);
+\node[font=\tiny\ttfamily, text=gray!80!black, anchor=center] at (-5, 7.75) {viewBox="0 0 100 100"};
+\node[font=\tiny\ttfamily, text=gray!80!black, anchor=north west, inner sep=2pt] at (-8.6787,7.5034) {(0,0)};
+\node[font=\tiny\ttfamily, text=gray!80!black, anchor=south east, inner sep=2pt] at (-1.1777,2.3529) {(100,100)};
+
+% Mobile Graphic (Minimal Topology)
+% Absolute center = (-5, 5)
+
+% Physical Shutter Button
+\fill[gray!70] (-6.2, 6.0) rectangle (-5.8, 6.15);
+\fill[gray!90] (-6.2, 6.0) rectangle (-5.8, 6.04);
+
+% Sleek Metallic Compact Camera Module
+\shade[top color=gray!20, bottom color=gray!50, draw=gray!60, line width=0.8pt, rounded corners=6pt] (-6.5, 4.0) rectangle (-3.5, 6.0);
+\draw[white!80, line width=0.5pt] (-6.4, 5.88) -- (-3.6, 5.88);
+
+% Compact Multi-element Lens Assembly (Concentric at (-5, 5))
+\shade[top color=gray!80, bottom color=gray!50, draw=gray!70, line width=0.8pt] (-5, 5) circle (1.1cm);
+\shade[inner color=cyan!20!black, outer color=black!90] (-5, 5) circle (0.95cm);
+\draw[cyan!40!black, line width=0.6pt] (-5, 5) circle (0.65cm);
+\fill[black] (-5, 5) circle (0.4cm);
+\fill[white, opacity=0.3] (-5.2, 5.2) circle (0.12cm);
+\fill[white, opacity=0.15] (-4.85, 4.85) circle (0.06cm);
+\draw[white, opacity=0.2, line width=0.8pt] (-5, 5) ++(120:0.75cm) arc (120:165:0.75cm);
+
+% LED Light / Sensor Dot
+\fill[cameraaccent] (-6.0, 5.5) circle (0.12cm);
+\fill[white, opacity=0.6] (-6.04, 5.54) circle (0.04cm);
+
+% Hidden elements (dotted to show DOM existence but display:none)
+% Flash Unit (display: none)
+\draw[thick, dashed, borderc!80] (-5.6, 6.0) rectangle (-4.4, 6.4);
+\node[anchor=center, font=\sffamily\tiny, text=borderc!90!black, text width=1.5cm, align=center] at (-7.0, 6.8) {display: none};
+\draw[-Stealth, dashed, borderc!90!black] (-6.2, 6.8) -- (-5.6, 6.4);
+
+% Grip Texture (display: none)
+\draw[thick, dashed, borderc!80] (-4.1, 4.0) rectangle (-3.4, 6.0);
+\node[anchor=center, font=\sffamily\tiny, text=borderc!90!black, text width=1.8cm, align=center] at (-2.5, 5.0) {display: none};
+\draw[-Stealth, dashed, borderc!90!black] (-3.0, 5.0) -- (-3.5, 5.0);
+
+% Mobile CSS Snippet
+\node[fill=black!85, text=white, font=\scriptsize\ttfamily, rounded corners=6pt, align=left, inner sep=10pt, text width=6.5cm, blur shadow={shadow opacity=20, shadow yshift=-2pt, shadow xshift=0pt}] at (-5, 0) {
+@media (max-width: 600px) \{\\
+\quad \textcolor{keyword}{.flash-unit}, \textcolor{keyword}{.grip-texture} \{\\
+\quad\quad \textcolor{property}{display}: \textcolor{value}{none}; /* Strip complexity */\\
+\quad \}\\
+\quad \textcolor{keyword}{.camera-body} \{\\
+\quad\quad \textcolor{property}{fill}: \textcolor{value}{var(--mobile-gray)};\\
+\quad\quad \textcolor{property}{width}: \textcolor{value}{100\%};\\
+\quad \}\\
+\}
+};
+
+
+% --- DESKTOP VIEWPORT (RIGHT) ---
+\draw[fill=bglight, draw=borderc, line width=2pt, rounded corners=6pt, blur shadow={shadow opacity=20, shadow yshift=-2pt, shadow xshift=0pt}] (0.5, -3.5) rectangle (9.5, 9);
+\draw[fill=textc, draw=none, rounded corners=6pt] (0.5, 8) rectangle (9.5, 9);
+\node[font=\sffamily\large\bfseries, text=white] at (5, 8.5) {\faDesktop\ Desktop Viewport ($>$600px)};
+
+% Desktop SVG Coordinate Box
+\draw[fill=white, draw=borderc, dashed, thick] (1.5, 2.5) rectangle (8.5, 7.5);
+\node[font=\tiny\ttfamily, text=gray!80!black, anchor=center] at (5, 7.75) {viewBox="0 0 100 100"};
+\node[font=\tiny\ttfamily, text=gray!80!black, anchor=north west, inner sep=2pt] at (1.3372,7.4874) {(0,0)};
+\node[font=\tiny\ttfamily, text=gray!80!black, anchor=south east, inner sep=2pt] at (8.95,2.3848) {(100,100)};
+
+% Desktop Graphic (Complex Topology & Affine Transforms)
+% Absolute center = (5, 5)
+
+% DSLR Main Body Base with metallic gradient
+\shade[top color=gray!15, bottom color=gray!40, draw=gray!60, line width=1.2pt, rounded corners=8pt] (2.5, 3.6) rectangle (7.5, 6.4);
+
+% Pentaprism Hump
+\shade[top color=gray!30, bottom color=gray!50, draw=gray!60, line width=1pt] (4.1, 6.4) -- (4.4, 6.75) -- (5.6, 6.75) -- (5.9, 6.4) -- cycle;
+
+% Hot-shoe Mount
+\fill[gray!80, draw=black!70, line width=0.5pt] (4.7, 6.75) rectangle (5.3, 6.82);
+\fill[silver] (4.8, 6.8) rectangle (5.2, 6.82);
+
+% Mode and Shutter Dials
+\fill[gray!70, draw=gray!90, rounded corners=1pt] (3.0, 6.4) rectangle (3.6, 6.65);
+\draw[gray!40] (3.15, 6.4) -- (3.15, 6.65);
+\draw[gray!40] (3.3, 6.4) -- (3.3, 6.65);
+\draw[gray!40] (3.45, 6.4) -- (3.45, 6.65);
+
+\fill[gray!75, draw=gray!90, rounded corners=1pt] (6.4, 6.4) rectangle (7.0, 6.62);
+\fill[silver, draw=gray!80] (6.55, 6.62) rectangle (6.85, 6.75);
+
+% Textured Rubber Grip (Layered over dark base)
+\shade[top color=gray!80, bottom color=gray!95, rounded corners=4pt] (6.5, 3.65) rectangle (7.4, 6.35);
+\fill[pattern=crosshatch dots, pattern color=black, rounded corners=4pt] (6.5, 3.65) rectangle (7.4, 6.35);
+\draw[gray!50, line width=0.6pt, rounded corners=4pt] (6.5, 3.65) rectangle (7.4, 6.35);
+
+% Articulated Pop-up Flash Unit (Mechanically mounted to pentaprism)
+\draw[line width=1.2pt, gray!80] (4.3, 6.75) -- (4.1, 6.95);
+\draw[line width=1.2pt, gray!80] (5.7, 6.75) -- (5.9, 6.95);
+\shade[top color=gray!70, bottom color=gray!90, draw=gray!50, rounded corners=2pt] (3.9, 6.95) rectangle (6.1, 7.35);
+\shade[inner color=yellow!20, outer color=white, draw=gray!60, line width=0.5pt, rounded corners=1pt] (4.1, 7.02) rectangle (5.9, 7.28);
+\draw[gray!30, line width=0.3pt] (4.1, 7.15) -- (5.9, 7.15);
+\draw[gray!30, line width=0.3pt] (4.5, 7.02) -- (4.5, 7.28);
+\draw[gray!30, line width=0.3pt] (5.0, 7.02) -- (5.0, 7.28);
+\draw[gray!30, line width=0.3pt] (5.5, 7.02) -- (5.5, 7.28);
+\fill[cameraaccent!80!black] (4.1, 6.95) circle (0.05cm);
+
+% Leader Line & Callout for Flash (display: block)
+\node[anchor=center, fill=white, inner sep=1pt, font=\sffamily\tiny\bfseries, text=cameraaccent, text width=2cm, align=center] (dispblock) at (7.4, 7.15) {display: block};
+\draw[-Stealth=3mm, thick, cameraaccent, dashed] (6.6, 7.15) -- (6.15, 7.15);
+
+% Advanced Multi-element Lens Assembly (Concentric at (5, 5))
+\shade[top color=gray!80, bottom color=gray!50, draw=gray!70, line width=1pt] (5, 5) circle (1.5cm);
+\draw[gray!40, line width=0.5pt, dashed] (5, 5) circle (1.42cm);
+\shade[top color=gray!30, bottom color=gray!70, draw=gray!90] (5, 5) circle (1.25cm);
+\shade[inner color=cyan!20!black, outer color=black!90] (5, 5) circle (1.05cm);
+\shade[inner color=blue!30!black, outer color=black] (5, 5) circle (0.65cm);
+\fill[black] (5, 5) circle (0.35cm);
+
+% Lens Glare & Flare reflections
+\fill[white, opacity=0.18] (4.6, 5.4) circle (0.22cm);
+\fill[white, opacity=0.35] (4.5, 5.5) circle (0.08cm);
+\fill[cyan!40, opacity=0.12] (5.4, 4.5) circle (0.15cm);
+\draw[white, opacity=0.25, line width=1.2pt] (5, 5) ++(120:0.85cm) arc (120:165:0.85cm);
+\draw[cyan!60, opacity=0.2, line width=0.8pt] (5, 5) ++(-45:0.75cm) arc (-45:10:0.75cm);
+
+% Hover effect on lens (Affine Transform)
+\node[font=\sffamily\footnotesize, align=center, text=textc, text width=2.0cm] (affinetext) at (7.9383,3.9681) {Affine Transform\\on \texttt{.lens:hover}};
+\draw[-Stealth=3mm, thick, textc] (7.3777,4.1) -- (5.9, 4.3);
+
+% Desktop CSS Snippet
+\node[fill=black!85, text=white, font=\scriptsize\ttfamily, rounded corners=6pt, align=left, inner sep=10pt, text width=6.5cm, blur shadow={shadow opacity=20, shadow yshift=-2pt, shadow xshift=0pt}] at (5, 0) {
+@media (min-width: 601px) \{\\
+\quad \textcolor{keyword}{.flash-unit}, \textcolor{keyword}{.grip-texture} \{\\
+\quad\quad \textcolor{property}{display}: \textcolor{value}{block}; /* Inject detail */\\
+\quad \}\\
+\quad \textcolor{keyword}{.camera-body} \{\\
+\quad\quad \textcolor{property}{fill}: \textcolor{value}{var(--desktop-white)};\\
+\quad \}\\
+\quad \textcolor{keyword}{.lens}:hover \{\\
+\quad\quad \textcolor{property}{transform}: \textcolor{value}{scale(1.1) rotate(10deg)};\\
+\quad \}\\
+\}
+};
+
+% --- BOTTOM EXPLANATION ---
+\node[fill=white, draw=borderc, thick, rounded corners=8pt, text width=16.5cm, inner sep=14pt, blur shadow={shadow opacity=20, shadow yshift=-2pt, shadow xshift=0pt}, anchor=north] at (-0.3211,-4.069) {
+    \sffamily\textbf{\Large Topological Mutation within the ViewBox}\\[8pt]
+    Unlike raster \texttt{<picture>} tags that force the client to download entirely new files for desktop vs. mobile, an inline SVG transfers a single mathematical payload. \\
+    \vspace{6pt}
+    By querying viewport parameters with CSS \texttt{@media}, we structurally manipulate the graphic's geometry. We can strip away complex sub-trees (using \texttt{display: none}), drastically alter proportions using \texttt{transform} algorithms, and shift color spaces. This ensures maximum visual fidelity and context-aware "Art Direction" with practically zero bandwidth overhead.
+};
+
+\end{tikzpicture}
+\end{document}

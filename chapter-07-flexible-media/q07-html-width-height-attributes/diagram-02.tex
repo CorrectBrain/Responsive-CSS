@@ -1,0 +1,290 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{254, 249, 231}
+
+% --- COLOR PALETTE ---
+\definecolor{cssblue}{RGB}{41, 128, 185}
+\definecolor{htmlorange}{RGB}{211, 84, 0}
+\definecolor{darkgray}{RGB}{44, 62, 80}
+\definecolor{lightgray}{RGB}{236, 240, 241}
+\definecolor{purple}{RGB}{142, 68, 173}
+\definecolor{vscodedark}{RGB}{30, 30, 30}
+\definecolor{vscodeheader}{RGB}{45, 45, 45}
+\definecolor{codeattr}{RGB}{156, 220, 254}
+\definecolor{codekeyword}{RGB}{86, 156, 214}
+\definecolor{codestring}{RGB}{206, 145, 120}
+\definecolor{dotred}{RGB}{255, 95, 86}
+\definecolor{dotyellow}{RGB}{255, 189, 46}
+\definecolor{dotgreen}{RGB}{39, 201, 63}
+
+\begin{document}
+\begin{tikzpicture}
+
+% Master Canvas Boundary with strict white fill expanded to prevent clipping
+\fill[white] (0, -0.5) rectangle (20, 15.5);
+
+% =========================================================================
+% SECTION 1: TITLE & HEADER BLOCK
+% =========================================================================
+\node[font=\Huge\bfseries\sffamily, text=darkgray] at (10.0, 14.6) {Modern CSS \& HTML Interplay};
+\node[font=\Large\ttfamily, text=cssblue] at (10.0, 13.8) {How hard-coded attributes power responsive \textbf{height: auto;}};
+
+% Underline gradient accent bar centered horizontally at X=10.0
+\fill[left color=htmlorange, middle color=purple, right color=cssblue, rounded corners=1.5pt] (7.5, 13.3) rectangle (12.5, 13.37);
+
+
+% =========================================================================
+% SECTION 2: TOP SECTION - INTERNAL CODE MAPPING (THE PIPELINE)
+% =========================================================================
+% Container Panel expanded outward to prevent shadow clipping
+\draw[fill=lightgray!35, draw=lightgray!80, line width=1pt, rounded corners=8pt,
+      blur shadow={shadow blur steps=6, shadow blur radius=1.2ex, shadow opacity=15}]
+      (0.2, 9.2) rectangle (19.8, 12.8);
+
+% -------------------------------------------------------------------------
+% 2.1 HTML Node (The Author IDE) - Centered at x=3.0
+% -------------------------------------------------------------------------
+\draw[fill=vscodedark, draw=htmlorange!80, line width=1.2pt, rounded corners=6pt,
+      blur shadow={shadow blur steps=8, shadow blur radius=1.2ex, shadow opacity=25}]
+      (0.8, 9.7) rectangle (5.2, 12.3);
+
+% IDE Window Header
+\fill[vscodeheader, rounded corners=6pt] (0.8, 11.75) [sharp corners] -- (0.8, 11.75) -- (5.2, 11.75) [rounded corners=6pt] -- (5.2, 12.3) -- (0.8, 12.3) -- cycle;
+\draw[draw=darkgray!50, line width=0.5pt] (0.8, 11.75) -- (5.2, 11.75);
+
+% macOS Window Controls
+\fill[dotred] (1.1, 12.05) circle (2.2pt);
+\fill[dotyellow] (1.35, 12.05) circle (2.2pt);
+\fill[dotgreen] (1.6, 12.05) circle (2.2pt);
+\node[font=\sffamily\bfseries\scriptsize, text=htmlorange, anchor=east] at (5.0, 12.05) {\faHtml5\ Author HTML};
+
+% HTML Code Content
+\node[anchor=north west, font=\ttfamily\scriptsize, align=left, inner sep=0pt] at (1.05, 11.55) {
+    \textcolor{codeattr}{<}\textcolor{codekeyword}{img} \textcolor{codeattr}{src=}\textcolor{codestring}{"art.jpg"}\\[2pt]
+    \hspace*{1.2em}\textcolor{codeattr}{width=}\textcolor{codestring}{"800"}\\[2pt]
+    \hspace*{1.2em}\textcolor{codeattr}{height=}\textcolor{codestring}{"400"}\textcolor{codeattr}{>}
+};
+
+% -------------------------------------------------------------------------
+% 2.2 UA Stylesheet Node (The Browser Engine) - Centered at x=10.0
+% -------------------------------------------------------------------------
+\draw[fill=purple!6, draw=purple, line width=1.2pt, rounded corners=6pt,
+      blur shadow={shadow blur steps=8, shadow blur radius=1.2ex, shadow opacity=20}]
+      (7.8, 9.7) rectangle (12.2, 12.3);
+
+% Process Header
+\fill[purple!15, rounded corners=6pt] (7.8, 11.75) [sharp corners] -- (7.8, 11.75) -- (12.2, 11.75) [rounded corners=6pt] -- (12.2, 12.3) -- (7.8, 12.3) -- cycle;
+\draw[draw=purple!30, line width=0.5pt] (7.8, 11.75) -- (12.2, 11.75);
+
+% Subtle Gear Watermark in background
+\node[purple, opacity=0.08, font=\fontsize{38}{38}\selectfont] at (10.0, 10.7) {\faCogs};
+\node[font=\sffamily\bfseries\scriptsize, text=purple] at (10.0, 12.05) {\faCogs\ UA Stylesheet (Hidden)};
+
+% UA CSS Code Content
+\node[anchor=center, font=\ttfamily\scriptsize, align=left, text=darkgray] at (10.0, 10.75) {
+    \textcolor{purple}{\textbf{img}} \{\\[1pt]
+    \hspace*{1em}\textcolor{darkgray}{\textbf{aspect-ratio:}}\\[1pt]
+    \hspace*{2em}\textcolor{darkgray}{attr(}\textcolor{htmlorange}{\textbf{width}}\textcolor{darkgray}{) / attr(}\textcolor{htmlorange}{\textbf{height}}\textcolor{darkgray}{);}\\[1pt]
+    \}
+};
+
+% -------------------------------------------------------------------------
+% 2.3 Author CSS Node (The Styling IDE) - Centered at x=17.0
+% -------------------------------------------------------------------------
+\draw[fill=vscodedark, draw=cssblue, line width=1.6pt, rounded corners=6pt,
+      blur shadow={shadow blur steps=10, shadow blur radius=1.2ex, shadow opacity=35}]
+      (14.8, 9.7) rectangle (19.2, 12.3);
+
+% IDE Window Header
+\fill[vscodeheader, rounded corners=6pt] (14.8, 11.75) [sharp corners] -- (14.8, 11.75) -- (19.2, 11.75) [rounded corners=6pt] -- (19.2, 12.3) -- (14.8, 12.3) -- cycle;
+\draw[draw=darkgray!50, line width=0.5pt] (14.8, 11.75) -- (19.2, 11.75);
+
+% macOS Window Controls
+\fill[dotred] (15.1, 12.05) circle (2.2pt);
+\fill[dotyellow] (15.35, 12.05) circle (2.2pt);
+\fill[dotgreen] (15.6, 12.05) circle (2.2pt);
+\node[font=\sffamily\bfseries\scriptsize, text=cssblue, anchor=east] at (19.0, 12.05) {\faIcon{css3-alt}\ Author CSS (Responsive)};
+
+% CSS Code Content
+\node[anchor=north west, font=\ttfamily\scriptsize, align=left, inner sep=0pt] at (15.05, 11.55) {
+    \textcolor{codekeyword}{img} \{\\[2pt]
+    \hspace*{1.2em}\textcolor{codeattr}{max-width:} \textcolor{codestring}{100\%};\\[2pt]
+    \hspace*{1.2em}\textcolor{codeattr}{height:} \textcolor{codekeyword}{auto};\\[2pt]
+    \}
+};
+
+% -------------------------------------------------------------------------
+% 2.4 Data Pipelines (Split Routing to Prevent Overlap)
+% -------------------------------------------------------------------------
+% Track 1: HTML -> UA Stylesheet
+\draw[line width=5pt, draw=htmlorange!25, line cap=round] (5.2, 11.0) -- (6.1, 11.0);
+\draw[line width=1.5pt, draw=htmlorange, dashed] (5.2, 11.0) -- (6.1, 11.0);
+\fill[white, draw=htmlorange, line width=1pt] (6.5, 11.0) circle (3pt);
+\draw[line width=5pt, draw=htmlorange!25, line cap=round] (6.9, 11.0) -- (7.8, 11.0);
+\draw[line width=1.5pt, draw=htmlorange, dashed] (6.9, 11.0) -- (7.8, 11.0);
+\node[font=\sffamily\bfseries\scriptsize, text=htmlorange] at (6.5, 11.4) {Maps to};
+
+% Track 2: UA Stylesheet -> Author CSS
+\draw[line width=5pt, draw=purple!25, line cap=round] (12.2, 11.0) -- (13.1, 11.0);
+\draw[line width=1.5pt, draw=purple, dashed] (12.2, 11.0) -- (13.1, 11.0);
+\fill[white, draw=purple, line width=1pt] (13.5, 11.0) circle (3pt);
+\draw[line width=5pt, draw=purple!25, line cap=round] (13.9, 11.0) -- (14.8, 11.0);
+\draw[line width=1.5pt, draw=purple, dashed] (13.9, 11.0) -- (14.8, 11.0);
+\node[anchor=south, align=center, font=\sffamily\bfseries\scriptsize, text=purple] at (13.5, 11.5) {Combined\\[2pt]with};
+
+
+% =========================================================================
+% SECTION 3: BOTTOM SECTION - VISUAL LAYOUT CALCULATION
+% =========================================================================
+\node[font=\Large\bfseries\sffamily, text=darkgray] at (9.9058,8.7506) {\faIcon{expand-arrows-alt}\ Fluid Layout Calculation (No CLS on Mobile)};
+
+% -------------------------------------------------------------------------
+% 3.1 Desktop Visualization (Centered at x=4.5)
+% -------------------------------------------------------------------------
+\node[font=\large\bfseries\sffamily, text=darkgray] at (4.4876,7.7515) {Desktop: Container is 800px wide};
+
+% Desktop Browser Window Chassis
+\draw[fill=white, draw=darkgray!40, line width=1pt, rounded corners=8pt,
+      blur shadow={shadow blur steps=10, shadow blur radius=1.2ex, shadow opacity=35}]
+      (0.5, 1.2) rectangle (8.5, 7.3);
+
+% Browser Top Bar & Chrome
+\fill[lightgray!70, rounded corners=8pt] (0.5, 6.6) [sharp corners] -- (0.5, 6.6) -- (8.5, 6.6) [rounded corners=8pt] -- (8.5, 7.3) -- (0.5, 7.3) -- cycle;
+\draw[draw=darkgray!30, line width=0.5pt] (0.5, 6.6) -- (8.5, 6.6);
+
+% Window Controls & Address Bar
+\fill[dotred] (1.0, 6.95) circle (2.2pt);
+\fill[dotyellow] (1.25, 6.95) circle (2.2pt);
+\fill[dotgreen] (1.5, 6.95) circle (2.2pt);
+
+\draw[fill=white, draw=darkgray!25, line width=0.5pt, rounded corners=3pt] (2.0, 6.75) rectangle (7.5, 7.15);
+\node[font=\sffamily\tiny, text=darkgray!70] at (4.5, 6.95) {\faLock\ https://example.com/gallery \ \ --- \ \ Browser Window};
+
+% Desktop Image Box (2:1 Ratio -> W: 6.0, H: 3.0, Centered at X=5.0)
+\draw[left color=cssblue!12, right color=cssblue!30, draw=cssblue, line width=1.5pt, rounded corners=4pt]
+      (2.0, 2.5) rectangle (8.0, 5.5);
+
+% Inner Technical Info / Skeleton State
+\node[font=\sffamily\small, text width=5.5cm, align=center, text=darkgray] at (5.0, 4.0) {
+    \textbf{\large Native Size}\\[4pt]
+    CSS \texttt{max-width} is not triggered.\\[2pt]
+    Aspect Ratio \textbf{2:1} maintained.
+};
+
+% Engineering Dimension Lines - Desktop Width (W = 800px)
+\draw[draw=darkgray!60, line width=0.5pt] (2.0, 2.1) -- (2.0, 1.7);
+\draw[draw=darkgray!60, line width=0.5pt] (8.0, 2.1) -- (8.0, 1.7);
+\draw[{Stealth[length=2.5mm]}-Stealth=3mm, darkgray, line width=0.9pt] (2.0, 1.9) -- (8.0, 1.9);
+\node[font=\sffamily\scriptsize\bfseries, text=darkgray, fill=white, inner sep=2pt, rounded corners=2pt] at (5.0, 1.9) {width: 800px \ (Native)};
+
+% Engineering Dimension Lines - Desktop Height (H = 400px) - Guideline at X=1.5, Text at (1.0, 4.0)
+\draw[draw=darkgray!60, line width=0.5pt] (1.8, 2.5) -- (1.2, 2.5);
+\draw[draw=darkgray!60, line width=0.5pt] (1.8, 5.5) -- (1.2, 5.5);
+\draw[{Stealth[length=2.5mm]}-Stealth=3mm, darkgray, line width=0.9pt] (1.5, 2.5) -- (1.5, 5.5);
+\node[font=\sffamily\scriptsize\bfseries, text=darkgray, rotate=90, fill=white, inner sep=2pt, rounded corners=2pt] at (1.0, 4.0) {height: 400px};
+
+% -------------------------------------------------------------------------
+% 3.2 Responsive Transformation Bridge (Centered at x=10.5)
+% -------------------------------------------------------------------------
+\draw[-Stealth=3mm, line width=3.5pt, draw=darkgray!40] (8.7, 4.25) -- (12.3, 4.25);
+\node[font=\sffamily\bfseries\small, text=darkgray, fill=white, draw=darkgray!30, rounded corners=4pt, inner sep=3.5pt,
+      blur shadow={shadow blur steps=4, shadow opacity=15}] at (10.5, 5.0) {\faIcon{compress-alt}\ Responsive};
+\node[font=\sffamily\scriptsize, text=darkgray!80, align=center, text width=3.5cm] at (10.5, 3.5) {Viewport shrinks\\to 400px};
+
+% -------------------------------------------------------------------------
+% 3.3 Mobile Visualization (Centered at x=15.75)
+% -------------------------------------------------------------------------
+\node[font=\large\bfseries\sffamily, text=darkgray] at (15.75, 7.9) {Mobile: Container shrinks to 400px wide};
+
+% Smartphone Outer Chassis (Shifted to X=12.5 .. 19.0)
+\draw[fill=darkgray!12, draw=darkgray, line width=2pt, rounded corners=18pt,
+      blur shadow={shadow blur steps=12, shadow blur radius=1.2ex, shadow opacity=35}]
+      (12.5, 0.4) rectangle (19.0, 7.6);
+
+% Smartphone Screen Bezel (Shifted to X=12.8 .. 18.7)
+\draw[fill=white, draw=darkgray!35, line width=0.8pt, rounded corners=12pt] (12.8, 0.9) rectangle (18.7, 7.1);
+
+% Top Speaker Notch / Dynamic Island & Home Bar
+\fill[darkgray, rounded corners=2.5pt] (15.25, 7.26) rectangle (16.25, 7.42);
+\fill[darkgray!60, rounded corners=2pt] (15.0, 0.62) rectangle (16.5, 0.68);
+\node[font=\sffamily\tiny, text=gray] at (15.75, 6.85) {Mobile Window};
+
+% Mobile Layout Reservation Box (2:1 Ratio -> W: 3.0, H: 1.5)
+\draw[left color=cssblue!15, right color=cssblue!30, draw=cssblue, line width=1.3pt, rounded corners=3pt]
+      (14.25, 5.0) rectangle (17.25, 6.5);
+
+% Structural dashed grid inside representing pre-paint reserved box
+\draw[dashed, cssblue!40, line width=0.5pt] (14.25, 5.0) grid[step=0.5] (17.25, 6.5);
+
+% Mobile Image Box Text
+\node[font=\sffamily\scriptsize, text width=2.8cm, align=center, text=darkgray] at (15.75, 5.75) {
+    \textbf{Scaled Down}\\[1pt]
+    CSS forces $W=400$px
+};
+
+% Engineering Dimension Lines - Mobile Width (W = 400px)
+\draw[draw=darkgray!60, line width=0.5pt] (14.25, 4.7) -- (14.25, 4.3);
+\draw[draw=darkgray!60, line width=0.5pt] (17.25, 4.7) -- (17.25, 4.3);
+\draw[{Stealth[length=2mm]}-Stealth=3mm, darkgray, line width=0.8pt] (14.25, 4.5) -- (17.25, 4.5);
+\node[font=\sffamily\tiny\bfseries, text=darkgray, fill=white, inner sep=1.5pt, rounded corners=2pt] at (15.75, 4.5) {width: 400px};
+
+% Engineering Dimension Lines - Mobile Height (H = 200px) - Guidelines at X=13.75, Text at (13.25, 5.75)
+\draw[draw=darkgray!60, line width=0.5pt] (14.05, 5.0) -- (13.45, 5.0);
+\draw[draw=darkgray!60, line width=0.5pt] (14.05, 6.5) -- (13.45, 6.5);
+\draw[{Stealth[length=2mm]}-Stealth=3mm, darkgray, line width=0.8pt] (13.75, 5.0) -- (13.75, 6.5);
+\node[font=\sffamily\tiny\bfseries, text=darkgray, rotate=90, fill=white, inner sep=1.5pt, rounded corners=2pt] at (13.25, 5.75) {height: 200px};
+
+% Math Proof Tooltip Overlay
+\node[font=\ttfamily\scriptsize\bfseries, text=purple!90!black, fill=purple!10, draw=purple!50,
+      line width=0.8pt, rounded corners=3pt, inner sep=3pt, align=center, text width=3.2cm] at (15.75, 3.7) {
+    \textsf{calc:} $H = 400\text{px} \times \frac{400}{800}$\\[2pt]
+    $H \mathbf{= 200\text{px}}$
+};
+
+% Mobile Explanatory Logic Card (Zero Layout Shift)
+\draw[fill=cream, draw=gold!70!orange, line width=0.9pt, rounded corners=5pt,
+      blur shadow={shadow blur steps=4, shadow opacity=15}] (13.25, 1.2) rectangle (18.25, 2.9);
+
+\node[font=\sffamily\scriptsize, text width=4.5cm, align=center, text=darkgray, inner sep=4pt] at (15.75, 2.05) {
+    \faCheckCircle\ \textbf{Zero Layout Shift}\\[4pt]
+    The \textbf{\texttt{height: auto}} reads the \textbf{2:1} UA ratio and \textit{immediately} reserves 200px height.
+};
+
+\end{tikzpicture}
+\end{document}

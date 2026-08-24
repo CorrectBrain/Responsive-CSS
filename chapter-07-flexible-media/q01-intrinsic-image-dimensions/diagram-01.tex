@@ -1,0 +1,294 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+% --- COLOR PALETTE DEFINITION ---
+\definecolor{rastercol}{RGB}{230, 81, 0}      % Deep Hardware Orange
+\definecolor{vectorcol}{RGB}{41, 98, 255}     % Precision Blue
+\definecolor{textcol}{RGB}{33, 33, 33}        % Primary Text Dark
+\definecolor{idedark}{RGB}{30, 30, 30}        % VS Code Dark Editor
+\definecolor{idetop}{RGB}{45, 45, 45}         % IDE Title/Tab Bar
+\definecolor{idegutter}{RGB}{37, 37, 38}      % Line Number Gutter
+\definecolor{tagblue}{RGB}{86, 156, 214}      % XML Tag Color
+\definecolor{attrcyan}{RGB}{156, 220, 254}    % XML Attribute Color
+\definecolor{strorange}{RGB}{206, 145, 120}   % XML String Color
+\definecolor{commentgreen}{RGB}{106, 153, 85} % XML Comment Color
+\definecolor{hexbg}{RGB}{248, 249, 250}       % Hex Editor Window
+\definecolor{hextop}{RGB}{233, 236, 239}      % Hex Title Bar
+\definecolor{hexhighlight}{RGB}{255, 224, 178}% SOF0 Byte Highlight
+\definecolor{cadbg}{RGB}{240, 246, 255}       % CAD Millimeter Background
+\definecolor{cadgrid}{RGB}{185, 215, 245}     % CAD Grid Lines
+
+% Logical Pixel Palette for Macro Callout
+\definecolor{pxA}{HTML}{E65100}
+\definecolor{pxB}{HTML}{FF5722}
+\definecolor{pxC}{HTML}{F4511E}
+\definecolor{pxD}{HTML}{FF6F00}
+\definecolor{pxE}{HTML}{FF4500}
+\definecolor{pxF}{HTML}{E64A19}
+\definecolor{pxG}{HTML}{D84315}
+\definecolor{pxH}{HTML}{BF360C}
+\definecolor{pxI}{HTML}{FF7043}
+
+\begin{document}
+\begin{tikzpicture}[
+    show background rectangle,
+    background rectangle/.style={fill=white},
+    font=\sffamily,
+    bubble/.style={
+        draw=gray!50,
+        fill=white,
+        rounded corners=6pt,
+        inner sep=12pt,
+        blur shadow={shadow opacity=15, shadow yshift=-2pt},
+        align=left
+    },
+    binarybox/.style={
+        draw=rastercol,
+        thick,
+        fill=white,
+        align=center,
+        rounded corners=6pt
+    }
+]
+
+% ==============================================================================
+% 1. GLOBAL TITLES & HEADERS (Y: 22.5 to 25.5)
+% ==============================================================================
+\node[font=\Huge\bfseries, text=textcol, align=center] at (11, 25.5) {Architectural Definition of Intrinsic Dimensions};
+\node[font=\large, text=gray!80!black, align=center] at (11, 24.5) {What physically defines the space an image requests from the browser before CSS intervenes?};
+
+\node[font=\LARGE\bfseries, text=rastercol] at (4.5, 22.5) {\faImage \ Raster Assets (JPEG/PNG)};
+\node[font=\LARGE\bfseries, text=vectorcol] at (17.5, 22.5) {\faBezierCurve \ Vector Assets (SVG)};
+
+% ==============================================================================
+% 2. RASTER COLUMN (LEFT - X: [0 to 9])
+% ==============================================================================
+
+% --- Panel 1: Binary File Header / Hex Editor UI (Y: 16 to 21) ---
+\fill[hexbg, rounded corners=6pt] (0, 16) rectangle (9, 21);
+\draw[gray!50, line width=0.8pt, rounded corners=6pt, blur shadow={shadow opacity=15, shadow yshift=-2pt}] (0, 16) rectangle (9, 21);
+
+% Title Bar with macOS Buttons
+\fill[hextop, rounded corners=6pt] (0, 20.3) rectangle (9, 21);
+\fill[hextop] (0, 20.3) rectangle (9, 20.6);
+\draw[gray!40, thin] (0, 20.3) -- (9, 20.3);
+\fill[red!80!black] (0.35, 20.65) circle (2.8pt);
+\fill[yellow!80!black] (0.65, 20.65) circle (2.8pt);
+\fill[green!70!black] (0.95, 20.65) circle (2.8pt);
+\node[font=\footnotesize\bfseries, text=gray!80!black] at (4.5, 20.65) {\faFileCode \ Binary File Header (Hex View)};
+
+% Absolute Line Positioning for Hex Editor
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt] at (0.25, 20.0) {\textcolor{gray!60}{OFFSET} \ \ \textcolor{gray!60}{HEX BYTES} \hspace{2.2cm} \ \textcolor{gray!60}{ASCII / INFO}};
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt, text=gray!90!black] at (0.25, 19.5) {\textcolor{rastercol!80!black}{00000000} \ \textbf{FF D8 FF E0} \ 00 10 4A 46 \ \ \dots \ \textsf{..JFIF} (SOI, APP0)};
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt, text=gray!90!black] at (0.25, 19.0) {\textcolor{rastercol!80!black}{00000010} \ 49 46 00 01 \ 01 01 00 60 \ \ \dots \ \textsf{....`..} (JFIF Tag)};
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt, text=gray!90!black] at (0.25, 18.5) {\textcolor{rastercol!80!black}{00000020} \ \textbf{FF DB} 00 43 \ 00 08 06 06 \ \ \dots \ \textsf{..C...} (DQT Quant)};
+
+% SOF0 Line with Mathematical Hex Correction (0F A0) and explicit highlight
+\fill[orange!30, rounded corners=2pt] (1.30, 17.85) rectangle (5.80, 18.25);
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt, text=gray!90!black] at (0.25, 18.0) {\textcolor{rastercol!80!black}{00000030} \ \textbf{\textcolor{rastercol!90!black}{FF C0}} \textbf{00 11} \ \textbf{08 0B B8 0F A0} \dots \textbf{\textcolor{rastercol!90!black}{SOF0 (4000$\times$3000)}}};
+
+% --- Panel 2: Physical Pixel Grid with Macro Logical Pixel Callout (Y: 8.0 to 14) ---
+% Rigid 4:3 Grid from (1.5, 9.0) to (7.5, 13.5)
+\fill[rastercol!12, rounded corners=6pt] (1.5, 9.0) rectangle (7.5, 13.5);
+\draw[step=0.5cm, rastercol!35, very thin] (1.5, 9.0) grid (7.5, 13.5);
+\draw[rastercol!80, thick, rounded corners=6pt] (1.5, 9.0) rectangle (7.5, 13.5);
+
+% Hardcoded Pixels Pillbox
+\node[draw=rastercol, fill=white, rounded corners=4pt, font=\bfseries\small, text=rastercol!90!black, inner sep=4pt, blur shadow={shadow opacity=10}] at (4.5, 11.25) {\faTh \ 12,000,000 Hardcoded Pixels};
+
+% CAD Dimension Ticks and Arrows (Zero Overlaps)
+% Width
+\draw[rastercol, thin] (1.5, 9.0) -- (1.5, 8.0);
+\draw[rastercol, thin] (7.5, 9.0) -- (7.5, 8.0);
+\draw[arrows={<->}, thick, rastercol] (1.5, 8.3) -- (7.5, 8.3);
+\node[font=\footnotesize\bfseries, text=rastercol] at (4.5, 8.0) {Intrinsic Width ($W_{int} = 4000$)};
+
+% Height
+\draw[rastercol, thin] (1.5, 9.0) -- (1.0, 9.0);
+\draw[rastercol, thin] (1.5, 13.5) -- (1.0, 13.5);
+\draw[arrows={<->}, thick, rastercol] (1.2, 9.0) -- (1.2, 13.5);
+\node[font=\footnotesize\bfseries, text=rastercol, rotate=90] at (0.9, 11.25) {Intrinsic Height};
+
+% Target Cell on Grid
+\draw[rastercol!90, thick, dashed] (6.5, 10.0) rectangle (7.0, 10.5);
+
+% Dashed Projection Lines to Macro Lens
+\draw[gray!60, thin, dashed] (7.0, 10.5) -- (7.6, 11.0);
+\draw[gray!60, thin, dashed] (7.0, 10.0) -- (7.6, 10.0);
+
+% Macro-Lens Callout Visualizing Logical Pixel Data (Radius 1.5cm, 0.8x0.8 cells)
+\begin{scope}
+    \clip (9.0, 10.5) circle (1.5cm);
+    \fill[black!90] (7.3, 8.8) rectangle (10.7, 12.2);
+
+    % Row 3 (Top): Y = 11.3
+    \fill[pxA] (7.8, 10.9) rectangle (8.6, 11.7);
+    \node[font=\fontsize{4pt}{5pt}\selectfont\ttfamily\bfseries, text=white] at (8.2, 11.3) {\#E65100};
+
+    \fill[pxB] (8.6, 10.9) rectangle (9.4, 11.7);
+    \node[font=\fontsize{4pt}{5pt}\selectfont\ttfamily\bfseries, text=white] at (9.0, 11.3) {\#FF5722};
+
+    \fill[pxC] (9.4, 10.9) rectangle (10.2, 11.7);
+    \node[font=\fontsize{4pt}{5pt}\selectfont\ttfamily\bfseries, text=white] at (9.8, 11.3) {\#F4511E};
+
+    % Row 2 (Middle): Y = 10.5
+    \fill[pxD] (7.8, 10.1) rectangle (8.6, 10.9);
+    \node[font=\fontsize{4pt}{5pt}\selectfont\ttfamily\bfseries, text=white] at (8.2, 10.5) {\#FF6F00};
+
+    \fill[pxE] (8.6, 10.1) rectangle (9.4, 10.9);
+    \node[font=\fontsize{4pt}{5pt}\selectfont\ttfamily\bfseries, text=white] at (9.0, 10.5) {\#FF4500};
+
+    \fill[pxF] (9.4, 10.1) rectangle (10.2, 10.9);
+    \node[font=\fontsize{4pt}{5pt}\selectfont\ttfamily\bfseries, text=white] at (9.8, 10.5) {\#E64A19};
+
+    % Row 1 (Bottom): Y = 9.7
+    \fill[pxG] (7.8, 9.3) rectangle (8.6, 10.1);
+    \node[font=\fontsize{4pt}{5pt}\selectfont\ttfamily\bfseries, text=white] at (8.2, 9.7) {\#D84315};
+
+    \fill[pxH] (8.6, 9.3) rectangle (9.4, 10.1);
+    \node[font=\fontsize{4pt}{5pt}\selectfont\ttfamily\bfseries, text=white] at (9.0, 9.7) {\#BF360C};
+
+    \fill[pxI] (9.4, 9.3) rectangle (10.2, 10.1);
+    \node[font=\fontsize{4pt}{5pt}\selectfont\ttfamily\bfseries, text=white] at (9.8, 9.7) {\#FF7043};
+
+    % Grid overlay
+    \draw[white!40, thin] (7.8, 9.3) grid[step=0.8cm] (10.2, 11.7);
+\end{scope}
+\draw[rastercol!90!black, line width=1.8pt] (9.0, 10.5) circle (1.5cm);
+\node[font=\tiny\bfseries, fill=white, draw=rastercol!70, rounded corners=2pt, inner sep=2pt, anchor=north] at (9.0, 8.8) {Logical Pixel Data (RGB)};
+
+% --- Panel 3: Immutable Pixel Grid Explanation Bubble (Y: 2 to 6) ---
+\node[bubble, draw=rastercol, line width=1pt, text width=7.5cm] at (4.5, 4) {
+    \textbf{\color{rastercol}\faMemory \ The Immutable Pixel Grid}\vspace{2mm}\\
+    For raster images, intrinsic dimensions are a \textbf{physical memory reality} encoded in the file header. The browser reads these bytes \textit{first}. Before the image even finishes decoding, the rendering engine allocates a rigid, unyielding rectangle of exactly $4000 \times 3000$ CSS pixels for this asset.
+};
+
+% ==============================================================================
+% 3. CENTER CHANNEL (X: [9 to 13])
+% ==============================================================================
+
+% Central Divider
+\draw[thick, dashed, gray!30] (11, 15.5) -- (11, 2.2);
+
+% Parsed Payload Inspector Panel (Moved to Y = 18.0 for perfect horizontal alignment)
+\node[binarybox, fill=white, line width=1.2pt, text width=3.1cm, blur shadow={shadow opacity=15, shadow yshift=-2pt}] (intrinsicData) at (11, 18.0) {
+    \textbf{\color{rastercol}\faSearchPlus \ Parsed Payload}\vspace{1.5mm}\\
+    \rule{2.7cm}{0.4pt}\vspace{1.5mm}\\
+    \texttt{\textbf{Width:  4000 px}}\\
+    \texttt{\textbf{Height: 3000 px}}\\
+    \vspace{1.5mm}
+    \footnotesize\textit{Aspect Ratio: 4:3}
+};
+
+% Strictly horizontal connector from SOF0 Byte Highlight to Parsed Payload
+\draw[->, very thick, rastercol] (9.0, 18.0) -- (intrinsicData.west);
+
+% Replaced Element Boundary Box (Y = 0)
+\node[bubble, text width=16cm, fill=yellow!10, draw=orange!90!black, line width=1.3pt] at (11, 0) {
+    \textbf{\color{orange!90!black}\faExclamationTriangle \ The "Replaced Element" Boundary}\vspace{2mm}\\
+    Tags like \texttt{<img>} and \texttt{<video>} are \textbf{Replaced Elements}. CSS does not render their internal contents. CSS merely provides a bounding box to an external decoder. \textit{If CSS provides no active constraints, the bounding box forcefully defaults to the external asset's Intrinsic Dimensions.}
+};
+
+% ==============================================================================
+% 4. VECTOR COLUMN (RIGHT - X: [13 to 22])
+% ==============================================================================
+
+% --- Panel 1: XML Document Structure / Dark-Theme IDE UI (Y: 16 to 21) ---
+\fill[idedark, rounded corners=6pt] (13, 16) rectangle (22, 21);
+\draw[gray!70, line width=0.8pt, rounded corners=6pt, blur shadow={shadow opacity=15, shadow yshift=-2pt}] (13, 16) rectangle (22, 21);
+
+% Top Tab Bar & Active Tab
+\fill[idetop, rounded corners=6pt] (13, 20.3) rectangle (22, 21);
+\fill[idetop] (13, 20.3) rectangle (22, 20.6);
+\draw[gray!60, thin] (13, 20.3) -- (22, 20.3);
+
+\fill[idedark, rounded corners=3pt] (13.2, 20.3) rectangle (16.2, 20.95);
+\node[font=\scriptsize\sffamily, text=gray!20] at (14.7, 20.63) {\faFileCode \ \textbf{image.svg} \ \textcolor{gray!50}{$\times$}};
+
+% Gutter for Line Numbers
+\fill[idegutter] (13.01, 16.01) rectangle (13.7, 20.29);
+\draw[gray!60, thin] (13.7, 16) -- (13.7, 20.3);
+
+% Absolute Line Numbers Positioning
+\node[font=\ttfamily\scriptsize, text=gray!50] at (13.45, 20.0) {1};
+\node[font=\ttfamily\scriptsize, text=gray!50] at (13.45, 19.5) {2};
+\node[font=\ttfamily\scriptsize, text=gray!50] at (13.45, 19.0) {3};
+\node[font=\ttfamily\scriptsize, text=gray!50] at (13.45, 18.5) {4};
+\node[font=\ttfamily\scriptsize, text=gray!50] at (13.45, 18.0) {5};
+\node[font=\ttfamily\scriptsize, text=gray!50] at (13.45, 17.5) {6};
+\node[font=\ttfamily\scriptsize, text=gray!50] at (13.45, 17.0) {7};
+\node[font=\ttfamily\scriptsize, text=gray!50] at (13.45, 16.5) {8};
+
+% Absolute Code Lines Positioning with Path Semantic Correction (Z closepath)
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt] at (13.9, 20.0) {\textcolor{tagblue}{<svg} \textcolor{attrcyan}{xmlns}=\textcolor{strorange}{"http://www.w3.org/2000/svg"}};
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt] at (13.9, 19.5) {\quad \textcolor{attrcyan}{\textbf{width}}=\textcolor{strorange}{\textbf{"800"}}};
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt] at (13.9, 19.0) {\quad \textcolor{attrcyan}{\textbf{height}}=\textcolor{strorange}{\textbf{"600"}}};
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt] at (13.9, 18.5) {\quad \textcolor{attrcyan}{\textbf{viewBox}}=\textcolor{strorange}{\textbf{"0 0 800 600"}}};
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt] at (13.9, 18.0) {\textcolor{tagblue}{>}};
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt] at (13.9, 17.5) {\quad \textcolor{tagblue}{<path} \textcolor{attrcyan}{d}=\textcolor{strorange}{"M10 10 H 90 V 90 H 10 Z"}\textcolor{tagblue}{/>}};
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt] at (13.9, 17.0) {\quad \textcolor{commentgreen}{<!-- Math-based drawing instructions -->}};
+\node[anchor=west, font=\ttfamily\scriptsize, inner sep=0pt] at (13.9, 16.5) {\textcolor{tagblue}{</svg>}};
+
+% --- Panel 2: CAD Drafting Interface & SVG ViewBox (Y: 8.0 to 14.5) ---
+% Infinite CAD Engineering Drafting Grid
+\fill[cadbg, rounded corners=6pt] (13.0, 8.0) rectangle (22.0, 14.5);
+\draw[step=0.25cm, cadgrid!60, very thin] (13.0, 8.0) grid (22.0, 14.5);
+\draw[step=1.0cm, cadgrid, thin] (13.0, 8.0) grid (22.0, 14.5);
+\draw[dashed, vectorcol!50, thick, rounded corners=6pt] (13.0, 8.0) rectangle (22.0, 14.5);
+
+% Masked Label above X-Axis to eliminate grid collision
+\node[font=\footnotesize\itshape, text=vectorcol!80!black, fill=cadbg, inner sep=4pt, rounded corners=2pt] at (17.5, 14.1) {\faDraftingCompass \ Infinite Coordinate Space (No physical size)};
+
+% Semi-transparent Frosted Glass ViewBox Window (4:3 Aspect Ratio: 6.0 x 4.5)
+\fill[white, fill opacity=0.88, rounded corners=2pt] (14.5, 8.5) rectangle (20.5, 13.0);
+\draw[thick, vectorcol, rounded corners=2pt, blur shadow={shadow opacity=10}] (14.5, 8.5) rectangle (20.5, 13.0);
+\node[font=\bfseries\small, text=vectorcol] at (17.5, 9.5) {The ViewBox Window};
+
+% Mathematically Accurate SVG Path (80x80 square inside 800x600 ViewBox)
+% (10,10) -> (14.575, 12.925), (90,90) -> (15.175, 12.325)
+\draw[thick, vectorcol!80, fill=vectorcol!25] (14.575, 12.925) rectangle (15.175, 12.325);
+
+% SVG Path Label positioned at (15.5, 11.5) with clean curved pointer
+\node[font=\tiny\ttfamily, text=vectorcol!80!black, anchor=west] (pathlabel) at (15.5, 11.5) {path d="M10 10 H 90 V 90 H 10 Z"};
+\draw[-Stealth=3mm, vectorcol, thin] (15.5, 11.5) to[out=180, in=270] (14.875, 12.325);
+
+% Accurate SVG Coordinate System (Y Points DOWNWARDS from Top-Left Origin)
+\fill[vectorcol] (14.5, 13.0) circle (2.5pt);
+\node[anchor=south west, font=\ttfamily\bfseries\scriptsize, text=vectorcol!90!black] at (14.5, 13.0) {(0,0)};
+
+\fill[vectorcol] (20.5, 8.5) circle (2.5pt);
+\node[anchor=north east, font=\ttfamily\bfseries\scriptsize, text=vectorcol!90!black] at (20.5, 8.5) {(800,600)};
+
+% SVG X-Axis (Right)
+\draw[-Stealth=3mm, thick, vectorcol] (14.5, 13.0) -- (20.5, 13.0)
+    node[midway, above=4pt, font=\footnotesize\bfseries] {width="800" ($W_{int}$) \ $\rightarrow$ +X};
+
+% SVG Y-Axis (Strictly Downward)
+\draw[-Stealth=3mm, thick, vectorcol] (14.5, 13.0) -- (14.5, 8.5)
+    node[midway, left=2pt, font=\footnotesize\bfseries, align=right] {height="600"\\$\downarrow$ +Y};
+
+% --- Panel 3: Declarative Coordinate Window Explanation Bubble (Y: 2 to 6) ---
+\node[bubble, draw=vectorcol, line width=1pt, text width=7.5cm] at (17.5, 4) {
+    \textbf{\color{vectorcol}\faCode \ The Declarative Coordinate Window}\vspace{2mm}\\
+    Vectors are mathematically infinite. Their intrinsic dimensions are \textbf{purely declarative}, established by the root \texttt{width} and \texttt{height} attributes (which map to CSS pixels), or derived from the aspect ratio of the \texttt{viewBox}. Without these specific attributes, an SVG has \textit{no inherent physical size at all}!
+};
+
+\end{tikzpicture}
+\end{document}

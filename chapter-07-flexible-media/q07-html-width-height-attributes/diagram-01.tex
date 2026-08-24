@@ -1,0 +1,267 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% Professional Tech Color Palette
+\definecolor{accentblue}{RGB}{41, 128, 185}
+\definecolor{badred}{RGB}{192, 57, 43}
+\definecolor{goodgreen}{RGB}{39, 174, 96}
+\definecolor{darkgray}{RGB}{44, 62, 80}
+\definecolor{lightgray}{RGB}{236, 240, 241}
+\definecolor{osred}{RGB}{255, 95, 86}
+\definecolor{osyellow}{RGB}{255, 189, 46}
+\definecolor{osgreen}{RGB}{39, 201, 63}
+
+\begin{document}
+\sffamily
+\begin{tikzpicture}[
+    timelinecard/.style={
+        draw=accentblue!70,
+        top color=lightgray!30,
+        bottom color=white,
+        rounded corners=6pt,
+        line width=0.9pt,
+        blur shadow={shadow opacity=18, shadow yshift=-2.5pt, shadow blur radius=4pt},
+        align=center,
+        inner sep=10pt,
+        text width=8.5cm
+    },
+    windowframe/.style={
+        draw=darkgray!35,
+        fill=white,
+        rounded corners=6pt,
+        line width=0.8pt,
+        blur shadow={shadow opacity=16, shadow yshift=-3pt, shadow blur radius=5pt}
+    },
+    flowarrow/.style={
+        -Stealth=3mm,
+        accentblue,
+        line width=2pt,
+        shorten >=2pt,
+        shorten <=2pt
+    }
+]
+
+% ==========================================
+% CANVAS BACKGROUND
+% ==========================================
+\fill[white] (-1.5, -5.5) rectangle (22.5, 15.0);
+
+% ==========================================
+% TITLE SECTION
+% ==========================================
+\node[font=\Huge\bfseries\color{darkgray}] at (10.3157,14.1926) {Preventing Cumulative Layout Shift (CLS)};
+\node[font=\large\color{darkgray!80}] at (10.3157,13.3926) {How {\ttfamily width} and {\ttfamily height} attributes create pre-parsed layout constraints};
+
+% ==========================================
+% LEFT SIDE: THE PARSING TIMELINE MECHANISM
+% ==========================================
+% Panel Background Container
+\draw[rounded corners=8pt, fill=lightgray!15, draw=darkgray!20, line width=0.8pt] (-1.0, -4.8) rectangle (9.2, 11.8);
+
+% Subtle DOM Layout Engine Watermarks
+\begin{scope}
+\clip[rounded corners=8pt] (-1.0, -4.8) rectangle (9.2, 11.8);
+\node[font=\fontsize{65}{65}\selectfont, text=accentblue!6] at (7.3, 8.5) {\faSitemap};
+\node[font=\fontsize{55}{55}\selectfont, text=accentblue!5] at (1.2, 4.2) {\faCogs};
+\node[font=\fontsize{70}{70}\selectfont, text=accentblue!6] at (7.0, -0.6) {\faProjectDiagram};
+\end{scope}
+
+% Timeline Header
+\node[font=\Large\bfseries\color{accentblue}] at (4.1,11.2732) {\faClock \ Browser Parsing Timeline};
+
+% Step 1: HTML Payload Arrives
+\node[timelinecard, draw=accentblue, line width=1.2pt] (step1) at (4.1, 9.8) {
+    \textbf{\color{accentblue}\faFileCode \ 1. HTML Payload Arrives}\\[5pt]
+    \ttfamily\small <img src="hero.jpg"\\ width="800" height="400">
+};
+
+% Step 2: UA Pre-scanner
+\node[timelinecard] (step2) at (4.1, 6.3) {
+    \textbf{\color{accentblue}\faSearch \ 2. UA Pre-scanner}\\[5pt]
+    \textit{Milliseconds before CSS executes}, the browser reads the raw attributes:\\[3pt]
+    \textbf{Width = 800} \quad \textbf{Height = 400}
+};
+
+% Step 3: Proportional Fraction Math
+\node[timelinecard] (step3) at (4.1, 2.8) {
+    \textbf{\color{accentblue}\faCalculator \ 3. Proportional Fraction Math}\\[5pt]
+    Browser internally calculates the aspect ratio:\\[3pt]
+    {\large $800 \div 400 = \mathbf{2:1}$}
+};
+
+% Step 4: Layout Space Allocation
+\node[timelinecard] (step4) at (4.1, -0.7) {
+    \textbf{\color{accentblue}\faPencilRuler \ 4. Space Allocation}\\[5pt]
+    Layout engine creates an empty block maintaining the $\mathbf{2:1}$ ratio, reserving space \textit{before} the image downloads.
+};
+
+% Data Flow Structural Arrows & Trajectory Data Indicator Dots
+\draw[flowarrow] (step1.south) -- (step2.north) node[midway, circle, fill=accentblue!60, inner sep=1.8pt] {};
+\draw[flowarrow] (step2.south) -- (step3.north) node[midway, circle, fill=accentblue!60, inner sep=1.8pt] {};
+\draw[flowarrow] (step3.south) -- (step4.north) node[midway, circle, fill=accentblue!60, inner sep=1.8pt] {};
+
+
+% ==========================================
+% RIGHT SIDE: VISUAL EXPERIENCE COMPARISON
+% ==========================================
+% Panel Background Container
+\draw[rounded corners=8pt, fill=lightgray!15, draw=darkgray!20, line width=0.8pt] (9.8, -4.8) rectangle (21.6, 11.8);
+\node[font=\Large\bfseries\color{darkgray}] at (15.7, 11.1) {\faEye \ User Experience (Visual Load)};
+
+% ------------------------------------------
+% SCENARIO A: WITHOUT ATTRIBUTES (CLS!)
+% ------------------------------------------
+\node[font=\normalsize\bfseries\color{badred}] at (15.7,10.4732) {\faTimesCircle \ Scenario A: No Width/Height Attributes (CLS!)};
+
+% --- Window 1: Loading ---
+\draw[windowframe] (10.2, 5.1) rectangle (15.2, 9.9);
+% Window Header Bar
+\draw[fill=lightgray!40, draw=darkgray!20, rounded corners=6pt] (10.2, 9.3) rectangle (15.2, 9.9);
+\fill[lightgray!40] (10.2, 9.3) rectangle (15.2, 9.5);
+\draw[darkgray!20] (10.2, 9.3) -- (15.2, 9.3);
+% Window Control Buttons
+\fill[osred] (10.5, 9.6) circle (2pt);
+\fill[osyellow] (10.7, 9.6) circle (2pt);
+\fill[osgreen] (10.9, 9.6) circle (2pt);
+% Window URL Bar
+\draw[fill=white, draw=darkgray!20, rounded corners=2pt] (11.2, 9.45) rectangle (14.9, 9.75);
+\node[font=\tiny\sffamily\color{darkgray!70}] at (13.05, 9.6) {Loading...};
+% Content Text Blocks
+\draw[fill=darkgray!20, rounded corners=2pt, draw=none] (11.2, 8.7) rectangle (14.2, 8.4);
+\draw[fill=darkgray!20, rounded corners=2pt, draw=none] (11.2, 8.2) rectangle (14.2, 7.9);
+\draw[fill=darkgray!15, rounded corners=2pt, draw=none] (11.2, 7.7) rectangle (13.2, 7.4);
+
+% --- Window 2: Loaded (Image Pops In) ---
+\draw[windowframe] (16.2, 5.1) rectangle (21.2, 9.9);
+% Window Header Bar
+\draw[fill=lightgray!40, draw=darkgray!20, rounded corners=6pt] (16.2, 9.3) rectangle (21.2, 9.9);
+\fill[lightgray!40] (16.2, 9.3) rectangle (21.2, 9.5);
+\draw[darkgray!20] (16.2, 9.3) -- (21.2, 9.3);
+% Window Control Buttons
+\fill[osred] (16.5, 9.6) circle (2pt);
+\fill[osyellow] (16.7, 9.6) circle (2pt);
+\fill[osgreen] (16.9, 9.6) circle (2pt);
+% Window URL Bar
+\draw[fill=white, draw=darkgray!20, rounded corners=2pt] (17.2, 9.45) rectangle (20.9, 9.75);
+\node[font=\tiny\sffamily\color{darkgray!70}] at (19.05, 9.6) {Image Loaded};
+% Injected Image (Strict 3.0cm x 1.5cm = 2:1 Geometric Aspect Ratio)
+\draw[fill=badred!15, draw=badred, dashed, line width=1pt, rounded corners=2pt] (17.2, 7.2) rectangle (20.2, 8.7);
+\node[font=\tiny\bfseries\color{badred}] at (18.7, 7.95) {\faExclamationTriangle \ Image Pops In};
+% Pushed Text Blocks (Displaced mathematically relative to injected image)
+\draw[fill=darkgray!20, rounded corners=2pt, draw=none] (17.2, 6.8) rectangle (20.2, 6.5);
+\draw[fill=darkgray!20, rounded corners=2pt, draw=none] (17.2, 6.3) rectangle (20.2, 6.0);
+\draw[fill=darkgray!15, rounded corners=2pt, draw=none] (17.2, 5.8) rectangle (19.2, 5.5);
+
+% Scenario A "JUMP!" Arrow
+\draw[-Stealth=3mm, badred, line width=2.5pt] (15.2, 7.3) -- (16.2, 7.3) node[midway, above=6pt, font=\small\bfseries\color{badred}] {JUMP!};
+
+% Scenario A Explanation
+\node[font=\footnotesize\sffamily\color{badred}, text width=7cm, align=center] at (15.7, 4.3) {\textbf{Content Shifts Wildly.}\\Browser doesn't know image size until downloaded.};
+
+
+% ------------------------------------------
+% SCENARIO B: WITH ATTRIBUTES (SMOOTH)
+% ------------------------------------------
+\node[font=\normalsize\bfseries\color{goodgreen}] at (15.7, 2.3) {\faCheckCircle \ Scenario B: With Attributes (Smooth Load)};
+
+% --- Window 3: Pre-parsing ---
+\draw[windowframe] (10.2, -2.9) rectangle (15.2, 1.9);
+% Window Header Bar
+\draw[fill=lightgray!40, draw=darkgray!20, rounded corners=6pt] (10.2, 1.3) rectangle (15.2, 1.9);
+\fill[lightgray!40] (10.2, 1.3) rectangle (15.2, 1.5);
+\draw[darkgray!20] (10.2, 1.3) -- (15.2, 1.3);
+% Window Control Buttons
+\fill[osred] (10.5, 1.6) circle (2pt);
+\fill[osyellow] (10.7, 1.6) circle (2pt);
+\fill[osgreen] (10.9, 1.6) circle (2pt);
+% Window URL Bar
+\draw[fill=white, draw=darkgray!20, rounded corners=2pt] (11.2, 1.45) rectangle (14.9, 1.75);
+\node[font=\tiny\sffamily\color{darkgray!70}] at (13.05, 1.6) {Pre-parsing...};
+
+% Empty 2:1 Placeholder with Engineering Grid & Architectural Dimension Lines
+\begin{scope}
+\clip[rounded corners=2pt] (11.2, -0.8) rectangle (14.2, 0.7);
+\draw[fill=goodgreen!5, draw=none] (11.2, -0.8) rectangle (14.2, 0.7);
+\draw[step=0.25cm, goodgreen!25, thin] (11.2, -0.8) grid (14.2, 0.7);
+\end{scope}
+\draw[goodgreen, dashed, line width=1.1pt, rounded corners=2pt] (11.2, -0.8) rectangle (14.2, 0.7);
+\node[font=\tiny\bfseries\color{goodgreen!85!black}, align=center] at (12.7, -0.05) {Empty 2:1\\Placeholder};
+
+% Dimension Lines (Architectural Tick Indicators)
+\draw[{Bar[width=2.5pt]Stealth[length=2.5pt]}-Stealth=3mm, goodgreen!80!black, thin] (11.2, 0.9) -- (14.2, 0.9) node[midway, above=-1pt, font=\tiny\bfseries] {w: 800px};
+\draw[{Bar[width=2.5pt]Stealth[length=2.5pt]}-Stealth=3mm, goodgreen!80!black, thin] (10.9, -0.8) -- (10.9, 0.7) node[midway, left=-1pt, font=\tiny\bfseries] {h: 400px};
+
+% Pre-positioned Text Blocks
+\draw[fill=darkgray!20, rounded corners=2pt, draw=none] (11.2, -1.2) rectangle (14.2, -1.5);
+\draw[fill=darkgray!20, rounded corners=2pt, draw=none] (11.2, -1.7) rectangle (14.2, -2.0);
+\draw[fill=darkgray!15, rounded corners=2pt, draw=none] (11.2, -2.2) rectangle (13.2, -2.5);
+
+% --- Window 4: Loaded (Smooth Load) ---
+\draw[windowframe] (16.2, -2.9) rectangle (21.2, 1.9);
+% Window Header Bar
+\draw[fill=lightgray!40, draw=darkgray!20, rounded corners=6pt] (16.2, 1.3) rectangle (21.2, 1.9);
+\fill[lightgray!40] (16.2, 1.3) rectangle (21.2, 1.5);
+\draw[darkgray!20] (16.2, 1.3) -- (21.2, 1.3);
+% Window Control Buttons
+\fill[osred] (16.5, 1.6) circle (2pt);
+\fill[osyellow] (16.7, 1.6) circle (2pt);
+\fill[osgreen] (16.9, 1.6) circle (2pt);
+% Window URL Bar
+\draw[fill=white, draw=darkgray!20, rounded corners=2pt] (17.2, 1.45) rectangle (20.9, 1.75);
+\node[font=\tiny\sffamily\color{darkgray!70}] at (19.05, 1.6) {Image Loaded};
+
+% Loaded Image (Strict 3.0cm x 1.5cm = 2:1 Geometric Aspect Ratio matching placeholder)
+\draw[fill=goodgreen!20, draw=goodgreen, line width=1.1pt, rounded corners=2pt] (17.2, -0.8) rectangle (20.2, 0.7);
+\node[font=\tiny\bfseries\color{goodgreen!80!black}] at (18.7, -0.05) {\faImage \ Pixels Fill Box};
+
+% Static / Unmoved Text Blocks
+\draw[fill=darkgray!20, rounded corners=2pt, draw=none] (17.2, -1.2) rectangle (20.2, -1.5);
+\draw[fill=darkgray!20, rounded corners=2pt, draw=none] (17.2, -1.7) rectangle (20.2, -2.0);
+\draw[fill=darkgray!15, rounded corners=2pt, draw=none] (17.2, -2.2) rectangle (19.2, -2.5);
+
+% Scenario B "SMOOTH" Arrow
+\draw[-Stealth=3mm, goodgreen, line width=2.5pt] (15.2, -0.5) -- (16.2, -0.5) node[midway, above=4pt, font=\small\bfseries\color{goodgreen}] {SMOOTH};
+
+% Scenario B Explanation
+\node[font=\footnotesize\sffamily\color{goodgreen}, text width=7cm, align=center] at (15.7, -4.0) {\textbf{Zero Layout Shift.}\\Pre-parser creates exact boundaries immediately.};
+
+\end{tikzpicture}
+\end{document}

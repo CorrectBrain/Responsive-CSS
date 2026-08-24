@@ -1,0 +1,193 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+% Color Definitions
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{NavyBlue}{RGB}{25,45,95}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+\definecolor{domColor}{RGB}{41, 128, 185}
+\definecolor{payloadColor}{RGB}{230, 126, 34}
+\definecolor{clipColor}{RGB}{192, 57, 43}
+\definecolor{canvasColor}{RGB}{236, 240, 241}
+\definecolor{textColor}{RGB}{44, 62, 80}
+\definecolor{accentColor}{RGB}{39, 174, 96}
+
+% Reusable Landscape Graphic Component
+\tikzset{
+    pics/landscape/.style={
+        code={
+            % Sky Gradient
+            \shade[top color=skyblue!80!DodgerBlue, bottom color=white] (-4, -2) rectangle (4, 2);
+
+            % Glowing Sun
+            \shade[inner color=gold, outer color=gold!5!white, opacity=0.85] (2.0, 0.8) circle (0.85);
+            \fill[gold!95!yellow] (2.0, 0.8) circle (0.4);
+
+            % Layered Mountain Ranges
+            % Distant Mountain Range
+            \shade[top color=NavyBlue!35!SlateGray, bottom color=NavyBlue!65!white]
+                (-4, -2) -- (-4, -0.5) -- (-3.0, 0.6) -- (-2.0, -0.3) -- (-0.8, 1.1) -- (0.5, -0.4) -- (1.8, 0.8) -- (3.2, -0.2) -- (4, 0.5) -- (4, -2) -- cycle;
+
+            % Midground Mountain Range
+            \shade[top color=NavyBlue!60!SteelBlue, bottom color=NavyBlue!85!black]
+                (-4, -2) -- (-4, -1.2) -- (-2.6, 0.2) -- (-1.2, -0.8) -- (0.2, 0.5) -- (1.5, -0.7) -- (2.8, 0.2) -- (4, -0.9) -- (4, -2) -- cycle;
+
+            % Foreground Range / Foothills
+            \shade[top color=NavyBlue!80!black, bottom color=NavyBlue!95!black]
+                (-4, -2) -- (-3.4, -0.8) -- (-1.8, -1.8) -- (-0.6, -0.4) -- (0.8, -1.6) -- (2.2, -0.6) -- (3.6, -1.5) -- (4, -1.2) -- (4, -2) -- cycle;
+
+            % Base Ground / Water
+            \shade[top color=DodgerBlue!40!NavyBlue, bottom color=NavyBlue!90!black] (-4, -2) rectangle (4, -1.75);
+        }
+    }
+}
+
+\begin{document}
+\begin{tikzpicture}[
+    box/.style={draw=black!20, fill=white, rounded corners=6pt, blur shadow={shadow opacity=12, shadow blur steps=5}, inner sep=10pt},
+    annot/.style={font=\footnotesize, text=textColor, align=center},
+    arrow/.style={-Stealth, thick, textColor!60, rounded corners=6pt}
+]
+
+% --- 1. GLOBAL CANVAS & BACKGROUND ---
+\useasboundingbox (-1, -1.5) rectangle (31, 27.5);
+\fill[white] (-1, -1.5) rectangle (31, 27.5);
+
+% --- 2. GLOBAL TITLES ---
+\node[font=\Huge\bfseries, text=textColor, align=center] at (15,26.538) {Architectural Severance via \texttt{object-fit: cover}};
+\node[font=\Large, text=gray, align=center] at (15,25.538) {Decoupling the HTML Box Model from the Raster Graphic Payload};
+
+% --- 3. TOP-LEFT: CSS BOX MODEL ---
+\node[box, minimum width=9cm, minimum height=10.5cm, fill=domColor!5, draw=domColor, thick] (domBox) at (6.5, 19) {};
+
+% Headers
+\node[font=\Large\bfseries, text=domColor] at (6.5, 22.5) {\faBox\ CSS Box Model};
+\node[font=\normalsize, text=domColor, align=center] at (6.5, 21.8) {HTML \texttt{<img>} Tag};
+
+% Realistic DevTools Box Model Graphic (1:1 Aspect Ratio)
+\filldraw[fill=orange!15, draw=orange!80, line width=1pt] (4.3, 17.0) rectangle (8.7, 21.4);
+\node[font=\tiny\bfseries, text=orange!90!black, anchor=north west, fill=white, fill opacity=0.95, text opacity=1, inner sep=1.5pt] at (4.3, 21.4) {margin};
+
+\filldraw[fill=yellow!20, draw=yellow!80!orange, line width=1pt] (4.7, 17.4) rectangle (8.3, 21.0);
+\node[font=\tiny\bfseries, text=yellow!70!black, anchor=north west, fill=white, fill opacity=0.95, text opacity=1, inner sep=1.5pt] at (4.7, 21.0) {border};
+
+\filldraw[fill=green!18, draw=green!70!teal, line width=1pt] (5.1, 17.8) rectangle (7.9, 20.6);
+\node[font=\tiny\bfseries, text=green!60!black, anchor=north west, fill=white, fill opacity=0.95, text opacity=1, inner sep=1.5pt] at (5.1, 20.6) {padding};
+
+\filldraw[fill=blue!18, draw=blue!70, line width=1pt] (5.5, 18.2) rectangle (7.5, 20.2);
+\node[font=\small\bfseries, text=blue!90!black, align=center] at (6.5, 19.2) {600 $\times$ 600};
+
+% Left Explanatory Text Block
+\node[annot, text width=8cm] at (6.5, 15.5) {
+    \textbf{Viewport-Driven Dimensions}\\[2pt]
+    Defined by responsive CSS:\\[2pt]
+    \texttt{width: 100\%;}\\[1pt]
+    \texttt{aspect-ratio: 1 / 1;}\\[2pt]
+    (Layout engine creates an empty void)
+};
+
+% --- 4. TOP-RIGHT: INTRINSIC PAYLOAD ---
+\node[box, minimum width=9cm, minimum height=10.5cm, fill=payloadColor!5, draw=payloadColor, thick] (payloadBox) at (23.5, 19) {};
+
+% Headers
+\node[font=\Large\bfseries, text=payloadColor] at (23.5, 22.5) {\faImage\ Intrinsic Payload};
+\node[font=\normalsize, text=payloadColor, align=center] at (23.5, 21.8) {Raster Image File};
+
+% Realistic Vector Landscape Graphic (2:1 Aspect Ratio: 8cm x 4cm)
+\begin{scope}[shift={(23.5, 19.2)}]
+    \clip (-4, -2) rectangle (4, 2);
+    \pic {landscape};
+    % Crisp Outline
+    \draw[payloadColor, thick] (-4, -2) rectangle (4, 2);
+\end{scope}
+
+% Right Explanatory Text Block
+\node[annot, text width=8cm] at (23.5, 15.5) {
+    \textbf{Pixel-Driven Dimensions}\\[2pt]
+    Defined by file metadata:\\[2pt]
+    Intrinsic Width: 2000px\\[1pt]
+    Intrinsic Height: 1000px\\[2pt]
+    (Unaffected by DOM layout)
+};
+
+% --- 5. BOTTOM SECTION: RENDER ENGINE COMPOSITING ---
+\node[box, minimum width=30cm, minimum height=12.5cm, fill=canvasColor!20, draw=black!10] (composerBox) at (15, 6) {};
+
+% Header
+\node[font=\Large\bfseries, text=textColor] at (15, 11) {\faCogs\ Render Engine Compositing (The ``Severance'')};
+
+% Left Annotation Box (Clip-Path Isolation)
+\node[box, text width=6.5cm, align=center] (clipAnnot) at (4.5, 7.5) {
+    \textbf{2. Clip-Path Isolation}\\[4pt]
+    The DOM container acts purely as a \textit{clipping mask} or window. Overflowing pixels (red zones) are discarded from the render tree, entirely severing layout dependency.
+};
+
+% Right Annotation Box (Proportional Scale Matrix)
+\node[box, text width=6.5cm, align=center] (scaleAnnot) at (25.5, 7.5) {
+    \textbf{1. Proportional Scale Matrix}\\[4pt]
+    The engine computes a transform matrix to scale the intrinsic payload so both $W$ and $H$ completely cover the container void.
+    \vspace{10pt}
+    \[ \max\left(\frac{W_{dom}}{W_{img}}, \frac{H_{dom}}{H_{img}}\right) \]
+};
+
+% --- 6. CONNECTING ARROWS (SEVERANCE ROUTING) ---
+% Arrow 1 (DOM Box -> Clip-Path)
+\draw[-Stealth, line width=2pt, domColor, rounded corners=8pt, preaction={draw=white, line width=4pt}]
+    (6.5, 13.75) -- (6.5, 11.5) -- (4.5, 11.5) -- (clipAnnot.north);
+
+% Arrow 2 (Intrinsic Payload -> Scale Matrix)
+\draw[-Stealth, line width=2pt, payloadColor, rounded corners=8pt, preaction={draw=white, line width=4pt}]
+    (23.5, 13.75) -- (23.5, 11.5) -- (25.5, 11.5) -- (scaleAnnot.north);
+
+% The Composite Visual (Center at X=15, Y=6)
+% Scaled Payload (12cm x 6cm spanning (9,3) to (21,9))
+\begin{scope}[shift={(15, 6)}, scale=1.5]
+    \clip (-4, -2) rectangle (4, 2);
+    \pic {landscape};
+\end{scope}
+
+% Scaled Payload Boundary
+\draw[payloadColor!60, dashed, line width=1pt] (9, 3) rectangle (21, 9);
+
+% Left Clip Zone (Semi-transparent Red + Diagonal Hatching)
+\fill[clipColor!30, opacity=0.8] (9, 3) rectangle (12, 9);
+\fill[pattern=north east lines, pattern color=clipColor] (9, 3) rectangle (12, 9);
+\draw[clipColor, thick] (9, 3) rectangle (12, 9);
+\node[font=\Large\bfseries, text=clipColor!90!black, rotate=90] at (10.5, 6) {\faCut\ Clipped};
+
+% Right Clip Zone (Semi-transparent Red + Diagonal Hatching)
+\fill[clipColor!30, opacity=0.8] (18, 3) rectangle (21, 9);
+\fill[pattern=north east lines, pattern color=clipColor] (18, 3) rectangle (21, 9);
+\draw[clipColor, thick] (18, 3) rectangle (21, 9);
+\node[font=\Large\bfseries, text=clipColor!90!black, rotate=90] at (19.5, 6) {\faCut\ Clipped};
+
+% Viewport Window (6cm x 6cm at (12,3) to (18,9)) with Blur Shadow
+\draw[domColor, line width=3.5pt, blur shadow={shadow opacity=30, shadow blur steps=5, shadow xshift=0pt, shadow yshift=0pt}] (12, 3) rectangle (18, 9);
+\draw[accentColor, line width=1.5pt] (12, 3) rectangle (18, 9);
+
+% Viewport Window Boundary Label
+\node[font=\small\bfseries, text=domColor, fill=white, draw=domColor, inner sep=2pt, rounded corners=2pt, anchor=south] at (15, 9.3) {Content Box Boundary (600px)};
+
+% Final Output Badge
+\node[font=\small\bfseries, text=accentColor, fill=white, draw=accentColor, rounded corners=4pt, inner sep=5pt, blur shadow={shadow opacity=15}] at (15, 1.5) {\faCheckCircle\ Final Painted Output (A perfect square)};
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,191 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes,fadings,shadows.blur,patterns,patterns.meta}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+% Define Architectural Colors
+\definecolor{domblue}{RGB}{33, 150, 243}
+\definecolor{svggreen}{RGB}{56, 142, 60}
+\definecolor{cssmagenta}{RGB}{231, 76, 60} % Exact #e74c3c match
+\definecolor{textdark}{RGB}{40, 40, 40}
+\definecolor{macred}{HTML}{FF5F56}
+\definecolor{macyellow}{HTML}{FFBD2E}
+\definecolor{macgreen}{HTML}{27C93F}
+\definecolor{idebg}{HTML}{1E1E1E}
+\definecolor{lightgreen}{HTML}{90EE90}
+
+\begin{document}
+\begin{tikzpicture}
+
+% --- CANVAS BOUNDING & PURE WHITE BACKGROUND ---
+\fill[white] (-20.1948,-8.9358) rectangle (20, 14);
+
+% --- A. TITLES & HEADERS ---
+\node[font=\Huge\bfseries, text=textdark, align=center] at (-0.9819,12.0213) {Architectural Integration: Inline \texttt{<svg>}};
+\node[font=\Large\color{gray}, align=center] at (-0.9819,11.0213) {Seamless DOM Integration Permitting Responsive Art Direction};
+
+% --- B. THE UNIFIED DOM VS. SHADOW DOM TREE (Left Side) ---
+% Level 1
+\node[draw=domblue, fill=blue!5, thick, rounded corners=6pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=7pt, font=\ttfamily\large] (html) at (-10, 10.5) {<html>};
+
+% Level 2
+\node[draw=domblue, fill=blue!5, thick, rounded corners=6pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=7pt, font=\ttfamily\large] (body) at (-10, 8.5) {<body>};
+
+% Level 3
+\node[draw=domblue, fill=blue!5, thick, rounded corners=6pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=7pt, font=\ttfamily\large, scale=0.8] (div) at (-15.5, 6.0) {<div class="content">};
+\node[draw=svggreen, fill=green!5, very thick, rounded corners=6pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=7pt, font=\ttfamily\large, scale=0.8] (svg) at (-10, 6.0) {<svg class="hero-graphic">};
+\node[draw=macred, fill=red!5, thick, rounded corners=6pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=7pt, font=\ttfamily\large, scale=0.8] (img) at (-3.7529,6.0213) {<img src="vector.svg">};
+
+% Level 4 (Children of SVG & IMG)
+\node[draw=svggreen, fill=green!5, thick, rounded corners=6pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=7pt, font=\ttfamily\large] (path) at (-12.5, 3.5) {<path id="curve">};
+\node[draw=svggreen, fill=green!5, thick, rounded corners=6pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=7pt, font=\ttfamily\large, scale=0.8] (circle) at (-7.5, 3.5) {<circle class="dot">};
+\node[draw=macred!80!black, fill=gray!15, dashed, line width=1pt, rounded corners=6pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=6pt, font=\ttfamily\footnotesize, scale=0.8] (shadow) at (-3.7529,3.5213) {\faLock\ \#shadow-root (closed)};
+
+% Level 5 (Child of Shadow Root)
+\node[draw=gray!50, fill=gray!10, thick, rounded corners=6pt, opacity=0.4, text opacity=0.4, inner sep=7pt, font=\ttfamily\large] (inaccpath) at (-3.7529,1.0213) {<path>};
+
+% DOM Structural Connections (Orthogonal Bus Lines)
+\draw[-Stealth, domblue, thick] (html.south) -- (body.north);
+
+% Body to Level 3 (domblue bus)
+\draw[domblue, thick] (body.south) -- (-10, 7.5);
+\draw[domblue, thick] (-15.5, 7.5) -- (-3.7529,7.5213);
+\draw[-Stealth, domblue, thick] (-15.5, 7.5) -- (div.north);
+\draw[-Stealth, domblue, thick] (-10, 7.5) -- (svg.north);
+\draw[-Stealth, domblue, thick] (-3.7529,7.5213) -- (img.north);
+
+% SVG to Level 4 (svggreen bus)
+\draw[svggreen, thick] (svg.south) -- (-10, 4.75);
+\draw[svggreen, thick] (-12.5, 4.75) -- (-7.5, 4.75);
+\draw[-Stealth, svggreen, thick] (-12.5, 4.75) -- (path.north);
+\draw[-Stealth, svggreen, thick] (-7.5, 4.75) -- (circle.north);
+
+% IMG to Level 5
+\draw[-Stealth, macred, thick] (img.south) -- (shadow.north);
+\draw[-Stealth, gray!60, dashed, thick] (shadow.south) -- (inaccpath.north);
+
+% --- C. THE SHADOW DOM BARRIER & ROUTING LANES ---
+% 1. The Shadow Wall (X = -1.5, Y = 2.5 to 4.5)
+\draw[draw=macred, line width=1.2pt, fill=macred!15, pattern={Lines[angle=45,distance={4pt}]}, pattern color=macred!60, rounded corners=3pt, drop shadow={opacity=0.15, shadow xshift=1.5pt, shadow yshift=-1.5pt}] (-1.75, 2.5) rectangle (-1.25, 4.5);
+\node[text=macred, font=\tiny\bfseries, rotate=90] at (-1.5, 3.5) {SHADOW WALL};
+
+% 2. CSSOM Panel (Top Right - IDE / Code Editor Style) Spanning (3, 6.5) to (16, 10.5)
+\fill[idebg, rounded corners=8pt, draw=gray!60, line width=0.8pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}] (3, 6.5) rectangle (16, 10.5);
+\fill[black!90, rounded corners=8pt] (3, 9.8) rectangle (16, 10.5);
+\fill[black!90] (3, 9.8) rectangle (16, 10.0);
+\draw[gray!70, line width=0.5pt] (3, 9.8) -- (16, 9.8);
+
+% Mac-Style Window Dots & Inspector Header
+\fill[macred] (3.5, 10.15) circle (2.5pt);
+\fill[macyellow] (3.9, 10.15) circle (2.5pt);
+\fill[macgreen] (4.3, 10.15) circle (2.5pt);
+\node[anchor=west, font=\tiny\ttfamily\color{gray!40}] at (4.7, 10.15) {styles.css --- CSSOM Rule Inspector};
+
+% CSSOM Code Content
+\node[anchor=north west, inner sep=0pt, text width=11.5cm] (cssom) at (3.5, 9.5) {
+    \textbf{\color{cssmagenta}\faCss3\ Global CSS Object Model}\\[4pt]
+    \ttfamily\small
+    \color{LightSkyBlue}svg.hero-graphic\color{white}:\color{orange}hover \color{LightSkyBlue}path \color{white}\{\\
+    \quad \color{lightgreen}fill\color{white}: \color{cssmagenta}\#e74c3c\color{white};\\
+    \quad \color{lightgreen}transform\color{white}: \color{Khaki}translateY(-5px)\color{white};\\
+    \quad \color{lightgreen}transition\color{white}: \color{white}all \color{Khaki}0.3s \color{white}ease;\\
+    \color{white}\}
+};
+
+% 3. Success Routing Lane (Magenta, targeting Inline SVG)
+\draw[-Stealth, cssmagenta, line width=2pt, rounded corners=8pt]
+    (3.0, 9.5) -- (-18.0, 9.5) -- (-18.0, 3.5) -- (path.west);
+\node[fill=cssmagenta, text=white, font=\bfseries\footnotesize, rounded corners=4pt, inner sep=4pt, drop shadow={opacity=0.15, shadow xshift=1pt, shadow yshift=-1pt}]
+    at (-15.0, 10.0) {\faCrosshairs\ Native Selector Matching};
+
+% 4. Failure Routing Lane (Red, targeting <img>)
+\draw[-Stealth, macred, line width=1.8pt, dashed, rounded corners=6pt]
+    (3.0, 7.5) -- (-0.5, 7.5) -- (-0.5, 3.5) -- (-1.25, 3.5);
+\node[draw=macred, fill=white, line width=1pt, circle, inner sep=2pt, text=macred, drop shadow={opacity=0.15, shadow xshift=1pt, shadow yshift=-1pt}] at (-0.5, 3.5) {\faTimes};
+\node[text=macred, font=\footnotesize\bfseries, fill=white, rounded corners=3pt, inner sep=2pt] at (1.0, 8.0) {Blocked by Shadow DOM};
+
+% --- D. ARCHITECTURAL CONTRAST NOTE ---
+\node[draw=macred, fill=white, line width=1pt, rounded corners=6pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, text width=11cm, inner sep=12pt, align=left, font=\footnotesize] (contrast) at (-10.6493,-0.5065) {
+    \textbf{\color{macred}\faExclamationTriangle\ Architectural Note:}\\[3pt]
+    If imported via \texttt{<img>}, the browser enforces a \texttt{\#shadow-root} encapsulation wall here, permanently blocking the CSSOM from targeting internal vector paths.
+};
+
+% --- E. THE BROWSER RENDER TREE (Right Side) ---
+% Browser Window Frame: X=[3, 16], Y=[-4.5, 5.0]
+\fill[white, rounded corners=8pt, draw=gray!40, line width=1pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}] (3, -4.5) rectangle (16, 5.0);
+\fill[gray!15, rounded corners=8pt] (3, 4.3) rectangle (16, 5.0);
+\fill[gray!15] (3, 4.3) rectangle (16, 4.5);
+\draw[gray!30, line width=0.8pt] (3, 4.3) -- (16, 4.3);
+
+% Browser Window Controls & Address Bar
+\fill[macred] (3.5, 4.65) circle (2.5pt);
+\fill[macyellow] (3.9, 4.65) circle (2.5pt);
+\fill[macgreen] (4.3, 4.65) circle (2.5pt);
+\fill[white, draw=gray!30, rounded corners=3pt] (4.7, 4.45) rectangle (15.5, 4.85);
+\node[anchor=west, font=\tiny\ttfamily\color{gray!70}] at (4.9, 4.65) {\faLock\ https://app.internal/hero-graphic.html};
+
+% Browser Window Subtitle Badge
+\node[anchor=north west, font=\footnotesize\bfseries\color{gray!70}] at (3.3, 4.0) {\faEye\ Browser Render Tree Output};
+
+% 1. Ghost Path (Original Position before translateY: shifted down by 0.5)
+\draw[dashed, gray!40, line width=2.5pt] (6, 0.0) .. controls (9, 2.0) and (11, -2.0) .. (14, 0.0);
+\node[font=\footnotesize\color{gray!60}, anchor=north] at (11.0, -3.0) {original path position};
+
+% 2. Active Transformed Path (Mathematical Vector Correction)
+\draw[line width=3.5pt, cssmagenta] (6, 0.5) .. controls (9, 2.5) and (11, -1.5) .. (14, 0.5);
+
+% 3. Vector Anchor Points & Bezier Control Handles
+\draw[RoyalBlue!70, dashed, line width=0.8pt] (6, 0.5) -- (9, 2.5);
+\draw[RoyalBlue!70, dashed, line width=0.8pt] (14, 0.5) -- (11, -1.5);
+\fill[RoyalBlue] (9, 2.5) circle (2.2pt);
+\fill[RoyalBlue] (11, -1.5) circle (2.2pt);
+\filldraw[fill=white, draw=RoyalBlue, line width=0.8pt] (5.85, 0.35) rectangle (6.15, 0.65);
+\filldraw[fill=white, draw=RoyalBlue, line width=0.8pt] (13.85, 0.35) rectangle (14.15, 0.65);
+
+% 4. Circle Element in Default State
+\fill[svggreen] (7.0, -2.5) circle (0.35);
+\node[anchor=west, font=\scriptsize\ttfamily\color{svggreen!80!black}, align=left] at (7.5, -2.5) {<circle class="dot">\\ \normalfont\footnotesize(default SVG green)};
+
+% 5. Transform Indicator
+\draw[<->, >=Stealth, cssmagenta, line width=0.8pt] (5.3, 0.0) -- (5.3, 0.5) node[midway, left=4pt, font=\tiny\ttfamily\bfseries\color{cssmagenta}] {-5px};
+
+% 6. Realistic Vector OS Mouse Cursor (Locked at (10, 1.25))
+\draw[draw=black!90, fill=white, line width=0.8pt, drop shadow={opacity=0.15, shadow xshift=1.5pt, shadow yshift=-2pt}]
+  (10, 1.25) -- ++(0, -0.65) -- ++(0.18, 0.18) -- ++(0.24, -0.42) -- ++(0.16, 0.08) -- ++(-0.24, 0.42) -- ++(0.32, 0.04) -- cycle;
+
+% 7. Hover Notification Badge
+\node[fill=cssmagenta!10, draw=cssmagenta, thick, rounded corners=4pt, text=cssmagenta, font=\bfseries\footnotesize, inner sep=4pt] (hoverlabel) at (12, 3.5) {Changed color due to hover!};
+\draw[-Stealth, cssmagenta, thick] (hoverlabel.south) -- (10.1, 1.35);
+
+% --- F. EXPLANATORY BUBBLES (Bottom Row: Centered at Y = -11.0) ---
+\node[draw=gray!30, fill=white, rounded corners=8pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=10pt, text width=9cm, align=left] at (-11.7597,-7.2664) {
+    \textbf{\faCodeBranch\ 1. Unified Parser Tree}\\[4pt]
+    When SVG code is written directly into the HTML document, the HTML5 parser tokenizes elements like \texttt{<path>} and inserts them natively into the primary DOM tree alongside standard HTML tags.
+};
+
+\node[draw=gray!30, fill=white, rounded corners=8pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=10pt, text width=9cm, align=left] at (-0.2597,-7.2664) {
+    \textbf{\faCheckCircle\ 2. Direct CSSOM Penetration}\\[4pt]
+    Because there is no encapsulation wall, the Global CSSOM engine can map rules perfectly. Selectors traverse the tree seamlessly, allowing vector points to react to pseudo-classes like \texttt{:hover} or JavaScript event listeners.
+};
+
+\node[draw=gray!30, fill=white, rounded corners=8pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}, inner sep=10pt, text width=9cm, align=left] at (11.2403,-7.2664) {
+    \textbf{\faIcon{mobile-alt}\ 3. True Art Direction}\\[4pt]
+    This architecture enables responsive art direction. Media queries in your main CSS file can selectively hide layers, change viewports, or alter stroke properties to optimize the SVG for different screen sizes.
+};
+
+\end{tikzpicture}
+\end{document}

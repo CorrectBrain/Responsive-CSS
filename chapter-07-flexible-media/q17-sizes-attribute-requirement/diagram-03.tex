@@ -1,0 +1,240 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+% Color Definitions
+\definecolor{accentart}{RGB}{142, 68, 173}
+\definecolor{accentres}{RGB}{41, 128, 185}
+\definecolor{darktext}{RGB}{44, 62, 80}
+\definecolor{idebg}{RGB}{28, 30, 38}
+\definecolor{ideheader}{RGB}{40, 44, 52}
+\definecolor{codekw}{RGB}{198, 120, 221}
+\definecolor{codetag}{RGB}{224, 108, 117}
+\definecolor{codeattr}{RGB}{97, 175, 239}
+\definecolor{codestr}{RGB}{152, 195, 121}
+\definecolor{alertred}{RGB}{231, 76, 60}
+\definecolor{successgreen}{RGB}{39, 174, 96}
+\definecolor{darkgreen}{RGB}{30, 130, 70}
+\definecolor{navy}{RGB}{24, 43, 73}
+
+\begin{document}
+\begin{tikzpicture}[
+    box/.style={draw=black!15, fill=white, rounded corners=8pt, blur shadow={shadow opacity=15}, inner sep=12pt, align=center},
+    codebox/.style={draw=black!20, fill=gray!5, font=\ttfamily\small, rounded corners=6pt, inner sep=10pt, align=left}
+]
+
+% =============================================================
+% 1. PURE WHITE CANVAS (32 x 20)
+% =============================================================
+\fill[white] (0,0) rectangle (31.9193,20.9676);
+
+% =============================================================
+% 2. HEADER: TITLE & SUBTITLE
+% =============================================================
+\node[font=\fontsize{22}{26}\selectfont\bfseries\color{darktext}] at (15.9193,19.7676) {Architectural Paradigms in Flexible Media};
+\node[font=\large\color{gray!80!black}, text width=28cm, align=center] at (15.9193,18.8676) {Understanding when to dictate (Art Direction) versus when to empower (Resolution Switching)};
+
+% =============================================================
+% 3. LEFT PANEL: ART DIRECTION (<picture>)
+% =============================================================
+% Panel Container
+\draw[draw=accentart, line width=1.5pt, fill=white, rounded corners=12pt, drop shadow={shadow xshift=0.15cm, shadow yshift=-0.15cm, opacity=0.12}] (1.0, 0.5) rectangle (15.5, 17.0);
+\node[font=\Large\bfseries\color{accentart}, fill=white, draw=accentart, line width=1.2pt, rounded corners=6pt, inner sep=6pt, scale=0.8] at (8.25, 17.0) {\faCrop\ Art Direction (\texttt{<picture>})};
+
+% Dark IDE Code Block (Shifted up to match right side)
+\fill[fill=idebg, rounded corners=6pt, drop shadow={shadow xshift=0.08cm, shadow yshift=-0.1cm, opacity=0.25}] (1.7, 14.0) rectangle (14.8, 16.5);
+\fill[fill=ideheader, rounded corners=6pt] (1.7, 15.9) rectangle (14.8, 16.5);
+\fill[fill=ideheader] (1.7, 15.9) rectangle (14.8, 16.1);
+\fill[alertred] (2.1, 16.2) circle (0.1);
+\fill[orange!90!yellow] (2.4, 16.2) circle (0.1);
+\fill[successgreen] (2.7, 16.2) circle (0.1);
+\node[font=\tiny\ttfamily\color{gray!60}, anchor=west] at (3.1, 16.2) {art-direction.html};
+
+\node[font=\ttfamily\small, text width=12.5cm, anchor=north west, inner sep=0pt] at (2.0, 15.75) {
+    \textcolor{codekw}{\textbf{<picture>}}\\
+    \quad \textcolor{codetag}{<source} \textcolor{codeattr}{media}=\textcolor{codestr}{"(min-width: 800px)"} \textcolor{codeattr}{srcset}=\textcolor{codestr}{"wide-crop.jpg"}\textcolor{codetag}{>}\\
+    \quad \textcolor{codetag}{<img} \textcolor{codeattr}{src}=\textcolor{codestr}{"square-crop.jpg"}\textcolor{codetag}{>}\\
+    \textcolor{codekw}{\textbf{</picture>}}
+};
+
+% Connecting flow lines from code to devices (Anchored at Y=14.0)
+\draw[-Stealth=3mm, accentart, line width=1.2pt] (4.6, 14.0) .. controls (4.6, 12.3) and (5.3, 12.3) .. (5.3, 11.4);
+\node[fill=white, draw=accentart!40, rounded corners=3pt, font=\tiny\bfseries\color{accentart}, inner sep=2pt] at (4.6, 12.5) {\faCheck\ Viewport $\ge$ 800px};
+
+\draw[-Stealth=3mm, accentart, line width=1.2pt] (11.0, 14.0) .. controls (11.0, 12.4) and (11.8, 12.4) .. (11.8, 11.7);
+\node[fill=white, draw=accentart!40, rounded corners=3pt, font=\tiny\bfseries\color{accentart}, inner sep=2pt] at (11.8, 12.5) {\faReply\ Fallback (< 800px)};
+
+% --- DEVICE GRAPHICS (Art Direction Visual Mockups) ---
+% 1. Laptop (Wide Cinematic Crop) - Center X=5.3, Y=9.5
+\fill[fill=gray!85!black, rounded corners=6pt, drop shadow={shadow xshift=0.1cm, shadow yshift=-0.12cm, opacity=0.25}] (2.6, 7.8) rectangle (8.0, 11.2);
+\fill[fill=gray!30!black, rounded corners=3pt] (2.8, 8.0) rectangle (7.8, 11.0);
+\fill[black] (5.3, 11.1) circle (0.05);
+\fill[cyan!80!white] (5.3, 11.1) circle (0.02);
+
+\begin{scope}
+    \clip (2.85, 8.05) rectangle (7.75, 10.95);
+    \shade[top color=blue!70!Indigo, bottom color=orange!40!yellow] (2.85, 8.05) rectangle (7.75, 10.95);
+    \shade[inner color=yellow!90!white, outer color=orange!80!transparent] (6.8, 9.9) circle (0.6);
+    \fill[Indigo!60!black, opacity=0.85] (2.85, 8.05) -- (3.8, 9.4) -- (4.8, 8.6) -- (6.0, 9.8) -- (7.2, 8.8) -- (7.75, 9.2) -- (7.75, 8.05) -- cycle;
+    \fill[blue!40!black] (2.85, 8.05) -- (3.4, 8.9) -- (4.5, 8.05) -- cycle;
+    \shade[top color=cyan!60!blue, bottom color=blue!90!black] (2.85, 8.05) rectangle (7.75, 8.5);
+    \fill[white, opacity=0.08] (2.85, 10.95) -- (4.5, 10.95) -- (3.2, 8.05) -- (2.85, 8.05) -- cycle;
+    \node[fill=black!75, text=white, font=\tiny\bfseries, rounded corners=2pt, inner sep=2pt] at (4.0, 10.6) {\faDesktop\ 16:9 Wide Aspect};
+\end{scope}
+% Laptop Base
+\fill[fill=gray!70, rounded corners=2pt] (2.2, 7.6) -- (2.5, 7.8) -- (8.1, 7.8) -- (8.4, 7.6) -- cycle;
+\fill[fill=gray!50, rounded corners=1pt] (4.8, 7.7) rectangle (5.8, 7.8);
+\node[font=\bfseries\scriptsize\color{darktext}, align=center] at (5.3, 7.2) {Desktop ($\ge$800px): \textcolor{accentart}{\texttt{wide-crop.jpg}}};
+
+% 2. Smartphone (Square / Tight Focal Crop) - Center X=11.8, Y=9.5
+\fill[fill=gray!85!black, rounded corners=8pt, drop shadow={shadow xshift=0.1cm, shadow yshift=-0.12cm, opacity=0.25}] (10.6, 7.3) rectangle (13.0, 11.5);
+\fill[fill=gray!20!black, rounded corners=6pt] (10.75, 7.45) rectangle (12.85, 11.35);
+\fill[black] (11.8, 11.2) circle (0.04);
+\fill[gray!60, rounded corners=1pt] (11.5, 11.23) rectangle (11.7, 11.27);
+
+\begin{scope}
+    \clip (10.8, 7.5) rectangle (12.8, 11.0);
+    \shade[top color=blue!70!Indigo, bottom color=orange!40!yellow] (10.8, 7.5) rectangle (12.8, 11.0);
+    \shade[inner color=yellow!90!white, outer color=orange!80!transparent] (12.1, 9.8) circle (0.45);
+    \fill[Indigo!60!black, opacity=0.85] (10.8, 7.5) -- (11.6, 9.8) -- (12.8, 8.5) -- (12.8, 7.5) -- cycle;
+    \shade[top color=cyan!60!blue, bottom color=blue!90!black] (10.8, 7.5) rectangle (12.8, 8.2);
+    \fill[white, opacity=0.08] (10.8, 11.0) -- (11.8, 11.0) -- (11.0, 7.5) -- (10.8, 7.5) -- cycle;
+    \node[fill=black!75, text=white, font=\tiny\bfseries, rounded corners=2pt, inner sep=2pt] at (11.8, 10.6) {\faMobile*\ 1:1 Focal Crop};
+\end{scope}
+\fill[white!80, rounded corners=1pt] (11.5, 7.58) rectangle (12.1, 7.63);
+\node[font=\bfseries\scriptsize\color{darktext}, align=center] at (11.8, 6.9) {Mobile (<800px): \textcolor{accentart}{\texttt{square-crop.jpg}}};
+
+% Visual Transformation Label
+\node[draw=accentart!40, fill=white, rounded corners=4pt, font=\scriptsize\bfseries\color{accentart}, inner sep=3.5pt] at (8.25, 5.2) {\faArrowsAltH\ Visual Art Direction: Aspect ratio \& framing physically altered};
+
+% Left Explanation Box (Positioned at Y=1.8 with Tabular Layout for Global Symmetry)
+\node[box, text width=12.5cm, draw=accentart, line width=1.5pt, fill=accentart!5, inner sep=12pt, scale=0.8] at (8.25, 1.8) {
+    \textbf{\color{accentart}\faGavel\ Browser is DICTATED To}\\[5pt]
+    \begin{tabular}{@{}p{0.5cm} p{11.5cm}@{}}
+    \faCheckCircle & \textbf{Use Case:} The image content physically changes (cropping, aspect ratio, focal point) at different breakpoints.\\
+    \faTimesCircle & \textbf{Constraint:} The browser \textit{must} obey the media query strictly. It has no freedom to optimize based on network speed or device density.
+    \end{tabular}
+};
+
+% =============================================================
+% 4. RIGHT PANEL: RESOLUTION SWITCHING (srcset + sizes)
+% =============================================================
+% Panel Container
+\draw[draw=accentres, line width=1.5pt, fill=white, rounded corners=12pt, drop shadow={shadow xshift=0.15cm, shadow yshift=-0.15cm, opacity=0.12}] (16.5, 0.5) rectangle (31.0, 17.0);
+\node[font=\Large\bfseries\color{accentres}, fill=white, draw=accentres, line width=1.2pt, rounded corners=6pt, inner sep=6pt, scale=0.8] at (23.75, 17.0) {\faIcon{expand-arrows-alt}\ Resolution Switching (\texttt{srcset+sizes})};
+
+% Dark IDE Code Block (Center Y=15.3: (17.2, 14.0) to (30.3, 16.5))
+\fill[fill=idebg, rounded corners=6pt, drop shadow={shadow xshift=0.08cm, shadow yshift=-0.1cm, opacity=0.25}] (17.2, 14.0) rectangle (30.3, 16.5);
+\fill[fill=ideheader, rounded corners=6pt] (17.2, 15.9) rectangle (30.3, 16.5);
+\fill[fill=ideheader] (17.2, 15.9) rectangle (30.3, 16.1);
+\fill[alertred] (17.6, 16.2) circle (0.1);
+\fill[orange!90!yellow] (17.9, 16.2) circle (0.1);
+\fill[successgreen] (18.2, 16.2) circle (0.1);
+\node[font=\tiny\ttfamily\color{gray!60}, anchor=west] at (18.6, 16.2) {resolution-switching.html};
+
+\node[font=\ttfamily\small, text width=12.5cm, anchor=north west, inner sep=0pt] at (17.5, 15.75) {
+    \textcolor{codetag}{\textbf{<img}}\\
+    \quad \textcolor{codeattr}{srcset}=\textcolor{codestr}{"img-400.jpg 400w,}\\
+    \quad \quad \quad \ \ \textcolor{codestr}{img-800.jpg 800w"}\\
+    \quad \textcolor{codeattr}{sizes}=\textcolor{codestr}{"(min-width: 800px) 50vw, 100vw"}\textcolor{codetag}{>}
+};
+
+% --- PRELOAD SCANNER & MATHEMATICAL LOGIC FLOW ---
+% 1. Preload Scanner Banner (Center: 23.75, 13.1)
+\node[draw=accentres!80, fill=accentres!10, line width=1pt, rounded corners=4pt, font=\bfseries\footnotesize\color{accentres!90!black}, inner sep=3.5pt] (nodePreload) at (23.75,13.2882) {\faBolt\ PRE-CSS PARSE PHASE: Browser Preload Scanner Running};
+
+% Arrow 1: Code directly to Preload Scanner
+\draw[-Stealth=3mm, accentres, line width=1.2pt] (23.75, 14.0) -- (nodePreload.north);
+
+% 2. Input Nodes (srcset map & sizes budget at Y=11.2)
+\node[draw=accentres, line width=1.2pt, fill=white, rounded corners=6pt, blur shadow={shadow opacity=10}, inner sep=5pt, text width=5.2cm, align=left] (nodeSrcset) at (19.8, 11.2) {
+    \textbf{\color{accentres}\faListUl\ \texttt{srcset} Descriptor Map}\\[2pt]
+    \scriptsize Available files \& intrinsic widths:\\
+    \texttt{img-400.jpg} $\rightarrow W_{\text{available}} = 400\text{w}$\\
+    \texttt{img-800.jpg} $\rightarrow W_{\text{available}} = 800\text{w}$
+};
+
+\node[draw=accentres, line width=1.2pt, fill=white, rounded corners=6pt, blur shadow={shadow opacity=10}, inner sep=5pt, text width=5.2cm, align=left] (nodeSizes) at (27.7, 11.2) {
+    \textbf{\color{accentres}\faRulerCombined\ \texttt{sizes} Layout Budget}\\[2pt]
+    \scriptsize Informs rendered slot width before CSS:\\
+    $W_{\text{layout}} = \begin{cases} 50\text{vw} & (\ge 800\text{px}) \\ 100\text{vw} & (\text{default}) \end{cases}$\\[2pt]
+    \textit{(Eliminates pre-CSS blindness)}
+};
+
+% Arrows from Scanner branching to inputs
+\draw[-Stealth=3mm, accentres, line width=1.2pt] ([xshift=-1.5cm]nodePreload.south) -- (nodeSrcset.north);
+\draw[-Stealth=3mm, accentres, line width=1.2pt] ([xshift=1.5cm]nodePreload.south) -- (nodeSizes.north);
+
+% 3. Central Math Engine (Repositioned to Y=9.1 with Single-Line Formula)
+\node[draw=navy!80, line width=1.4pt, fill=navy!5, rounded corners=6pt, blur shadow={shadow opacity=12}, inner sep=6pt, text width=12.2cm, align=center, scale=0.8] (nodeEngine) at (23.75, 9.1) {
+    \textbf{\color{navy}\faMicrochip\ Browser Selection Engine: Mathematical Evaluation}\\[4pt]
+    $\displaystyle \text{Effective DPR} = \frac{W_{\text{available}}}{W_{\text{layout}}}$
+    \quad \scalebox{1.2}{$\implies$} \quad
+    $\displaystyle \text{Target Width} = W_{\text{layout}} \times \text{Device DPR}$
+};
+
+% Dynamic Arrows from Inputs to Central Math Engine
+\draw[-Stealth=3mm, accentres, line width=1.2pt] (nodeSrcset.south) -- ([xshift=-2cm]nodeEngine.north);
+\draw[-Stealth=3mm, accentres, line width=1.2pt] (nodeSizes.south) -- ([xshift=2cm]nodeEngine.north);
+
+% Arrow down from Math Engine to Comparison Card
+\draw[-Stealth=3mm, navy, line width=1.2pt] (nodeEngine.south) -- (23.75, 7.9);
+
+% 4. Mathematical Blindness vs Empowerment Card (Compressed Layout: Y=3.6 to Y=7.9)
+\fill[fill=gray!5, draw=gray!30, rounded corners=6pt] (17.0, 3.6) rectangle (30.5, 7.9);
+\draw[draw=gray!30, line width=0.8pt] (23.75, 3.6) -- (23.75, 7.9);
+
+% --- Left Half: Blindness (Anchor X = 20.3, text width = 6.0cm) ---
+\node[font=\bfseries\color{alertred}] at (20.3, 7.5) {\faTimesCircle\ WITHOUT \texttt{sizes} (Blindness)};
+
+\node[font=\scriptsize, align=left, text width=6.0cm] at (20.3, 6.5) {
+    \textbullet\ CSS stylesheet not parsed yet.\\
+    \textbullet\ Browser knows $W_{\text{available}} \in \{400, 800\}$,\\
+    \quad but rendered slot $W_{\text{layout}} = \textbf{\textcolor{alertred}{UNKNOWN}}$.
+};
+
+\node[fill=red!10, rounded corners=2pt, inner sep=4pt] at (20.3, 5.3) {\small $\displaystyle \frac{W_{\text{available}}}{\textbf{? (Unknown)}} = \text{\textbf{\textcolor{alertred}{Cannot Calc Density}}}$};
+
+\node[font=\scriptsize, align=left, text width=6.0cm] at (20.3, 4.2) {$\implies$ Preload scanner is blinded; must fall back to 100vw or wait for CSS.};
+
+% --- Right Half: Empowered (Anchor X = 27.2, text width = 6.0cm) ---
+\node[font=\bfseries\color{successgreen}] at (27.2, 7.5) {\faCheckCircle\ WITH \texttt{sizes} (Empowered)};
+
+\node[font=\scriptsize, align=left, text width=6.0cm] at (27.2, 6.5) {
+    \textbullet\ $W_{\text{layout}}$ supplied directly in HTML.\\
+    \textbullet\ Example: Viewport=800px $\implies W_{\text{layout}}=400\text{px}$.\\
+    \quad Device DPR = $2.0\times$ (Retina).
+};
+
+\node[fill=green!15, rounded corners=2pt, inner sep=4pt] at (27.2, 5.3) {\small $\displaystyle \frac{800\text{w}}{400\text{px}} = \mathbf{2.0\times} \implies \text{\textbf{\textcolor{darkgreen}{Exact Match}}}$};
+
+\node[font=\scriptsize, align=left, text width=6.0cm] at (27.2, 4.2) {$\implies$ Instantly downloads \texttt{img-800.jpg} with zero preload delay!};
+
+% 5. Right Explanation Box (Positioned at Y=1.8 with Tabular Layout for Global Symmetry)
+\node[box, text width=12.5cm, draw=accentres, line width=1.5pt, fill=accentres!5, inner sep=12pt, scale=0.8] at (23.75, 1.8) {
+    \textbf{\color{accentres}\faBrain\ Browser is EMPOWERED}\\[5pt]
+    \begin{tabular}{@{}p{0.5cm} p{11.5cm}@{}}
+    \faCheckCircle & \textbf{Use Case:} The image content is identical, but scalable graphics are needed to support various layout sizes and high-DPI screens (Retina).\\
+    \faLightbulb & \textbf{Advantage:} By supplying $W_{\text{layout}}$ (\texttt{sizes}) and $W_{\text{img}}$ (\texttt{srcset}), the browser heuristically picks the best image, factoring in device pixel ratio and user bandwidth.
+    \end{tabular}
+};
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,290 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\definecolor{cssblue}{RGB}{20, 100, 180}
+\definecolor{nativeteal}{RGB}{0, 150, 136}
+\definecolor{htmlorange}{RGB}{230, 81, 0}
+\definecolor{containergray}{RGB}{240, 240, 245}
+
+% Modern editor and syntax colors
+\definecolor{codebg}{RGB}{30, 30, 46}
+\definecolor{codeheader}{RGB}{24, 24, 37}
+\definecolor{synpink}{RGB}{243, 139, 168}
+\definecolor{synblue}{RGB}{137, 180, 250}
+\definecolor{syngreen}{RGB}{166, 227, 161}
+\definecolor{synyellow}{RGB}{249, 226, 175}
+\definecolor{syntext}{RGB}{205, 214, 244}
+\definecolor{syncomment}{RGB}{108, 112, 134}
+
+% Realistic device palette
+\definecolor{deviceframe}{RGB}{30, 32, 40}
+\definecolor{screendark}{RGB}{0, 77, 64}
+\definecolor{screenlight}{RGB}{0, 121, 107}
+
+% macOS Window Controls
+\definecolor{macred}{RGB}{255, 95, 86}
+\definecolor{macyellow}{RGB}{255, 189, 46}
+\definecolor{macgreen}{RGB}{39, 201, 63}
+
+\begin{document}
+\begin{tikzpicture}[
+    background rectangle/.style={fill=white},
+    show background rectangle,
+    font=\sffamily,
+    bubble/.style={
+        draw=black!20,
+        fill=white,
+        rounded corners=8pt,
+        blur shadow={shadow blur steps=5, shadow opacity=15},
+        inner sep=12pt
+    }
+]
+
+% ==========================================
+% Global Title Group (Centered across canvas at y = 15.0)
+% ==========================================
+\node[font=\Huge\bfseries, color=black!80] at (0, 15.0) {Art Direction: Avoiding Upscaling Entirely};
+\node[font=\Large, color=black!60] at (0, 14.1) {Using the HTML5 \texttt{<picture>} element for resolution switching};
+
+
+% ==========================================
+% Left Column: The Problem (Center Axis: x = -11)
+% ==========================================
+\node[font=\Large\bfseries, text=darkred] at (-11, 11) {The Problem: width: 100\% Upscaling};
+
+% Native File Box (Unified node to prevent text clipping)
+\node[
+    fill=teal!10,
+    draw=teal,
+    thick,
+    rounded corners=3pt,
+    blur shadow={shadow opacity=10, shadow blur steps=3},
+    minimum width=4cm,
+    minimum height=1cm,
+    inner sep=4pt,
+    font=\small\bfseries,
+    text=teal!80!black
+] at (-11, 9.0) {Native File: 400px};
+
+% The CSS Action Arrow
+\draw[-Stealth=3mm, very thick, darkred]
+    (-11, 8.5) -- (-11, 7.2)
+    node[midway, right=10pt, anchor=west, font=\footnotesize\bfseries, text=darkred] {Apply CSS: \texttt{width: 100\%}};
+
+% Container Box (Dashed)
+\draw[draw=gray, dashed, thick, fill=gray!5, rounded corners=4pt]
+    (-15, 3) rectangle (-7, 7);
+
+% Container Label (Rests cleanly on top-left corner of dashed container box)
+\node[anchor=south west, inner sep=2pt, font=\footnotesize\bfseries, text=gray!70] at (-15, 7.3) {Container: 1200px};
+
+% Stretched Blurred Image
+\draw[fill=teal!20, opacity=0.8, pattern=crosshatch dots, pattern color=teal!40, draw=teal!60, thick, rounded corners=2pt]
+    (-15, 3) rectangle (-7, 7);
+\node[font=\small\bfseries, text=teal!90!black, align=center] at (-11, 5.0) {
+    Upscaled Image (Stretched to 1200px)\\[3pt]
+    {\footnotesize\color{darkred}\faExclamationTriangle\ Severe Interpolation \& Pixelation}
+};
+
+% The Mathematical Proof (The "Why")
+\node[font=\normalsize\bfseries, text=black!85] at (-11, 1.2) {
+    $\text{Scale Factor} = \dfrac{\text{Container (1200px)}}{\text{Native (400px)}} = 3.0\text{x}$
+};
+\node[font=\footnotesize, text=black!70, align=center, text width=8cm] at (-10.9258,-0.0918) {
+    At 3.0x scale, the browser mathematically forces 1 real pixel\\
+    to stretch across 9 pixels ($3 \times 3$), causing severe interpolation blur.
+};
+
+
+% ==========================================
+% Center Column: Code Editor Window (x: -5.5 to 5.5, y: 2.5 to 10.5)
+% ==========================================
+% Outer Window Frame & Shadow
+\draw[draw=gray!60, fill=codebg, rounded corners=8pt, blur shadow={shadow blur steps=5, shadow opacity=20}]
+    (-5.5, 2.5) rectangle (5.5, 10.5);
+
+% Editor Title Bar & Header
+\fill[codeheader, rounded corners=8pt] (-5.5, 9.9) rectangle (5.5, 10.5);
+\fill[codeheader] (-5.5, 9.9) rectangle (5.5, 10.1);
+\draw[draw=gray!50, line width=0.4pt] (-5.5, 9.9) -- (5.5, 9.9);
+
+% macOS Window Control Buttons & Header Title
+\fill[macred] (-5.0, 10.2) circle (3pt);
+\fill[macyellow] (-4.6, 10.2) circle (3pt);
+\fill[macgreen] (-4.2, 10.2) circle (3pt);
+\node[font=\footnotesize\ttfamily, text=gray!50] at (0, 10.2) {index.html};
+
+% Browser Parse Flow Indicator (Positioned in gutter at x = -5.0)
+\draw[dashed, thick, synblue!85!white, -Stealth=3mm] (-5.0, 9.5) -- (-5.0, 3.5);
+\node[rotate=90, font=\scriptsize\bfseries, text=synblue!90!white, fill=codebg, inner sep=1.5pt] at (-5.0, 6.5) {Top-Down Evaluation};
+
+% Code Lines with Exact Absolute Vertical Anchors
+% Line 1: <picture> (y = 9.2)
+\node[anchor=west, font=\small\ttfamily, inner sep=0pt] at (-4.2, 9.2) {\textcolor{synpink}{<picture>}};
+
+% Lines 2-3: Desktop Source (y = 8.5, y = 7.9)
+\node[anchor=west, font=\small\ttfamily, inner sep=0pt] at (-3.6, 8.5) {\textcolor{synpink}{<source} \textcolor{syngreen}{media=}\textcolor{synyellow}{"(min-width: 1024px)"}};
+\node[anchor=west, font=\small\ttfamily, inner sep=0pt] at (-2.8, 7.9) {\textcolor{syngreen}{srcset=}\textcolor{synyellow}{"hero-desktop.jpg"}\textcolor{synpink}{>}};
+
+% Lines 4-5: Tablet Source (y = 7.0, y = 6.4)
+\node[anchor=west, font=\small\ttfamily, inner sep=0pt] at (-3.6, 7.0) {\textcolor{synpink}{<source} \textcolor{syngreen}{media=}\textcolor{synyellow}{"(min-width: 768px)"}};
+\node[anchor=west, font=\small\ttfamily, inner sep=0pt] at (-2.8, 6.4) {\textcolor{syngreen}{srcset=}\textcolor{synyellow}{"hero-tablet.jpg"}\textcolor{synpink}{>}};
+
+% Lines 6-8: Mobile Image Source (y = 5.5, y = 4.9, y = 4.3)
+\node[anchor=west, font=\small\ttfamily, inner sep=0pt] at (-3.6, 5.5) {\textcolor{synpink}{<img} \textcolor{syngreen}{src=}\textcolor{synyellow}{"hero-mobile.jpg"}};
+\node[anchor=west, font=\small\ttfamily, inner sep=0pt] at (-2.8, 4.9) {\textcolor{syngreen}{alt=}\textcolor{synyellow}{"Responsive Hero"}};
+\node[anchor=west, font=\small\ttfamily, inner sep=0pt] at (-2.8, 4.3) {\textcolor{syngreen}{style=}\textcolor{synyellow}{"max-width: 100\%"}\textcolor{synpink}{>}};
+
+% Line 9: </picture> (y = 3.4)
+\node[anchor=west, font=\small\ttfamily, inner sep=0pt] at (-4.2, 3.4) {\textcolor{synpink}{</picture>}};
+
+
+% ==========================================
+% Right Column: Viewport Devices (Center Axis: x = 12.5)
+% ==========================================
+
+% --- Desktop Viewport Device (Top) ---
+% Monitor Stand Base and Stem
+\fill[shading=axis, left color=gray!25, right color=gray!45, rounded corners=2pt, blur shadow={shadow opacity=15, shadow blur steps=3}]
+    (11.5, 8.0) rectangle (13.5, 8.2);
+\fill[shading=axis, left color=gray!35, right color=gray!55]
+    (12.2, 8.2) rectangle (12.8, 9.2);
+
+% Monitor Bezel
+\draw[draw=gray!70, fill=deviceframe, rounded corners=6pt, blur shadow={shadow blur steps=5, shadow opacity=20}]
+    (8.5, 9.2) rectangle (16.5, 14.0);
+
+% Monitor Screen
+\fill[top color=screendark!90!black, bottom color=screenlight, rounded corners=2pt]
+    (8.8, 9.5) rectangle (16.2, 13.7);
+
+% 3D Glass Glare
+\fill[white, opacity=0.05] (8.8, 13.7) -- (16.2, 9.5) -- (16.2, 13.7) -- cycle;
+
+% Webcam
+\fill[gray!40] (12.5, 13.85) circle (1.3pt);
+\fill[black] (12.5, 13.85) circle (0.6pt);
+
+% Desktop Text Content
+\node[font=\bfseries\small, text=teal!20] at (12.5, 12.4) {\faDesktop \ Desktop Viewport (1024px+)};
+\node[font=\bfseries\small, text=white, align=center, text width=6.5cm] at (12.5, 10.7) {
+    Downloads: \texttt{\color{yellow!90}hero-desktop.jpg}\\[4pt]
+    {\footnotesize\color{teal!20}(Native Width: 1200px)}
+};
+
+
+% --- Tablet Viewport Device (Middle) ---
+% Tablet Bezel
+\draw[draw=gray!70, fill=deviceframe, rounded corners=8pt, blur shadow={shadow blur steps=5, shadow opacity=20}]
+    (10.0, 3.5) rectangle (15.0, 7.5);
+
+% Tablet Screen
+\fill[top color=screendark!90!black, bottom color=screenlight, rounded corners=3pt]
+    (10.3, 3.8) rectangle (14.7, 7.2);
+
+% 3D Glass Glare
+\fill[white, opacity=0.05] (10.3, 7.2) -- (14.7, 3.8) -- (14.7, 7.2) -- cycle;
+
+% Front Camera & Home Bar
+\fill[gray!40] (12.5, 7.35) circle (1.0pt);
+\fill[black] (12.5, 7.35) circle (0.5pt);
+\fill[gray!50, rounded corners=1pt] (12.15, 3.60) rectangle (12.85, 3.66);
+
+% Tablet Text Content
+\node[font=\bfseries\footnotesize, text=teal!20] at (12.5, 6.2) {\faTablet \ Tablet Viewport (768px+)};
+\node[font=\bfseries\footnotesize, text=white, align=center, text width=3.8cm] at (12.5, 5.0) {
+    Downloads: \texttt{\color{yellow!90}hero-tablet.jpg}\\[3pt]
+    {\scriptsize\color{teal!20}(Native Width: 800px)}
+};
+
+
+% --- Mobile Viewport Device (Bottom) ---
+% Smartphone Bezel
+\draw[draw=gray!70, fill=deviceframe, rounded corners=10pt, blur shadow={shadow blur steps=5, shadow opacity=20}]
+    (11.0, -3.5) rectangle (14.0, 2.5);
+
+% Smartphone Screen
+\fill[top color=screendark!90!black, bottom color=screenlight, rounded corners=4pt]
+    (11.2, -3.2) rectangle (13.8, 2.2);
+
+% 3D Glass Glare
+\fill[white, opacity=0.05] (11.2, 2.2) -- (13.8, -3.2) -- (13.8, 2.2) -- cycle;
+
+% Speaker Slit & Home Bar
+\fill[black, rounded corners=1.5pt] (12.25, 2.35) rectangle (12.75, 2.43);
+\fill[gray!50, rounded corners=1pt] (12.15, -3.38) rectangle (12.85, -3.34);
+
+% Mobile Text Content
+\node[font=\bfseries\tiny, text=teal!20] at (12.5, 0.7) {\faMobile \ Mobile (<768px)};
+\node[font=\bfseries\tiny, text=white, align=center, text width=2.2cm] at (12.5, -0.7) {
+    Downloads:\\[1pt]
+    \texttt{\color{yellow!90}hero-mobile.jpg}\\[3pt]
+    {\tiny\color{teal!20}(Native: 400px)}
+};
+
+
+% ==========================================
+% Semantic Routing Connectors & Bandwidth Payload Badges
+% ==========================================
+% Desktop Routing: Originating at srcset line (y = 7.9) -> Desktop Bezel (8.5, 11.6)
+\draw[-Stealth=3mm, very thick, htmlorange]
+    (5.5, 7.9) -- (7.0, 7.9) |- (8.5, 11.6);
+\node[anchor=west, fill=white, draw=htmlorange!80, rounded corners=3pt, font=\scriptsize\bfseries, text=htmlorange, inner sep=4pt, blur shadow={shadow opacity=12, shadow blur steps=3}] at (6.0494,9.75) {\faDownload\ 1200px Payload};
+
+% Tablet Routing: Originating at srcset line (y = 6.4) -> Tablet Bezel (10.0, 5.5)
+\draw[-Stealth=3mm, very thick, htmlorange]
+    (5.5, 6.4) -- (7.75, 6.4) |- (10.0, 5.5);
+\node[anchor=west, fill=white, draw=htmlorange!80, rounded corners=3pt, font=\scriptsize\bfseries, text=htmlorange, inner sep=4pt, blur shadow={shadow opacity=12, shadow blur steps=3}] at (7.2634,5.9129) {\faDownload\ 800px Payload};
+
+% Mobile Routing: Originating at img src line (y = 5.5) -> Mobile Bezel (11.0, -0.5)
+\draw[-Stealth=3mm, very thick, htmlorange]
+    (5.4629,4.7017) -- (8.2129,4.7017) |- (11.0, -0.5);
+\node[anchor=west, fill=white, draw=htmlorange!80, rounded corners=3pt, font=\scriptsize\bfseries, text=htmlorange, inner sep=4pt, blur shadow={shadow opacity=12, shadow blur steps=3}] at (7.485,1.5718) {\faDownload\ 400px Payload};
+
+
+% ==========================================
+% Explanation Bubble (Centered at (0, -7.0), 16cm wide)
+% ==========================================
+\node[bubble, text width=16cm, align=left] at (0.6681,-3.2132) {
+    \textbf{\color{htmlorange}\faLightbulb\ How Art Direction solves math problems:}\\
+    Instead of forcing a single low-res image to stretch (multiplying fake pixels) or a high-res image to shrink (wasting bandwidth), the browser intelligently evaluates the container's physical size and downloads a \textbf{mathematically appropriate} native file. Combined with \texttt{max-width: 100\%} on the inner \texttt{<img>}, the image remains perfectly crisp with zero interpolation overhead.
+};
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,14 @@
+# LuaLaTeX build files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+# Operating-system and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*~

@@ -1,0 +1,191 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\definecolor{srccolor}{RGB}{33, 150, 243}   % Blue
+\definecolor{vpcolor}{RGB}{244, 67, 54}    % Red
+\definecolor{mathcolor}{RGB}{76, 175, 80}  % Green
+\definecolor{cropcolor}{RGB}{158, 158, 158} % Gray
+
+\begin{document}
+\begin{tikzpicture}
+
+% =============================================================================
+% --- CANVAS BOUNDING BOX & BACKGROUND (RULES 4 & 8) ---
+% =============================================================================
+\path (-15, -23) rectangle (15, 21);
+\fill[white] (-15, -23) rectangle (15, 21);
+
+% =============================================================================
+% --- TITLE BLOCK (RULE 6) ---
+% =============================================================================
+\node[font=\Huge\bfseries, text=black!80] at (0, 19.5) {SVG \texttt{preserveAspectRatio="xMidYMid slice"} $\equiv$ CSS \texttt{object-fit: cover}};
+\node[font=\Large, text=black!60] at (0, 18.5) {Structural Equivalence under Extreme Horizontal Stretching};
+
+% =============================================================================
+% --- SECTION 1: SOURCE GEOMETRY (RULES 3 & 6) ---
+% =============================================================================
+\node[font=\Large\bfseries, text=srccolor] at (-8, 15.5) {\faImage \ Source Geometry (SVG / Image)};
+\node[font=\small, text=black!70] at (-8, 14.8) {Intrinsic Aspect Ratio = 1:1 ($4 \times 4$)};
+
+% Source Box & Grid
+\draw[line width=2pt, srccolor] (-10, 10) rectangle (-6, 14);
+\draw[srccolor!30, step=1] (-10, 10) grid (-6, 14);
+
+% Dimension Braces for Source Geometry (Shifted to prevent overlap)
+\draw[decorate, decoration={brace, mirror, raise=5pt, amplitude=5pt}, line width=1pt, srccolor]
+    (-10, 9.7) -- (-6, 9.7);
+\node[font=\small\bfseries, text=srccolor, anchor=north] at (-8, 9.1) {Width = 4};
+
+\draw[decorate, decoration={brace, raise=5pt, amplitude=5pt}, line width=1pt, srccolor]
+    (-10.3, 10) -- (-10.3, 14);
+\node[font=\small\bfseries, text=srccolor, anchor=east] at (-10.8, 12) {Height = 4};
+
+% Source Motif with explicit clip enforcing viewBox bounds
+\begin{scope}
+    \clip (-10, 10) rectangle (-6, 14);
+
+    % Radiant Sun
+    \fill[gold!30, opacity=0.4] (-7.5, 12.5) circle (1.2);
+    \shade[inner color=gold!80!white, outer color=gold!20, draw=none] (-7.5, 12.5) circle (0.8);
+
+    % Mountain 1 (Foreground / Left)
+    \shade[top color=gray!70!black, bottom color=darkgreen!40!black] (-9, 10) -- (-7.5, 13) -- (-6, 10) -- cycle;
+    % Snowcap 1
+    \fill[white, opacity=0.9] (-7.5, 13) -- (-7.9, 12.2) -- (-7.65, 12.4) -- (-7.5, 12.1) -- (-7.35, 12.3) -- (-7.1, 12.0) -- cycle;
+
+    % Mountain 2 (Right)
+    \shade[top color=gray!70!black, bottom color=darkgreen!40!black] (-8, 10) -- (-6.5, 12) -- (-6, 10) -- cycle;
+    % Snowcap 2
+    \fill[white, opacity=0.9] (-6.5, 12) -- (-6.8, 11.4) -- (-6.6, 11.55) -- (-6.5, 11.3) -- (-6.35, 11.5) -- (-6.1, 11.25) -- (-6.0, 11.4) -- cycle;
+\end{scope}
+
+% =============================================================================
+% --- SECTION 2: TARGET CONTAINER (VIEWPORT) (RULES 5 & 6) ---
+% =============================================================================
+\node[font=\Large\bfseries, text=vpcolor] at (7, 15.5) {\faDesktop \ Target Container (Viewport)};
+\node[font=\small, text=black!70] at (7, 14.8) {Target Aspect Ratio = 5:1 ($10 \times 2$) $\rightarrow$ Extreme Stretch};
+
+% Target Viewport Window UI Bar
+\fill[gray!20, draw=vpcolor, line width=1.5pt, rounded corners=2pt] (2, 13) rectangle (12, 13.5);
+\fill[red!80!black] (2.5, 13.25) circle (0.12);
+\fill[yellow!80!black] (3.0, 13.25) circle (0.12);
+\fill[green!70!black] (3.5, 13.25) circle (0.12);
+\node[font=\footnotesize\sffamily, text=black!50] at (7, 13.25) {\faGlobe \ \texttt{viewport.html}};
+
+% Target Viewport Body & Grid
+\draw[line width=2pt, vpcolor] (2, 11) rectangle (12, 13);
+\draw[vpcolor!20, step=1] (2, 11) grid (12, 13);
+\node[font=\Large\bfseries, text=vpcolor!80, fill=white, inner sep=4pt] at (7, 12) {EMPTY CONTAINER};
+
+% Dimension Braces for Target Viewport (Shifted to prevent overlap)
+\draw[decorate, decoration={brace, mirror, raise=5pt, amplitude=5pt}, line width=1pt, vpcolor]
+    (2, 10.7) -- (12, 10.7);
+\node[font=\small\bfseries, text=vpcolor, anchor=north] at (7, 10.1) {Width = 10};
+
+\draw[decorate, decoration={brace, mirror, raise=5pt, amplitude=5pt}, line width=1pt, vpcolor]
+    (12.3, 11) -- (12.3, 13);
+\node[font=\small\bfseries, text=vpcolor, anchor=west] at (12.8, 12) {Height = 2};
+
+% ARROW MAPPER (Centered between boxes)
+\draw[-Stealth, line width=3pt, black!20] (-3.5, 12) -- (-0.5, 12);
+\node[anchor=south, font=\bfseries, text=black!50] at (-2, 12.2) {MAP TO};
+
+% =============================================================================
+% --- SECTION 3: ALGORITHMIC MATH BOX (RULES 1, 6, 7 & 8) ---
+% =============================================================================
+\node[fill=white, draw=black!30, rounded corners=8pt, inner sep=16pt, align=left, text width=15.5cm, text=black!85, blur shadow={shadow blur steps=5, shadow opacity=20, shadow yshift=-3pt}] at (0, 5) {
+    \textbf{\Large Algorithmic Transformation Pipeline} \\[8pt]
+    Both \texttt{object-fit: cover} and \texttt{preserveAspectRatio="xMidYMid slice"} resolve via identical matrix logic:\\[6pt]
+    \textbf{1. Max Scale Ratio ($\mathbf{S}$)}: Ensure the viewport is completely covered without distortion.\\
+    \quad $S_x = \frac{W_{vp}}{W_{src}} = \frac{10}{4} = 2.5, \quad S_y = \frac{H_{vp}}{H_{src}} = \frac{2}{4} = 0.5 \implies \mathbf{S = \max(2.5, 0.5) = 2.5}$\\[6pt]
+    \textbf{2. Dimensional Projection}: \\
+    \quad $W_{scaled} = 2.5 \times 4 = \mathbf{10}, \quad H_{scaled} = 2.5 \times 4 = \mathbf{10}$\\[6pt]
+    \textbf{3. Centering Translation ($\mathbf{\vec{T}}$)}: Align coordinate centers (xMid, yMid / center center)\\
+    \quad $T_x = \frac{W_{vp} - W_{scaled}}{2} = \frac{10 - 10}{2} = \mathbf{0}, \quad T_y = \frac{H_{vp} - H_{scaled}}{2} = \frac{2 - 10}{2} = \mathbf{-4}$
+};
+
+% =============================================================================
+% --- SECTION 4: FINAL RENDERED GEOMETRY (THE CROP) (RULES 2, 5, 6 & 7) ---
+% =============================================================================
+\node[font=\Huge\bfseries, text=black!80] at (0, -1) {The Geometric Result: Sliced / Cropped};
+
+% Full Scaled 10x10 Rendered Area & Visual Scene
+\begin{scope}
+    \clip (-5, -16) rectangle (5, -6);
+
+    % Canvas background and scaling grid
+    \fill[gray!5] (-5, -16) rectangle (5, -6);
+    \draw[srccolor!30, step=2.5] (-5, -16) grid (5, -6);
+
+    % Scaled Sun (Scaled by 2.5)
+    \fill[gold!30, opacity=0.3] (1.25, -9.75) circle (3.0);
+    \shade[inner color=gold!80!white, outer color=gold!20, draw=none] (1.25, -9.75) circle (2.0);
+
+    % Scaled Mountain 1 & Snowcap
+    \shade[top color=gray!70!black, bottom color=darkgreen!40!black] (-2.5, -16) -- (1.25, -8.5) -- (5, -16) -- cycle;
+    \fill[white, opacity=0.9] (1.25, -8.5) -- (0.25, -10.5) -- (0.9, -10.0) -- (1.25, -10.75) -- (1.6, -10.25) -- (2.5, -11.0) -- cycle;
+
+    % Scaled Mountain 2 & Snowcap
+    \shade[top color=gray!70!black, bottom color=darkgreen!40!black] (0, -16) -- (3.75, -11) -- (5, -16) -- cycle;
+    \fill[white, opacity=0.9] (3.75, -11) -- (3.0, -12.5) -- (3.4, -12.25) -- (3.75, -12.75) -- (4.15, -12.35) -- (4.6, -12.8) -- (5, -12.5) -- (5, -12.0) -- cycle;
+
+    % Discarded Overflow / Slices Overlays (Technical Blueprint / Discard Pattern)
+    \fill[pattern=north west lines, pattern color=cropcolor!40] (-5, -10) rectangle (5, -6);
+    \fill[black, opacity=0.35] (-5, -10) rectangle (5, -6);
+
+    \fill[pattern=north west lines, pattern color=cropcolor!40] (-5, -16) rectangle (5, -12);
+    \fill[black, opacity=0.35] (-5, -16) rectangle (5, -12);
+\end{scope}
+
+% Rigid Outlines
+\draw[line width=1.5pt, srccolor, dashed] (-5, -16) rectangle (5, -6);
+\draw[line width=2.5pt, vpcolor] (-5, -12) rectangle (5, -10);
+
+% Extracted High-Contrast Pillbox Labels with Pointer Arrows (Rule 5 & 7)
+\node[fill=black!75, text=white, rounded corners=6pt, inner sep=6pt, font=\Large\bfseries\sffamily, align=center, text width=8cm] at (0, -4) {Y-AXIS SLICE (CROPPED)};
+\draw[-Stealth=3mm, line width=2.5pt, black!75] (0, -4.5) -- (0, -6.0);
+
+\node[fill=black!75, text=white, rounded corners=6pt, inner sep=6pt, font=\Large\bfseries\sffamily, align=center, text width=8cm] at (0, -18) {Y-AXIS SLICE (CROPPED)};
+\draw[-Stealth=3mm, line width=2.5pt, black!75] (0, -17.5) -- (0, -16.0);
+
+% CSS Y-Axis Arrow (Shifted left for clearance)
+\draw[-Stealth=3mm, line width=2pt, black!70] (-13.8, -4.5) -- (-13.8, -17);
+\node[anchor=center, rotate=90, font=\small\bfseries\sffamily, text=black!80] at (-14.4, -10.75) {CSS Y-Axis (+)};
+
+% Extended Horizontal Dashed Anchor Lines (Bounded x = -13.5 to x = 7.0)
+\draw[dashed, line width=1pt, black!40] (-13.5, -6) -- (7.0, -6);   % Image Top
+\draw[dashed, line width=1pt, black!40] (-13.5, -10) -- (7.0, -10); % Viewport Top
+\draw[dashed, line width=1pt, black!40] (-13.5, -12) -- (7.0, -12); % Viewport Bottom
+\draw[dashed, line width=1pt, black!40] (-13.5, -16) -- (7.0, -16); % Image Bottom
+
+% Non-Overlapping CSS Space Labels (Anchored south west sitting on dashed lines)
+\node[anchor=south west, font=\ttfamily\small, text=srccolor] at (-13.3, -5.9) {CSS Space: (0, -4px)};
+\node[anchor=south west, font=\ttfamily\small, text=vpcolor] at (-13.3, -9.9) {CSS Space: (0, 0px) [Viewport Top]};
+\node[anchor=south west, font=\ttfamily\small, text=vpcolor] at (-13.3, -11.9) {CSS Space: (0, 2px) [Viewport Bottom]};
+\node[anchor=south west, font=\ttfamily\small, text=srccolor] at (-13.3, -15.9) {CSS Space: (0, 6px)};
+
+% Translation Math Visualizer Arrow & Anchor (Positioned at x = 7.5 and x = 8.0 with clearance)
+\draw[{Stealth[scale=1.2]}-Stealth=3mm, line width=2pt, vpcolor] (7.5, -10) -- (7.5, -6);
+\node[anchor=west, font=\bfseries\normalsize, fill=white, inner sep=3pt, rounded corners=2pt, draw=vpcolor!30] at (8.0, -8) {$T_y = -4\text{px}$ (Centering offset)};
+
+\end{tikzpicture}
+\end{document}

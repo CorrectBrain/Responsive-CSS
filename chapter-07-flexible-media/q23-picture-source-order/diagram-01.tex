@@ -1,0 +1,281 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes,fadings,shadows.blur,patterns,patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% Define vivid, postgraduate-standard color palette
+\definecolor{darkbg}{RGB}{28, 33, 40}
+\definecolor{codeline}{RGB}{171, 178, 191}
+\definecolor{tagcolor}{RGB}{224, 108, 117}
+\definecolor{attrcolor}{RGB}{209, 154, 102}
+\definecolor{strcolor}{RGB}{152, 195, 121}
+
+\definecolor{flowblue}{RGB}{52, 152, 219}
+\definecolor{flowdark}{RGB}{41, 128, 185}
+\definecolor{successgreen}{RGB}{46, 204, 113}
+\definecolor{failred}{RGB}{231, 76, 60}
+\definecolor{warninggold}{RGB}{241, 196, 15}
+\definecolor{mutedgray}{RGB}{149, 165, 166}
+\definecolor{textdark}{RGB}{44, 62, 80}
+
+\begin{document}
+\begin{tikzpicture}[
+    background rectangle/.style={fill=white},
+    show background rectangle,
+    font=\sffamily,
+    % Realistic macOS-style code editor window (Active)
+    codebox/.style={
+        draw=codeline!30, fill=darkbg, rounded corners=8pt, text=codeline,
+        font=\ttfamily\Large, inner sep=14pt, inner ysep=32pt, text width=10cm, align=left,
+        blur shadow={shadow opacity=25, shadow yshift=-3pt, shadow blur steps=10},
+        path picture={
+            \fill[failred] ([xshift=14pt, yshift=-12pt]path picture bounding box.north west) circle (4pt);
+            \fill[warninggold] ([xshift=28pt, yshift=-12pt]path picture bounding box.north west) circle (4pt);
+            \fill[successgreen] ([xshift=42pt, yshift=-12pt]path picture bounding box.north west) circle (4pt);
+            \draw[codeline!20, line width=0.5pt] ([yshift=-24pt]path picture bounding box.north west) -- ([yshift=-24pt]path picture bounding box.north east);
+        }
+    },
+    % High-contrast Inactive macOS-style code editor window
+    inactivecodebox/.style={
+        draw=codeline!40, fill=darkbg!80!white, rounded corners=8pt, text=codeline!60!black,
+        font=\ttfamily\Large, inner sep=14pt, inner ysep=32pt, text width=10cm, align=left,
+        blur shadow={shadow opacity=25, shadow yshift=-3pt, shadow blur steps=10},
+        path picture={
+            \fill[failred!70] ([xshift=14pt, yshift=-12pt]path picture bounding box.north west) circle (4pt);
+            \fill[warninggold!70] ([xshift=28pt, yshift=-12pt]path picture bounding box.north west) circle (4pt);
+            \fill[successgreen!70] ([xshift=42pt, yshift=-12pt]path picture bounding box.north west) circle (4pt);
+            \draw[codeline!40, line width=0.5pt] ([yshift=-24pt]path picture bounding box.north west) -- ([yshift=-24pt]path picture bounding box.north east);
+        }
+    },
+    % Browser viewport window styling
+    viewport/.style={
+        draw=flowblue!60, fill=white, line width=1.5pt, rounded corners=10pt,
+        inner sep=16pt, inner ysep=32pt, align=center,
+        blur shadow={shadow opacity=25, shadow yshift=-3pt, shadow blur steps=10},
+        path picture={
+            \fill[flowblue!10] (path picture bounding box.north west) rectangle ([yshift=-22pt]path picture bounding box.north east);
+            \fill[flowblue!40] ([xshift=14pt, yshift=-11pt]path picture bounding box.north west) circle (3.5pt);
+            \fill[flowblue!40] ([xshift=26pt, yshift=-11pt]path picture bounding box.north west) circle (3.5pt);
+            \fill[flowblue!40] ([xshift=38pt, yshift=-11pt]path picture bounding box.north west) circle (3.5pt);
+            \draw[flowblue!20, line width=0.5pt] ([yshift=-22pt]path picture bounding box.north west) -- ([yshift=-22pt]path picture bounding box.north east);
+        }
+    },
+    % Polished logic gates with gradient fills
+    diamondbox/.style={
+        draw=flowdark, fill=white, top color=flowblue!20, bottom color=white,
+        diamond, aspect=2.5, line width=1.5pt, text=textdark, font=\Large\bfseries,
+        inner sep=6pt, text width=4.5cm, align=center,
+        blur shadow={shadow opacity=25, shadow yshift=-3pt, shadow blur steps=10}
+    },
+    % Status indicator panels with clean white body and solid accent bar
+    evalbox/.style={
+        draw=mutedgray!30, fill=white, rounded corners=6pt, inner sep=14pt, text width=7.5cm,
+        font=\Large\bfseries, align=center,
+        blur shadow={shadow opacity=25, shadow yshift=-3pt, shadow blur steps=10}
+    },
+    evalfail/.style={
+        draw=failred!30,
+        path picture={
+            \fill[failred] (path picture bounding box.north west) rectangle ([xshift=5pt]path picture bounding box.south west);
+        }
+    },
+    evalsuccess/.style={
+        draw=successgreen!30,
+        path picture={
+            \fill[successgreen] (path picture bounding box.north west) rectangle ([xshift=5pt]path picture bounding box.south west);
+        }
+    },
+    evalmuted/.style={
+        draw=mutedgray!40, fill=gray!10, text=gray!70!black,
+        path picture={
+            \fill[mutedgray!70] (path picture bounding box.north west) rectangle ([xshift=5pt]path picture bounding box.south west);
+        }
+    },
+    % Sleek modern tooltips with gold accent bar
+    infobubble/.style={
+        draw=warninggold!40, fill=white, rounded corners=8pt,
+        text=textdark, font=\large, inner sep=14pt, text width=7cm, align=left,
+        blur shadow={shadow opacity=25, shadow yshift=-3pt, shadow blur steps=10},
+        path picture={
+            \fill[warninggold] (path picture bounding box.north west) rectangle ([xshift=5pt]path picture bounding box.south west);
+        }
+    }
+]
+
+% =========================================================================
+% 1. HEADER & CONTEXT (Top, Y = 18, 16.5, 13.5)
+% =========================================================================
+\node[font=\fontsize{36}{40}\bfseries, text=textdark, align=center] at (0, 18) {The Truth-Finding Waterfall of \texttt{<picture>} Tags};
+\node[font=\fontsize{20}{24}\itshape, text=mutedgray, align=center] at (0, 16.5) {Sequential Source-Order DOM Parsing \& Network Short-Circuiting in Art Direction};
+
+\node[viewport] (viewport) at (0, 13.5) {
+    \begin{tabular}{c}
+        \fontsize{24}{28}\selectfont \faDesktop \quad \textbf{Current Browser Viewport: 850px} \\
+        \fontsize{14}{18}\selectfont \color{flowdark} The DOM parser evaluates \texttt{<source>} tags sequentially from top to bottom.
+    \end{tabular}
+};
+
+% =========================================================================
+% 2. CENTRAL LOGIC COLUMN (X = 0)
+% =========================================================================
+\node[draw=none, fill=flowdark, text=white, circle, font=\Large\bfseries, inner sep=10pt, blur shadow={shadow opacity=25, shadow yshift=-3pt, shadow blur steps=10}] (start) at (0, 10.5) {\faPlay};
+\draw[-{Stealth[scale=1.2]}, line width=4pt, color=flowblue] (viewport.south) -- (start.north);
+
+\node[diamondbox] (dia1) at (0, 6.5) {Viewport \\ $\ge$ 1024px?};
+\draw[-{Stealth[scale=1.2]}, line width=5pt, color=flowblue] (start.south) -- (dia1.north);
+
+\node[diamondbox] (dia2) at (0, 1.5) {Viewport \\ $\ge$ 768px?};
+\draw[-{Stealth[scale=1.2]}, line width=5pt, color=flowblue] (dia1.south) -- (dia2.north) node[midway, anchor=west, xshift=20pt, font=\Large\bfseries, color=flowdark] {FALSE (Drops down)};
+
+\node[diamondbox, draw=mutedgray!60, fill=gray!10, text=gray!70!black] (dia3) at (0, -9.5) {Viewport \\ $\ge$ 480px?};
+
+% DOM Parsing node for <img> anchor
+\node[draw=mutedgray!60, fill=gray!10, text=gray!70!black, rounded corners=8pt, inner sep=12pt, font=\Large\bfseries] (imglogic) at (0, -14.5) {\faCode \quad Parse <img> Anchor};
+
+% =========================================================================
+% 3. LEFT COLUMN: CODE EDITOR WINDOWS (X = -12)
+% =========================================================================
+\node[codebox] (picstart) at (-12, 10.5) {\color{tagcolor}<picture>};
+
+\node[codebox] (src1) at (-12, 6.5) {
+    \color{tagcolor}<source\\
+    \hspace*{10pt}\color{attrcolor}media\color{codeline}=\color{strcolor}"(min-width: 1024px)"\\
+    \hspace*{10pt}\color{attrcolor}srcset\color{codeline}=\color{strcolor}"large.jpg"\color{tagcolor}>
+};
+
+\node[codebox] (src2) at (-12, 1.5) {
+    \color{tagcolor}<source\\
+    \hspace*{10pt}\color{attrcolor}media\color{codeline}=\color{strcolor}"(min-width: 768px)"\\
+    \hspace*{10pt}\color{attrcolor}srcset\color{codeline}=\color{strcolor}"medium.jpg"\color{tagcolor}>
+};
+
+\node[inactivecodebox] (src3) at (-12, -9.5) {
+    \color{tagcolor!70!white}<source\\
+    \hspace*{10pt}\color{attrcolor!70!white}media\color{codeline!80!white}=\color{strcolor!70!white}"(min-width: 480px)"\\
+    \hspace*{10pt}\color{attrcolor!70!white}srcset\color{codeline!80!white}=\color{strcolor!70!white}"small.jpg"\color{tagcolor!70!white}>
+};
+
+\node[inactivecodebox] (img) at (-12, -14.5) {
+    \color{tagcolor!70!white}<img\\
+    \hspace*{10pt}\color{attrcolor!70!white}src\color{codeline!80!white}=\color{strcolor!70!white}"fallback.jpg"\\
+    \hspace*{10pt}\color{attrcolor!70!white}alt\color{codeline!80!white}=\color{strcolor!70!white}"Hero Image"\color{tagcolor!70!white}>
+};
+
+\node[codebox] (picend) at (-12, -18) {\color{tagcolor}</picture>};
+
+% Connecting HTML to Waterfall Logic Center
+\draw[dashed, line width=2pt, color=mutedgray] (src1.east) -- (dia1.west);
+\draw[dashed, line width=2pt, color=mutedgray] (src2.east) -- (dia2.west);
+\draw[dashed, line width=2pt, color=mutedgray] (src3.east) -- (dia3.west);
+\draw[dashed, line width=2pt, color=mutedgray] (img.east) -- (imglogic.west);
+
+% =========================================================================
+% 4. FAR LEFT COLUMN: INFO TOOLTIPS (X = -24)
+% =========================================================================
+\node[infobubble] (info1) at (-24, 6.5) {
+    \textbf{\color{warninggold!80!black}\faExclamationTriangle \quad Source Order Matters}\\[4pt]
+    Always order queries from largest to smallest when using \texttt{min-width}. The first matching truth wins. If \texttt{480px} was first, it would match this 850px viewport and steal the execution!
+};
+\draw[-{Stealth[scale=1.2]}, line width=1.5pt, color=warninggold] (info1.east) -- (src1.west);
+
+\node[infobubble] (info2) at (-24, -14.5) {
+    \textbf{\color{warninggold!80!black}\faAnchor \quad The Required Anchor}\\[4pt]
+    The \texttt{<img>} tag is not optional. The \texttt{<picture>} tag is just a wrapper that feeds a source to this \texttt{<img>}. Without it, nothing renders on the screen!
+};
+\draw[-{Stealth[scale=1.2]}, line width=1.5pt, color=warninggold] (info2.east) -- (img.west);
+
+% =========================================================================
+% 5. RIGHT COLUMN: EVALUATION PANELS (X = 11)
+% =========================================================================
+\node[evalbox, evalfail] (res1) at (11, 6.5) {
+    {\fontsize{24}{28}\selectfont \color{failred}\faTimesCircle}\\[4pt]
+    \textbf{\color{failred!90!black}CONDITION FAILED}\\[2pt]
+    \large \color{textdark}850px is less than 1024px.\\[2pt]
+    \small \color{mutedgray}Network request is bypassed.
+};
+\draw[-{Stealth[scale=1.2]}, line width=3pt, color=failred!60] (dia1.east) -- (res1.west) node[midway, yshift=14pt, font=\Large\bfseries, color=failred] {NO};
+
+\node[evalbox, evalsuccess] (res2) at (11, 1.5) {
+    {\fontsize{24}{28}\selectfont \color{successgreen}\faCheckCircle}\\[4pt]
+    \textbf{\color{successgreen!90!black}MATCH FOUND!}\\[2pt]
+    \large \color{textdark}850px is $\ge$ 768px.\\[2pt]
+    \small \color{mutedgray}Parsing stops. Execution begins.
+};
+\draw[-{Stealth[scale=1.2]}, line width=3pt, color=successgreen] (dia2.east) -- (res2.west) node[midway, yshift=14pt, font=\Large\bfseries, color=successgreen] {YES};
+
+\node[evalbox, evalmuted] (res3) at (11, -9.5) {
+    {\fontsize{20}{24}\selectfont \color{gray!70!black}\faGhost}\\[4pt]
+    \textbf{\color{gray!70!black}NEVER EVALUATED}\\[2pt]
+    \small \color{gray!70!black}This rule is dead code for this viewport.
+};
+\draw[-{Stealth[scale=1.2]}, line width=3pt, color=mutedgray!60] (dia3.east) -- (res3.west);
+
+\node[evalbox, evalmuted] (res4) at (11, -14.5) {
+    {\fontsize{20}{24}\selectfont \color{gray!70!black}\faUnlink}\\[4pt]
+    \textbf{\color{gray!70!black}NETWORK IGNORED}\\[2pt]
+    \small \color{gray!70!black}The DOM element is created for layout,\\[1pt]
+    \small \color{gray!70!black}but its \texttt{src} attribute is superseded.
+};
+\draw[-{Stealth[scale=1.2]}, line width=3pt, color=mutedgray!60, dashed] (imglogic.east) -- (res4.west);
+
+% =========================================================================
+% 6. FAR RIGHT COLUMN: NETWORK EXECUTION & ART DIRECTION (X = 23)
+% =========================================================================
+\node[draw=successgreen!80!black, fill=successgreen, text=white, rounded corners=12pt, inner sep=20pt, blur shadow={shadow opacity=25, shadow yshift=-3pt, shadow blur steps=10}, align=center] (network) at (23, 1.5) {
+    \fontsize{32}{36}\selectfont \faIcon{cloud-download-alt} \\
+    \vspace{10pt}
+    \fontsize{20}{24}\selectfont \textbf{NETWORK REQUEST}\\
+    \vspace{5pt}
+    \Large \texttt{GET /medium.jpg}\\
+    \vspace{5pt}
+    \normalsize The browser immediately queues\\this image for download.
+};
+\draw[-{Stealth[scale=1.2]}, line width=6pt, color=successgreen] (res2.east) -- (network.west);
+
+\node[infobubble] (info3) at (23, 7.5) {
+    \textbf{\color{warninggold!80!black}\faPaintBrush \quad Art Direction Strategy}\\[4pt]
+    We aren't just sending a smaller file; \texttt{medium.jpg} might be a completely different, zoomed-in crop of the photo, specifically composed for tablets. This is the power of Art Direction.
+};
+\draw[-{Stealth[scale=1.2]}, line width=2pt, color=warninggold] (info3.south) -- (network.north);
+
+% =========================================================================
+% 7. THE SHORT-CIRCUIT BARRIER (Y = -2.5, -4.5)
+% =========================================================================
+\draw[line width=10pt, color=failred!15, line cap=round] (-28, -2.5) -- (28, -2.5);
+\draw[line width=4pt, color=failred, line cap=round] (-28, -2.5) -- (28, -2.5);
+
+\node[fill=failred, text=white, font=\Large\bfseries, rounded corners=6pt, inner sep=10pt, blur shadow={shadow opacity=25, shadow yshift=-3pt, shadow blur steps=10}] (barrierlabel) at (0,-2.3241) {
+    \faBan \quad THE WATERFALL STOPS HERE: SHORT-CIRCUIT!
+};
+
+\node[font=\Large\itshape, text=failred!80!black, align=center, fill=white, text width=13cm, inner sep=8pt] (barriertext) at (0, -4.5) {
+    Once a \texttt{<source>} matches, the browser \textbf{aborts} evaluating any further \texttt{<source>} tags. It guarantees only \textbf{one} image is ever requested, saving immense bandwidth.
+};
+
+% Logic flow interruption around barrier
+\draw[line width=5pt, color=mutedgray!60, dashed] (dia2.south) -- (barrierlabel.north);
+\draw[-{Stealth[scale=1.2]}, line width=5pt, color=mutedgray!60, dashed] (barrierlabel.south) -- (barriertext.north);
+\draw[-{Stealth[scale=1.2]}, line width=5pt, color=mutedgray!60, dashed] (barriertext.south) -- (dia3.north);
+\draw[-{Stealth[scale=1.2]}, line width=5pt, color=mutedgray!60, dashed] (dia3.south) -- (imglogic.north);
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,321 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+% --- THEME & PALETTE DEFINITIONS ---
+\definecolor{textdark}{RGB}{30, 41, 59}
+\definecolor{accentblue}{RGB}{37, 99, 235}
+\definecolor{cropred}{RGB}{225, 29, 72}
+\definecolor{devicegray}{RGB}{241, 245, 249}
+\definecolor{successgreen}{RGB}{16, 185, 129}
+\definecolor{warninggold}{RGB}{245, 158, 11}
+\definecolor{codebg}{RGB}{15, 23, 42}
+\definecolor{codeheader}{RGB}{30, 41, 59}
+\definecolor{tagpink}{RGB}{244, 114, 182}
+\definecolor{attributecyan}{RGB}{56, 189, 248}
+\definecolor{stringyellow}{RGB}{253, 224, 71}
+\definecolor{commentgray}{RGB}{148, 163, 184}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\providecolor{snow}{RGB}{255,250,250}
+% --- MACRO: HYPER-REALISTIC VECTOR LANDSCAPE SCENERY ---
+% Defined in master coordinates: X in [-8.5, 8.5], Y in [6.8, 15.2]
+\newcommand{\drawscenery}{%
+    % 1. Sky & Sun Gradient
+    \fill[top color=navy!85!blue, bottom color=skyblue!50!white] (-8.5, 6.8) rectangle (8.5, 15.2);
+    \fill[yellow!30, opacity=0.3] (-4.0, 13.5) circle (1.2cm);
+    \fill[yellow!60!white, opacity=0.6] (-4.0, 13.5) circle (0.75cm);
+    \fill[yellow!95!orange] (-4.0, 13.5) circle (0.45cm);
+    % 2. Translucent Layered Vector Clouds
+    \fill[white, opacity=0.75] (-1.5, 13.6) .. controls (-1.8, 14.0) and (-1.0, 14.3) .. (-0.4, 13.9)
+        .. controls (0.1, 14.2) and (0.9, 14.0) .. (0.8, 13.5)
+        .. controls (1.0, 13.2) and (0.4, 13.0) .. (-0.2, 13.1)
+        .. controls (-0.8, 12.9) and (-1.4, 13.1) .. cycle;
+    \fill[white, opacity=0.65] (4.0, 14.0) .. controls (3.7, 14.4) and (4.5, 14.7) .. (5.1, 14.3)
+        .. controls (5.6, 14.5) and (6.3, 14.3) .. (6.1, 13.8)
+        .. controls (6.3, 13.5) and (5.7, 13.3) .. (5.2, 13.4)
+        .. controls (4.6, 13.2) and (4.1, 13.5) .. cycle;
+    % 3. Background Mountain Range (Distant Slate & Snowcaps)
+    \fill[top color=white!90!SlateGray, bottom color=SlateGray!80!black]
+        (-8.5, 8.5) -- (-6.5, 12.2) -- (-5.2, 10.8) -- (-3.0, 13.2) -- (-1.2, 10.6)
+        -- (0.2, 12.4) -- (1.8, 10.4) -- (3.8, 12.8) -- (5.6, 10.6) -- (7.2, 12.0)
+        -- (8.5, 9.8) -- (8.5, 6.8) -- (-8.5, 6.8) -- cycle;
+    \fill[white] (-3.0, 13.2) -- (-3.6, 12.4) -- (-3.2, 12.5) -- (-3.0, 12.2) -- (-2.7, 12.6) -- (-2.4, 12.3) -- cycle;
+    \fill[white] (0.2, 12.4) -- (-0.3, 11.8) -- (0.0, 11.9) -- (0.2, 11.6) -- (0.5, 11.8) -- (0.7, 11.6) -- cycle;
+    \fill[white] (3.8, 12.8) -- (3.2, 12.1) -- (3.5, 12.2) -- (3.8, 11.9) -- (4.2, 12.2) -- (4.4, 12.0) -- cycle;
+    \fill[white] (-6.5, 12.2) -- (-7.0, 11.6) -- (-6.6, 11.7) -- (-6.3, 11.5) -- (-6.0, 11.7) -- cycle;
+    % 4. Midground Mountain Range
+    \fill[top color=SlateGray!70!DarkSlateGray, bottom color=DarkSlateGray!90!black]
+        (-8.5, 8.0) -- (-6.0, 10.8) -- (-4.2, 9.2) -- (-1.8, 11.5) -- (0.8, 9.4)
+        -- (2.2, 11.0) -- (4.2, 8.8) -- (6.2, 10.8) -- (8.5, 8.5) -- (8.5, 6.8) -- (-8.5, 6.8) -- cycle;
+    \fill[white!95!SlateGray] (-1.8, 11.5) -- (-2.3, 10.9) -- (-2.0, 11.0) -- (-1.8, 10.7) -- (-1.5, 10.9) -- (-1.3, 10.7) -- cycle;
+    \fill[white!95!SlateGray] (2.2, 11.0) -- (1.8, 10.5) -- (2.0, 10.6) -- (2.2, 10.3) -- (2.5, 10.5) -- cycle;
+    \fill[white!95!SlateGray] (-6.0, 10.8) -- (-6.4, 10.3) -- (-6.1, 10.4) -- (-5.8, 10.2) -- (-5.6, 10.4) -- cycle;
+    % 5. Foreground Foothills & Shoreline
+    \fill[top color=DarkOliveGreen!80!DarkSlateGray, bottom color=DarkSlateGray!95!black]
+        (-8.5, 7.2) -- (-6.8, 9.0) -- (-4.5, 7.8) -- (-2.0, 8.6) -- (0.5, 7.6)
+        -- (3.0, 8.7) -- (5.5, 7.5) -- (7.5, 8.9) -- (8.5, 7.6) -- (8.5, 6.8) -- (-8.5, 6.8) -- cycle;
+    % 6. Water Body with Deep Gradients & Specular Streaks
+    \fill[top color=teal!70!DeepSkyBlue, bottom color=navy!95!black] (-8.5, 6.8) rectangle (8.5, 8.2);
+    \draw[white, opacity=0.35, line width=0.8pt] (-7.0, 8.0) -- (-4.0, 8.0);
+    \draw[white, opacity=0.45, line width=1.0pt] (-2.0, 7.85) -- (1.0, 7.85);
+    \draw[white, opacity=0.45, line width=0.8pt] (3.0, 7.95) -- (6.0, 7.95);
+    \draw[white, opacity=0.30, line width=0.7pt] (-6.0, 7.6) -- (-3.0, 7.6);
+    \draw[white, opacity=0.50, line width=1.1pt] (0.5, 7.55) -- (4.0, 7.55);
+    \draw[white, opacity=0.35, line width=0.8pt] (4.5, 7.7) -- (7.5, 7.7);
+    \draw[white, opacity=0.40, line width=0.9pt] (-4.0, 7.3) -- (-0.5, 7.3);
+    \draw[white, opacity=0.55, line width=1.2pt] (1.2, 7.25) -- (3.5, 7.25);
+    \draw[white, opacity=0.30, line width=0.7pt] (5.0, 7.35) -- (8.0, 7.35);
+    % 7. Subject: Highly Detailed Realistic Billowing Sailboat at (2.0, 7.85)
+    \fill[SaddleBrown!80!black] (1.45, 7.7) .. controls (1.55, 7.45) and (2.45, 7.45) .. (2.65, 7.75) -- (1.35, 7.75) -- cycle;
+    \fill[white!90!gray] (1.4, 7.72) rectangle (2.6, 7.78);
+    \draw[black!85, line width=1.6pt, line cap=round] (2.0, 7.75) -- (2.0, 9.2);
+    \fill[top color=cropred!85!white, bottom color=cropred!90!black]
+        (2.0, 7.9) .. controls (2.65, 8.45) and (2.55, 8.9) .. (2.0, 9.05) -- cycle;
+    \draw[cropred!60!black, line width=0.5pt] (2.0, 7.9) .. controls (2.65, 8.45) and (2.55, 8.9) .. (2.0, 9.05);
+    \fill[top color=white, bottom color=snow!85!cropred] (1.95, 7.9) -- (1.3, 7.85) -- (1.95, 8.85) -- cycle;
+    \draw[gray!50, line width=0.4pt] (1.95, 7.9) -- (1.3, 7.85) -- (1.95, 8.85) -- cycle;
+    \fill[warninggold] (2.0, 9.2) -- (1.65, 9.05) -- (2.0, 8.95) -- cycle;
+    \draw[white!90, opacity=0.8, line width=0.8pt] (1.2, 7.62) .. controls (1.8, 7.58) and (2.3, 7.58) .. (2.85, 7.62);
+}
+\begin{document}
+\begin{tikzpicture}[font=\sffamily, background rectangle/.style={fill=white}, show background rectangle]
+% =========================================================================
+% --- SECTION 1: HEADER & MASTER IMAGE (TOP TIER: Y = 7.0 to 18.5) ---
+% =========================================================================
+% Global Titles
+\node[font=\fontsize{32}{36}\bfseries, text=textdark, align=center] at (0, 18.5) {What is Art Direction?};
+\node[font=\fontsize{18}{22}\itshape, text=accentblue, align=center] at (0, 17.5) {Why simply scaling an image down is not always enough for flexible media.};
+% Master Image Title
+\node[font=\Large\bfseries, text=textdark] at (0.049,16.2164) {Original Master Image (e.g., A sprawling landscape with a tiny subject)};
+% Master Image Render (X in [-8, 8], Y in [7, 15])
+\begin{scope}
+    \clip[rounded corners=4pt] (-8, 7) rectangle (8, 15);
+    \drawscenery
+\end{scope}
+\draw[draw=textdark, line width=2pt, rounded corners=4pt, blur shadow={shadow opacity=15}] (-8, 7) rectangle (8, 15);
+% Subject Callout inside Master Image
+\node[font=\footnotesize\bfseries, fill=white, draw=cropred, line width=1pt, rounded corners=3pt, inner sep=2pt, text=cropred, blur shadow={shadow opacity=20}] at (2.0, 8.5) {SUBJECT};
+\draw[cropred, line width=1.2pt, -Stealth] (2.0, 8.25) -- (2.0, 7.85);
+% Crop Annotations on Master Image
+% 1. Desktop Crop (Full Landscape)
+\draw[line width=3pt, accentblue, dashed] (-7.8, 7.2) rectangle (7.8, 14.8);
+\node[fill=accentblue, text=white, font=\bfseries\small, rounded corners=2pt, inner sep=3pt, anchor=north west] (crop1_lbl) at (-7.8, 14.8) {large.jpg (Desktop)};
+% 2. Tablet Crop (Square focus around sailboat)
+\draw[line width=3pt, successgreen, dashed] (-1.0, 7.2) rectangle (5.0, 13.2);
+\node[fill=successgreen, text=white, font=\bfseries\small, rounded corners=2pt, inner sep=3pt, anchor=north west] (crop2_lbl) at (-1.0, 13.2) {medium.jpg (Tablet)};
+% 3. Mobile Crop (Tight vertical portrait focus on sailboat)
+\draw[line width=3pt, warninggold, dashed] (0.5, 7.2) rectangle (3.5, 12.0);
+\node[fill=warninggold, text=white, font=\bfseries\small, rounded corners=2pt, inner sep=3pt, anchor=north east] (crop3_lbl) at (3.5, 12.0) {small.jpg (Mobile)};
+% =========================================================================
+% --- SECTION 2: MIDDLE TIER: THE PARSING ENGINE (Y = -0.2 to 5.7) ---
+% =========================================================================
+% --- A. The Code Editor (Right Side: [1.5, -0.2] rectangle [12.5, 5.7]) ---
+\fill[codebg, rounded corners=6pt, blur shadow={shadow opacity=25}] (1.5, -0.2) rectangle (12.5, 5.7);
+\fill[codeheader, rounded corners=6pt] (1.5, 5.2) rectangle (12.5, 5.7);
+\draw[textdark!60, line width=1pt, rounded corners=6pt] (1.5, -0.2) rectangle (12.5, 5.7);
+% Window Controls & File Tab
+\fill[cropred] (1.9, 5.45) circle (0.1cm);
+\fill[warninggold] (2.2, 5.45) circle (0.1cm);
+\fill[successgreen] (2.5, 5.45) circle (0.1cm);
+\node[font=\scriptsize\ttfamily, text=white!70, anchor=west] at (3.0, 5.45) {index.html --- <picture> DOM Waterfall};
+% Code Editor Lines with Syntax Highlighting (Strict Horizontal Alignment starting at X=1.8)
+\node[anchor=west, font=\small\ttfamily] at (1.8, 4.8) {\textcolor{tagpink}{<picture>}};
+\node[anchor=west, font=\footnotesize\ttfamily] at (1.8, 3.85) {\textcolor{tagpink}{<source} \textcolor{attributecyan}{media}=\textcolor{stringyellow}{"(min-width: 1024px)"} \textcolor{attributecyan}{srcset}=\textcolor{stringyellow}{"large.jpg"}\textcolor{tagpink}{>}};
+\node[anchor=west, font=\footnotesize\ttfamily] at (1.8, 2.4) {\textcolor{tagpink}{<source} \textcolor{attributecyan}{media}=\textcolor{stringyellow}{"(min-width: 768px)"} \textcolor{attributecyan}{srcset}=\textcolor{stringyellow}{"medium.jpg"}\textcolor{tagpink}{>}};
+\node[anchor=west, font=\footnotesize\ttfamily] at (1.8, 1.0) {\textcolor{tagpink}{<img} \textcolor{attributecyan}{src}=\textcolor{stringyellow}{"small.jpg"} \textcolor{attributecyan}{alt}=\textcolor{stringyellow}{"Subject"}\textcolor{tagpink}{>}};
+\node[anchor=west, font=\small\ttfamily] at (1.8, 0.2) {\textcolor{tagpink}{</picture>}};
+% --- B. The Flowchart (Center-Left: Centered on X = -2.0) ---
+\node[font=\bfseries\footnotesize, text=textdark] at (-2.0, 5.25) {\faCogs \quad Browser Evaluation Waterfall};
+% Downward flow thread
+\draw[-Stealth, line width=1.8pt, textdark!80] (-2.0, 4.9) -- (-2.0, 4.35);
+% Step 1: >= 1024px Decision at (-2.0, 3.85)
+\node[draw=accentblue!80!black, fill=accentblue!15, shape=diamond, aspect=1.8, inner sep=1.5pt, font=\scriptsize\bfseries, text=textdark] (d1) at (-2.0, 3.85) {$\ge 1024\text{px}?$};
+% Step 2: >= 768px Decision at (-2.0, 2.4)
+\node[draw=successgreen!80!black, fill=successgreen!15, shape=diamond, aspect=1.8, inner sep=1.5pt, font=\scriptsize\bfseries, text=textdark] (d2) at (-2.0, 2.4) {$\ge 768\text{px}?$};
+\draw[-Stealth, line width=1.5pt, textdark!70] (d1.south) -- node[right, font=\tiny\bfseries, text=cropred] {FALSE} (d2.north);
+% Step 3: Default Fallback text entry point at (-2.0, 1.0)
+\draw[-Stealth, line width=1.5pt, textdark!70] (d2.south) -- node[right, font=\tiny\bfseries, text=cropred] {FALSE} (-2.0, 1.0);
+% Alignment guides connecting Flowchart directly to Code Editor at X = 1.5
+\draw[SlateGray!40, densely dashed, line width=0.8pt] (-0.5, 3.85) -- (1.5, 3.85);
+\draw[SlateGray!40, densely dashed, line width=0.8pt] (-0.5, 2.4) -- (1.5, 2.4);
+\draw[SlateGray!40, densely dashed, line width=0.8pt] (-0.5, 1.0) -- (1.5, 1.0);
+% --- C. The Execution Nodes (Far Left: Centered strictly at X = -6.5) ---
+\node[draw=accentblue, fill=accentblue!10, rounded corners=4pt, line width=1.2pt, font=\scriptsize\bfseries, text=accentblue!90!black, inner sep=4pt] (exec1) at (-6.5, 3.85) {\parbox{3.5cm}{\centering \faCheckCircle \enspace Fetch \texttt{large.jpg} \\ \textbf{\& STOP PARSING}}};
+\draw[-Stealth, line width=1.5pt, accentblue] (d1.west) -- node[above, font=\scriptsize\bfseries, text=accentblue] {TRUE} (exec1.east);
+\node[draw=successgreen, fill=successgreen!10, rounded corners=4pt, line width=1.2pt, font=\scriptsize\bfseries, text=successgreen!90!black, inner sep=4pt] (exec2) at (-6.5, 2.4) {\parbox{3.5cm}{\centering \faCheckCircle \enspace Fetch \texttt{medium.jpg} \\ \textbf{\& STOP PARSING}}};
+\draw[-Stealth, line width=1.5pt, successgreen] (d2.west) -- node[above, font=\scriptsize\bfseries, text=successgreen] {TRUE} (exec2.east);
+\node[draw=warninggold, fill=warninggold!10, rounded corners=4pt, line width=1.2pt, font=\scriptsize\bfseries, text=warninggold!90!black, inner sep=4pt] (exec3) at (-6.5, 1.0) {\parbox{3.5cm}{\centering \faDownload \enspace Fallback: Fetch \texttt{small.jpg} \\ \textbf{(Default \texttt{<img>} Tag)}}};
+\draw[-Stealth, line width=1.5pt, warninggold] (-2.0, 1.0) -- node[above, font=\scriptsize\bfseries, text=warninggold] {DEFAULT} (exec3.east);
+% =========================================================================
+% --- SECTION 3: DATA MAPPING & ZERO-OVERLAP ROUTING BUS ---
+% =========================================================================
+% --- A. Master Image Crops to Code Editor (Source of Truth Declarations) ---
+% Blue Line: (6.0, 7.2) -> (6.0, 5.8) -> (14.0, 5.8) -> (14.0, 3.85) -> (12.5, 3.85)
+\draw[accentblue, line width=1.5pt, dashed, -Stealth, rounded corners=4pt]
+    (6.0, 7.2) -- (6.0, 5.8) -- (14.0, 5.8) -- (14.0, 3.85) -- (12.5, 3.85);
+% Green Line: (4.0, 7.2) -> (4.0, 6.1) -> (13.5, 6.1) -> (13.5, 2.4) -> (12.5, 2.4)
+\draw[successgreen, line width=1.5pt, dashed, -Stealth, rounded corners=4pt]
+    (4.0, 7.2) -- (4.0, 6.1) -- (13.5, 6.1) -- (13.5, 2.4) -- (12.5, 2.4);
+% Gold Line: (2.5, 7.2) -> (2.5, 6.5) -> (13.0, 6.5) -> (13.0, 1.0) -> (12.5, 1.0)
+\draw[warninggold, line width=1.5pt, dashed, -Stealth, rounded corners=4pt]
+    (2.5, 7.2) -- (2.5, 6.5) -- (13.0, 6.5) -- (13.0, 1.0) -- (12.5, 1.0);
+% --- B. Execution Nodes to Devices (The Stepped Depth Routing Bus) ---
+% 1. Gold Line (Mobile): Channel X = -8.5, Bus Y = -2.4, Drop X = 6.5, Y = -4.7
+\draw[-Stealth, line width=2.5pt, warninggold, rounded corners=5pt]
+    (exec3.west) -- (-8.5, 1.0) -- (-8.5, -2.4) -- (6.5, -2.4) -- (6.5, -4.7);
+% 2. Green Line (Tablet): Channel X = -9.5, Bus Y = -2.9, Drop X = 0.0, Y = -4.5
+\draw[-Stealth, line width=2.5pt, successgreen, rounded corners=5pt]
+    (exec2.west) -- (-9.5, 2.4) -- (-9.5, -2.9) -- (0.0, -2.9) -- (0.0, -4.5);
+% 3. Blue Line (Desktop): Channel X = -10.5, Bus Y = -3.4, Drop X = -6.5, Y = -4.5
+\draw[-Stealth, line width=2.5pt, accentblue, rounded corners=5pt]
+    (exec1.west) -- (-10.5, 3.85) -- (-10.5, -3.4) -- (-6.5, -3.4) -- (-6.5, -4.5);
+% =========================================================================
+% --- SECTION 4: REALISTIC DEVICE TERMINALS (BOTTOM TIER: Y = -13.5 to -4.5) ---
+% =========================================================================
+\node[font=\fontsize{22}{26}\bfseries, text=textdark, align=center] at (0, -1.2) {The Resulting User Experience on Devices};
+% -------------------------------------------------------------------------
+% 1. Desktop / Laptop Terminal (Center: X = -6.5)
+% -------------------------------------------------------------------------
+% Aluminum Monitor Stand
+\fill[gray!60, draw=gray!80, line width=1pt] (-7.0, -10.5) rectangle (-6.0, -11.3);
+\fill[gray!40, draw=gray!70, rounded corners=2pt, line width=1pt] (-8.0, -11.3) rectangle (-5.0, -11.6);
+% Monitor Bezel & Frame: [-11.0, -4.5] rectangle [-2.0, -10.5]
+\fill[gray!20, draw=textdark, line width=2.5pt, rounded corners=6pt, blur shadow={shadow opacity=20}]
+    (-11.0, -4.5) rectangle (-2.0, -10.5);
+% Screen Display Area: [-10.6, -4.9] rectangle [-2.4, -10.1]
+\begin{scope}
+    \clip[rounded corners=4pt] (-10.6, -4.9) rectangle (-2.4, -10.1);
+    \fill[skyblue!40!white] (-10.6, -4.9) rectangle (-2.4, -10.1);
+    % Render scaled scenery in top section: [-10.6, -4.9] rectangle [-2.4, -9.0]
+    \begin{scope}[shift={(-6.5, -12.725)}, scale=0.525]
+        \drawscenery
+    \end{scope}
+    % Wireframe text rectangles below image
+    \fill[gray!40, rounded corners=2pt] (-10.2, -9.3) rectangle (-2.8, -9.55);
+    \fill[gray!30, rounded corners=2pt] (-10.2, -9.75) rectangle (-5.5, -10.0);
+    \draw[black!30, line width=1pt, rounded corners=4pt] (-10.6, -4.9) rectangle (-2.4, -10.1);
+\end{scope}
+% Desktop Labels (Shifted down to Y = -12.5 / -13.2)
+\node[font=\large\bfseries, text=textdark] at (-6.5, -12.5) {Desktop / Laptop};
+\node[font=\small, text=textdark, align=center, text width=4cm] at (-6.5, -13.2) {Full landscape.\\Subject provides context.};
+% -------------------------------------------------------------------------
+% 2. Tablet Terminal (Center: X = 0.0)
+% -------------------------------------------------------------------------
+% Tablet Chassis & Black Bezel: [-2.8, -4.5] rectangle [2.8, -11.5]
+\fill[gray!30, draw=textdark, line width=2.5pt, rounded corners=10pt, blur shadow={shadow opacity=20}]
+    (-2.8, -4.5) rectangle (2.8, -11.5);
+\fill[black!85, rounded corners=8pt] (-2.6, -4.65) rectangle (2.6, -11.35);
+% Camera Dot & Home Indicator
+\fill[white!40] (0.0, -4.78) circle (0.06cm);
+\fill[white!50, rounded corners=1pt] (-0.6, -11.2) rectangle (0.6, -11.1);
+% Screen Display Area: [-2.4, -4.9] rectangle [2.4, -11.1]
+\begin{scope}
+    \clip[rounded corners=4pt] (-2.4, -4.9) rectangle (2.4, -11.1);
+    \fill[skyblue!30!white] (-2.4, -4.9) rectangle (2.4, -11.1);
+    % Render scaled scenery strictly as Square at top
+    \begin{scope}[shift={(-1.6, -15.46)}, scale=0.8]
+        \drawscenery
+    \end{scope}
+    % Wireframe text lines below square image
+    \fill[gray!40, rounded corners=2pt] (-2.1, -10.0) rectangle (2.1, -10.22);
+    \fill[gray!30, rounded corners=2pt] (-2.1, -10.38) rectangle (1.2, -10.6);
+    \fill[gray!25, rounded corners=2pt] (-2.1, -10.75) rectangle (-0.3, -10.97);
+    \draw[black!40, line width=1pt, rounded corners=4pt] (-2.4, -4.9) rectangle (2.4, -11.1);
+\end{scope}
+% Tablet Labels (Shifted down to Y = -12.5 / -13.2)
+\node[font=\large\bfseries, text=textdark] at (0.0, -12.5) {Tablet};
+\node[font=\small, text=textdark, align=center, text width=4cm] at (0.0, -13.2) {Square crop.\\Subject is prominent.};
+% -------------------------------------------------------------------------
+% 3. Mobile Phone Terminal (Center: X = 6.5)
+% -------------------------------------------------------------------------
+% Modern Phone Body: [5.0, -4.7] rectangle [8.0, -11.3]
+\fill[gray!20, draw=textdark, line width=2.5pt, rounded corners=14pt, blur shadow={shadow opacity=20}]
+    (5.0, -4.7) rectangle (8.0, -11.3);
+% Screen Display Area: [5.3, -5.0] rectangle [7.7, -11.0]
+\begin{scope}
+    \clip[rounded corners=8pt] (5.3, -5.0) rectangle (7.7, -11.0);
+    \fill[skyblue!30!white] (5.3, -5.0) rectangle (7.7, -11.0);
+    % Render scaled scenery as 1:2 portrait image
+    \begin{scope}[shift={(4.5, -17.0)}, scale=1.0]
+        \drawscenery
+    \end{scope}
+    % Dynamic Island / Camera Notch
+    \fill[black, rounded corners=3.5pt] (5.95, -5.28) rectangle (7.05, -5.1);
+    % Wireframe text lines below portrait image
+    \fill[gray!40, rounded corners=2pt] (5.5, -10.05) rectangle (7.5, -10.27);
+    \fill[gray!30, rounded corners=2pt] (5.5, -10.42) rectangle (7.0, -10.64);
+    \fill[gray!25, rounded corners=2pt] (5.5, -10.78) rectangle (6.4, -11.0);
+    \draw[black!40, line width=1pt, rounded corners=8pt] (5.3, -5.0) rectangle (7.7, -11.0);
+\end{scope}
+% Mobile Labels (Shifted down to Y = -12.5 / -13.2)
+\node[font=\large\bfseries, text=textdark] at (6.5, -12.5) {Mobile Phone};
+\node[font=\small, text=textdark, align=center, text width=4cm] at (6.5, -13.2) {Portrait crop.\\Subject fills the screen.};
+% =========================================================================
+% --- SECTION 5: EXPLANATION FOOTER (Centered at (0, -16.0)) ---
+% =========================================================================
+\node[draw=cropred, fill=cropred!5, line width=2pt, rounded corners=8pt, inner sep=15pt, text width=17cm, align=left, blur shadow={shadow opacity=15}] at (0, -16.0) {
+    \textbf{\fontsize{18}{22}\selectfont \faLightbulb \quad The Power of the \texttt{<picture>} Tag}\\[6pt]
+    \large If we only used a single image and scaled it down with CSS (\texttt{max-width: 100\%}), the subject on the mobile phone would be microscopic and unrecognizable. The \texttt{<picture>} tag allows us to serve entirely different image files (crops) based on viewport size, maintaining visual impact --- this is \textbf{Art Direction}.
+};
+\end{tikzpicture}
+\end{document}

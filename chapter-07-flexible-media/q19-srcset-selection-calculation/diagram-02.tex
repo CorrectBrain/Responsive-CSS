@@ -1,0 +1,408 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+
+% --- COLOR PALETTE DEFINITIONS ---
+\definecolor{targetpurple}{RGB}{156, 39, 176}
+\definecolor{neonpurple}{RGB}{218, 112, 214}
+\definecolor{purpledash}{RGB}{186, 104, 200}
+\definecolor{codebg}{RGB}{30, 34, 42}
+\definecolor{terminalheader}{RGB}{45, 50, 60}
+\definecolor{dangerred}{RGB}{244, 67, 54}
+\definecolor{successgreen}{RGB}{76, 175, 80}
+\definecolor{ignoregray}{RGB}{158, 158, 158}
+\definecolor{networkblue}{RGB}{0, 188, 212}
+\definecolor{rackdark}{RGB}{24, 28, 36}
+\definecolor{rackbay}{RGB}{35, 40, 52}
+\definecolor{textdark}{RGB}{33, 33, 33}
+\definecolor{chipdark}{RGB}{26, 29, 36}
+\definecolor{cardbg}{RGB}{250, 251, 253}
+\definecolor{winbg}{RGB}{241, 248, 242}
+
+\begin{document}
+\sffamily
+\begin{tikzpicture}[
+    % --- COMPONENT STYLES ---
+    standardpanel/.style={
+        draw=black!15,
+        fill=white,
+        rounded corners=8pt,
+        drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}
+    },
+    imagecard/.style={
+        draw=black!20,
+        top color=white,
+        bottom color=gray!6,
+        rounded corners=6pt,
+        text width=3.6cm,
+        align=center,
+        inner sep=12pt,
+        drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}
+    },
+    winnercard/.style={
+        draw=successgreen,
+        line width=1.5pt,
+        top color=winbg,
+        bottom color=successgreen!10,
+        rounded corners=6pt,
+        text width=3.6cm,
+        align=center,
+        inner sep=12pt,
+        drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}
+    },
+    chipnode/.style={
+        draw=black!80,
+        line width=1.2pt,
+        top color=chipdark!95!black,
+        bottom color=black,
+        rounded corners=5pt,
+        text=white,
+        align=center,
+        inner sep=7pt,
+        drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}
+    },
+    databus/.style={
+        color=purpledash,
+        dashed,
+        line width=1.4pt
+    },
+    flowarrow/.style={
+        -Stealth,
+        line width=1.6pt,
+        color=gray!65,
+        rounded corners=6pt
+    }
+]
+
+% =========================================================================
+% 0. EXECUTION ENVIRONMENT CONTEXT BOX (BACKGROUND LAYER)
+% =========================================================================
+\begin{scope}[on background layer]
+    % Global White Canvas
+    \fill[white] (-14.0, 19.0) rectangle (14.0, -12.0);
+
+    % Browser Engine Execution Scope Boundary
+    \filldraw[fill=gray!2, draw=gray!20, dashed, rounded corners=12pt, line width=1pt]
+        (-14.5, 12.0) rectangle (13.5, -6.5);
+    \node[anchor=center, font=\scriptsize\bfseries\color{gray!60}, inner sep=6pt]
+        at (0, 11.5) {\faCogs\ BROWSER ENGINE ITERATIVE COMPARISON MATRIX};
+\end{scope}
+
+% =========================================================================
+% 1. HEADER TITLE (0, 17.5)
+% =========================================================================
+\node[
+    fill=white,
+    draw=black!10,
+    rounded corners=10pt,
+    inner sep=14pt,
+    drop shadow={opacity=0.10, shadow xshift=1pt, shadow yshift=-3pt},
+    text width=16.5cm,
+    align=center
+] (titlenode) at (-0.0474,18.354) {
+    {\Huge\bfseries\color{textdark} Phase 2: Array Resolution Logic}\\[6pt]
+    {\large\color{gray}Comparing the Target Width against the \texttt{srcset} list to select the optimal payload.}
+};
+
+% =========================================================================
+% 2. DYNAMIC TARGET WIDTH REGISTER (0, 14.5)
+% =========================================================================
+% Register Bezel and Digital Display
+\node[
+    draw=black!80,
+    line width=1.5pt,
+    top color=gray!90!black,
+    bottom color=black,
+    rounded corners=8pt,
+    inner sep=10pt,
+    text width=8.5cm,
+    align=center,
+    drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}
+] (target) at (0, 14.5) {
+    \textbf{\textcolor{targetpurple!40!white}{\faMicrochip\ \ Dynamic Target Width Calculation}}\\[6pt]
+    {\fontsize{14}{16}\selectfont\textcolor{white}{800px (sizes) $\times$ 1.5x (DPR) =}}\\[4pt]
+    {\fontsize{24}{28}\selectfont\textbf{\textcolor{neonpurple}{1200w}}}\\[3pt]
+    \small\textit{\textcolor{gray!40}{(Calculated from Phase 1)}}
+};
+
+% Digital Register Status LEDs
+\fill[neonpurple] ([xshift=14pt, yshift=-12pt]target.north west) circle (2.2pt);
+\fill[targetpurple!40!white] ([xshift=22pt, yshift=-12pt]target.north west) circle (2.2pt);
+\fill[gray!60] ([xshift=30pt, yshift=-12pt]target.north west) circle (2.2pt);
+
+% =========================================================================
+% 3. BROWSER PARSER TERMINAL WINDOW (0, 9.5)
+% =========================================================================
+% Outer Window Frame & Code Body
+\node[
+    draw=black!30,
+    line width=1.2pt,
+    fill=codebg,
+    rounded corners=8pt,
+    inner sep=0pt,
+    text width=11.2cm,
+    align=center,
+    drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}
+] (srcsetbox) at (0, 9.5) {
+    \vspace*{28pt}
+    \begin{minipage}{10.6cm}
+        \vspace{6pt}
+        \ttfamily\small\color{white}
+        \begin{tabular}{@{\hspace{0.4cm}}l l l@{}}
+        \textcolor{cyan!80}{srcset}\textcolor{white}{=}\textcolor{orange!50}{"} & \textcolor{white}{img-400.jpg} & \textcolor{yellow!90}{\textbf{400w}}, \\[2pt]
+        & \textcolor{white}{img-800.jpg} & \textcolor{yellow!90}{\textbf{800w}}, \\[2pt]
+        & \textcolor{white}{img-1200.jpg} & \textcolor{yellow!90}{\textbf{1200w}}, \\[2pt]
+        & \textcolor{white}{img-1600.jpg} & \textcolor{yellow!90}{\textbf{1600w}}\textcolor{orange!50}{"}
+        \end{tabular}
+        \vspace{8pt}
+    \end{minipage}
+};
+
+% Window Header Bar
+\path[fill=terminalheader, rounded corners=8pt] (srcsetbox.north west) rectangle ([yshift=-20pt]srcsetbox.north east);
+\path[fill=terminalheader] (srcsetbox.north west) ++(0,-10pt) rectangle ([yshift=-20pt]srcsetbox.north east); % square bottom
+\draw[draw=black!20, line width=0.8pt] ([yshift=-20pt]srcsetbox.north west) -- ([yshift=-20pt]srcsetbox.north east);
+
+% macOS Window Control Dots
+\fill[red!80!black] ([xshift=15pt, yshift=-10pt]srcsetbox.north west) circle (3.2pt);
+\fill[yellow!80!black] ([xshift=27pt, yshift=-10pt]srcsetbox.north west) circle (3.2pt);
+\fill[green!75!black] ([xshift=39pt, yshift=-10pt]srcsetbox.north west) circle (3.2pt);
+
+% Window Title
+\node[anchor=center, text=gray!30, font=\bfseries\footnotesize] at ([yshift=-10pt]srcsetbox.north) {
+    \faSearch\ Browser Parses \texttt{srcset} Array
+};
+
+% Routing from Target to Srcset Window
+\draw[flowarrow] (target.south) -- (srcsetbox.north);
+
+% =========================================================================
+% 4. CANDIDATE IMAGE CARDS (Y = 5.0)
+% =========================================================================
+
+% Candidate 1 (-8.4, 5.0)
+\node[imagecard] (c1) at (-8.4, 5.0) {
+    \vspace{6pt}
+    \faImage\\[3pt]
+    \textbf{img-400.jpg}\\[2pt]
+    \textcolor{gray}{Width: 400px}
+};
+\node[fill=gray!15, rounded corners=3pt, font=\scriptsize\bfseries\color{gray!70}, inner sep=3pt]
+    at ([yshift=-12pt]c1.north) {\faFileImage\ JPEG ASSET};
+
+% Candidate 2 (-2.8, 5.0)
+\node[imagecard] (c2) at (-2.8, 5.0) {
+    \vspace{6pt}
+    \faImage\\[3pt]
+    \textbf{img-800.jpg}\\[2pt]
+    \textcolor{gray}{Width: 800px}
+};
+\node[fill=gray!15, rounded corners=3pt, font=\scriptsize\bfseries\color{gray!70}, inner sep=3pt]
+    at ([yshift=-12pt]c2.north) {\faFileImage\ JPEG ASSET};
+
+% Candidate 3 (2.8, 5.0) - Winning Selection
+\node[winnercard] (c3) at (2.8, 5.0) {
+    \vspace{6pt}
+    \textcolor{successgreen}{\faImage}\\[3pt]
+    \textbf{img-1200.jpg}\\[2pt]
+    \textcolor{successgreen}{\textbf{Width: 1200px}}
+};
+\node[fill=successgreen!25, rounded corners=3pt, font=\scriptsize\bfseries\color{successgreen!80!black}, inner sep=3pt]
+    at ([yshift=-12pt]c3.north) {\faCheckCircle\ OPTIMAL PAYLOAD};
+
+% Candidate 4 (8.4, 5.0) - Dimmed / Ignored
+\node[imagecard, opacity=0.45] (c4) at (8.4, 5.0) {
+    \vspace{6pt}
+    \faImage\\[3pt]
+    \textbf{img-1600.jpg}\\[2pt]
+    \textcolor{gray}{Width: 1600px}
+};
+\node[fill=gray!15, rounded corners=3pt, font=\scriptsize\bfseries\color{gray!50}, inner sep=3pt, opacity=0.45]
+    at ([yshift=-12pt]c4.north) {\faFileImage\ JPEG ASSET};
+
+% =========================================================================
+% 5. COMPARATOR LOGIC HARDWARE CHIPS (Y = 1.0)
+% =========================================================================
+
+% Logic Chip 1 (-8.4, 1.0)
+\node[chipnode, text width=4.5cm] (l1) at (-8.4, 1.0) {
+    \begin{tabular}{@{}c p{3.7cm}@{}}
+        \textcolor{dangerred}{\faCircle} &
+        \raggedright\arraybackslash \textbf{400w $\ge$ 1200w ?}\\[2pt]
+        & \textcolor{dangerred}{\textbf{NO}} \textcolor{gray!30}{(Too blurry)}
+    \end{tabular}
+};
+
+% Logic Chip 2 (-2.8, 1.0)
+\node[chipnode, text width=4.5cm] (l2) at (-2.8, 1.0) {
+    \begin{tabular}{@{}c p{3.7cm}@{}}
+        \textcolor{dangerred}{\faCircle} &
+        \raggedright\arraybackslash \textbf{800w $\ge$ 1200w ?}\\[2pt]
+        & \textcolor{dangerred}{\textbf{NO}} \textcolor{gray!30}{(Too blurry)}
+    \end{tabular}
+};
+
+% Logic Chip 3 (2.8, 1.0) - Winner
+\node[chipnode, draw=successgreen, line width=1.5pt, text width=4.5cm] (l3) at (2.8, 1.0) {
+    \begin{tabular}{@{}c p{3.7cm}@{}}
+        \textcolor{successgreen}{\faCircle} &
+        \raggedright\arraybackslash \textbf{1200w $\ge$ 1200w ?}\\[2pt]
+        & \textcolor{successgreen}{\textbf{YES}} \textbf{(Perfect Match!)}
+    \end{tabular}
+};
+
+% Logic Chip 4 (8.4, 1.0) - Ignored
+\node[chipnode, opacity=0.45, text width=4.5cm] (l4) at (8.4, 1.0) {
+    \begin{tabular}{@{}c p{3.7cm}@{}}
+        \textcolor{ignoregray}{\faCircle} &
+        \raggedright\arraybackslash \faBan\ \textbf{IGNORED}\\[2pt]
+        & \textcolor{gray!30}{(Saves bandwidth)}
+    \end{tabular}
+};
+
+% Hardware Metallic Pins on Chips (Cleared center at 0pt)
+\foreach \c in {l1, l2, l3, l4} {
+    \foreach \y in {-7pt, 7pt} {
+        \fill[gray!50] ($(\c.west) + (-2.5pt, \y)$) rectangle ++(2.5pt, 2.5pt);
+        \fill[gray!50] ($(\c.east) + (0pt, \y)$) rectangle ++(2.5pt, 2.5pt);
+    }
+}
+
+% =========================================================================
+% 6. ARRAYS, DATA BUS & CONNECTIONS (PRECISION ROUTING)
+% =========================================================================
+
+% Backbone Split from Parser
+\draw[flowarrow] (srcsetbox.south) -- (0, 7.0);
+\draw[line width=1.6pt, color=gray!65] (-8.4, 7.0) -- (8.4, 7.0);
+
+\draw[-Stealth=3mm, line width=1.6pt, color=gray!65] (-8.4, 7.0) -- (c1.north);
+\draw[-Stealth=3mm, line width=1.6pt, color=gray!65] (-2.8, 7.0) -- (c2.north);
+\draw[-Stealth=3mm, line width=1.6pt, color=gray!65] (2.8, 7.0) -- (c3.north);
+\draw[-Stealth=3mm, line width=1.6pt, color=gray!40, opacity=0.45] (8.4, 7.0) -- (c4.north);
+
+% Candidates to Logic Chips
+\draw[flowarrow] (c1.south) -- (l1.north);
+\draw[flowarrow] (c2.south) -- (l2.north);
+\draw[-Stealth=3mm, line width=2.4pt, color=successgreen] (c3.south) -- (l3.north);
+\draw[flowarrow, opacity=0.45] (c4.south) -- (l4.north);
+
+% DATA BUS ROUTING (Target 1200w Data Feed at x = -12.5)
+\node[fill=white, draw=purpledash, inner sep=4pt, rounded corners=3pt, font=\scriptsize\bfseries\color{targetpurple}]
+    (buslabel) at (-12.5, 7.5) {\faRandom\ 1200w TARGET DATA BUS};
+
+\draw[databus] (target.west) -| (-12.5, 14.5) -- (buslabel.north);
+\draw[databus, -Stealth=3mm] (buslabel.south) -- (-12.5, 1.0) -- (l1.west);
+
+% Data Bus tap points into logic chips
+\draw[databus, -Stealth=3mm] (l1.east) -- (l2.west);
+\draw[databus, -Stealth=3mm] (l2.east) -- (l3.west);
+
+% Loop Termination / HALT Circuit Breaker between Chip 3 and Chip 4
+\node[
+    draw=dangerred,
+    fill=white,
+    text=dangerred,
+    line width=1.1pt,
+    rounded corners=3pt,
+    inner sep=2pt,
+    font=\scriptsize\bfseries,
+    drop shadow={opacity=0.15, shadow xshift=1pt, shadow yshift=-1pt}
+] (haltnode) at (5.6809,0.7168) {\faBan\ HALT};
+\draw[line width=1.2pt, color=dangerred!80, dashed] (l3.east) -- (haltnode.west);
+\draw[line width=1.2pt, color=gray!40, dashed, opacity=0.45] (haltnode.east) -- (l4.west);
+
+% =========================================================================
+% 7. ENGINE LOGICAL SELECTION CONTAINER (0, -4.0)
+% =========================================================================
+\node[
+    standardpanel,
+    draw=successgreen,
+    line width=1.6pt,
+    text width=12.5cm,
+    align=center,
+    inner sep=12pt
+] (winner) at (0, -4.0) {
+    {\large\textbf{\textcolor{successgreen}{\faCheckCircle\ Engine Logical Selection}}}\\[6pt]
+    The browser engine iterates through the list (sorted internally by width) and selects the \textbf{first image that is equal to or larger than} the Target Width.\\[5pt]
+    \textit{\textcolor{textdark}{It stops at \textbf{img-1200.jpg} to avoid downloading unnecessary heavier files.}}
+};
+
+% Winner Routing Line: from Logic 3 (2.8, 1.0) to Winner (0, -4.0)
+\draw[-Stealth=3mm, line width=2.4pt, color=successgreen, rounded corners=8pt]
+    (l3.south) -- (2.8, -2.0) -- (0, -2.0) -- (winner.north);
+
+% =========================================================================
+% 8. NETWORK EXECUTION RACK CONTAINER (0, -9.5)
+% =========================================================================
+\node[
+    draw=networkblue!90!black,
+    line width=1.5pt,
+    top color=rackdark,
+    bottom color=black,
+    rounded corners=10pt,
+    text width=8.5cm,
+    align=center,
+    inner sep=14pt,
+    drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}
+] (network) at (0, -9.5) {
+    \vspace{18pt}
+    \textcolor{networkblue}{\Huge\faServer}\\[6pt]
+    {\large\textbf{\textcolor{white}{Network Execution}}}\\[4pt]
+    \vspace{22pt}
+    {\small\color{gray!30}Browser logically initiates the single network request for the optimal image.}
+};
+
+% Server Rack Bay Lines & Status Indicators (Extracted from node)
+\fill[rackbay, rounded corners=3pt] ([xshift=-3.8cm, yshift=-21pt]network.north) rectangle ++(7.6cm, 10pt);
+\fill[networkblue] ([xshift=-3.4cm, yshift=-16pt]network.north) circle (2pt);
+\fill[networkblue!60] ([xshift=-3.1cm, yshift=-16pt]network.north) circle (2pt);
+\fill[green!80!black] ([xshift=-2.8cm, yshift=-16pt]network.north) circle (2pt);
+\draw[gray!50, line width=0.5pt] ([xshift=-2.2cm, yshift=-16pt]network.north) -- ([xshift=3.5cm, yshift=-16pt]network.north);
+
+% GET Request Snippet (Extracted from node)
+\node[fill=codebg, draw=networkblue!50, rounded corners=4pt, inner sep=5pt, text=networkblue, font=\ttfamily\bfseries\normalsize]
+    at ([yshift=-12pt]network.center) {GET /assets/img-1200.jpg};
+
+% Arrow connecting Engine Selection to Network Rack
+\draw[-Stealth=3mm, line width=2.4pt, color=networkblue]
+    (winner.south) -- (network.north);
+
+\end{tikzpicture}
+\end{document}

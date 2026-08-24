@@ -1,0 +1,413 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes,fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- High-End Tech Color Palette ---
+\definecolor{codebg}{RGB}{40, 44, 52}
+\definecolor{codefg}{RGB}{171, 178, 191}
+\definecolor{greenstr}{RGB}{152, 195, 121}
+\definecolor{redtag}{RGB}{224, 108, 117}
+\definecolor{attrcolor}{RGB}{209, 154, 102}
+
+\definecolor{advcolor}{HTML}{0055A4}       % Electric Advisory Blue
+\definecolor{enginecolor}{HTML}{FF6B00}    % Metallic Neon Orange
+\definecolor{enginecolordark}{HTML}{CC5500}
+\definecolor{resultcolor}{HTML}{00AA00}    % Success Neon Green
+\definecolor{panelbg}{RGB}{245, 247, 250}
+
+\definecolor{strictcolor}{HTML}{D32F2F}    % Crimson Red (Mandatory Directive)
+\definecolor{evalcolor}{HTML}{455A64}      % Slate Gray (Deterministic Evaluator)
+
+% macOS UI Dot Colors
+\definecolor{dotred}{HTML}{FF5F56}
+\definecolor{dotyellow}{HTML}{FFBD2E}
+\definecolor{dotgreen}{HTML}{27C93F}
+
+\begin{document}
+\begin{tikzpicture}[
+    % Base Styles & Drop Shadows
+    sensorbox/.style={
+        draw=gray!50,
+        line width=1pt,
+        top color=white,
+        bottom color=panelbg!80!gray!20,
+        rounded corners=8pt,
+        inner sep=7pt,
+        blur shadow={shadow blur steps=6, shadow xshift=1.5pt, shadow yshift=-2.5pt, shadow opacity=15}
+    },
+    % Dynamic Glowing Data Bus with Moving Particles
+    databus/.style={
+        draw=advcolor!70,
+        line width=1.8pt,
+        -Stealth=3mm,
+        rounded corners=5pt,
+        postaction={
+            decorate,
+            decoration={
+                markings,
+                mark=at position 0.35 with {\fill[white, draw=advcolor, line width=0.8pt] circle (1.5pt);},
+                mark=at position 0.70 with {\fill[advcolor] circle (1.3pt);}
+            }
+        }
+    },
+    resultbus/.style={
+        draw=resultcolor,
+        line width=2.5pt,
+        -Stealth=3mm,
+        postaction={
+            decorate,
+            decoration={
+                markings,
+                mark=at position 0.35 with {\fill[white, draw=resultcolor, line width=1pt] circle (2pt);},
+                mark=at position 0.65 with {\fill[resultcolor!40!white] circle (1.8pt);}
+            }
+        }
+    },
+    strictbus/.style={
+        draw=strictcolor,
+        line width=2.5pt,
+        -Stealth=3mm,
+        postaction={
+            decorate,
+            decoration={
+                markings,
+                mark=at position 0.35 with {\fill[white, draw=strictcolor, line width=1pt] circle (2pt);},
+                mark=at position 0.65 with {\fill[strictcolor!40!white] circle (1.8pt);}
+            }
+        }
+    }
+]
+
+% ==========================================
+% Global Solid White Background
+% ==========================================
+\fill[white] (-14, -11) rectangle (21.9627,18.5308);
+
+% ==========================================
+% 1. Header (Title & Subtitle)
+% ==========================================
+\node[font=\Huge\bfseries\color{advcolor}, align=center] at (5.4627,16.5308) {\texttt{<img> srcset} (Advisory) vs. \texttt{<picture>} (Directive)};
+\node[font=\Large\color{gray!80!black}, align=center] at (5.4627,15.7308) {Resolution Switching vs. Art Direction: Browser Autonomy vs. Deterministic Control};
+
+% =========================================================================
+% FLOW A (TOP): ADVISORY FLOW (`srcset` Resolution Switching)
+% =========================================================================
+
+% --- Code Box A (macOS UI Editor) ---
+\node[
+    draw=gray!60,
+    line width=0.8pt,
+    top color=codebg!95!black,
+    bottom color=codebg!85!black,
+    rounded corners=7pt,
+    minimum width=9.5cm,
+    minimum height=4cm,
+    blur shadow={shadow blur steps=10, shadow xshift=2pt, shadow yshift=-4pt, shadow opacity=25}
+] (codeboxA) at (-7.5, 9) {};
+
+\begin{scope}
+    \clip[rounded corners=7pt] (codeboxA.south west) rectangle (codeboxA.north east);
+    \fill[codebg!70!black] (codeboxA.north west) rectangle ($(codeboxA.north east)+(0,-6.5mm)$);
+\end{scope}
+
+\fill[dotred] ($(codeboxA.north west)+(3.5mm,-3.2mm)$) circle (1.3mm);
+\fill[dotyellow] ($(codeboxA.north west)+(7mm,-3.2mm)$) circle (1.3mm);
+\fill[dotgreen] ($(codeboxA.north west)+(10.5mm,-3.2mm)$) circle (1.3mm);
+\node[font=\scriptsize\ttfamily\color{gray!40}, anchor=center] at ($(codeboxA.north)+(0,-3.2mm)$) {index.html (srcset)};
+
+\node[anchor=north west, align=left] at ($(codeboxA.north west)+(3.5mm, -8mm)$) {
+    \fontsize{8.5pt}{12pt}\selectfont\ttfamily\color{codefg}
+    <\textcolor{redtag}{img} \textcolor{attrcolor}{src}=\textcolor{greenstr}{"fallback.jpg"}\\
+    \hspace*{3.5mm}\textcolor{attrcolor}{srcset}=\textcolor{greenstr}{"sm.jpg 400w,}\\
+    \hspace*{12.5mm}\textcolor{greenstr}{md.jpg 800w,}\\
+    \hspace*{12.5mm}\textcolor{greenstr}{lg.jpg 1200w"}\\
+    \hspace*{3.5mm}\textcolor{attrcolor}{sizes}=\textcolor{greenstr}{"(max-width: 600px) 100vw, 50vw"}\\
+    \hspace*{3.5mm}\textcolor{attrcolor}{alt}=\textcolor{greenstr}{"Advisory Spec"}>
+};
+\node[font=\small\bfseries\color{gray!80!black}, anchor=north] at ([yshift=-2mm]codeboxA.south) {Developer's Suggestion};
+
+% --- The "Menu" (Glassmorphism UI Stack) ---
+\node[
+    draw=advcolor!40,
+    top color=white,
+    bottom color=advcolor!5,
+    fill opacity=0.95,
+    text opacity=1,
+    rounded corners=8pt,
+    text width=4cm,
+    inner sep=10pt,
+    align=center,
+    blur shadow={shadow blur steps=8, shadow xshift=2pt, shadow yshift=-3pt, shadow opacity=15}
+] (menuA) at (2.0, 9) {
+    \textbf{\color{advcolor!90!black} The "Menu"}\\[2mm]
+    \textcolor{advcolor}{\faImage}\ \texttt{sm.jpg} (400w)\\[1mm]
+    \textcolor{advcolor}{\faImage}\ \texttt{md.jpg} (800w)\\[1mm]
+    \textcolor{advcolor}{\faImage}\ \texttt{lg.jpg} (1200w)
+};
+
+% --- Browser's Heuristic Engine ---
+\node[
+    draw=enginecolordark,
+    line width=1.5pt,
+    top color=enginecolor!12,
+    bottom color=enginecolor!32,
+    rounded corners=12pt,
+    text width=5cm,
+    minimum height=4.2cm,
+    inner sep=12pt,
+    align=center,
+    blur shadow={shadow blur steps=10, shadow xshift=3pt, shadow yshift=-4pt, shadow opacity=25}
+] (engineA) at (10, 9) {
+    \Huge \textcolor{enginecolor}{\faCogs} \\[2mm]
+    \Large \textbf{\color{enginecolor!90!black} Browser's}\\
+    \textbf{\color{enginecolor!90!black} Heuristic Engine}\\[2mm]
+    \normalsize\color{gray!80!black} Acts as a "Black Box"
+};
+\foreach \px in {9.25, 9.75, 10.25, 10.75} {
+    \fill[enginecolordark] (\px-0.15, 6.8) rectangle (\px+0.15, 7.0);
+}
+
+% --- Thought Bubble / HUD Display ---
+\node[
+    draw=enginecolor!70,
+    line width=1pt,
+    top color=white,
+    bottom color=enginecolor!8,
+    rounded corners=8pt,
+    text width=6.5cm,
+    inner sep=9pt,
+    align=center,
+    font=\footnotesize\itshape,
+    blur shadow={shadow blur steps=8, shadow xshift=1.5pt, shadow yshift=-3pt, shadow opacity=15}
+] (thoughtA) at (9.9754,13.2117) {
+    \textcolor{enginecolor}{\faBrain}\hspace{1mm}\textbf{\color{enginecolor!90!black} Engine's Decision Process:}\\[1.5mm]
+    "The viewport is large enough for \texttt{lg.jpg}, but the user is on a slow 3G network and battery is low. I will override and fetch \texttt{sm.jpg} instead to save resources."
+};
+\draw[dashed, line width=1.2pt, draw=enginecolor!80, -{Circle[length=3.5pt]}] (thoughtA.south) -- (engineA.north);
+
+% --- Final Choice A ---
+\node[
+    draw=resultcolor,
+    line width=1.5pt,
+    top color=white,
+    bottom color=resultcolor!10,
+    rounded corners=10pt,
+    text width=3.5cm,
+    inner sep=10pt,
+    align=center,
+    blur shadow={shadow blur steps=10, shadow xshift=2pt, shadow yshift=-4pt, shadow opacity=20}
+] (resultA) at (18.0, 9) {
+    \Huge \textcolor{resultcolor}{\faCheckCircle} \\[2mm]
+    \large \textbf{Final Choice}\\[1mm]
+    \normalsize \texttt{sm.jpg}\\[2mm]
+    \footnotesize (Chosen autonomously based on environment)
+};
+
+% --- Flow A Horizontal Connections ---
+\draw[-Stealth=3mm, line width=2pt, draw=gray!50, shorten >=4pt, shorten <=4pt] (codeboxA.east) -- (menuA.west) node[midway, above, yshift=2mm, font=\scriptsize\bfseries, color=gray!80!black] {Parses into};
+\draw[-Stealth=3mm, line width=2.5pt, draw=advcolor, shorten >=4pt, shorten <=4pt] (menuA.east) -- (engineA.west) node[midway, above, yshift=2mm, font=\small\bfseries, color=advcolor] {Offers to};
+\draw[resultbus, shorten >=4pt, shorten <=4pt] (engineA.east) -- (resultA.west) node[midway, above, yshift=2mm, font=\small\bfseries, color=resultcolor] {Downloads ONE};
+
+% =========================================================================
+% INTERMEDIATE ENVIRONMENTAL SENSORS (y=5)
+% =========================================================================
+\node[sensorbox, text width=2.4cm, align=center] (user) at (5.5, 5) {
+    \textcolor{advcolor}{\faUserCog}\\[1.5mm]
+    \textbf{\footnotesize User Prefs}\\[0.5mm]
+    \scriptsize (Save Data Mode)
+};
+
+\node[sensorbox, text width=2.4cm, align=center] (network) at (8.5, 5) {
+    \textcolor{advcolor}{\faWifi}\\[1.5mm]
+    \textbf{\footnotesize Network State}\\[0.5mm]
+    \scriptsize (3G, 4G, Offline)
+};
+
+\node[sensorbox, text width=2.4cm, align=center] (dpr) at (11.5, 5) {
+    \textcolor{advcolor}{\faIcon{mobile-alt}}\\[1.5mm]
+    \textbf{\footnotesize Pixel Density}\\[0.5mm]
+    \scriptsize (1x, 2x, 3x DPR)
+};
+
+\node[sensorbox, text width=2.4cm, align=center] (cache) at (14.5, 5) {
+    \textcolor{advcolor}{\faDatabase}\\[1.5mm]
+    \textbf{\footnotesize Local Cache}\\[0.5mm]
+    \scriptsize (Is lg.jpg cached?)
+};
+
+% Telemetry Buses: STRICTLY UPWARD into Heuristic Engine (Flow A)
+\draw[databus, rounded corners=4pt] (user.north) |- (9.25, 6.1) -- (9.25, 6.9);
+\draw[databus, rounded corners=4pt] (network.north) |- (9.75, 6.3) -- (9.75, 6.9);
+\draw[databus, rounded corners=4pt] (dpr.north) |- (10.25, 6.5) -- (10.25, 6.9);
+\draw[databus, rounded corners=4pt] (cache.north) |- (10.75, 6.7) -- (10.75, 6.9);
+
+% =========================================================================
+% FLOW B (BOTTOM): DIRECTIVE FLOW (`<picture>` Strict Media Queries)
+% =========================================================================
+
+% --- Code Box B (macOS UI Editor) ---
+\node[
+    draw=gray!60,
+    line width=0.8pt,
+    top color=codebg!95!black,
+    bottom color=codebg!85!black,
+    rounded corners=7pt,
+    minimum width=9.5cm,
+    minimum height=4.5cm,
+    blur shadow={shadow blur steps=10, shadow xshift=2pt, shadow yshift=-4pt, shadow opacity=25}
+] (codeboxB) at (-7.5, 1) {};
+
+\begin{scope}
+    \clip[rounded corners=7pt] (codeboxB.south west) rectangle (codeboxB.north east);
+    \fill[codebg!70!black] (codeboxB.north west) rectangle ($(codeboxB.north east)+(0,-6.5mm)$);
+\end{scope}
+
+\fill[dotred] ($(codeboxB.north west)+(3.5mm,-3.2mm)$) circle (1.3mm);
+\fill[dotyellow] ($(codeboxB.north west)+(7mm,-3.2mm)$) circle (1.3mm);
+\fill[dotgreen] ($(codeboxB.north west)+(10.5mm,-3.2mm)$) circle (1.3mm);
+\node[font=\scriptsize\ttfamily\color{gray!40}, anchor=center] at ($(codeboxB.north)+(0,-3.2mm)$) {index.html (<picture>)};
+
+\node[anchor=north west, align=left] at ($(codeboxB.north west)+(3.5mm, -8mm)$) {
+    \fontsize{8.5pt}{12pt}\selectfont\ttfamily\color{codefg}
+    <\textcolor{redtag}{picture}>\\
+    \hspace*{3.5mm}<\textcolor{redtag}{source} \textcolor{attrcolor}{media}=\textcolor{greenstr}{"(min-width: 1200px)"}\\
+    \hspace*{12.5mm}\textcolor{attrcolor}{srcset}=\textcolor{greenstr}{"lg.jpg"}>\\
+    \hspace*{3.5mm}<\textcolor{redtag}{source} \textcolor{attrcolor}{media}=\textcolor{greenstr}{"(min-width: 600px)"}\\
+    \hspace*{12.5mm}\textcolor{attrcolor}{srcset}=\textcolor{greenstr}{"md.jpg"}>\\
+    \hspace*{3.5mm}<\textcolor{redtag}{img} \textcolor{attrcolor}{src}=\textcolor{greenstr}{"fallback.jpg"} \textcolor{attrcolor}{alt}=\textcolor{greenstr}{"Art Direction"}>\\
+    </\textcolor{redtag}{picture}>
+};
+\node[font=\small\bfseries\color{strictcolor}, anchor=north] at ([yshift=-2mm]codeboxB.south) {Developer's Directive (Mandatory)};
+
+% --- Strict Media Queries Node ---
+\node[
+    draw=strictcolor!50,
+    top color=white,
+    bottom color=strictcolor!5,
+    fill opacity=0.95,
+    text opacity=1,
+    rounded corners=8pt,
+    text width=4.5cm,
+    inner sep=10pt,
+    align=center,
+    blur shadow={shadow blur steps=8, shadow xshift=2pt, shadow yshift=-3pt, shadow opacity=15}
+] (rulesB) at (2.0, 1) {
+    \textbf{\color{strictcolor} Strict Media Queries}\\[2mm]
+    \textcolor{strictcolor}{\faFilter}\ \texttt{>=1200px} $\rightarrow$ \texttt{lg.jpg}\\[1mm]
+    \textcolor{strictcolor}{\faFilter}\ \texttt{>=600px} $\rightarrow$ \texttt{md.jpg}\\[1mm]
+    \textcolor{strictcolor}{\faFilter}\ Default $\rightarrow$ \texttt{fallback}
+};
+
+% --- Deterministic Evaluator Node ---
+\node[
+    draw=evalcolor!80!black,
+    line width=1.5pt,
+    top color=evalcolor!12,
+    bottom color=evalcolor!30,
+    rounded corners=12pt,
+    text width=5cm,
+    minimum height=4.2cm,
+    inner sep=12pt,
+    align=center,
+    blur shadow={shadow blur steps=10, shadow xshift=3pt, shadow yshift=-4pt, shadow opacity=25}
+] (evaluatorB) at (10, 1) {
+    \Huge \textcolor{evalcolor}{\faMicrochip} \\[2mm]
+    \Large \textbf{\color{evalcolor!90!black} Deterministic}\\
+    \textbf{\color{evalcolor!90!black} Evaluator}\\[2mm]
+    \normalsize\color{gray!80!black} Bypasses Heuristics
+};
+
+% --- System Execution Log Bubble ---
+\node[
+    draw=evalcolor!70,
+    line width=1pt,
+    top color=white,
+    bottom color=evalcolor!8,
+    rounded corners=8pt,
+    text width=6.5cm,
+    inner sep=9pt,
+    align=center,
+    font=\footnotesize\itshape,
+    blur shadow={shadow blur steps=8, shadow xshift=1.5pt, shadow yshift=-3pt, shadow opacity=15}
+] (logB) at (10, -2.5) {
+    \textcolor{strictcolor}{\faTerminal}\hspace{1mm}\textbf{\color{evalcolor!90!black} System Execution Log:}\\[1.5mm]
+    "Viewport is 1200px. First \texttt{<source>} condition met. Fetching \texttt{lg.jpg} immediately. Environment ignored."
+};
+\draw[dashed, line width=1.2pt, draw=evalcolor!80, -{Circle[length=3.5pt]}] (logB.north) -- (evaluatorB.south);
+
+% --- Final Choice B ---
+\node[
+    draw=strictcolor,
+    line width=1.5pt,
+    top color=white,
+    bottom color=strictcolor!10,
+    rounded corners=10pt,
+    text width=3.5cm,
+    inner sep=10pt,
+    align=center,
+    blur shadow={shadow blur steps=10, shadow xshift=2pt, shadow yshift=-4pt, shadow opacity=20}
+] (resultB) at (18.0, 1) {
+    \Huge \textcolor{strictcolor}{\faLock} \\[2mm]
+    \large \textbf{Strict Choice}\\[1mm]
+    \normalsize \texttt{lg.jpg}\\[2mm]
+    \footnotesize (Mandated by media query condition)
+};
+
+% --- Flow B Horizontal Connections ---
+\draw[-Stealth=3mm, line width=2pt, draw=gray!50, shorten >=4pt, shorten <=4pt] (codeboxB.east) -- (rulesB.west) node[midway, above, yshift=2mm, font=\scriptsize\bfseries, color=gray!80!black] {Parses into};
+\draw[-Stealth=3mm, line width=2.5pt, draw=strictcolor, shorten >=4pt, shorten <=4pt] (rulesB.east) -- (evaluatorB.west) node[midway, above, yshift=2mm, font=\small\bfseries, color=strictcolor] {Enforces on};
+\draw[strictbus, shorten >=4pt, shorten <=4pt] (evaluatorB.east) -- (resultB.west) node[midway, above, yshift=2mm, font=\small\bfseries, color=strictcolor] {Fetches EXACT};
+
+% =========================================================================
+% EXPLANATION FOOTER BOXES
+% ==========================================
+
+% --- Footer A: Advisory Principle ---
+\node[
+    draw=advcolor!60,
+    line width=1pt,
+    top color=white,
+    bottom color=advcolor!6,
+    rounded corners=8pt,
+    text width=24cm,
+    inner sep=10pt,
+    font=\normalsize,
+    blur shadow={shadow blur steps=8, shadow xshift=2pt, shadow yshift=-3pt, shadow opacity=15}
+] at (3.192,-5.4202) {
+    \textbf{\textcolor{advcolor}{\faInfoCircle}\ The Advisory Principle (Resolution Switching):} The \texttt{srcset} and \texttt{sizes} attributes do \textbf{not} force the browser to download a specific image. They merely provide a menu of available resources and geometric hints. The browser is explicitly designed to retain absolute autonomy. It evaluates its current environment (network speed, battery level, cache, pixel density) and autonomously selects the most optimal image to download. \textit{Developers suggest; the browser decides.}
+};
+
+% --- Footer B: Directive Principle ---
+\node[
+    draw=strictcolor!60,
+    line width=1pt,
+    top color=white,
+    bottom color=strictcolor!6,
+    rounded corners=8pt,
+    text width=24cm,
+    inner sep=10pt,
+    font=\normalsize,
+    blur shadow={shadow blur steps=8, shadow xshift=2pt, shadow yshift=-3pt, shadow opacity=15}
+] at (3.192,-7.9202) {
+    \textbf{\textcolor{strictcolor}{\faExclamationTriangle}\ The Directive Principle (\texttt{<picture>} Art Direction):} Unlike \texttt{srcset}, the \texttt{<picture>} wrapper bypasses heuristic evaluation entirely. It provides strict, hardcoded execution parameters where media query conditions dictate the exact asset to load. The browser must match rules in top-down sequential order and cannot override decisions based on network speed, battery state, or data saver settings. \textit{Developers dictate; the browser obeys.}
+};
+
+\end{tikzpicture}
+\end{document}

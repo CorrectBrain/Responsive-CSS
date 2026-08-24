@@ -1,0 +1,214 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes,fadings,shadows.blur,patterns,patterns.meta}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+% --- CUSTOM COLORS ---
+\definecolor{htmlcolor}{RGB}{227, 79, 38}    % HTML5 Orange
+\definecolor{csscolor}{RGB}{21, 114, 182}    % CSS3 Blue
+\definecolor{enginecolor}{RGB}{46, 125, 50}  % Green for engine success
+\definecolor{alertcolor}{RGB}{211, 47, 47}   % Red for bottleneck
+\definecolor{darkgray}{RGB}{40, 40, 40}
+
+\begin{document}
+\begin{tikzpicture}[
+    % --- STYLES ---
+    code_editor/.style={
+        draw=black!20,
+        fill=white,
+        rounded corners=6pt,
+        inner sep=12pt,
+        font=\sffamily,
+        blur shadow={shadow blur steps=4, shadow opacity=0.15, shadow xshift=1pt, shadow yshift=-1pt}
+    },
+    engine_node/.style={
+        draw=black!15,
+        top color=white,
+        bottom color=gray!5,
+        rounded corners=6pt,
+        inner sep=10pt,
+        font=\sffamily,
+        blur shadow={shadow blur steps=4, shadow opacity=0.15, shadow xshift=1pt, shadow yshift=-1pt}
+    },
+    box/.style={
+        draw=black!20,
+        fill=white,
+        rounded corners=8pt,
+        inner sep=10pt,
+        font=\sffamily,
+        blur shadow={shadow blur steps=4, shadow opacity=0.15, shadow xshift=1pt, shadow yshift=-1pt}
+    },
+    bubble/.style={
+        draw=black!30,
+        fill=white,
+        rounded corners=6pt,
+        inner sep=9pt,
+        font=\small\sffamily,
+        blur shadow={shadow blur steps=4, shadow opacity=0.15, shadow xshift=1pt, shadow yshift=-1pt}
+    },
+    arrow/.style={
+        -Stealth=3mm,
+        line width=1.5pt,
+        draw=gray!60,
+        rounded corners=4pt
+    },
+    fastarrow/.style={
+        -Stealth=3mm,
+        line width=2.5pt,
+        draw=enginecolor,
+        rounded corners=4pt
+    }
+]
+
+% --- BACKGROUND CANVAS & THREAD SWIMLANES (LAYER 0 & 1) ---
+\begin{scope}[on background layer]
+    % Pure white background enforcing non-transparency
+    \fill[white] (-16.5, 18) rectangle (16.5, -6.5);
+
+    % Background / Network Thread Swimlane
+    \draw[fill=gray!10, rounded corners=12pt, draw=gray!40, dashed, line width=1.5pt] (-15.5, 15) rectangle (-6.5, -5.5);
+    \node[font=\large\bfseries\sffamily\color{darkgray!80}, align=center] at (-11.0, 14) {\faNetworkWired\ Background / Network Thread};
+
+    % Main Thread Swimlane
+    \draw[fill=blue!5, rounded corners=12pt, draw=blue!20, dashed, line width=1.5pt] (-5.5, 15) rectangle (15.5, -5.5);
+    \node[font=\large\bfseries\sffamily\color{darkgray!80}, align=center] at (5.0, 14) {\faMicrochip\ Main Thread};
+\end{scope}
+
+% --- TITLE & HEADER ---
+\node[font=\Huge\bfseries\sffamily\color{darkgray}] at (0.1845,14.8292) {The Browser Engine Bottleneck \& The HTML Forecast};
+\node[font=\Large\sffamily\color{gray}, text width=16cm, align=center] at (0.1845,13.8292) {Why the Preload Scanner requires you to forecast CSS layout geometry.};
+
+% --- DOCUMENTS (CODE EDITORS) ---
+% HTML Document (Main Thread)
+\node[code_editor, text width=7.5cm] (html_doc) at (0, 10.5) {
+    \vspace{15pt}\\
+    \textbf{\color{htmlcolor}\faHtml5\ index.html}\\[5pt]
+    \footnotesize
+    \texttt{<img src="small.jpg"}\\
+    \texttt{ srcset="sm.jpg 400w, lg.jpg 1200w"}\\
+    \colorbox{enginecolor!20}{\texttt{ sizes="(max-width: 600px) 100vw, 33vw"}}\\
+    \texttt{ >}
+};
+
+% CSS Document (Main Thread)
+\node[code_editor, text width=6.5cm] (css_doc) at (10, 10.5) {
+    \vspace{15pt}\\
+    \textbf{\color{csscolor}\faIcon{css3-alt}\ styles.css}\\[5pt]
+    \footnotesize
+    \texttt{.hero-image \{}\\
+    \texttt{\ \ width: 33.333\%;}\\
+    \texttt{\ \ max-width: 100\%;}\\
+    \texttt{\}}
+};
+
+% Window Control Buttons (macOS-style dots drawn explicitly)
+\fill[red!80!black] ([xshift=15pt, yshift=-12pt]html_doc.north west) circle (3pt);
+\fill[yellow!80!black] ([xshift=25pt, yshift=-12pt]html_doc.north west) circle (3pt);
+\fill[green!75!black] ([xshift=35pt, yshift=-12pt]html_doc.north west) circle (3pt);
+
+\fill[red!80!black] ([xshift=15pt, yshift=-12pt]css_doc.north west) circle (3pt);
+\fill[yellow!80!black] ([xshift=25pt, yshift=-12pt]css_doc.north west) circle (3pt);
+\fill[green!75!black] ([xshift=35pt, yshift=-12pt]css_doc.north west) circle (3pt);
+
+% --- PARSERS & ENGINES ---
+% HTML Preload Scanner (Background Thread)
+\node[engine_node, text width=6.5cm, align=center, fill=enginecolor!10, draw=enginecolor!50] (scanner) at (-11.0, 6.0) {
+    \textbf{\color{enginecolor}\faSearch\ HTML Preload Scanner}\\[3pt]
+    \footnotesize Scans raw HTML ahead of the main thread to initiate network requests early.
+};
+
+% HTML Parser (Main Thread)
+\node[engine_node, text width=5cm, align=center] (html_parser) at (0, 6.0) {
+    \textbf{\faCogs\ HTML Parser}\\[2pt]
+    \footnotesize (Main Thread: Builds DOM)
+};
+
+% CSS Parser (Main Thread)
+\node[engine_node, text width=5cm, align=center] (css_parser) at (10, 6.0) {
+    \textbf{\faCogs\ CSS Parser}\\[2pt]
+    \footnotesize (Main Thread: Builds CSSOM)
+};
+
+% Layout Engine (Main Thread Merge)
+\node[engine_node, text width=6cm, align=center, fill=alertcolor!10, draw=alertcolor!40] (layout) at (5.0, 1.5) {
+    \textbf{\color{alertcolor}\faSitemap\ Layout Engine}\\[3pt]
+    \footnotesize Combines DOM + CSSOM.\\Calculates the final geometry.
+};
+
+% --- ENGINE BORDER ACCENTS ---
+\draw[enginecolor, line width=3.5pt, line cap=round] ([xshift=2pt, yshift=-8pt]scanner.north west) -- ([xshift=2pt, yshift=8pt]scanner.south west);
+\draw[htmlcolor, line width=3.5pt, line cap=round] ([xshift=2pt, yshift=-8pt]html_parser.north west) -- ([xshift=2pt, yshift=8pt]html_parser.south west);
+\draw[csscolor, line width=3.5pt, line cap=round] ([xshift=2pt, yshift=-8pt]css_parser.north west) -- ([xshift=2pt, yshift=8pt]css_parser.south west);
+\draw[alertcolor, line width=3.5pt, line cap=round] ([xshift=2pt, yshift=-8pt]layout.north west) -- ([xshift=2pt, yshift=8pt]layout.south west);
+
+% --- NETWORK ACTIONS ---
+% Instant Network Request (Background Thread)
+\node[box, text width=6.5cm, align=center, draw=enginecolor] (fast_req) at (-11.0, 1.5) {
+    \textbf{\color{enginecolor}\faRocket\ Instant Network Request}\\[3pt]
+    \footnotesize Image is fetched concurrently with CSS parsing.
+};
+
+% Late Network Request (Main Thread)
+\node[box, text width=6.5cm, align=center, draw=alertcolor] (late_req) at (5.0, -3.5) {
+    \textbf{\color{alertcolor}\faClock\ Late Network Request}\\[3pt]
+    \footnotesize \textit{Without sizes}, the image fetch is blocked waiting for CSS layout!
+};
+
+% --- EXPLANATORY BUBBLES ---
+% The Dilemma
+\node[bubble, text width=4.8cm] (dilemma) at (12.5, 1.5) {
+    \textbf{\faExclamationTriangle\ The Dilemma}\\[4pt]
+    To pick a file from \texttt{srcset}, the engine needs the layout width. But width is defined in CSS, which hasn't been parsed yet!
+};
+
+% The 'sizes' Solution
+\node[bubble, text width=7cm, draw=enginecolor, thick] (sizes_solution) at (-11.0, -3.5) {
+    \textbf{\color{enginecolor}\faMagic\ The 'sizes' Solution}\\[4pt]
+    By providing \texttt{sizes}, you hardcode the future CSS geometry into the HTML. The Scanner reads this, skips the CSS wait, calculates the layout width, and fetches instantly.
+};
+
+% --- FLOW ARROWS ---
+% Document down to Parsers
+\draw[arrow] (html_doc.south) -- (html_parser.north);
+\draw[arrow] (css_doc.south) -- (css_parser.north);
+
+% Main Thread Parser Merges to Layout Engine
+\draw[arrow] (html_parser.south) -- (0, 4.0) -- (5.0, 4.0);
+\draw[arrow] (css_parser.south) -- (10, 4.0) -- (5.0, 4.0);
+\draw[arrow] (5.0, 4.0) -- (layout.north);
+
+% Layout Engine to Late Request
+\draw[arrow, draw=alertcolor, dashed, line width=1.5pt] (layout.south) -- (late_req.north)
+    node[midway, anchor=west, xshift=10pt, font=\footnotesize\sffamily, text=alertcolor] {Layout known (too late)};
+
+% The Fast Path Arrows (Preload Scanner)
+\draw[fastarrow] (html_doc.west) -- (-11.0, 10.5)
+    node[pos=0.75, anchor=south, yshift=4pt, fill=gray!10, inner sep=4pt, font=\footnotesize\sffamily, text=enginecolor] {Reads raw HTML instantly} -- (scanner.north);
+
+\draw[fastarrow] (scanner.south) -- (fast_req.north)
+    node[midway, anchor=west, xshift=10pt, align=left, text width=3.5cm, font=\footnotesize\sffamily, text=enginecolor] {Math solved using \\ \texttt{sizes} forecast};
+
+% Semantic Linkage Arrow: 'sizes' Solution to Instant Network Request
+\draw[arrow, draw=enginecolor, dashed, line width=1.5pt] (sizes_solution.north) -- (fast_req.south);
+
+% Dilemma Context Link
+\draw[arrow, dotted, draw=darkgray, line width=1pt] (dilemma.west) -- (layout.east);
+
+\end{tikzpicture}
+\end{document}

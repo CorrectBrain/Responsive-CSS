@@ -1,0 +1,257 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usetikzlibrary{
+    arrows.meta,
+    positioning,
+    calc,
+    shapes,
+    shadows,
+    decorations.pathmorphing,
+    shapes.geometric,
+    backgrounds,
+    decorations.markings,
+    decorations.pathreplacing,
+    decorations.text,
+    fit,
+    shapes.misc,
+    shapes.arrows,
+    matrix,
+    bending,
+    3d,
+    chains,
+    intersections,
+    shapes.symbols,
+    svg.path,
+    shapes.multipart,
+    shapes.callouts,
+    angles,
+    quotes,
+    fadings,
+    shadows.blur,
+    patterns,
+    patterns.meta
+}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- COLOR PALETTE (Light Theme / High Contrast) ---
+\definecolor{textmain}{HTML}{1E293B}        % Charcoal / Slate 800
+\definecolor{textsub}{HTML}{475569}         % Slate 600
+\definecolor{textmuted}{HTML}{94A3B8}       % Slate 400
+
+% DOM Layer Colors
+\definecolor{domborder}{HTML}{94A3B8}       % Slate / Silver
+\definecolor{dombg}{HTML}{F8FAFC}           % Slate 50
+\definecolor{domheader}{HTML}{E2E8F0}       % Slate 200
+\definecolor{domprimary}{HTML}{0F172A}      % Navy 900
+
+% Scaffold Layer Colors
+\definecolor{scaffoldborder}{HTML}{3B82F6}   % Blueprint Blue 500
+\definecolor{scaffoldbg}{HTML}{EFF6FF}       % Blue 50
+\definecolor{scaffoldpattern}{HTML}{60A5FA}  % Blue 400
+\definecolor{scaffoldprimary}{HTML}{1D4ED8}  % Blue 700
+
+% Payload Layer Colors
+\definecolor{payloadborder}{HTML}{E11D48}    % Rose 600
+\definecolor{payloadbg}{HTML}{FFF1F2}        % Rose 50
+\definecolor{payloadprimary}{HTML}{BE123C}   % Rose 700
+
+% Window Controls & Connectors
+\definecolor{macred}{HTML}{EF4444}
+\definecolor{macyellow}{HTML}{F59E0B}
+\definecolor{macgreen}{HTML}{10B981}
+\definecolor{connectcolor}{HTML}{CBD5E1}
+
+% Card Styling
+\definecolor{cardbg}{HTML}{FFFFFF}
+\definecolor{cardborder}{HTML}{E2E8F0}
+
+\begin{document}
+\sffamily
+\begin{tikzpicture}[
+    annotation/.style={
+        fill=cardbg,
+        draw=cardborder,
+        line width=1.2pt,
+        rounded corners=10pt,
+        text width=8cm,
+        align=left,
+        inner sep=14pt,
+        drop shadow={shadow opacity=15, shadow xshift=2pt, shadow yshift=-3pt}
+    },
+    connector/.style={
+        densely dotted,
+        color=gray!50,
+        line width=1.5pt
+    }
+]
+
+% ==============================================================================
+% GLOBAL CANVAS BACKGROUND
+% ==============================================================================
+\fill[white] (-6, -2) rectangle (26, 36);
+
+% ==============================================================================
+% 3D PROJECTION CONNECTING LINES (Vertical Orthogonal Stack)
+% ==============================================================================
+% DOM (Layer 1) to Scaffold (Layer 2)
+\draw[connector] (0, 6.75) -- (0, 11.75);
+\draw[connector] (12, 6.75) -- (12, 11.75);
+
+% Scaffold (Layer 2) to Payload (Layer 3)
+\draw[connector] (0, 18.5) -- (0, 23.5);
+\draw[connector] (12, 18.5) -- (12, 23.5);
+
+% ==============================================================================
+% 0. TITLE & SUBTITLE
+% ==============================================================================
+\node[font=\Huge\bfseries\color{textmain}, anchor=north west] at (0.7019,34.2732) {Structural Scaffolding \& The Absolute Payload};
+\node[font=\Large\color{scaffoldborder}, anchor=north west] at (1.9053,32.9479) {Pre-computing layout layering to eliminate Cumulative Layout Shift (CLS)};
+
+% ==============================================================================
+% 1. LAYER 1: The DOM Flow / Container ((0,0) to (12,6.75))
+% ==============================================================================
+% Browser Window Outer Frame
+\draw[draw=domborder, line width=2pt, fill=dombg, rounded corners=8pt] (0, 0) rectangle (12, 6.75);
+
+% Browser Window Title Bar
+\begin{scope}
+    \clip[rounded corners=8pt] (0, 0) rectangle (12, 6.75);
+    \fill[domheader] (0, 5.95) rectangle (12, 6.75);
+    \draw[draw=domborder, line width=1pt] (0, 5.95) -- (12, 5.95);
+
+    % macOS-style window controls
+    \fill[macred] (0.45, 6.35) circle (0.13);
+    \fill[macyellow] (0.85, 6.35) circle (0.13);
+    \fill[macgreen] (1.25, 6.35) circle (0.13);
+
+    % Address / URL Bar
+    \draw[draw=domborder!60, fill=white, rounded corners=3pt] (2.2, 6.1) rectangle (9.8, 6.6);
+    \node[font=\scriptsize\ttfamily\color{textsub}, anchor=west] at (2.4, 6.35) {\faLock \ https://viewport.internal/dom-root};
+\end{scope}
+
+% Containing Block inside DOM
+\draw[dashed, draw=domborder, line width=1.5pt, fill=white, fill opacity=0.9, rounded corners=6pt] (0.8, 0.6) rectangle (11.2, 5.35);
+
+% Layer 1 Content & Labels
+\node[font=\Large\bfseries\color{domprimary}, anchor=north west] at (1.1, 5.0) {\faSitemap \ DOM Container};
+\node[font=\large\color{textmain}, anchor=center, text width=10cm, align=center] at (6, 2.8) {
+    The page structure creates the \textbf{Containing Block}.\\
+    Its width is dictated by the viewport or grid.
+};
+
+% ==============================================================================
+% 2. LAYER 2: The Geometric Scaffold ((0,11.75) to (12,18.5))
+% ==============================================================================
+% Scaffold Background & Padding Box Pattern Fill
+\fill[scaffoldbg, rounded corners=8pt] (0, 11.75) rectangle (12, 18.5);
+\fill[pattern={Lines[angle=45,distance=6pt,line width=0.8pt]}, pattern color=scaffoldpattern!30, rounded corners=8pt] (0, 11.75) rectangle (12, 18.5);
+\draw[draw=scaffoldborder, line width=2.5pt, rounded corners=8pt] (0, 11.75) rectangle (12, 18.5);
+
+% Zero-height content box (Thick Solid Top Line - Height 0)
+\draw[line width=4pt, color=scaffoldprimary] (0, 18.5) -- (12, 18.5);
+\node[font=\small\bfseries\ttfamily\color{scaffoldprimary}, fill=white, draw=scaffoldprimary, line width=0.8pt, rounded corners=3pt, inner sep=3pt, anchor=south] at (6, 18.7) {height: 0;};
+
+% Architectural Dimension Lines (Completely Outside the Box)
+\draw[scaffoldprimary, densely dotted] (0, 18.5) -- (0, 19.5);
+\draw[scaffoldprimary, densely dotted] (12, 18.5) -- (12, 19.5);
+\draw[|<->|, >=Stealth, thick, scaffoldprimary] (0, 19.5) -- (12, 19.5) node[midway, above, font=\small\bfseries\color{scaffoldprimary}] {width: 100\% (W)};
+
+\draw[scaffoldprimary, densely dotted] (0, 11.75) -- (-1.5, 11.75);
+\draw[scaffoldprimary, densely dotted] (0, 18.5) -- (-1.5, 18.5);
+\draw[|<->|, >=Stealth, thick, scaffoldprimary] (-1.5, 11.75) -- (-1.5, 18.5) node[midway, left, font=\small\bfseries\color{scaffoldprimary}] {padding-bottom: 56.25\% of W};
+
+% Layer 2 Content & Code Block
+\node[font=\Large\bfseries\color{scaffoldprimary}, anchor=north west] at (0.4, 17.9) {\faVectorSquare \ The Geometric Scaffold};
+\node[fill=white, fill opacity=1.0, draw=scaffoldborder!40, rounded corners=6pt, inner sep=8pt, anchor=west] at (0.6, 15.125) {
+    \begin{tabular}{l}
+    \ttfamily\large\color{textmain}\textbf{position: relative;}\\
+    \ttfamily\large\color{textmain}\textbf{width: 100\%;}\\
+    \ttfamily\large\color{textmain}\textbf{height: 0;}\\
+    \ttfamily\large\color{scaffoldprimary}\textbf{padding-bottom: 56.25\%;}
+    \end{tabular}
+};
+\node[font=\large\bfseries\color{scaffoldprimary}, fill=white, fill opacity=0.85, inner sep=4pt, rounded corners=2pt, anchor=south east] at (11.6, 12.15) {Height is faked via padding};
+
+% ==============================================================================
+% 3. LAYER 3: The Absolute Payload ((0,23.5) to (12,30.25))
+% ==============================================================================
+% Image Proxy Art (Landscape Vector)
+\begin{scope}
+    \clip[rounded corners=8pt] (0, 23.5) rectangle (12, 30.25);
+    \fill[payloadbg] (0, 23.5) rectangle (12, 30.25);
+
+    % Sun
+    \fill[orange!70!yellow] (9.5, 28.5) circle (1.1);
+    \fill[yellow!30, opacity=0.4] (9.5, 28.5) circle (1.6);
+
+    % Vector Mountains
+    \fill[payloadborder!20] (0, 23.5) -- (3.5, 27.7) -- (7.5, 23.5) -- cycle;
+    \fill[payloadborder!35] (5.5, 23.5) -- (9.2, 28.4) -- (12.5, 24.3) -- (12.5, 23.5) -- cycle;
+    \fill[payloadborder!50] (1.5, 23.5) -- (6.2, 26.7) -- (10.5, 23.5) -- cycle;
+\end{scope}
+
+% Payload Outer Frame
+\draw[draw=payloadborder, line width=2.5pt, rounded corners=8pt] (0, 23.5) rectangle (12, 30.25);
+
+% Anchor Points & Coordinate Origin Indicators (0,0) (Outside the Box)
+\fill[payloadprimary] (0, 30.25) circle (0.15);
+\node[font=\footnotesize\bfseries\ttfamily\color{payloadprimary}, anchor=south east] at (-0.4, 30.6) {(0, 0)};
+\draw[->, >=Stealth, line width=2pt, color=payloadprimary] (-1.5, 30.25) -- (-0.2, 30.25) node[midway, above, font=\scriptsize\ttfamily\bfseries] {left: 0};
+\draw[->, >=Stealth, line width=2pt, color=payloadprimary] (0, 31.7) -- (0, 30.45) node[midway, left, font=\scriptsize\ttfamily\bfseries] {top: 0};
+
+% Layer 3 Content & Code Block
+\node[font=\Large\bfseries\color{payloadprimary}, anchor=north west] at (0.4, 29.6) {\faImage \ The Absolute Payload};
+\node[fill=white, fill opacity=1.0, draw=payloadborder!40, rounded corners=6pt, inner sep=8pt, anchor=south west] at (0.5, 24.0) {
+    \begin{tabular}{l}
+    \ttfamily\large\color{payloadprimary}\textbf{position: absolute;}\\
+    \ttfamily\large\color{textmain}\textbf{top: 0; left: 0;}\\
+    \ttfamily\large\color{textmain}\textbf{width: 100\%;}\\
+    \ttfamily\large\color{textmain}\textbf{height: 100\%;}\\
+    \ttfamily\large\color{textmain}\textbf{object-fit: cover;}
+    \end{tabular}
+};
+
+% ==============================================================================
+% 4. EXPLANATORY ANNOTATIONS (Right Column anchored at X=15)
+% ==============================================================================
+\node[annotation, anchor=west] (ann1) at (15, 3.375) {
+    \textbf{\Large\color{domprimary}\faClock \ Time $T=0$: CSS Parsed}\\[8pt]
+    \large\color{textmain}
+    Before the heavy image is requested, the CSS applies \texttt{padding-bottom: 56.25\%}. The browser mathematically calculates the exact pixel height from the container's width and \textbf{rigidly reserves this geometric space} in the DOM.
+};
+
+\node[annotation, anchor=west] (ann2) at (15, 15.125) {
+    \textbf{\Large\color{scaffoldprimary}\faAnchor \ The Absolute Trap}\\[8pt]
+    \large\color{textmain}
+    Because the Scaffold has \texttt{position: relative}, it becomes the coordinate origin for its children. The \texttt{height: 0} means its content box is literally empty, but its \textbf{padding box} perfectly forms the target 16:9 rectangle.
+};
+
+\node[annotation, anchor=west] (ann3) at (15, 26.875) {
+    \textbf{\Large\color{payloadprimary}\faServer \ Time $T>0$: Payload Arrives}\\[8pt]
+    \large\color{textmain}
+    The image downloads asynchronously. Because it is positioned absolutely with \texttt{width: 100\%} and \texttt{height: 100\%}, it expands to cover the padding box of the scaffold exactly. \textbf{Zero layout shift occurs.}
+};
+
+% Direct Horizontal Annotation Leader Lines
+\draw[line width=1.4pt, color=domborder, -{Stealth[length=3mm]}] (12, 3.375) -- (ann1.west);
+\draw[line width=1.4pt, color=scaffoldborder, -{Stealth[length=3mm]}] (12, 15.125) -- (ann2.west);
+\draw[line width=1.4pt, color=payloadborder, -{Stealth[length=3mm]}] (12, 26.875) -- (ann3.west);
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,276 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes,fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+% --- Color Palette ---
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+\definecolor{mainthread}{RGB}{233, 30, 99}
+\definecolor{mainthreadDark}{RGB}{173, 20, 87}
+\definecolor{mainthreadBg}{RGB}{253, 242, 246}
+\definecolor{preparser}{RGB}{46, 125, 50}
+\definecolor{preparserDark}{RGB}{27, 94, 32}
+\definecolor{preparserBg}{RGB}{241, 248, 241}
+\definecolor{blocked}{RGB}{211, 47, 47}
+\definecolor{blockedBg}{RGB}{255, 235, 238}
+\definecolor{network}{RGB}{2, 136, 209}
+\definecolor{networkBg}{RGB}{225, 245, 254}
+\definecolor{renderTree}{RGB}{69, 90, 100}
+\definecolor{algoColor}{RGB}{106, 27, 154}
+\definecolor{algoBg}{RGB}{243, 229, 245}
+\definecolor{streamColor}{RGB}{46, 125, 50}
+\definecolor{streamBg}{RGB}{232, 245, 233}
+\definecolor{legacyColor}{RGB}{230, 81, 0}
+\definecolor{legacyBg}{RGB}{255, 243, 224}
+\definecolor{textdark}{RGB}{33, 33, 33}
+\definecolor{cardBorder}{RGB}{207, 216, 220}
+
+\begin{document}
+\begin{tikzpicture}
+
+% Force stark white canvas background
+\fill[white] (-15.0, -12.0) rectangle (21.0, 16.5);
+
+% =========================================================================
+% TIMELINES (Vertical Dashed Lines & Offset Labels)
+% =========================================================================
+\foreach \x/\label in {
+    -11.0/{T0 (HTML Arrives)},
+    -5.0/{T1 (Native Calculation)},
+    1.0/{T2 (Early Request)},
+    12.75/{T3 (CSSOM Complete)},
+    17.25/{T4 (Late Request)}
+} {
+    % Timeline vertical grid line strictly terminating at y=-7.5
+    \draw[line width=1pt, gray!35, dashed] (\x, 12.5) -- (\x, -7.5);
+
+    % Timeline Marker Dot and Label anchored at y=-8.0
+    \fill[gray!60] (\x, -7.65) circle (2pt);
+    \node[anchor=north, font=\bfseries\small, text=gray!60!black, align=center, inner sep=2pt] at (\x, -8.0) {\label};
+}
+
+% =========================================================================
+% TITLES
+% =========================================================================
+\node[font=\Huge\bfseries, color=textdark, align=center] at (2.75, 15.0) {The Speculative Pre-parser Bypass};
+\node[font=\Large\color{gray!80!black}, align=center, text width=18cm] at (2.75, 13.8) {How \texttt{srcset} native HTML attributes unlock multi-threaded image discovery, evading the CSSOM bottleneck.};
+
+% =========================================================================
+% 1. MAIN BROWSER THREAD (TOP SWIMLANE)
+% =========================================================================
+% Swimlane Body Container (-13.5, 5.0) to (19.5, 12.0)
+\filldraw[fill=mainthreadBg!40, draw=gray!30, line width=1pt, rounded corners=12pt] (-13.5, 5.0) rectangle (19.5, 12.0);
+
+% Subtle Execution Timeline Internal Grid
+\foreach \gy in {5.5, 9.5, 10.0} {
+    \draw[gray!15, line width=0.5pt] (-13.2, \gy) -- (19.2, \gy);
+}
+
+% Dark Header Bar: (-13.5, 10.5) to (19.5, 12.0)
+\filldraw[fill=mainthreadDark, draw=mainthreadDark, rounded corners=12pt] (-13.5, 10.5) rectangle (19.5, 12.0);
+\fill[mainthreadDark] (-13.5, 10.5) rectangle (19.5, 10.8); % Square bottom edge of header
+
+% Header Text
+\node[anchor=center, align=center, text=white] at (3.0, 11.25) {
+    {\Large\bfseries \faLaptopCode\quad MAIN BROWSER THREAD (UI)}\\[1pt]
+    {\small\color{white!90} Synchronous, Render-blocking, CSS-dependent}
+};
+
+% --- PROCESS CARDS (MAIN THREAD) ---
+
+% Card 1: HTML Parsing (DOM) -> (-13.25, 6.0) to (-8.75, 10.0) (Center x=-11.0)
+\filldraw[fill=white, draw=cardBorder, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=15, shadow blur steps=5}]
+    (-13.25, 6.0) rectangle (-8.75, 10.0);
+
+% Micro-Visualization: DOM Tree Hierarchy explicitly centered at y=9.2
+\draw[line width=0.8pt, mainthread!80] (-11.0, 9.2) -- (-11.4, 8.8) (-11.0, 9.2) -- (-10.6, 8.8);
+\fill[mainthread] (-11.0, 9.2) circle (2.2pt);
+\fill[mainthread!70] (-11.4, 8.8) circle (1.8pt);
+\fill[mainthread!70] (-10.6, 8.8) circle (1.8pt);
+\node[font=\tiny\ttfamily\color{mainthread!80}, above=1pt] at (-11.0, 9.2) {DOM};
+
+% Text Content explicitly positioned
+\node[anchor=center, align=center, text width=4.0cm] at (-11.0, 8.2) {
+    {\Large\bfseries HTML Parsing}\\[-1pt]
+    {\small\bfseries (DOM)}
+};
+\node[anchor=center, align=center, text width=4.0cm] at (-11.0, 7.0) {
+    {\scriptsize\color{gray!80!black} Builds DOM Tree.\\Finds \texttt{<link rel="stylesheet">}.}
+};
+
+% Card 2: CSSOM BOTTLENECK (THREAD BLOCKED) -> (-7.5, 6.0) to (10.0, 10.0)
+\filldraw[fill=blockedBg, draw=blocked!80, line width=1.5pt, rounded corners=8pt, blur shadow={shadow opacity=20, shadow blur steps=6}]
+    (-7.5, 6.0) rectangle (10.0, 10.0);
+
+% Diagonal Hazard/Blocked Pattern Overlay
+\begin{scope}
+    \clip[rounded corners=8pt] (-7.5, 6.0) rectangle (10.0, 10.0);
+    \fill[pattern={Lines[angle=45,distance=8pt,line width=1.5pt]}, pattern color=blocked!20] (-7.5, 6.0) rectangle (10.0, 10.0);
+\end{scope}
+
+% Danger Badges at absolute positions x=-6.5 and x=9.0
+\node[font=\Huge\color{blocked!85}] at (-6.5, 8.0) {\faLock};
+\node[font=\Huge\color{blocked!85}] at (9.0, 8.0) {\faBan};
+
+% Text Content centered at (1.25, 8.0) with explicit text width=14cm
+\node[anchor=center, align=center, text width=14cm] at (1.25, 8.0) {
+    {\Large\bfseries\color{blocked!90!black} \faStopwatch\quad CSSOM BOTTLENECK (THREAD BLOCKED)}\\[4pt]
+    {\small\bfseries\color{blocked!90!black} Render Tree construction is halted! Waiting for CSS download, parsing, and execution.}
+};
+
+% Card 3: Render Tree & Layout -> (10.75, 6.0) to (14.75, 10.0) (Center x=12.75)
+\filldraw[fill=white, draw=cardBorder, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=15, shadow blur steps=5}]
+    (10.75, 6.0) rectangle (14.75, 10.0);
+\node[anchor=center, align=center, text width=3.8cm] at (12.75, 8.5) {
+    {\Large\bfseries\color{renderTree} \faLayerGroup\ Render Tree}\\[-1pt]
+    {\Large\bfseries\color{renderTree} \& Layout}
+};
+\node[anchor=center, align=center, text width=3.8cm] at (12.75, 6.8) {
+    {\scriptsize\color{gray!80!black} CSS media queries resolve. Layout geometry applied.}
+};
+
+% Card 4: Legacy Image Request -> (15.25, 6.0) to (19.25, 10.0) (Center x=17.25)
+\filldraw[fill=legacyBg, draw=legacyColor!60, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=15, shadow blur steps=5}]
+    (15.25, 6.0) rectangle (19.25, 10.0);
+\node[anchor=center, align=center, text width=3.8cm] at (17.25, 8.5) {
+    {\Large\bfseries\color{legacyColor!90!black} \faHourglassHalf\ Legacy Image}\\[-1pt]
+    {\Large\bfseries\color{legacyColor!90!black} Request}
+};
+\node[anchor=center, align=center, text width=3.8cm] at (17.25, 6.8) {
+    {\scriptsize\color{gray!80!black} CSS \texttt{background-image} finally discovered.}
+};
+
+% Main Thread Horizontal Flow Connectors
+\draw[-Stealth=3mm, line width=2pt, gray!60, shorten >= 2pt, shorten <= 2pt] (-8.75, 8.0) -- (-7.5, 8.0);
+\draw[-Stealth=3mm, line width=2pt, gray!60, shorten >= 2pt, shorten <= 2pt] (10.0, 8.0) -- (10.75, 8.0);
+\draw[-Stealth=3mm, line width=2pt, gray!60, shorten >= 2pt, shorten <= 2pt] (14.75, 8.0) -- (15.25, 8.0);
+
+
+% =========================================================================
+% 2. SPECULATIVE PRE-PARSER THREAD (BOTTOM SWIMLANE)
+% =========================================================================
+% Swimlane Body Container (-13.5, -6.5) to (19.5, 1.0)
+\filldraw[fill=preparserBg!40, draw=preparser!30, line width=1pt, rounded corners=12pt] (-13.5, -6.5) rectangle (19.5, 1.0);
+
+% Subtle Execution Timeline Internal Grid
+\foreach \gy in {-6.0, -5.5, -1.0, -0.5} {
+    \draw[preparser!15, line width=0.5pt] (-13.2, \gy) -- (19.2, \gy);
+}
+
+% Dark Header Bar: (-13.5, -0.5) to (19.5, 1.0)
+\filldraw[fill=preparserDark, draw=preparserDark, rounded corners=12pt] (-13.5, -0.5) rectangle (19.5, 1.0);
+\fill[preparserDark] (-13.5, -0.5) rectangle (19.5, -0.2); % Square bottom edge of header
+
+% Header Text
+\node[anchor=center, align=center, text=white] at (5.0516,0.212) {
+    {\Large\bfseries \faMicrochip\quad SPECULATIVE PRE-PARSER THREAD}\\[1pt]
+    {\small\color{white!90} Asynchronous, Independent, Native HTML Evaluation}
+};
+
+% --- PROCESS CARDS (PRE-PARSER THREAD) ---
+
+% Card 5: Raw Token Stream -> (-13.25, -5.5) to (-8.75, -1.5) (Center x=-11.0)
+\filldraw[fill=white, draw=cardBorder, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=15, shadow blur steps=5}]
+    (-13.25, -5.5) rectangle (-8.75, -1.5);
+\node[anchor=center, align=center, text width=4.0cm] at (-11.0, -2.5) {
+    {\Large\bfseries \faStream\ Raw Token}\\[-1pt]
+    {\Large\bfseries Stream}
+};
+\node[anchor=center, align=center, text width=4.0cm] at (-11.0, -3.8) {
+    {\scriptsize\color{gray!80!black} Scans raw incoming bytes independently of DOM.}
+};
+% Micro-Visualization: Binary to HTML Token Stream badge explicitly centered at y=-4.9
+\node[font=\tiny\ttfamily, fill=gray!10, draw=gray!30, rounded corners=3pt, inner sep=2pt] at (-11.0, -4.9) {
+    \color{gray!60}0110\color{gray!80}1001$\rightarrow$\color{preparserDark}\textbf{<img\dots>}
+};
+
+% Card 6: Algorithmic Decision -> (-7.6, -5.5) to (-2.4, -1.5) (Center x=-5.0)
+\filldraw[fill=algoBg, draw=algoColor!50, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=20, shadow blur steps=5}]
+    (-7.6, -5.5) rectangle (-2.4, -1.5);
+\node[font=\Large\color{algoColor}] at (-5,-1.773) {\faCogs};
+\node[anchor=center, align=center, text width=4.8cm] at (-5,-2.5237) {
+    {\Large\bfseries\color{algoColor} Algorithmic Decision}
+};
+\node[anchor=center, align=center, text width=4.8cm] at (-5.0, -4.0) {
+    {\scriptsize\color{algoColor!90!black} Evaluates \texttt{sizes} against Viewport width. Multiplies by Device Pixel Ratio (DPR). Selects optimal \texttt{srcset} candidate.}
+};
+% Micro-Visualization Flowchart Badge: Sizes -> DPR -> hero-1200w.jpg explicitly centered at (-5.0, -4.85)
+\node[font=\scriptsize\ttfamily\bfseries, fill=white, draw=algoColor!40, line width=0.8pt, rounded corners=5pt, inner sep=3pt, blur shadow={shadow opacity=10}] at (-5,-5.1949) {
+    {\color{network}\faIcon{mobile-alt}\ \textsf{Sizes}}\;$\boldsymbol{\rightarrow}$\;{\color{algoColor}\faTimes\ \textsf{DPR}}\;$\boldsymbol{\rightarrow}$\;{\color{preparserDark}\faFileImage\ \textsf{hero-1200w.jpg}}
+};
+
+% Card 7: Early Image Request -> (-1.1, -5.5) to (3.1, -1.5) (Center x=1.0)
+\filldraw[fill=networkBg, draw=network!60, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=15, shadow blur steps=5}]
+    (-1.1, -5.5) rectangle (3.1, -1.5);
+% Micro-Visualization: HTTP Packet Dispatch Wave & Icon centered at y=-2.2
+\node[font=\Large\color{network!90!black}] at (1.0, -2.2) {\faRocket};
+\draw[line width=1pt, network!70] (1.5, -2.0) arc (45:-45:3.5pt);
+\draw[line width=1pt, network!50] (1.7, -2.0) arc (45:-45:5.5pt);
+\node[anchor=center, align=center, text width=3.8cm] at (1.0, -3.2) {
+    {\Large\bfseries\color{network!90!black} Early Image}\\[-1pt]
+    {\Large\bfseries\color{network!90!black} Request}
+};
+\node[anchor=center, align=center, text width=3.8cm] at (1.0, -4.5) {
+    {\scriptsize\color{gray!80!black} Network fetch dispatched immediately via C++ engine.}
+};
+
+% Card 8: Image Data Streaming & Ready -> (4.25, -5.5) to (10.75, -1.5) (Center x=7.5)
+\filldraw[fill=streamBg, draw=streamColor!60, line width=1.2pt, rounded corners=8pt, blur shadow={shadow opacity=20, shadow blur steps=6}]
+    (4.25, -5.5) rectangle (10.75, -1.5);
+\node[font=\Huge\color{streamColor}] at (7.5, -2.3) {\faIcon{cloud-download-alt}};
+\node[anchor=center, align=center, text width=6.0cm] at (7.5, -3.3) {
+    {\large\bfseries\color{streamColor} IMAGE DATA STREAMING \& READY!}
+};
+% Micro-Visualization: Progress Bar from x=5.25 to x=9.75 explicitly centered at y=-4.2
+\fill[streamColor!20, rounded corners=2pt] (5.25, -4.3) rectangle (9.75, -4.1);
+\fill[streamColor, rounded corners=2pt] (5.25, -4.3) rectangle (9.15, -4.1);
+% Footnote text centered explicitly at y=-5.0
+\node[font=\tiny\bfseries\color{streamColor!90!black}, align=center, text width=6.0cm] at (7.5, -5.0) {\faCheckCircle\ 100\% ASYNCHRONOUS DATA BUFFERED PRIOR TO CSSOM RESOLUTION};
+
+% Pre-parser Horizontal Flow Connectors
+\draw[-Stealth=3mm, line width=2pt, preparserDark, shorten >= 2pt, shorten <= 2pt] (-8.75, -3.5) -- (-7.6, -3.5);
+\draw[-Stealth=3mm, line width=2pt, preparserDark, shorten >= 2pt, shorten <= 2pt] (-2.4, -3.5) -- (-1.1, -3.5);
+\draw[-Stealth=3mm, line width=2pt, preparserDark, shorten >= 2pt, shorten <= 2pt] (3.1, -3.5) -- (4.25, -3.5);
+
+
+% =========================================================================
+% 3. CROSS-THREAD CONNECTORS & HIGHLIGHTS
+% =========================================================================
+
+% 1. "Spawns parallel scanner" vertical connector
+\draw[cyan, line width=5pt, opacity=0.3] (-11.0, 6.0) -- (-11.0, -1.5);
+\draw[-Stealth=3mm, line width=2pt, dashed, gray!80!black, shorten >= 2pt, shorten <= 2pt]
+    (-11.0, 6.0) -- (-11.0, -1.5);
+\node[anchor=center, font=\footnotesize\bfseries, align=center, text=gray!90!black, fill=white, draw=gray!30, rounded corners=4pt, inner sep=3pt, text width=3.5cm]
+    at (-11.0, 2.25) {Spawns parallel scanner};
+
+% 2. Simultaneity Annotator (Non-directional temporal indicator, replaces directional arrow)
+\draw[line width=1.5pt, gray!60, dashed] (1.0, 3.25) -- (1.0, 6.0);
+\draw[line width=1.5pt, gray!60, dashed] (1.0, 1.25) -- (1.0, -1.5);
+\node[anchor=center, font=\bfseries\small, align=center, text=mainthreadDark, fill=white, draw=mainthread!40, line width=1pt, rounded corners=6pt, inner sep=5pt, blur shadow={shadow opacity=10}, text width=4.5cm]
+    at (1.0, 2.25) {Pre-parser fires request\\[-1pt]while UI is totally frozen!};
+
+% 3. MASSIVE TIME SAVED Decorative Brace at y=-9.5 spanning x=1.0 to x=17.25
+\draw[line width=2pt, preparserDark, decoration={brace, amplitude=14pt, mirror}, decorate]
+    (1.0, -9.5) -- (17.25, -9.5);
+
+\node[font=\Large\bfseries\color{preparserDark}, align=center] at (9.125, -10.3) {
+    \faBolt\quad MASSIVE TIME SAVED / NO CSS DEPENDENCY\quad \faBolt
+};
+
+\end{tikzpicture}
+\end{document}

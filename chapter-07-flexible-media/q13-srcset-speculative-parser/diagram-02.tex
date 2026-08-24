@@ -1,0 +1,209 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes,fadings,shadows.blur,patterns,patterns.meta}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% Palette definitions
+\definecolor{envcolor}{RGB}{33, 150, 243}
+\definecolor{htmlcolor}{RGB}{255, 152, 0}
+\definecolor{stepcolor}{RGB}{156, 39, 176}
+\definecolor{resultcolor}{RGB}{76, 175, 80}
+\definecolor{textdark}{RGB}{40, 40, 40}
+
+% IDE Syntax Highlighting colors
+\definecolor{ideDark}{RGB}{30, 30, 30}
+\definecolor{ideBar}{RGB}{50, 50, 50}
+\definecolor{htmlTag}{RGB}{86, 156, 214}
+\definecolor{htmlAttr}{RGB}{156, 220, 254}
+\definecolor{htmlStr}{RGB}{206, 145, 120}
+
+\begin{document}
+\begin{tikzpicture}[
+  line join=round,
+  line cap=round,
+  >=Stealth,
+  every node/.style={line join=round, line cap=round}
+]
+
+% Background Enforcement
+\begin{scope}[on background layer]
+  \fill[white] (-10, -17) rectangle (9.9749,16.9532);
+\end{scope}
+
+% =========================================================================
+% COMPONENT 0: TITLES (Anchored at X=0)
+% =========================================================================
+\node[font=\Huge\bfseries, color=black!85] at (-0.0251,16.1556) {The Algorithmic Payload Decision Engine};
+\node[font=\Large, color=black!75, text width=16cm, align=center] at (-0.0251,14.9298) {Instant mathematical evaluation of \texttt{sizes} and \texttt{srcset} in the Pre-parser (No CSS Layout required).};
+
+
+% =========================================================================
+% COMPONENT 1: INPUTS (Y-range: 7.5 to 12.6)
+% =========================================================================
+
+% --- LEFT: Environment Constraints ---
+\node[font=\Large\bfseries, color=envcolor!80!black] at (-4.5, 12.6) {\faDesktop\ Environment Constraints};
+
+\node[fill=envcolor!5, draw=envcolor!50, rounded corners=12pt, thick, drop shadow={opacity=0.15, shadow xshift=3pt, shadow yshift=-3pt}, minimum width=8.5cm, minimum height=4.5cm] (envBox) at (-4.5, 9.75) {};
+
+% Vector Device Simulation (Chassis, Screen, Camera notch, Home bar shifted left by 0.2cm)
+\filldraw[fill=gray!85!black, draw=gray!70, rounded corners=5pt, thick] (-7.8, 8.1) rectangle (-6.1, 10.2);
+\fill[white, rounded corners=2pt] (-7.6, 8.35) rectangle (-6.3, 9.95);
+\fill[gray!40] (-6.95, 10.08) circle (1pt); % Speaker/Camera notch
+\draw[gray!40, line width=1pt, line cap=round] (-7.15, 8.23) -- (-6.75, 8.23); % Home indicator
+
+% Text Data for Environment Constraints
+\node[font=\small\ttfamily, textdark, anchor=west, text width=4.8cm, align=left] at (-5.4, 9.5) {Browser Viewport: \textbf{600px}};
+\node[font=\small\ttfamily, textdark, anchor=west, text width=4.8cm, align=left] at (-5.4, 8.5) {Device Pixel Ratio: \textbf{2.0x} (Retina)};
+
+% --- RIGHT: HTML Native Payload (IDE Window) ---
+\node[font=\Large\bfseries, color=htmlcolor!80!black] at (4.5, 12.6) {\faCode\ HTML Native Payload};
+
+% IDE Window Container
+\node[fill=ideDark, draw=gray!50, rounded corners=8pt, thick, drop shadow={opacity=0.15, shadow xshift=3pt, shadow yshift=-3pt}, minimum width=8.5cm, minimum height=4.5cm] (htmlBox) at (4.5, 9.75) {};
+
+% MacOS-Style IDE Title Bar
+\fill[fill=ideBar, rounded corners=8pt] (0.25, 11.3) rectangle (8.75, 12.0);
+\fill[fill=ideBar] (0.25, 11.3) rectangle (8.75, 11.6); % Square bottom of title bar
+\draw[draw=gray!50, thin] (0.25, 11.3) -- (8.75, 11.3);
+
+% Window Control Dots
+\fill[fill={rgb,255:red,255;green,95;blue,86}] (0.75, 11.65) circle (3pt);
+\fill[fill={rgb,255:red,255;green,189;blue,46}] (1.1, 11.65) circle (3pt);
+\fill[fill={rgb,255:red,39;green,201;blue,63}] (1.45, 11.65) circle (3pt);
+\node[font=\scriptsize\ttfamily, color=gray!40] at (4.5, 11.65) {index.html};
+
+% Code Syntax Highlighting with guaranteed wrapping / boundary bounds
+\node[anchor=north west, font=\footnotesize\ttfamily, align=left, inner sep=0pt, text width=7.8cm] at (0.7, 11.0) {%
+  \textcolor{htmlTag}{<img} \textcolor{htmlAttr}{class}=\textcolor{htmlStr}{"hero"}\\
+  \hspace*{0.5cm}\textcolor{htmlAttr}{sizes}=\textcolor{htmlStr}{"}\textbf{\textcolor{htmlStr}{(max-width: 800px) 100vw}}\textcolor{htmlStr}{, 50vw"}\\
+  \hspace*{0.5cm}\textcolor{htmlAttr}{srcset}=\textcolor{htmlStr}{"img-400.jpg 400w,}\\
+  \hspace*{1.45cm}\textcolor{htmlStr}{img-800.jpg 800w,}\\
+  \hspace*{1.45cm}\textcolor{htmlStr}{img-1200.jpg 1200w,}\\
+  \hspace*{1.45cm}\textbf{\textcolor{htmlStr}{img-1600.jpg 1600w}}\textcolor{htmlStr}{"} \textcolor{htmlTag}{/>}
+};
+
+
+% =========================================================================
+% COMPONENT 2: STEP 1 (Evaluate Media Conditions)
+% =========================================================================
+\node[fill=stepcolor!5, draw=stepcolor!50, rounded corners=12pt, thick, drop shadow={opacity=0.15, shadow xshift=3pt, shadow yshift=-3pt}, minimum width=16.5cm, minimum height=3.5cm] (step1Box) at (0, 4.25) {};
+\node[font=\Large\bfseries, color=stepcolor!80!black] at (0, 5.3) {Step 1: Evaluate \texttt{sizes} Media Conditions};
+\draw[thick, stepcolor!20] (-7.8, 4.7) -- (7.8, 4.7);
+
+% Logic Gate Pipeline Units
+\node[draw=stepcolor!40, fill=white, text=black, rounded corners=6pt, inner sep=5pt, font=\small, align=center, text width=5.5cm, scale=0.8] (condNode) at (-5.5, 3.65) {
+  \textbf{Condition: }\texttt{(max-width: 800px)}\\
+  \scriptsize against Viewport \texttt{600px}
+};
+
+\node[diamond, draw=stepcolor, fill=white, text=stepcolor!80!black, aspect=2.3, inner sep=3pt, font=\small\bfseries] (decisionNode) at (0, 3.65) {
+  600px $\le$ 800px?
+};
+
+\node[draw=resultcolor, fill=resultcolor!10, text=resultcolor!80!black, rounded corners=6pt, inner sep=5pt, font=\small\bfseries, align=center, text width=5.8cm, scale=0.8] (resultNode) at (5.5, 3.65) {
+  \faCheck\ TRUE $\rightarrow$ \textbf{100vw}\\
+  \scriptsize (Intended CSS Display Width: \textbf{600px})
+};
+
+% Logic Data Flow Connections
+\draw[-Stealth, thick, stepcolor] (condNode.east) -- (decisionNode.west);
+\draw[-Stealth, thick, stepcolor] (decisionNode.east) -- (resultNode.west);
+
+
+% =========================================================================
+% COMPONENT 3: STEP 2 (Hardware Pixel Translation)
+% =========================================================================
+\node[fill=stepcolor!5, draw=stepcolor!50, rounded corners=12pt, thick, drop shadow={opacity=0.15, shadow xshift=3pt, shadow yshift=-3pt}, minimum width=13.0cm, minimum height=3.5cm] (step2Box) at (0, -0.75) {};
+\node[font=\Large\bfseries, color=stepcolor!80!black] at (0, 0.3) {Step 2: Hardware Pixel Translation};
+\draw[thick, stepcolor!20] (-6.0, -0.2) -- (6.0, -0.2);
+
+% ALU/Math Modular Processing Blocks with uniform dimensions
+\node[draw=gray!30, fill=white, rounded corners=6pt, minimum width=2.4cm, minimum height=1.3cm, align=center] (mathA) at (-4.0, -1.3) {
+  \textbf{\Large 600px}\\
+  \scriptsize\color{gray!80!black}CSS Width (100vw)
+};
+
+\node[circle, fill=gray!20, draw=gray!40, font=\Large\bfseries, inner sep=4pt] (mathOp) at (-2.0, -1.3) {$\times$};
+
+\node[draw=gray!30, fill=white, rounded corners=6pt, minimum width=2.4cm, minimum height=1.3cm, align=center] (mathB) at (0, -1.3) {
+  \textbf{\Large 2.0}\\
+  \scriptsize\color{gray!80!black}DPR (Retina)
+};
+
+\node[font=\Large\bfseries, textdark] (mathEq) at (2.0, -1.3) {$=$};
+
+\node[draw=resultcolor, fill=resultcolor!15, rounded corners=6pt, minimum width=2.4cm, minimum height=1.3cm, align=center, thick] (mathOut) at (4.0, -1.3) {
+  \textbf{\Large\textcolor{stepcolor!80!black}{1200}}\\
+  \scriptsize\color{gray!80!black}Required Pixels
+};
+
+
+% =========================================================================
+% COMPONENT 4: STEP 3 (srcset Array Selection)
+% =========================================================================
+\node[fill=stepcolor!5, draw=stepcolor!50, rounded corners=12pt, thick, drop shadow={opacity=0.15, shadow xshift=3pt, shadow yshift=-3pt}, minimum width=14.5cm, minimum height=7.0cm] (step3Box) at (0, -7.5) {};
+\node[font=\Large\bfseries, color=stepcolor!80!black] at (0, -4.7) {Step 3: \texttt{srcset} Array Selection};
+\draw[thick, stepcolor!20] (-6.75, -5.1) -- (6.75, -5.1);
+\node[font=\normalsize, textdark, text width=13cm, align=center] at (0, -5.6) {Browser engine scans \texttt{srcset} for closest optimal match $\ge$ 1200.};
+
+% Row 1 (Y = -6.8)
+\node[font=\small\ttfamily, color=gray!80!black, anchor=east] at (-1.5, -6.8) {img-400.jpg};
+\node[font=\small\ttfamily, color=gray!80!black, anchor=west] at (-1.0, -6.8) {400w};
+\node[font=\small, color=red!80!black, anchor=west] at (0.5, -6.8) {\faTimes\ Discarded (Too small)};
+
+% Row 2 (Y = -7.7)
+\node[font=\small\ttfamily, color=gray!80!black, anchor=east] at (-1.5, -7.7) {img-800.jpg};
+\node[font=\small\ttfamily, color=gray!80!black, anchor=west] at (-1.0, -7.7) {800w};
+\node[font=\small, color=red!80!black, anchor=west] at (0.5, -7.7) {\faTimes\ Discarded (Too small)};
+
+% Row 3 (Y = -8.6) - Highlight rectangle drawn underneath first
+\fill[resultcolor!15, rounded corners=6pt] (-4.6172,-9.2254) rectangle (5.3446,-8.0749);
+\draw[resultcolor!50, thick, rounded corners=6pt] (-4.6172,-9.2254) rectangle (5.3446,-8.0749);
+\node[font=\small\ttfamily\bfseries, color=resultcolor!70!black, anchor=east] at (-1.5, -8.6) {\textbf{img-1200.jpg}};
+\node[font=\small\ttfamily\bfseries, color=resultcolor!70!black, anchor=west] at (-1.0, -8.6) {\textbf{1200w}};
+\node[font=\small\bfseries, color=resultcolor!70!black, anchor=west] at (0.5, -8.6) {\faCheckCircle\ Optimal Match Selected!};
+
+% Row 4 (Y = -9.5) - Clean strikethrough isolated to filename and width
+\node (img1600_name) [font=\small\ttfamily, color=gray!80!black, anchor=east] at (-1.5, -9.5) {img-1600.jpg};
+\node (img1600_width) [font=\small\ttfamily, color=gray!80!black, anchor=west] at (-1.0, -9.5) {1600w};
+\node[font=\small, color=gray!80!black, anchor=west] at (0.5, -9.5) {\faMinus\ Ignored (Overkill / Wastes bandwidth)};
+\draw[thick, gray!80, shorten <=-2mm, shorten >=-2mm] (img1600_name.west) -- (img1600_width.east);
+
+
+% =========================================================================
+% COMPONENT 5: INSTANT DISPATCH (Result)
+% =========================================================================
+\node[fill=resultcolor!10, draw=resultcolor!60, rounded corners=12pt, drop shadow={opacity=0.15, shadow xshift=3pt, shadow yshift=-3pt}, ultra thick, minimum width=14.0cm, minimum height=3.0cm] (resultBox) at (0, -14.0) {};
+\node[font=\huge\bfseries, color=resultcolor!80!black] at (0, -13.5) {\faRocket\ INSTANT DISPATCH};
+\node[font=\normalsize, align=center, text width=12.5cm, textdark] at (0, -14.6) {The Pre-parser thread issues the network request for \texttt{\textbf{img-1200.jpg}} instantaneously—completely bypassing the CSS Layout calculation wait time.};
+
+
+% =========================================================================
+% COMPONENT 6: GLOBAL PIPELINE ROUTING (Spatial Engine)
+% =========================================================================
+\draw[-Stealth, ultra thick, envcolor, shorten >=2pt, shorten <=2pt] (-4.5, 7.5) -- (-2.5, 6.0);
+\draw[-Stealth, ultra thick, htmlcolor, shorten >=2pt, shorten <=2pt] (4.5, 7.5) -- (2.5, 6.0);
+\draw[-Stealth, ultra thick, stepcolor, shorten >=2pt, shorten <=2pt] (0, 2.5) -- (0, 1.0);
+\draw[-Stealth, ultra thick, stepcolor, shorten >=2pt, shorten <=2pt] (0, -2.5) -- (0, -4.0);
+\draw[-Stealth, ultra thick, resultcolor, shorten >=2pt, shorten <=2pt] (0, -11.0) -- (0, -12.5);
+
+\end{tikzpicture}
+\end{document}

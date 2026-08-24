@@ -1,0 +1,209 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- POSTGRADUATE COLOR PALETTE ---
+\definecolor{imgblue}{RGB}{41, 128, 185}       % Intrinsic source blue
+\definecolor{ceilpurple}{RGB}{142, 68, 173}    % Mathematical ceiling purple
+\definecolor{contgreen}{RGB}{39, 174, 96}      % Max-width success green
+\definecolor{stretchred}{RGB}{192, 57, 43}     % Pixelation warning red
+\definecolor{darktext}{RGB}{44, 62, 80}        % Main text
+\definecolor{vscodebg}{HTML}{1E1E1E}           % macOS code editor dark background
+
+\begin{document}
+\begin{tikzpicture}
+% ==========================================
+% STRICT PURE WHITE MASTER CANVAS
+% ==========================================
+\fill[white] (-13, -3.5) rectangle (13, 16.5);
+
+% --- MAIN TITLE & SUBTITLE ---
+\node[font=\Huge\bfseries\color{darktext}] at (0, 14.5) {The Algorithmic Ceiling of \texttt{max-width: 100\%}};
+\node[font=\large\color{darktext!70}] at (0, 13.5) {Mathematical refusal to stretch beyond physical source resolution in flexible media};
+
+% ==========================================
+% PANEL 1: INTRINSIC SOURCE (Left)
+% ==========================================
+\fill[white, draw=black!15, rounded corners=8pt, blur shadow={shadow opacity=12, shadow yshift=-2pt, shadow blur radius=4pt}] (-12.5, 4) rectangle (-4.5, 12);
+\node[font=\Large\bfseries\color{darktext}] at (-8.5, 11.2) {1. Intrinsic Source Data};
+\node[font=\small\color{darktext!80}, text width=7.2cm, align=center, anchor=north] at (-8.5, 10.5) {The physical image file has absolute pixel dimensions encoded in its raw bitmap matrix.};
+
+% Dimension Braces (Shifted 0.5 units left with guaranteed clearance)
+\draw[decoration={brace, amplitude=6pt, raise=2pt}, decorate, thick, imgblue] (-11.0, 8) -- (-7.0, 8);
+\node[font=\bfseries\color{imgblue}, anchor=south] at (-9.0, 8.8) {$W_{\text{intrinsic}} = 800\text{px}$};
+
+\draw[decoration={brace, amplitude=6pt, raise=2pt}, decorate, thick, gray] (-6.8, 8) -- (-6.8, 6);
+\node[font=\bfseries\color{gray}, anchor=west] at (-6.5, 7.0) {$H = 400\text{px}$};
+
+% Source Image Rectangle (Strict 2:1 ratio: 4 units wide x 2 units high, shifted to X=-11 to -7)
+\begin{scope}
+  \fill[imgblue!10, rounded corners=3pt, blur shadow={shadow opacity=15, shadow yshift=-1.5pt}] (-11.0, 6) rectangle (-7.0, 8);
+  % Raw Bitmap Matrix Grid Pattern
+  \begin{scope}
+    \clip[rounded corners=3pt] (-11.0, 6) rectangle (-7.0, 8);
+    \draw[step=0.25, imgblue!20, line width=0.25pt] (-11.0, 6) grid (-7.0, 8);
+  \end{scope}
+  \draw[imgblue, thick, rounded corners=3pt] (-11.0, 6) rectangle (-7.0, 8);
+
+  \node[font=\Huge\color{imgblue!70}] at (-9.0, 7.4) {\faImage};
+  \node[font=\bfseries\ttfamily\color{imgblue}] at (-9.0, 6.4) {source\_art.jpg};
+\end{scope}
+
+% ==========================================
+% PANEL 2: CSS LOGIC ENGINE (Center)
+% ==========================================
+\fill[white, draw=black!15, rounded corners=8pt, blur shadow={shadow opacity=12, shadow yshift=-2pt, shadow blur radius=4pt}] (-3.5, 4) rectangle (3.5, 12);
+\node[font=\Large\bfseries\color{darktext}] at (0, 11.2) {2. Browser Algorithm};
+
+% Stylized Algorithmic Processor: Interlocking Metallic Shaded Gears
+\begin{scope}[shift={(0, 9.5)}]
+  % Main Center Gear
+  \foreach \a in {0,30,...,330} {
+    \fill[gray!50, rotate=\a] (-0.12, 0.55) rectangle (0.12, 0.78);
+  }
+  \shade[inner color=gray!20, outer color=gray!60, draw=gray!75, line width=0.6pt] (0,0) circle (0.65);
+  \fill[white, draw=gray!70, line width=0.5pt] (0,0) circle (0.24);
+  \fill[gray!45] (0,0) circle (0.14);
+
+  % Top-Left Interlocking Gear
+  \begin{scope}[shift={(-0.8, 0.55)}]
+    \foreach \a in {15,60,...,330} {
+      \fill[gray!45, rotate=\a] (-0.08, 0.35) rectangle (0.08, 0.48);
+    }
+    \shade[inner color=gray!25, outer color=gray!55, draw=gray!70, line width=0.5pt] (0,0) circle (0.4);
+    \fill[white, draw=gray!65, line width=0.4pt] (0,0) circle (0.16);
+    \fill[gray!40] (0,0) circle (0.09);
+  \end{scope}
+
+  % Bottom-Right Interlocking Gear
+  \begin{scope}[shift={(0.75, -0.55)}]
+    \foreach \a in {10,55,...,325} {
+      \fill[gray!45, rotate=\a] (-0.07, 0.3) rectangle (0.07, 0.42);
+    }
+    \shade[inner color=gray!25, outer color=gray!55, draw=gray!70, line width=0.5pt] (0,0) circle (0.35);
+    \fill[white, draw=gray!65, line width=0.4pt] (0,0) circle (0.14);
+    \fill[gray!40] (0,0) circle (0.08);
+  \end{scope}
+\end{scope}
+
+% Rules, Description & Math Formula
+\node[font=\large\bfseries\color{ceilpurple}] at (0, 7.5) {\texttt{max-width: 100\%}};
+\node[font=\small\color{darktext}, text width=6cm, align=center] at (0, 6.2) {
+    Computes a strict bounding function against the parent container width.
+};
+\node[font=\normalsize\color{darktext}, anchor=center] at (0, 5.0) {$\mathbf{W_{\text{render}} = \min(W_{\text{intrinsic}}, W_{\text{container}})}$};
+
+% Advanced Flow Arrows Connecting Panels (Buffered to prevent border collision)
+\draw[-Stealth=3mm, line width=2.5pt, darktext!30] (-4.4, 8) -- (-3.6, 8);
+\draw[-Stealth=3mm, line width=2.5pt, darktext!30] (3.6,7.5028) -- (4.4,7.5028);
+
+% ==========================================
+% PANEL 3: THE MATHEMATICAL CEILING (Right)
+% ==========================================
+\fill[white, draw=black!15, rounded corners=8pt, blur shadow={shadow opacity=12, shadow yshift=-2pt, shadow blur radius=4pt}] (4.5, 4) rectangle (12.5, 12);
+\node[font=\Large\bfseries\color{darktext}] at (8.5,11.434) {3. Visualizing the Math};
+
+% Graph Background Grid (Shifted to 5.5 to 11.0)
+\begin{scope}
+  \clip (5.5, 5.5) rectangle (11.0, 10.5);
+  \draw[step=0.5, black!6, line width=0.3pt] (5.5, 5.5) grid (11.0, 10.5);
+  \draw[step=1.0, black!12, line width=0.5pt] (5.5, 5.5) grid (11.0, 10.5);
+\end{scope}
+
+% Graph Axes (Origin shifted to X=5.5, Y=5.5)
+\draw[thick, -Stealth=3mm, darktext!80] (5.5, 5.5) -- (11.1, 5.5);
+\node[font=\scriptsize\color{darktext!80}, below] at (8.3, 4.7) {$W_{\text{container}}$ (Viewport)};
+
+\draw[thick, -Stealth=3mm, darktext!80] (5.5, 5.5) -- (5.5, 10.6);
+\node[font=\scriptsize\color{darktext!80}, rotate=90, anchor=center] at (4.8592,9.6907) {$W_{\text{render}}$ (Actual Size)};
+\node[font=\tiny\color{gray}, anchor=north east, fill=white, inner sep=1.5pt] at (5.4, 5.4) {0px};
+
+% Rigid Mathematical Axis Ticks
+\draw[thick, darktext!80] (5.4, 8.0) -- (5.5, 8.0);
+\draw[thick, darktext!80] (8.0, 5.4) -- (8.0, 5.5);
+
+% Intrinsic Limit Line (The Algorithmic Ceiling)
+\draw[ceilpurple, thick, dashed] (5.5, 8.0) -- (11.0, 8.0);
+\node[font=\footnotesize\bfseries\color{ceilpurple}, anchor=east, fill=white, inner sep=1.5pt] at (5.4, 8.0) {800px};
+\node[font=\scriptsize\bfseries\color{ceilpurple}, anchor=south west, align=left, fill=white, inner sep=2pt, rounded corners=2pt] at (5.7, 8.2) {The Algorithmic\\[-0.5ex]Ceiling};
+
+% Breakpoint Intersection Marking
+\draw[dotted, thick, gray!80] (8.0, 5.5) -- (8.0, 8.0);
+\node[font=\footnotesize\bfseries\color{gray}, anchor=north, fill=white, inner sep=1.5pt] at (8.0, 5.4) {800px};
+
+% "width: 100%" Path (Stretching beyond native resolution)
+\draw[stretchred, thick, dashed] (8.0, 8.0) -- (10.5, 10.5);
+\node[font=\scriptsize\bfseries\color{stretchred}, anchor=west, fill=white, inner sep=2pt, rounded corners=2pt] at (10.6, 10.7) {width: 100\%};
+\node[font=\tiny\color{stretchred}, anchor=west, fill=white, inner sep=2pt, rounded corners=2pt] at (10.6, 10.2) {\faExclamationTriangle\ Pixelation Zone};
+
+% "max-width: 100%" Path (Safe mathematical boundary: exact 1:1 slope to 8.0, 8.0)
+\draw[contgreen, line width=2.5pt] (5.5, 5.5) -- (8.0, 8.0) -- (11.0, 8.0);
+\node[font=\scriptsize\bfseries\color{contgreen}, anchor=north, fill=white, inner sep=2pt, rounded corners=2pt] at (9.5, 7.7) {max-width: 100\%};
+
+% Breakpoint Dot
+\fill[darktext] (8.0, 8.0) circle (2.5pt);
+
+% ==========================================
+% BOTTOM PANEL: CODE & ART DIRECTION CONTEXT
+% ==========================================
+\fill[white, draw=black!15, rounded corners=8pt, blur shadow={shadow opacity=12, shadow yshift=-2pt, shadow blur radius=4pt}] (-12.5, -2.2) rectangle (12.5, 3.2);
+\node[font=\Large\bfseries\color{darktext}, anchor=west] at (-12, 2.4) {\faCode\ \ CSS Implementation};
+
+% Realistic macOS Dark Mode Code Window
+\fill[vscodebg, rounded corners=6pt, blur shadow={shadow opacity=20, shadow yshift=-2pt}] (-12.0, -2.0) rectangle (-2.5, 1.5);
+\fill[red!80] (-11.5, 1.1) circle (3pt);
+\fill[yellow!80] (-11.1, 1.1) circle (3pt);
+\fill[green!80] (-10.7, 1.1) circle (3pt);
+\node[font=\footnotesize\ttfamily\color{white!50}, anchor=west] at (-10.2, 1.1) {style.css};
+\draw[white!15, line width=0.5pt] (-12.0, 0.75) -- (-2.5, 0.75);
+
+% CSS Code Content Recreated with Absolute Grid Coordinates
+\node[font=\ttfamily\small\color{white}, anchor=west] at (-11.5, 0.5) {img \{};
+\node[font=\ttfamily\small, anchor=west] at (-11.0, 0.0) {\textcolor{skyblue}{max-width}: \textcolor{orange}{100\%};};
+\node[font=\ttfamily\small\color{contgreen}, anchor=west] at (-7.0, 0.0) {/* Ceiling */};
+\node[font=\ttfamily\small, anchor=west] at (-11.0, -0.5) {\textcolor{skyblue}{height}: \textcolor{orange}{auto};};
+\node[font=\ttfamily\small\color{ceilpurple}, anchor=west] at (-7.0, -0.5) {/* Scale Lock */};
+\node[font=\ttfamily\small, anchor=west] at (-11.0, -1.0) {\textcolor{skyblue}{display}: \textcolor{orange}{block};};
+\node[font=\ttfamily\small\color{white}, anchor=west] at (-11.5, -1.5) {\}};
+
+% Text Explanation (The Structural Engine - Top aligned at Y=1.5)
+\node[font=\normalsize\color{darktext!90}, text width=13.5cm, align=left, anchor=north west] at (-2.0, 1.5) {
+\textbf{The Structural Engine:} The browser continuously calculates the bounding box of the parent HTML element. If the viewport shrinks, \texttt{100\%} dictates the image must algorithmically scale down to fit, triggering \texttt{height: auto} to mathematically preserve the original 2:1 aspect ratio. Conversely, on wide screens, the \texttt{max} function prohibits the browser from interpolating artificial pixels, refusing to stretch past its native source matrix (800px), guaranteeing absolute art direction fidelity.
+};
+
+\end{tikzpicture}
+\end{document}

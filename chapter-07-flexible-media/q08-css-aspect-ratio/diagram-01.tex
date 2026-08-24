@@ -1,0 +1,240 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+
+% --- COLOR DEFINITIONS ---
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+\definecolor{cssblue}{RGB}{41, 101, 241}
+\definecolor{htmlorange}{RGB}{227, 79, 38}
+\definecolor{warnred}{RGB}{211, 47, 47}
+\definecolor{goodgreen}{RGB}{46, 125, 50}
+\definecolor{boxgray}{RGB}{245, 247, 250}
+\definecolor{darkgray}{RGB}{40, 44, 52}
+\definecolor{enginepurple}{RGB}{123, 31, 162}
+\definecolor{macred}{RGB}{255, 95, 86}
+\definecolor{macyellow}{RGB}{255, 189, 46}
+\definecolor{macgreen}{RGB}{39, 201, 63}
+
+\begin{document}
+\begin{tikzpicture}[
+    x=1cm, y=1cm,
+    annotation/.style={
+        draw=black!30, fill=white, rounded corners=6pt,
+        text width=5.5cm, inner sep=8pt, font=\small, anchor=north,
+        blur shadow={shadow opacity=15, shadow yshift=-2pt}
+    }
+]
+
+% ==============================================================================
+% 1. CANVAS BACKGROUND (Rule 8)
+% ==============================================================================
+\begin{scope}[on background layer]
+    \fill[white] (-15, 16) rectangle (15, -17);
+\end{scope}
+
+% ==============================================================================
+% 2. HEADER & CENTRAL DIVIDER
+% ==============================================================================
+\node[font=\Huge\bfseries\color{darkgray}, anchor=center] at (0, 14.5) {Architectural Evolution of Responsive Media Sizing};
+\node[font=\Large\color{gray}, text width=20cm, align=center, anchor=center] at (0, 13.5) {Transitioning from Structural Hacks to Algorithmic Sizing Specifications in CSS};
+
+\draw[dashed, thick, gray!40] (0, 12.5) -- (0, -13.0);
+
+% ==============================================================================
+% 3. LEFT SIDE: LEGACY PADDING HACK (Center Axis: X = -7.5)
+% ==============================================================================
+% A. Titles & IDE Window
+\node[font=\huge\bfseries\color{warnred}, anchor=center] at (-7.533,11.9243) {Legacy: The Padding-Top Hack};
+\node[font=\normalsize\color{gray}, text width=13cm, align=center, anchor=center] at (-7.519,10.3483) {Relies on a quirk of the CSS Box Model: padding percentages are calculated based on the \textbf{width of the parent container}, not the element's own intrinsic dimensions.};
+
+% IDE Box (Legacy)
+\filldraw[fill=darkgray, draw=gray!60, rounded corners=8pt, blur shadow={shadow opacity=20, shadow yshift=-3pt}] (-13.5, 1.5) rectangle (-1.5, 9.0);
+\begin{scope}
+    \clip[rounded corners=8pt] (-13.5, 1.5) rectangle (-1.5, 9.0);
+    \fill[darkgray!75!black] (-13.5, 8.3) rectangle (-1.5, 9.0);
+    \draw[gray!50!black] (-13.5, 8.3) -- (-1.5, 8.3);
+    \fill[macred] (-13.0, 8.65) circle (3.2pt);
+    \fill[macyellow] (-12.6, 8.65) circle (3.2pt);
+    \fill[macgreen] (-12.2, 8.65) circle (3.2pt);
+    \node[font=\ttfamily\scriptsize\color{gray!60}, anchor=center] at (-7.5, 8.65) {legacy-padding-hack.html};
+\end{scope}
+
+% Legacy Code Content
+\node[anchor=north west, font=\ttfamily\footnotesize, text width=11.0cm, align=left] at (-13.1, 8.0) {
+    \color{gray!30}<div class="video-container">\\[1.5mm]
+    \quad <img src="image.jpg">\\[1.5mm]
+    </div>\\[3.5mm]
+    \color{skyblue}.video-container \color{white}\{\\[1.5mm]
+    \quad position: relative;\\[1.5mm]
+    \quad width: 100\%;\\[1.5mm]
+    \quad {\color{warnred!90!white}\textbf{padding-top: 56.25\%;}} \color{gray!60}/* 9/16 = 0.5625 */\\[1.5mm]
+    \color{white}\}\\[2.5mm]
+    \color{skyblue}.video-container img \color{white}\{\\[1.5mm]
+    \quad position: absolute;\\[1.5mm]
+    \quad top: 0; left: 0;\\[1.5mm]
+    \quad width: 100\%; height: 100\%;\\[1.5mm]
+    \color{white}\}
+};
+
+% B. Browser Diagram (Legacy)
+\node[font=\Large\bfseries\color{darkgray}, anchor=center] at (-7.5, 0.5) {Mechanical Execution};
+\node[font=\bfseries\small\color{darkgray}, anchor=center] at (-7.5, -0.5) {Parent Container (Width = $W$)};
+
+% Browser Frame (Legacy)
+\filldraw[fill=white, draw=gray!40, rounded corners=6pt, blur shadow={shadow opacity=15, shadow yshift=-2pt}] (-13.5, -7.5) rectangle (-1.5, -1.0);
+\begin{scope}
+    \clip[rounded corners=6pt] (-13.5, -7.5) rectangle (-1.5, -1.0);
+    \fill[gray!12] (-13.5, -1.5) rectangle (-1.5, -1.0);
+    \draw[gray!30] (-13.5, -1.5) -- (-1.5, -1.5);
+    \fill[gray!40] (-13.1, -1.25) circle (2pt);
+    \fill[gray!40] (-12.8, -1.25) circle (2pt);
+    \fill[gray!40] (-12.5, -1.25) circle (2pt);
+    \fill[white, draw=gray!25, rounded corners=2pt] (-12.0, -1.4) rectangle (-3.0, -1.1);
+    \node[font=\tiny\color{gray!60}, anchor=center] at (-7.5, -1.25) {\faLock\quad localhost:3000/legacy-demo};
+\end{scope}
+
+% Base Padding Box
+\filldraw[fill=warnred!10, draw=warnred, thick, dashed, pattern=crosshatch dots, pattern color=warnred!30] (-11.5, -6.0) rectangle (-4.5, -2.8);
+\node[align=center, anchor=north] at (-7.5,-1.9914) {
+    \Large\bfseries\color{warnred} Padding Space Hack\\[2mm]
+    \small\bfseries\color{warnred!80!black} Height = W $\times$ 0.5625
+};
+
+% Absolute Media Box (Overlay and Z-Index Stagger)
+\filldraw[fill=htmlorange!85, draw=htmlorange!50!black, thick, blur shadow={shadow opacity=35, shadow xshift=3pt, shadow yshift=-3pt}] (-10.5, -6.5) rectangle (-3.5, -3.3);
+\draw[->, dashed, warnred!80!black, thick] (-11.5, -2.8) -- (-10.5, -3.3);
+\node[font=\small\bfseries, text=white, align=center, anchor=center] at (-7.0, -4.9) {\faUnlink \quad Absolutely Positioned Media\\[1mm](Removed from Flow)};
+
+% C. Legacy Annotations
+\node[annotation] (legA) at (-10.8, -9.0) {
+    \textbf{\color{warnred}1. Structural Coupling}\\[2pt]
+    The structural height is artificially generated by pushing the container's padding down. The media element itself has zero structural impact on the document flow.
+};
+\draw[-Stealth, thick, warnred, shorten >= 2pt, shorten <= 2pt] (legA.north) -- (-10.8, -7.5);
+
+\node[annotation] (legB) at (-4.2, -9.0) {
+    \textbf{\color{warnred}2. DOM Bloat}\\[2pt]
+    Requires an extra wrapper \texttt{<div>} because intrinsic media (like \texttt{<img>} or \texttt{<iframe>}) cannot accept padding to create height natively without breaking rendering.
+};
+\draw[-Stealth, thick, warnred, shorten >= 2pt, shorten <= 2pt] (legB.north) -- (-4.2, -7.5);
+
+
+% ==============================================================================
+% 4. RIGHT SIDE: MODERN ASPECT-RATIO (Center Axis: X = 7.5)
+% ==============================================================================
+% A. Titles & IDE Window
+\node[font=\huge\bfseries\color{goodgreen}, anchor=center] at (7.5, 11.5) {Modern: \texttt{aspect-ratio}};
+\node[font=\normalsize\color{gray}, text width=13cm, align=center, anchor=center] at (7.5, 10.5) {Algorithmically decouples layout. The layout engine is explicitly instructed to compute the block-size based on the inline-size \textbf{natively} at parse time.};
+
+% IDE Box (Modern)
+\filldraw[fill=darkgray, draw=gray!60, rounded corners=8pt, blur shadow={shadow opacity=20, shadow yshift=-3pt}] (1.5, 1.5) rectangle (13.5, 9.0);
+\begin{scope}
+    \clip[rounded corners=8pt] (1.5, 1.5) rectangle (13.5, 9.0);
+    \fill[darkgray!75!black] (1.5, 8.3) rectangle (13.5, 9.0);
+    \draw[gray!50!black] (1.5, 8.3) -- (13.5, 8.3);
+    \fill[macred] (2.0, 8.65) circle (3.2pt);
+    \fill[macyellow] (2.4, 8.65) circle (3.2pt);
+    \fill[macgreen] (2.8, 8.65) circle (3.2pt);
+    \node[font=\ttfamily\scriptsize\color{gray!60}, anchor=center] at (7.5, 8.65) {modern-aspect-ratio.html};
+\end{scope}
+
+% Modern Code Content
+\node[anchor=north west, font=\ttfamily\footnotesize, text width=11.2cm, align=left] at (1.9, 8.0) {
+    \color{gray!60}<!-- No structural wrapper needed! -->\\[2mm]
+    \color{gray!30}<img class="modern-media" src="image.jpg">\\[4.5mm]
+    \color{skyblue}.modern-media \color{white}\{\\[2mm]
+    \quad width: 100\%;\\[2mm]
+    \quad {\color{goodgreen!90!white}\textbf{aspect-ratio: 16 / 9;}}\\[2mm]
+    \quad object-fit: cover;\\[2mm]
+    \color{white}\}
+};
+
+% B. Browser Diagram (Modern)
+\node[font=\Large\bfseries\color{darkgray}, anchor=center] at (7.5, 0.5) {Mechanical Execution};
+\node[font=\bfseries\small\color{darkgray}, anchor=center] at (7.5, -0.5) {Parent Container Flow};
+
+% Browser Frame (Modern)
+\filldraw[fill=white, draw=gray!40, rounded corners=6pt, blur shadow={shadow opacity=15, shadow yshift=-2pt}] (1.5, -7.5) rectangle (13.5, -1.0);
+\begin{scope}
+    \clip[rounded corners=6pt] (1.5, -7.5) rectangle (13.5, -1.0);
+    \fill[gray!12] (1.5, -1.5) rectangle (13.5, -1.0);
+    \draw[gray!30] (1.5, -1.5) -- (13.5, -1.5);
+    \fill[gray!40] (1.9, -1.25) circle (2pt);
+    \fill[gray!40] (2.2, -1.25) circle (2pt);
+    \fill[gray!40] (2.5, -1.25) circle (2pt);
+    \fill[white, draw=gray!25, rounded corners=2pt] (3.0, -1.4) rectangle (12.0, -1.1);
+    \node[font=\tiny\color{gray!60}, anchor=center] at (7.5, -1.25) {\faLock\quad localhost:3000/modern-demo};
+\end{scope}
+
+% Native Media Element
+\filldraw[fill=goodgreen!15, draw=goodgreen, thick, rounded corners=2pt] (4.0, -6.0) rectangle (11.0, -2.0);
+\node[align=center, anchor=center, text width=6.5cm] at (7.5, -4.0) {
+    \Large\bfseries\color{goodgreen!80!black}\faImage \quad Native Media Element\\[2mm]
+    \small\bfseries\color{goodgreen!90!black}Layout Engine Computes: Height = W $\times$ (9 $\div$ 16)
+};
+
+% Dimension Arrows (Modern)
+\draw[<->, thick, goodgreen] (3.6, -6.0) -- (3.6, -2.0);
+\node[anchor=east, font=\bfseries\footnotesize, align=right, color=goodgreen] at (3.5472,-4.0217) {Computed\\Block-size};
+
+\draw[<->, thick, goodgreen] (4.0, -6.4) -- (11.0, -6.4);
+\node[anchor=north, font=\bfseries\small, color=goodgreen] at (7.5, -6.6) {Resolved Inline-size ($W$)};
+
+% C. Modern Annotations
+\node[annotation] (modA) at (4.2, -9.0) {
+    \textbf{\color{goodgreen}1. Algorithmic Decoupling}\\[2pt]
+    The CSS parser establishes the geometric constraint \textbf{before} network requests are dispatched, decoupling the box layout from the physical payload dimensions.
+};
+\draw[-Stealth, thick, goodgreen, shorten >= 2pt, shorten <= 2pt] (modA.north) -- (4.2, -7.5);
+
+\node[annotation] (modB) at (10.8, -9.0) {
+    \textbf{\color{goodgreen}2. Flat DOM Architecture}\\[2pt]
+    Applies directly to replaced elements (images, videos). No wrappers, no absolute positioning, significantly reducing render tree depth and complexity.
+};
+\draw[-Stealth, thick, goodgreen, shorten >= 2pt, shorten <= 2pt] (modB.north) -- (10.8, -7.5);
+
+
+% ==============================================================================
+% 5. CONCLUSION SECTION (Center Axis: X = 0, Bottom)
+% ==============================================================================
+\node[draw=enginepurple, fill=enginepurple!5, rounded corners=8pt, text width=24cm, inner sep=15pt, blur shadow={shadow opacity=20}, anchor=center] at (0, -14.0) {
+    \textbf{\Large\color{enginepurple}\faCogs \quad The Core Algorithmic Shift}\\[4pt]
+    Legacy methods treat height as a consequence of content or padding box side-effects. The modern \texttt{aspect-ratio} property promotes the mathematical ratio to a first-class citizen within the \textbf{CSS Box Alignment algorithm}. It allows the browser's layout engine to solve the dimensional equation natively during the \textit{calculate block sizes} phase of the rendering pipeline, entirely independent of the physical image's intrinsic dimensions or its network loading state.
+};
+
+\end{tikzpicture}
+\end{document}

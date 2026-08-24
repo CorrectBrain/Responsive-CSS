@@ -1,0 +1,322 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,shapes.callouts,angles,quotes,fadings,shadows.blur,patterns,patterns.meta}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- Custom Colors ---
+\definecolor{advcolor}{RGB}{20, 120, 180}
+\definecolor{mandcolor}{RGB}{180, 20, 50}
+\definecolor{subjectcolor}{RGB}{230, 90, 0}
+\definecolor{bglight}{RGB}{245, 247, 250}
+
+\begin{document}
+\begin{tikzpicture}[
+    font=\sffamily,
+    titlebox/.style={fill=white, draw=gray!30, rounded corners=6pt, inner sep=11pt, text width=16.2cm, align=center, blur shadow={shadow opacity=12, shadow yshift=-2pt}},
+    networktag/.style={fill=advcolor!10, draw=advcolor!35, text=advcolor!90!black, font=\small\bfseries, rounded corners=4pt, inner sep=4pt, blur shadow={shadow opacity=10, shadow yshift=-1pt}},
+    nametagadv/.style={font=\footnotesize\bfseries, text=white, fill=advcolor, rounded corners=1ex, inner sep=4pt, blur shadow={shadow opacity=20, shadow yshift=-1pt}},
+    nametagmand/.style={font=\footnotesize\bfseries, text=white, fill=mandcolor, rounded corners=1ex, inner sep=4pt, blur shadow={shadow opacity=20, shadow yshift=-1pt}},
+    desclabel/.style={font=\small\bfseries, color=gray!80!black}
+]
+
+% ==========================================
+% TOP HALF: RESOLUTION SWITCHING (srcset)
+% ==========================================
+
+% Title 1 Box
+\node[titlebox, draw=advcolor!50, line width=1pt] (title1) at (0, 9.5) {
+    \LARGE\bfseries\color{advcolor} 1. Resolution Switching (via \texttt{srcset})\\[2.5mm]
+    \normalsize\color{gray!80!black} The composition is mathematically identical; only the pixel density changes.
+    It is \textbf{safe} for the Browser Engine to autonomously swap these images based on network speed.
+};
+% Top Accent Border
+\fill[advcolor, rounded corners=2pt] ($(title1.north west)+(0.08,-0.05)$) rectangle ($(title1.north east)+(-0.08,-0.16)$);
+
+% Network Speed / DPI Indicators
+\node[networktag] (net-fast) at (-6, 7.5) {\faWifi \hspace{1.5mm} Fast Network / High DPI};
+\node[networktag] (net-avg) at (0, 7.5) {\faSignal \hspace{1.5mm} Average Network};
+\node[networktag] (net-slow) at (6, 7.5) {\faIcon{tachometer-alt} \hspace{1.5mm} Slow Network / Data Saver};
+
+% ----------------------------------------------------
+% Simulated Photograph: Mountain Scenery (Identical compositions scaled)
+% ----------------------------------------------------
+
+% Image 1: Large (6cm x 3.5cm) at (-6, 4.2)
+\begin{scope}[shift={(-6, 4.2)}, scale=1.0]
+    \clip[rounded corners=3pt] (-3.0, -1.75) rectangle (3.0, 1.75);
+    % Sky
+    \fill[top color=SkyBlue!70!Cerulean!50, bottom color=white] (-3.0, -1.75) rectangle (3.0, 1.75);
+    % Sun
+    \fill[gold!90!orange] (1.6, 0.8) circle (0.42);
+    \fill[gold!40, opacity=0.3] (1.6, 0.8) circle (0.6);
+    % Distant mountain
+    \fill[SlateGray!60!NavyBlue!40] (-3.2, -1.8) -- (-1.1, 1.1) -- (1.0, -1.8) -- cycle;
+    \fill[white!95!SlateGray] (-1.1, 1.1) -- (-1.4, 0.6) -- (-1.2, 0.7) -- (-1.1, 0.55) -- (-0.95, 0.7) -- (-0.8, 0.6) -- cycle;
+    % Midground mountain
+    \fill[SlateGray!85!black] (-0.6, -1.8) -- (1.1, 0.75) -- (2.8, -1.8) -- cycle;
+    \fill[white!95!SlateGray] (1.1, 0.75) -- (0.8, 0.35) -- (0.95, 0.42) -- (1.1, 0.3) -- (1.25, 0.42) -- (1.4, 0.35) -- cycle;
+    % Foreground hills
+    \fill[ForestGreen!70!darkgreen] (-3.2, -1.8) .. controls (-2.0, -0.9) and (-0.5, -1.2) .. (1.0, -1.0) .. controls (2.0, -0.85) and (2.8, -1.2) .. (3.2, -1.8) -- (3.2, -2.5) -- (-3.2, -2.5) -- cycle;
+    \fill[ForestGreen!90!black] (-3.2, -1.8) .. controls (-1.5, -1.4) and (0.5, -1.1) .. (3.2, -1.4) -- (3.2, -2.5) -- (-3.2, -2.5) -- cycle;
+    % Trees
+    \foreach \tx/\ty/\ts in {-2.2/-1.1/0.25, -1.8/-1.05/0.3, -0.2/-1.1/0.25, 0.2/-1.05/0.28, 2.0/-1.2/0.22} {
+        \fill[DarkGreen!90!black] (\tx, \ty) -- ++(-0.25*\ts, -0.6*\ts) -- ++(0.5*\ts, 0) -- cycle;
+        \fill[DarkGreen!80!black] (\tx, \ty - 0.2*\ts) -- ++(-0.3*\ts, -0.6*\ts) -- ++(0.6*\ts, 0) -- cycle;
+    }
+\end{scope}
+\node[draw=black!20, line width=1pt, rounded corners=3pt, blur shadow={shadow opacity=15, shadow yshift=-1.5pt}, minimum width=6cm, minimum height=3.5cm, inner sep=0pt] (img-large) at (-6, 4.2) {};
+\node[nametagadv] at (-6, 1.4) {large.jpg (1200w)};
+
+% Image 2: Medium (4cm x 2.33cm) at (0, 4.2)
+\begin{scope}[shift={(0, 4.2)}, scale=0.6667]
+    \clip[rounded corners=3pt] (-3.0, -1.75) rectangle (3.0, 1.75);
+    % Sky
+    \fill[top color=SkyBlue!70!Cerulean!50, bottom color=white] (-3.0, -1.75) rectangle (3.0, 1.75);
+    % Sun
+    \fill[gold!90!orange] (1.6, 0.8) circle (0.42);
+    \fill[gold!40, opacity=0.3] (1.6, 0.8) circle (0.6);
+    % Distant mountain
+    \fill[SlateGray!60!NavyBlue!40] (-3.2, -1.8) -- (-1.1, 1.1) -- (1.0, -1.8) -- cycle;
+    \fill[white!95!SlateGray] (-1.1, 1.1) -- (-1.4, 0.6) -- (-1.2, 0.7) -- (-1.1, 0.55) -- (-0.95, 0.7) -- (-0.8, 0.6) -- cycle;
+    % Midground mountain
+    \fill[SlateGray!85!black] (-0.6, -1.8) -- (1.1, 0.75) -- (2.8, -1.8) -- cycle;
+    \fill[white!95!SlateGray] (1.1, 0.75) -- (0.8, 0.35) -- (0.95, 0.42) -- (1.1, 0.3) -- (1.25, 0.42) -- (1.4, 0.35) -- cycle;
+    % Foreground hills
+    \fill[ForestGreen!70!darkgreen] (-3.2, -1.8) .. controls (-2.0, -0.9) and (-0.5, -1.2) .. (1.0, -1.0) .. controls (2.0, -0.85) and (2.8, -1.2) .. (3.2, -1.8) -- (3.2, -2.5) -- (-3.2, -2.5) -- cycle;
+    \fill[ForestGreen!90!black] (-3.2, -1.8) .. controls (-1.5, -1.4) and (0.5, -1.1) .. (3.2, -1.4) -- (3.2, -2.5) -- (-3.2, -2.5) -- cycle;
+    % Trees
+    \foreach \tx/\ty/\ts in {-2.2/-1.1/0.25, -1.8/-1.05/0.3, -0.2/-1.1/0.25, 0.2/-1.05/0.28, 2.0/-1.2/0.22} {
+        \fill[DarkGreen!90!black] (\tx, \ty) -- ++(-0.25*\ts, -0.6*\ts) -- ++(0.5*\ts, 0) -- cycle;
+        \fill[DarkGreen!80!black] (\tx, \ty - 0.2*\ts) -- ++(-0.3*\ts, -0.6*\ts) -- ++(0.6*\ts, 0) -- cycle;
+    }
+\end{scope}
+\node[draw=black!20, line width=1pt, rounded corners=3pt, blur shadow={shadow opacity=15, shadow yshift=-1.5pt}, minimum width=4cm, minimum height=2.334cm, inner sep=0pt] (img-medium) at (0, 4.2) {};
+\node[nametagadv] at (0, 2.0) {medium.jpg (800w)};
+
+% Image 3: Small (2.5cm x 1.46cm) at (6, 4.2)
+\begin{scope}[shift={(6, 4.2)}, scale=0.4167]
+    \clip[rounded corners=3pt] (-3.0, -1.75) rectangle (3.0, 1.75);
+    % Sky
+    \fill[top color=SkyBlue!70!Cerulean!50, bottom color=white] (-3.0, -1.75) rectangle (3.0, 1.75);
+    % Sun
+    \fill[gold!90!orange] (1.6, 0.8) circle (0.42);
+    \fill[gold!40, opacity=0.3] (1.6, 0.8) circle (0.6);
+    % Distant mountain
+    \fill[SlateGray!60!NavyBlue!40] (-3.2, -1.8) -- (-1.1, 1.1) -- (1.0, -1.8) -- cycle;
+    \fill[white!95!SlateGray] (-1.1, 1.1) -- (-1.4, 0.6) -- (-1.2, 0.7) -- (-1.1, 0.55) -- (-0.95, 0.7) -- (-0.8, 0.6) -- cycle;
+    % Midground mountain
+    \fill[SlateGray!85!black] (-0.6, -1.8) -- (1.1, 0.75) -- (2.8, -1.8) -- cycle;
+    \fill[white!95!SlateGray] (1.1, 0.75) -- (0.8, 0.35) -- (0.95, 0.42) -- (1.1, 0.3) -- (1.25, 0.42) -- (1.4, 0.35) -- cycle;
+    % Foreground hills
+    \fill[ForestGreen!70!darkgreen] (-3.2, -1.8) .. controls (-2.0, -0.9) and (-0.5, -1.2) .. (1.0, -1.0) .. controls (2.0, -0.85) and (2.8, -1.2) .. (3.2, -1.8) -- (3.2, -2.5) -- (-3.2, -2.5) -- cycle;
+    \fill[ForestGreen!90!black] (-3.2, -1.8) .. controls (-1.5, -1.4) and (0.5, -1.1) .. (3.2, -1.4) -- (3.2, -2.5) -- (-3.2, -2.5) -- cycle;
+    % Trees
+    \foreach \tx/\ty/\ts in {-2.2/-1.1/0.25, -1.8/-1.05/0.3, -0.2/-1.1/0.25, 0.2/-1.05/0.28, 2.0/-1.2/0.22} {
+        \fill[DarkGreen!90!black] (\tx, \ty) -- ++(-0.25*\ts, -0.6*\ts) -- ++(0.5*\ts, 0) -- cycle;
+        \fill[DarkGreen!80!black] (\tx, \ty - 0.2*\ts) -- ++(-0.3*\ts, -0.6*\ts) -- ++(0.6*\ts, 0) -- cycle;
+    }
+\end{scope}
+\node[draw=black!20, line width=1pt, rounded corners=3pt, blur shadow={shadow opacity=15, shadow yshift=-1.5pt}, minimum width=2.5cm, minimum height=1.46cm, inner sep=0pt] (img-small) at (6, 4.2) {};
+\node[nametagadv] at (6, 2.5) {small.jpg (400w)};
+
+% Network Logic Routing Arrows
+\draw[-Latex, draw=advcolor, line width=1.2pt, dashed, shorten >=6pt, shorten <=3pt] (net-fast.south) -- (img-large.north);
+\draw[-Latex, draw=advcolor, line width=1.2pt, dashed, shorten >=6pt, shorten <=3pt] (net-avg.south) -- (img-medium.north);
+\draw[-Latex, draw=advcolor, line width=1.2pt, dashed, shorten >=6pt, shorten <=3pt] (net-slow.south) -- (img-small.north);
+
+% ==========================================
+% MID-SECTION DIVIDER
+% ==========================================
+\draw[thick, dashed, draw=gray!40] (-8.5, 1.0) -- (8.5, 1.0);
+\node[circle, fill=white, draw=gray!40, line width=0.8pt, inner sep=4pt] at (0, 1.0) {\color{gray!70}\faCogs};
+
+% ==========================================
+% BOTTOM HALF: ART DIRECTION (<picture>)
+% ==========================================
+
+% Title 2 Box
+\node[titlebox, draw=mandcolor!50, line width=1pt] (title2) at (0, -1.5) {
+    \LARGE\bfseries\color{mandcolor} 2. Art Direction (via \texttt{<picture>})\\[2.5mm]
+    \normalsize\color{gray!80!black} The composition is deliberately cropped to preserve the focal subject (\textcolor{subjectcolor}{\faDog}) on different screens. \\
+    The Browser Engine \textbf{must not} swap these! If it chose the wide image for mobile, the dog would be invisible.
+};
+% Top Accent Border
+\fill[mandcolor, rounded corners=2pt] ($(title2.north west)+(0.08,-0.05)$) rectangle ($(title2.north east)+(-0.08,-0.16)$);
+
+% ----------------------------------------------------
+% Device Frame 1: Desktop Monitor (16:9 Aspect Ratio)
+% ----------------------------------------------------
+% Silver Housing & Stand
+\fill[silver!25, draw=silver!80, line width=0.8pt, rounded corners=4pt, blur shadow={shadow opacity=15, shadow yshift=-2pt}] (-9.15, -7.8) rectangle (-2.85, -4.2);
+\fill[black!85, rounded corners=2pt] (-9.06, -7.74) rectangle (-2.94, -4.26);
+\fill[silver!60, draw=silver!80] (-6.15, -7.8) rectangle (-5.85, -8.1);
+\fill[silver!40, draw=silver!75, rounded corners=1.5pt] (-6.7, -8.2) rectangle (-5.3, -8.1);
+\fill[black!50] (-6, -4.23) circle (0.03);
+
+% Desktop Screen Content (16:9 Crop: 6cm x 3.375cm)
+\begin{scope}[shift={(-6, -6)}]
+    \clip[rounded corners=1pt] (-3.0, -1.6875) rectangle (3.0, 1.6875);
+    \begin{scope}[shift={(0,0)}]
+        % Sky
+        \fill[top color=SkyBlue!40!LightBlue!25, bottom color=white] (-3.5, -2.5) rectangle (3.5, 2.5);
+        % Sun
+        \fill[gold!95!orange] (-2.2, 1.1) circle (0.35);
+        \fill[gold!30, opacity=0.3] (-2.2, 1.1) circle (0.5);
+        % Clouds
+        \fill[white!92!LightBlue, opacity=0.9] (-1.5, 1.2) circle (0.28);
+        \fill[white!92!LightBlue, opacity=0.9] (-1.25, 1.3) circle (0.38);
+        \fill[white!92!LightBlue, opacity=0.9] (-0.95, 1.2) circle (0.26);
+        \fill[white!92!LightBlue, opacity=0.9] (1.5, 1.25) circle (0.26);
+        \fill[white!92!LightBlue, opacity=0.9] (1.8, 1.35) circle (0.36);
+        \fill[white!92!LightBlue, opacity=0.9] (2.1, 1.25) circle (0.24);
+        % Distant Hill
+        \fill[lightgreen!60!ForestGreen!40] (-3.5, -2.5) .. controls (-2.0, -0.4) and (0.0, -0.8) .. (3.5, -0.3) -- (3.5, -2.5) -- (-3.5, -2.5) -- cycle;
+        % Foreground Hill
+        \fill[ForestGreen!80!darkgreen] (-3.5, -2.5) .. controls (-1.8, -0.7) and (0.5, -0.9) .. (3.5, -0.6) -- (3.5, -2.5) -- (-3.5, -2.5) -- cycle;
+        % House (Far Right)
+        \fill[beige!85!orange!25, draw=brown!60!black, line width=0.4pt] (2.0, -1.0) rectangle (2.9, -0.2);
+        \fill[FireBrick!85!black, draw=FireBrick!60!black, line width=0.4pt] (1.9, -0.2) -- (2.45, 0.35) -- (3.0, -0.2) -- cycle;
+        \fill[FireBrick!90!black] (2.7, 0.1) rectangle (2.83, 0.4);
+        \fill[brown!70!black] (2.33, -1.0) rectangle (2.57, -0.55);
+        \fill[LightBlue!60!white, draw=gray!70, line width=0.3pt] (2.1, -0.6) rectangle (2.27, -0.4);
+        \fill[LightBlue!60!white, draw=gray!70, line width=0.3pt] (2.63, -0.6) rectangle (2.8, -0.4);
+        % Tree (Middle Right)
+        \fill[brown!60!black] (1.28, -1.2) rectangle (1.42, -0.5);
+        \fill[DarkGreen!90!black] (1.35, 0.35) circle (0.42);
+        \fill[ForestGreen!90!black] (1.1, 0.05) circle (0.38);
+        \fill[ForestGreen!85!black] (1.6, 0.05) circle (0.38);
+        \fill[ForestGreen!95!black] (1.35, -0.25) circle (0.42);
+        % Focal Dog (Hero Subject shifted to extreme left)
+        \node[scale=2.2, text=subjectcolor] at (-2.2, -0.5) {\faDog};
+        \fill[red!80!black] (-1.6, -1.0) circle (0.12);
+    \end{scope}
+\end{scope}
+
+\node[nametagmand] at (-6, -9.2) {desktop-crop.jpg (16:9)};
+\node[desclabel] at (-6, -9.7) {Wide Landscape View};
+
+% ----------------------------------------------------
+% Device Frame 2: Tablet Bezel (1:1 Aspect Ratio)
+% ----------------------------------------------------
+% Tablet Housing
+\fill[gray!85!black, draw=gray!60, line width=0.8pt, rounded corners=7pt, blur shadow={shadow opacity=15, shadow yshift=-2pt}] (-2.15, -8.2) rectangle (2.15, -3.9);
+\fill[black] (-2.04, -8.09) rectangle (2.04, -4.01);
+\fill[gray!50] (0, -3.97) circle (0.04);
+
+% Tablet Screen Content (1:1 Crop: 4cm x 4cm)
+\begin{scope}[shift={(0, -6.05)}]
+    \clip[rounded corners=1pt] (-2.0, -2.0) rectangle (2.0, 2.0);
+    \begin{scope}[shift={(1.5, 0)}] % Pan right
+        % Sky
+        \fill[top color=SkyBlue!40!LightBlue!25, bottom color=white] (-3.5, -2.5) rectangle (3.5, 2.5);
+        % Sun (Clipped by boundary)
+        \fill[gold!95!orange] (-2.2, 1.1) circle (0.35);
+        \fill[gold!30, opacity=0.3] (-2.2, 1.1) circle (0.5);
+        % Clouds
+        \fill[white!92!LightBlue, opacity=0.9] (-1.5, 1.2) circle (0.28);
+        \fill[white!92!LightBlue, opacity=0.9] (-1.25, 1.3) circle (0.38);
+        \fill[white!92!LightBlue, opacity=0.9] (-0.95, 1.2) circle (0.26);
+        \fill[white!92!LightBlue, opacity=0.9] (1.5, 1.25) circle (0.26);
+        \fill[white!92!LightBlue, opacity=0.9] (1.8, 1.35) circle (0.36);
+        \fill[white!92!LightBlue, opacity=0.9] (2.1, 1.25) circle (0.24);
+        % Distant Hill
+        \fill[lightgreen!60!ForestGreen!40] (-3.5, -2.5) .. controls (-2.0, -0.4) and (0.0, -0.8) .. (3.5, -0.3) -- (3.5, -2.5) -- (-3.5, -2.5) -- cycle;
+        % Foreground Hill
+        \fill[ForestGreen!80!darkgreen] (-3.5, -2.5) .. controls (-1.8, -0.7) and (0.5, -0.9) .. (3.5, -0.6) -- (3.5, -2.5) -- (-3.5, -2.5) -- cycle;
+        % House (Cropped Out)
+        \fill[beige!85!orange!25, draw=brown!60!black, line width=0.4pt] (2.0, -1.0) rectangle (2.9, -0.2);
+        \fill[FireBrick!85!black, draw=FireBrick!60!black, line width=0.4pt] (1.9, -0.2) -- (2.45, 0.35) -- (3.0, -0.2) -- cycle;
+        \fill[FireBrick!90!black] (2.7, 0.1) rectangle (2.83, 0.4);
+        \fill[brown!70!black] (2.33, -1.0) rectangle (2.57, -0.55);
+        \fill[LightBlue!60!white, draw=gray!70, line width=0.3pt] (2.1, -0.6) rectangle (2.27, -0.4);
+        \fill[LightBlue!60!white, draw=gray!70, line width=0.3pt] (2.63, -0.6) rectangle (2.8, -0.4);
+        % Tree (Kept in medium crop)
+        \fill[brown!60!black] (1.28, -1.2) rectangle (1.42, -0.5);
+        \fill[DarkGreen!90!black] (1.35, 0.35) circle (0.42);
+        \fill[ForestGreen!90!black] (1.1, 0.05) circle (0.38);
+        \fill[ForestGreen!85!black] (1.6, 0.05) circle (0.38);
+        \fill[ForestGreen!95!black] (1.35, -0.25) circle (0.42);
+        % Focal Dog (Hero Subject shifted to extreme left)
+        \node[scale=2.2, text=subjectcolor] at (-2.2, -0.5) {\faDog};
+        \fill[red!80!black] (-1.6, -1.0) circle (0.12);
+    \end{scope}
+\end{scope}
+
+\node[nametagmand] at (0, -9.2) {tablet-crop.jpg (1:1)};
+\node[desclabel] at (0, -9.7) {Medium Focus Crop};
+
+% ----------------------------------------------------
+% Device Frame 3: Smartphone Bezel (9:16 Aspect Ratio)
+% ----------------------------------------------------
+% Smartphone Housing
+\fill[gray!85!black, draw=gray!60, line width=0.8pt, rounded corners=9pt, blur shadow={shadow opacity=15, shadow yshift=-2pt}] (4.72, -8.2) rectangle (7.28, -3.9);
+\fill[black] (4.835, -8.09) rectangle (7.165, -4.01);
+\fill[gray!50, rounded corners=1pt] (5.75, -3.99) rectangle (6.25, -3.94);
+\fill[gray!40] (5.45, -3.965) circle (0.035);
+
+% Smartphone Screen Content (9:16 Crop: 2.25cm x 4cm)
+\begin{scope}[shift={(6, -6.05)}]
+    \clip[rounded corners=1pt] (-1.125, -2.0) rectangle (1.125, 2.0);
+    \begin{scope}[shift={(2.2, 0)}] % Pan heavily right to perfectly center subject
+        % Sky
+        \fill[top color=SkyBlue!40!LightBlue!25, bottom color=white] (-3.5, -2.5) rectangle (3.5, 2.5);
+        % Sun (Cropped Out)
+        \fill[gold!95!orange] (-2.2, 1.1) circle (0.35);
+        \fill[gold!30, opacity=0.3] (-2.2, 1.1) circle (0.5);
+        % Clouds
+        \fill[white!92!LightBlue, opacity=0.9] (-1.5, 1.2) circle (0.28);
+        \fill[white!92!LightBlue, opacity=0.9] (-1.25, 1.3) circle (0.38);
+        \fill[white!92!LightBlue, opacity=0.9] (-0.95, 1.2) circle (0.26);
+        \fill[white!92!LightBlue, opacity=0.9] (1.5, 1.25) circle (0.26);
+        \fill[white!92!LightBlue, opacity=0.9] (1.8, 1.35) circle (0.36);
+        \fill[white!92!LightBlue, opacity=0.9] (2.1, 1.25) circle (0.24);
+        % Distant Hill
+        \fill[lightgreen!60!ForestGreen!40] (-3.5, -2.5) .. controls (-2.0, -0.4) and (0.0, -0.8) .. (3.5, -0.3) -- (3.5, -2.5) -- (-3.5, -2.5) -- cycle;
+        % Foreground Hill
+        \fill[ForestGreen!80!darkgreen] (-3.5, -2.5) .. controls (-1.8, -0.7) and (0.5, -0.9) .. (3.5, -0.6) -- (3.5, -2.5) -- (-3.5, -2.5) -- cycle;
+        % House (Cropped Out)
+        \fill[beige!85!orange!25, draw=brown!60!black, line width=0.4pt] (2.0, -1.0) rectangle (2.9, -0.2);
+        \fill[FireBrick!85!black, draw=FireBrick!60!black, line width=0.4pt] (1.9, -0.2) -- (2.45, 0.35) -- (3.0, -0.2) -- cycle;
+        \fill[FireBrick!90!black] (2.7, 0.1) rectangle (2.83, 0.4);
+        \fill[brown!70!black] (2.33, -1.0) rectangle (2.57, -0.55);
+        \fill[LightBlue!60!white, draw=gray!70, line width=0.3pt] (2.1, -0.6) rectangle (2.27, -0.4);
+        \fill[LightBlue!60!white, draw=gray!70, line width=0.3pt] (2.63, -0.6) rectangle (2.8, -0.4);
+        % Tree (Cropped Out)
+        \fill[brown!60!black] (1.28, -1.2) rectangle (1.42, -0.5);
+        \fill[DarkGreen!90!black] (1.35, 0.35) circle (0.42);
+        \fill[ForestGreen!90!black] (1.1, 0.05) circle (0.38);
+        \fill[ForestGreen!85!black] (1.6, 0.05) circle (0.38);
+        \fill[ForestGreen!95!black] (1.35, -0.25) circle (0.42);
+        % Focal Dog (Hero Subject Preserved)
+        \node[scale=2.2, text=subjectcolor] at (-2.2, -0.5) {\faDog};
+        \fill[red!80!black] (-1.6, -1.0) circle (0.12);
+    \end{scope}
+\end{scope}
+
+\node[nametagmand] at (6, -9.2) {mobile-crop.jpg (9:16)};
+\node[desclabel] at (6, -9.7) {Tight Subject Focus};
+
+% ==========================================
+% STRICT WHITE CANVAS BACKGROUND
+% ==========================================
+\begin{scope}[on background layer]
+    \fill[white] (-10.5, 12) rectangle (10.5, -10.5);
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,206 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes,fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+\usepackage{xcolor}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+% --- HYPER-REALISTIC COLOR PALETTE ---
+\definecolor{bgcol}{RGB}{255, 255, 255}
+\definecolor{darkslate}{RGB}{30, 41, 59}      % #1E293B (Primary Text)
+\definecolor{muteslate}{RGB}{71, 85, 105}     % #475569 (Secondary Text)
+\definecolor{lightslate}{RGB}{241, 245, 249}  % #F1F5F9 (Background Tints)
+\definecolor{codebg}{RGB}{248, 250, 252}      % #F8FAFC (Codebox Surface)
+\definecolor{htmlcol}{RGB}{227, 79, 38}       % #E34F26 (HTML Accent)
+\definecolor{csscol}{RGB}{21, 114, 182}       % #1572B6 (CSS Accent)
+\definecolor{imgcol}{RGB}{240, 173, 78}       % #F0AD4E (Image Accent)
+\definecolor{scannercol}{RGB}{0, 150, 136}    % #009688 (Preload Scanner Accent)
+\definecolor{purplecol}{RGB}{123, 31, 162}    % #7B1FA2 (Render Tree Accent)
+\definecolor{successcol}{RGB}{46, 125, 50}    % #2E7D32 (Final Paint Accent)
+\begin{document}
+\sffamily
+\begin{tikzpicture}[
+    % --- MODERN UI ARCHITECTURAL CARD STYLES ---
+    card/.style 2 args={
+        draw=none,
+        fill=white,
+        rounded corners=6pt,
+        minimum width=#2,
+        minimum height=1.1cm,
+        align=center,
+        text=darkslate,
+        font=\sffamily\small,
+        blur shadow={shadow blur steps=5, shadow opacity=15, shadow yshift=-2pt, shadow xshift=0pt, shadow blur radius=3pt},
+        path picture={
+            \fill[#1] (path picture bounding box.north west) rectangle ([xshift=4.5pt]path picture bounding box.south west);
+        }
+    },
+    blockcard/.style={
+        draw=muteslate!30,
+        fill=lightslate,
+        rounded corners=6pt,
+        minimum width=4.2cm,
+        minimum height=1.1cm,
+        align=center,
+        text=muteslate,
+        font=\sffamily\small\bfseries,
+        blur shadow={shadow blur steps=5, shadow opacity=10, shadow yshift=-2pt, shadow xshift=0pt, shadow blur radius=3pt},
+        path picture={
+            \fill[muteslate!40] (path picture bounding box.north west) rectangle ([xshift=4.5pt]path picture bounding box.south west);
+            \begin{scope}
+                \clip (path picture bounding box.north west) rectangle (path picture bounding box.south east);
+                \foreach \x in {-5,-4.5,...,5} {
+                    \draw[muteslate!15, line width=1.5pt] (\x,-2) -- (\x+2,2);
+                }
+            \end{scope}
+        }
+    },
+    codecard/.style={
+        draw=scannercol!30,
+        fill=codebg,
+        rounded corners=6pt,
+        align=left,
+        font=\ttfamily\scriptsize,
+        inner sep=8pt,
+        text width=5.2cm,
+        blur shadow={shadow blur steps=5, shadow opacity=12, shadow yshift=-2pt, shadow xshift=0pt, shadow blur radius=3pt},
+        path picture={
+            \fill[scannercol] (path picture bounding box.north west) rectangle ([xshift=4.5pt]path picture bounding box.south west);
+        }
+    },
+    infocard/.style={
+        draw=none,
+        fill=white,
+        rounded corners=6pt,
+        align=left,
+        text width=6.2cm,
+        inner sep=10pt,
+        text=darkslate,
+        font=\sffamily\footnotesize,
+        blur shadow={shadow blur steps=5, shadow opacity=15, shadow yshift=-2pt, shadow xshift=0pt, shadow blur radius=3pt},
+        path picture={
+            \fill[scannercol] (path picture bounding box.north west) rectangle ([xshift=4.5pt]path picture bounding box.south west);
+        }
+    },
+    % --- PRECISION CIRCUITRY ARROWS ---
+    arr/.style={-Stealth=3mm, thick, darkslate!80},
+    netarr/.style={-Stealth=3mm, thick, dashed, darkslate!70}
+]
+% ==========================================
+% 1. MAIN TITLE & SUBTITLE
+% ==========================================
+\node[font=\Huge\bfseries, text=darkslate] at (1.0174,12.5985) {The Preload Scanner Solution: \texttt{<img srcset>}};
+\node[font=\large, text=muteslate] at (1.0174,11.7985) {How HTML Responsive Images Parallelize Network Requests \& Eliminate Latency};
+% ==========================================
+% 2. ARCHITECTURE COLUMN GUIDES & HEADERS
+% ==========================================
+\draw[thick, dashed, darkslate!15] (-5.6, 10.5) -- (-5.6, 0.5);
+\draw[thick, dashed, darkslate!15] (0.6, 10.5) -- (0.6, 0.5);
+\draw[thick, dashed, darkslate!15] (7.3727,10.5) -- (7.3727,0.5);
+\node[font=\Large\bfseries, text=darkslate] at (-8.8818,10.1347) {\faCloud\ Network Layer};
+\node[font=\Large\bfseries, text=darkslate] at (-2.5, 10.1) {\faMicrochip\ Main Thread (Parser)};
+\node[font=\Large\bfseries, text=darkslate] at (4,10.4121) {\faBolt\ Preload Scanner};
+\node[font=\Large\bfseries, text=darkslate] at (11.0727,10.1) {\faPaintBrush\ Rendering Engine};
+% ==========================================
+% 3. THE TIME AXIS (LEFT BOUNDARY: x = -11.8)
+% ==========================================
+\draw[ultra thick, -Stealth=3mm, darkslate!40] (-11.8, 10.5) -- (-11.8, 0.5)
+    node[below, font=\sffamily\bfseries, text=darkslate] {Time (Latency)};
+\foreach \y in {9.0, 7.0, 5.0, 3.0, 1.0} {
+    \draw[thick, darkslate!30] (-11.95, \y) -- (-11.65, \y);
+}
+% ==========================================
+% 4. ABSOLUTE NODE PLACEMENT
+% ==========================================
+% --- Network Layer (Col 1, Center x = -8.5) ---
+\node[card={htmlcol}{3.8cm}] (hres) at (-8.8818,9.0347) {{\color{htmlcol}\faHtml5}\hspace{6pt}\textbf{HTML Document}};
+\node[card={imgcol}{3.8cm}] (ires) at (-8.8818,7.0347) {{\color{imgcol}\faImage}\hspace{6pt}\textbf{Image Resource}};
+\node[card={csscol}{3.8cm}] (cres) at (-8.8818,5.0347) {{\color{csscol}\faIcon{css3-alt}}\hspace{6pt}\textbf{CSS Stylesheet}};
+% --- Main Thread / Parser (Col 2, Center x = -2.5) ---
+\node[card={htmlcol}{4.2cm}] (hparse) at (-2.5, 9.0) {\textbf{Parse HTML \& Build DOM}};
+\node[blockcard] (findcss) at (-2.5, 7.0) {\faClock\hspace{6pt}Wait for CSS...};
+\node[card={csscol}{4.2cm}] (cparse) at (-2.5, 5.0) {\textbf{Parse CSS \& Build CSSOM}};
+\node[card={htmlcol}{2.8cm}, minimum height=0.9cm] (dom) at (-4.2, 3.0) {{\color{htmlcol}\faSitemap}\hspace{4pt}\textbf{DOM Tree}};
+\node[card={csscol}{2.8cm}, minimum height=0.9cm] (cssom) at (-0.8, 3.0) {{\color{csscol}\faTree}\hspace{4pt}\textbf{CSSOM Tree}};
+% --- Preload Scanner (Col 3, Center x = 4.0) ---
+\node[font=\sffamily\scriptsize\bfseries, text=scannercol, fill=scannercol!10, rounded corners=3pt, inner sep=3pt, align=center, anchor=south] (scanner_text) at (4.0174,9.648) {Scans raw byte stream before DOM completes!};
+\node[card={scannercol}{5.0cm}] (scanner) at (4.0, 9.0) {{\color{scannercol}\faCrosshairs}\hspace{6pt}\textbf{Browser Preload Scanner}};
+\node[codecard] (code) at (4.0, 7.0) {%
+\textbf{\textcolor{scannercol}{<img}} \textcolor{darkslate}{src=}\textcolor{htmlcol}{"fallback.jpg"}\\
+\hspace*{0.5cm}\textcolor{darkslate}{srcset=}\textcolor{htmlcol}{"mob.jpg 600w,}\\
+\hspace*{1.6cm}\textcolor{htmlcol}{desk.jpg 1200w"}\\
+\hspace*{0.5cm}\textcolor{darkslate}{sizes=}\textcolor{csscol}{"(max-width: 600px)}\\
+\hspace*{1.5cm}\textcolor{csscol}{100vw, 50vw"}\textbf{\textcolor{scannercol}{>}}%
+};
+% --- Rendering Engine & Insights (Col 4, Center x = 10.5) ---
+\node[infocard] (win) at (11.4891,7) {%
+    {\color{scannercol}\bfseries\faRocket\quad THE PARALLELIZATION WIN}\\[5pt]
+    \color{darkslate}By defining the responsive logic (\texttt{sizes}) in the HTML payload, the scanner evaluates the viewport \textbf{instantly}.\\[4pt]
+    \color{muteslate}It fetches the exact image it needs \textbf{simultaneously} with the CSS, bypassing the Render Tree entirely.%
+};
+\node[card={purplecol}{4.5cm}] (rtree) at (11.0727,3) {{\color{purplecol}\faLayerGroup}\hspace{6pt}\textbf{Render Tree Construction}};
+\node[card={successcol}{4.5cm}] (paint) at (11.0727,1) {{\color{successcol}\faCheckCircle}\hspace{6pt}\textbf{Final Paint (LCP)}};
+% ==========================================
+% 5. PRECISION ORTHOGONAL ROUTING (ZERO OVERLAP)
+% ==========================================
+% --- Flow 1: Scientific Raw Stream Bypass (Network -> Preload Scanner) ---
+\draw[arr, scannercol, very thick, rounded corners=6pt]
+    (hres.north) -- (-8.8818,10.6347) -| (scanner.north);
+% --- Flow 2: HTML Network Ingestion (Network -> Main Thread Parser) ---
+\draw[netarr] (hres.east) -- (hparse.west);
+% --- Flow 3: Preload Scanner extracts Code Payload ---
+\draw[arr, scannercol, thick] (scanner.south) -- (code.north);
+% --- Flow 4: Main Thread Parser to CSS Block ---
+\draw[arr] (hparse.south) -- (findcss.north);
+% --- Flow 5: CSS Request (Main Thread -> Network Layer) ---
+\draw[netarr, rounded corners=6pt]
+    (findcss.west) -- (-6.0, 7.0)
+    node[midway, above, font=\sffamily\scriptsize\bfseries, text=muteslate] {Req CSS} |- (cres.north);
+% --- Flow 6: THE CRUCIAL BYPASS (Instant Image Request across idle Main Thread) ---
+\draw[netarr, scannercol, very thick, rounded corners=6pt]
+    (code.west) -- (0.8, 7.0) -- (0.8, 8.0) -- (-6.2, 8.0)
+    node[pos=0.6, above, font=\sffamily\scriptsize\bfseries, text=scannercol] {Instant Image Request!} |- (ires.east);
+% --- Flow 7: Main Thread Idle/Wait & CSS Stylesheet Delivery ---
+\draw[arr, muteslate, dashed] (findcss.south) -- (cparse.north);
+\draw[netarr, csscol] (cres.east) -- (cparse.west);
+% --- Flow 8: DOM Tree Construction (Left-Side Routing bypassing CSSOM & incoming arrows) ---
+\draw[arr, htmlcol, rounded corners=6pt]
+    (hparse.west) -- (-5.2, 9.0) |- (dom.north);
+% --- Flow 9: CSSOM Tree Construction ---
+\draw[arr, csscol, rounded corners=4pt]
+    (cparse.south) |- (cssom.north);
+% --- Flow 10: DOM & CSSOM Merge into Render Tree (Distinct Channels & Offset Anchors) ---
+\draw[arr, htmlcol, thick, rounded corners=6pt]
+    (dom.south) -- (-4.2, 2.2) -- (8.3727,2.2) -- (8.3727,2.86) -- ([yshift=-4pt]rtree.west);
+\draw[arr, csscol, thick, rounded corners=4pt]
+    (cssom.east) -- (8.3727,3) -- (8.3727,3.14) -- ([yshift=4pt]rtree.west);
+% --- Flow 11: Preload Scanner / Code to Infobox Insight ---
+\draw[arr, scannercol, thick] (code.east) -- (win.west);
+% --- Flow 12: Image Payload Delivery (Outer Left Bypass safely between nodes and Time Axis) ---
+\draw[arr, imgcol, ultra thick, rounded corners=6pt]
+    (ires.west) -- (-11.3818,7.0347) -- (-11.3818,1.0347) -- (paint.west)
+    node[midway, above, font=\sffamily\footnotesize\bfseries, text=imgcol] {Image ready \textit{before} Render Tree completes!};
+% --- Flow 13: Render Tree to Final Paint ---
+\draw[arr, successcol, ultra thick] (rtree.south) -- (paint.north);
+% ==========================================
+% 6. LATENCY ELIMINATION INDICATOR
+% ==========================================
+\draw[{Stealth[length=2.5mm]}-Stealth=3mm, thick, successcol] (14.0727,3) -- (14.0727,1)
+    node[midway, right=4pt, align=left, font=\sffamily\small\bfseries, text=successcol] {Lightning\\Fast};
+\draw[successcol, dashed, thick] (rtree.east) -- (14.0727,3);
+\draw[successcol, dashed, thick] (paint.east) -- (14.0727,1);
+\end{tikzpicture}
+\end{document}

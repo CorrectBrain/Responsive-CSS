@@ -1,0 +1,281 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- DEFINE CONTEXTUAL & HARMONIZED COLOR PALETTE ---
+\definecolor{textdark}{HTML}{0F172A}      % Slate 900
+\definecolor{textmuted}{HTML}{475569}     % Slate 600
+\definecolor{avifcol}{HTML}{9333EA}       % Deep Purple
+\definecolor{avifcollight}{HTML}{A855F7}  % Purple accent
+\definecolor{webpcol}{HTML}{0284C7}       % Deep Sky Blue
+\definecolor{webpcollight}{HTML}{38BDF8}  % Blue accent
+\definecolor{jpgcol}{HTML}{DC2626}        % Crimson
+\definecolor{jpgcollight}{HTML}{EF4444}   % Red accent
+\definecolor{checkgreen}{HTML}{16A34A}    % Emerald Green
+\definecolor{failred}{HTML}{DC2626}       % Crimson Red
+\definecolor{borderlight}{HTML}{CBD5E1}   % Slate 300
+\definecolor{metalbase}{HTML}{F8FAFC}     % Slate 50
+\definecolor{metaldark}{HTML}{E2E8F0}     % Slate 200
+\definecolor{accentblue}{HTML}{2563EB}    % Royal Blue
+\definecolor{cardbg}{RGB}{255, 255, 255}
+
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm]
+
+% ==============================================================================
+% GLOBAL CANVAS & TITLES
+% ==============================================================================
+
+% Pure White Canvas Background
+\fill[white] (-12, -14.0) rectangle (16.5, 11);
+
+% Main Diagram Header & Subtitle
+\node[font=\Huge\bfseries\color{textdark}] at (2, 9.5) {Software Version Resolution Matrix};
+\node[font=\Large\color{textmuted}, text width=22cm, align=center] at (2, 8.5) {Evaluating the \texttt{<picture>} fallback cascade across different browser software generations.};
+
+% Table Column Headers (Top Bar)
+\fill[fill=textdark, rounded corners=6pt, blur shadow={shadow opacity=20}] (-11, 6.4) rectangle (15.8322,7.4166);
+\node[font=\large\bfseries\color{white}] at (-8.0, 6.9) {\faServer \ Browser Software Version};
+\node[font=\large\bfseries\color{white}] at (1.7, 6.9) {\faCogs \ Processing Pipeline \& Engine Capabilities};
+\node[font=\large\bfseries\color{white}] at (12.5, 6.9) {\faDesktop \ \faMobile* \ Device Rendering Output};
+
+
+% ==============================================================================
+% ROW 1: NEXT-GEN ENGINE (Center y = 3.0)
+% ==============================================================================
+
+% Module Base Card
+\fill[cardbg, draw=borderlight, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=15}] (-11, -0.5) rectangle (14.5, 6.0);
+
+% Left: Software Engine Core (Modular Metallic Gradient Block)
+\shade[left color=metalbase, right color=metaldark, draw=borderlight, rounded corners=6pt, line width=1pt] (-10.6, 0.2) rectangle (-4.5, 5.3);
+\node[font=\scriptsize\bfseries\color{textmuted}, fill=white, draw=borderlight, rounded corners=3pt, inner sep=2pt] at (-8.2, 4.9) {CLIENT RUNTIME CORE};
+\node[font=\Large\bfseries\color{textdark}, anchor=west] at (-10.2, 4.0) {\faChrome \ Chrome 85+};
+\node[font=\Large\bfseries\color{textdark}, anchor=west] at (-10.2, 3.0) {\faSafari \ Safari 16.4+};
+\node[font=\normalsize\bfseries\color{textmuted}, anchor=west, fill=white, draw=borderlight, rounded corners=3pt, inner sep=3pt] at (-10.2, 1.8) {\faCogs \ Next-Gen Engine};
+
+% Middle: Decoder Gates & Code Snippets
+% AVIF Gate (Supported)
+\node[font=\scriptsize\ttfamily\color{textmuted}, anchor=south] at (-0.9983,4.9339) {<source type="image/avif">};
+\node[draw=checkgreen!70, fill=checkgreen!12, line width=1pt, rounded corners=4pt, inner sep=5pt, font=\small\bfseries\color{checkgreen!80!black}] (r1_avif) at (-0.9651,4.5) {\faCheckCircle \ AVIF Decoder};
+
+% WebP Gate (Supported)
+\node[font=\scriptsize\ttfamily\color{textmuted}, anchor=south] at (-0.9651,3.3508) {<source type="image/webp">};
+\node[draw=checkgreen!70, fill=checkgreen!12, line width=1pt, rounded corners=4pt, inner sep=5pt, font=\small\bfseries\color{checkgreen!80!black}] (r1_webp) at (-0.9651,3) {\faCheckCircle \ WebP Decoder};
+
+% JPEG Gate (Supported)
+\node[font=\scriptsize\ttfamily\color{textmuted}, anchor=south] at (-0.9983,1.7512) {<img src="mobile.jpg">};
+\node[draw=checkgreen!70, fill=checkgreen!12, line width=1pt, rounded corners=4pt, inner sep=5pt, font=\small\bfseries\color{checkgreen!80!black}] (r1_jpeg) at (-0.9651,1.5) {\faCheckCircle \ JPEG Decoder};
+
+% Conditional Splitter (Media Query Diamond)
+\node[shape=diamond, aspect=2.2, draw=accentblue!80, fill=accentblue!10, line width=1.2pt, font=\scriptsize\bfseries\color{textdark}, align=center, inner sep=3pt] (r1_split) at (4.0, 4.5) {Media Query\\ \texttt{(min-width: 800px)}};
+
+% Pipeline Routing Flow Lines
+\draw[-Latex=3mm, line width=2.5pt, accentblue] (-4.5, 3.75) -- (-3.9651,3.75) -- (-3.9651,4.5) -- (r1_avif.west);
+\draw[-Latex=3mm, line width=2.5pt, checkgreen] (r1_avif.east) -- (r1_split.west);
+\node[font=\scriptsize\bfseries\color{checkgreen!80!black}, anchor=south, scale=0.8] at (1.6, 4.65) {Format Match};
+
+% Splitter Branching Pathways
+\draw[-Latex=3mm, line width=2pt, avifcol] (r1_split.east) -- (10.0, 4.5);
+\node[font=\scriptsize\bfseries\color{avifcol}, anchor=south] at (8.25, 4.65) {Desktop ($\ge$800px)};
+
+\draw[-Latex=3mm, line width=2pt, jpgcol] (r1_split.east) -- (6.5, 4.5) -- (6.5, 1.5) -- (10.0, 1.5);
+\node[font=\scriptsize\bfseries\color{jpgcol}, anchor=south] at (8.25, 1.65) {Mobile (<800px)};
+
+% Right: Realistic Vector Outputs
+% Desktop Device & Rendered AVIF
+\begin{scope}[shift={(11.5, 4.5)}]
+    \fill[gray!40] (-0.8, -0.45) rectangle (0.8, -0.38);
+    \fill[gray!50] (-0.15, -0.38) rectangle (0.15, -0.1);
+    \fill[fill=textdark, rounded corners=3pt, blur shadow={shadow opacity=20}] (-1.8, -0.1) rectangle (1.8, 1.05);
+    \fill[top color=avifcol!15, bottom color=white, rounded corners=1.5pt] (-1.68, 0.0) rectangle (1.68, 0.95);
+    \fill[gray!20] (-1.68, 0.8) rectangle (1.68, 0.95);
+    \fill[red!60] (-1.45, 0.87) circle (1.2pt);
+    \fill[yellow!70!orange] (-1.35, 0.87) circle (1.2pt);
+    \fill[green!60!black] (-1.25, 0.87) circle (1.2pt);
+    \node[font=\footnotesize\bfseries\color{avifcol}, fill=avifcol!15, draw=avifcol!40, rounded corners=2pt, inner sep=3pt] at (0, 0.42) {\faImage \ desktop.avif};
+    \node[font=\tiny\color{textmuted}] at (0, 0.15) {Desktop Viewport ($\ge$800px)};
+\end{scope}
+\node[font=\small\color{textmuted}, align=center, text width=6.5cm] at (11.5, 3.3) {(Hits 1st \texttt{<source>})};
+
+% Mobile Device & Rendered JPEG
+\begin{scope}[shift={(11.5, 1.5)}]
+    \fill[fill=textdark, rounded corners=5pt, blur shadow={shadow opacity=20}] (-1.5, -0.55) rectangle (1.5, 0.55);
+    \fill[top color=jpgcol!12, bottom color=white, rounded corners=3pt] (-1.38, -0.45) rectangle (1.38, 0.45);
+    \fill[textdark, rounded corners=1pt] (-0.35, 0.46) rectangle (0.35, 0.52);
+    \fill[gray!40, rounded corners=0.5pt] (-0.4, -0.48) rectangle (0.4, -0.45);
+    \node[font=\footnotesize\bfseries\color{jpgcol}, fill=jpgcol!15, draw=jpgcol!40, rounded corners=2pt, inner sep=2.5pt] at (0, 0.05) {\faMobile*\ \faImage \ mobile.jpg};
+    \node[font=\tiny\color{textmuted}] at (0, -0.28) {Mobile Viewport (<800px)};
+\end{scope}
+\node[font=\small\color{textmuted}, align=center, text width=6.5cm] at (11.5, 0.2) {(Media check bypasses \\ directly to \texttt{<img>} tag)};
+
+
+% ==============================================================================
+% ROW 2: LEGACY MODERN ENGINE (Center y = -3.0)
+% ==============================================================================
+
+% Module Base Card
+\fill[cardbg, draw=borderlight, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=15}] (-11, -6.5) rectangle (14.5, -1.0);
+
+% Left: Software Engine Core
+\shade[left color=metalbase, right color=metaldark, draw=borderlight, rounded corners=6pt, line width=1pt] (-10.6, -6.2) rectangle (-4.5, -1.3);
+\node[font=\scriptsize\bfseries\color{textmuted}, fill=white, draw=borderlight, rounded corners=3pt, inner sep=2pt] at (-8.2, -1.6) {CLIENT RUNTIME CORE};
+\node[font=\Large\bfseries\color{textdark}, anchor=west] at (-10.2, -2.5) {\faSafari \ Safari 14+};
+\node[font=\Large\bfseries\color{textdark}, anchor=west] at (-10.2, -3.5) {\faApple \ iOS 14};
+\node[font=\normalsize\bfseries\color{textmuted}, anchor=west, fill=white, draw=borderlight, rounded corners=3pt, inner sep=3pt] at (-10.2, -4.8) {\faCogs \ Legacy Modern Engine};
+
+% Middle: Decoder Gates & Code Snippets
+% AVIF Gate (Fails)
+\node[font=\scriptsize\ttfamily\color{textmuted}, anchor=south] at (-0.4668,-1.1492) {<source type="image/avif">};
+\node[draw=failred!70, fill=failred!10, line width=1pt, rounded corners=4pt, inner sep=5pt, font=\small\bfseries\color{failred}] (r2_avif) at (-0.5, -1.5) {\faTimesCircle \ AVIF Decoder (Fail)};
+
+% WebP Gate (Supported)
+\node[font=\scriptsize\ttfamily\color{textmuted}, anchor=south] at (-0.6329,-2.7323) {<source type="image/webp">};
+\node[draw=checkgreen!70, fill=checkgreen!12, line width=1pt, rounded corners=4pt, inner sep=5pt, font=\small\bfseries\color{checkgreen!80!black}] (r2_webp) at (-0.5, -3.0) {\faCheckCircle \ WebP Decoder};
+
+% JPEG Gate (Supported)
+\node[font=\scriptsize\ttfamily\color{textmuted}, anchor=south] at (-0.5166,-4.2987) {<img src="mobile.jpg">};
+\node[draw=checkgreen!70, fill=checkgreen!12, line width=1pt, rounded corners=4pt, inner sep=5pt, font=\small\bfseries\color{checkgreen!80!black}] (r2_jpeg) at (-0.5, -4.5) {\faCheckCircle \ JPEG Decoder};
+
+% Pipeline Routing Flow Lines & Sequential Cascade
+\draw[line width=2.5pt, accentblue] (-4.5, -2.25) -- (-3.9, -2.25) -- (-3.9, -1.5) -- (-3.7, -1.5);
+
+% Physical Block Barrier at AVIF
+\draw[line width=2.5pt, failred] (-3.7, -1.3) -- (-3.3, -1.7);
+\draw[line width=2.5pt, failred] (-3.7, -1.7) -- (-3.3, -1.3);
+\node[font=\tiny\bfseries\color{failred}, anchor=south] at (-3.2675,-1.1329) {Unsupported};
+
+% Fallback Cascade Drops to WebP
+\draw[-Latex=3mm, line width=2.5pt, color=failred!80, dashed] (-3.9, -1.5) -- (-3.9, -3.0) -- (r2_webp.west);
+\node[font=\tiny\bfseries\color{failred}, anchor=east] at (-3.1366,-2.7982) {Cascade Fallback};
+
+% Conditional Splitter
+\node[shape=diamond, aspect=2.2, draw=accentblue!80, fill=accentblue!10, line width=1.2pt, font=\scriptsize\bfseries\color{textdark}, align=center, inner sep=3pt] (r2_split) at (4.0, -3.0) {Media Query\\ \texttt{(min-width: 800px)}};
+
+\draw[-Latex=3mm, line width=2.5pt, checkgreen] (r2_webp.east) -- (r2_split.west);
+\node[font=\scriptsize\bfseries\color{checkgreen!80!black}, anchor=south, scale=0.8] at (1.8492,-2.7503) {Format Match};
+
+% Splitter Branching Pathways
+\draw[-Latex=3mm, line width=2pt, webpcol] (r2_split.east) -- (6.5, -3.0) -- (6.5, -1.8) -- (10.0, -1.8);
+\node[font=\scriptsize\bfseries\color{webpcol}, anchor=south] at (8.25, -1.65) {Desktop ($\ge$800px)};
+
+\draw[-Latex=3mm, line width=2pt, jpgcol] (r2_split.east) -- (6.5, -3.0) -- (6.5, -4.5) -- (10.0, -4.5);
+\node[font=\scriptsize\bfseries\color{jpgcol}, anchor=south] at (8.25, -4.35) {Mobile (<800px)};
+
+% Right: Realistic Vector Outputs
+% Desktop Device & Rendered WebP
+\begin{scope}[shift={(11.5, -1.8)}]
+    \fill[gray!40] (-0.8, -0.45) rectangle (0.8, -0.38);
+    \fill[gray!50] (-0.15, -0.38) rectangle (0.15, -0.1);
+    \fill[fill=textdark, rounded corners=3pt, blur shadow={shadow opacity=20}] (-1.8, -0.1) rectangle (1.8, 1.05);
+    \fill[top color=webpcol!15, bottom color=white, rounded corners=1.5pt] (-1.68, 0.0) rectangle (1.68, 0.95);
+    \fill[gray!20] (-1.68, 0.8) rectangle (1.68, 0.95);
+    \fill[red!60] (-1.45, 0.87) circle (1.2pt);
+    \fill[yellow!70!orange] (-1.35, 0.87) circle (1.2pt);
+    \fill[green!60!black] (-1.25, 0.87) circle (1.2pt);
+    \node[font=\footnotesize\bfseries\color{webpcol}, fill=webpcol!15, draw=webpcol!40, rounded corners=2pt, inner sep=3pt] at (0, 0.42) {\faImage \ desktop.webp};
+    \node[font=\tiny\color{textmuted}] at (0, 0.15) {Desktop Viewport ($\ge$800px)};
+\end{scope}
+\node[font=\small\color{textmuted}, align=center, text width=6.5cm] at (11.5, -3.0) {(AVIF fails type check,\\ cascade hits 2nd \texttt{<source>})};
+
+% Mobile Device & Rendered JPEG
+\begin{scope}[shift={(11.5, -4.5)}]
+    \fill[fill=textdark, rounded corners=5pt, blur shadow={shadow opacity=20}] (-1.5, -0.55) rectangle (1.5, 0.55);
+    \fill[top color=jpgcol!12, bottom color=white, rounded corners=3pt] (-1.38, -0.45) rectangle (1.38, 0.45);
+    \fill[textdark, rounded corners=1pt] (-0.35, 0.46) rectangle (0.35, 0.52);
+    \fill[gray!40, rounded corners=0.5pt] (-0.4, -0.48) rectangle (0.4, -0.45);
+    \node[font=\footnotesize\bfseries\color{jpgcol}, fill=jpgcol!15, draw=jpgcol!40, rounded corners=2pt, inner sep=2.5pt] at (0, 0.05) {\faMobile*\ \faImage \ mobile.jpg};
+    \node[font=\tiny\color{textmuted}] at (0, -0.28) {Mobile Viewport (<800px)};
+\end{scope}
+
+
+% ==============================================================================
+% ROW 3: DEPRECATED ENGINE (Center y = -9.0)
+% ==============================================================================
+
+% Module Base Card
+\fill[cardbg, draw=borderlight, line width=1pt, rounded corners=8pt, blur shadow={shadow opacity=15}] (-11, -12.5) rectangle (14.5, -7.0);
+
+% Left: Software Engine Core
+\shade[left color=metalbase, right color=metaldark, draw=borderlight, rounded corners=6pt, line width=1pt] (-10.6, -12.2) rectangle (-4.5, -7.3);
+\node[font=\scriptsize\bfseries\color{textmuted}, fill=white, draw=borderlight, rounded corners=3pt, inner sep=2pt] at (-8.2, -7.6) {CLIENT RUNTIME CORE};
+\node[font=\Large\bfseries\color{textdark}, anchor=west] at (-10.2, -8.5) {\faInternetExplorer \ IE 11};
+\node[font=\Large\bfseries\color{textdark}, anchor=west] at (-10.2, -9.5) {\faCompass \ Ancient Browsers};
+\node[font=\normalsize\bfseries\color{textmuted}, anchor=west, fill=white, draw=borderlight, rounded corners=3pt, inner sep=3pt] at (-10.2, -10.8) {\faCogs \ Deprecated Engine};
+
+% Middle: Decoder Gates & Code Snippets
+% AVIF Gate (Fails)
+\node[font=\scriptsize\ttfamily\color{textmuted}, anchor=south] at (-0.4169,-7.1658) {<source type="image/avif">};
+\node[draw=failred!70, fill=failred!10, line width=1pt, rounded corners=4pt, inner sep=5pt, font=\small\bfseries\color{failred}] (r3_avif) at (-0.5, -7.5) {\faTimesCircle \ AVIF Decoder (Fail)};
+
+% WebP Gate (Fails)
+\node[font=\scriptsize\ttfamily\color{textmuted}, anchor=south] at (-0.4502,-8.6824) {<source type="image/webp">};
+\node[draw=failred!70, fill=failred!10, line width=1pt, rounded corners=4pt, inner sep=5pt, font=\small\bfseries\color{failred}] (r3_webp) at (-0.5, -9.0) {\faTimesCircle \ WebP Decoder (Fail)};
+
+% JPEG Gate (Supported)
+\node[font=\scriptsize\ttfamily\color{textmuted}, anchor=south] at (-0.4834,-10.1824) {<img src="mobile.jpg">};
+\node[draw=checkgreen!70, fill=checkgreen!12, line width=1pt, rounded corners=4pt, inner sep=5pt, font=\small\bfseries\color{checkgreen!80!black}] (r3_jpeg) at (-0.5, -10.5) {\faCheckCircle \ JPEG Decoder};
+
+% Pipeline Flow & Full Multi-Stage Blocked Cascade
+\draw[line width=2.5pt, accentblue] (-4.5, -8.25) -- (-3.9, -8.25) -- (-3.9, -7.5) -- (-3.7, -7.5);
+
+% Physical Block Barrier at AVIF
+\draw[line width=2.5pt, failred] (-3.7, -7.3) -- (-3.3, -7.7);
+\draw[line width=2.5pt, failred] (-3.7, -7.7) -- (-3.3, -7.3);
+\node[font=\tiny\bfseries\color{failred}, anchor=south] at (-3.5,-7.2824) {Unsupported};
+
+% Fallback Cascade Drops to WebP
+\draw[line width=2.5pt, color=failred!80, dashed] (-3.9, -7.5) -- (-3.9, -9.0) -- (-3.7, -9.0);
+\node[font=\tiny\bfseries\color{failred}, anchor=east] at (-3.8508,-8.7484) {Cascade Fallback};
+
+% Physical Block Barrier at WebP
+\draw[line width=2.5pt, failred] (-3.7, -8.8) -- (-3.3, -9.2);
+\draw[line width=2.5pt, failred] (-3.7, -9.2) -- (-3.3, -8.8);
+\node[font=\tiny\bfseries\color{failred}, anchor=south] at (-3.5,-8.7492) {Unsupported};
+
+% Fallback Cascade Drops to JPEG & Passes
+\draw[-Latex=3mm, line width=2.5pt, color=failred!80, dashed] (-3.9, -9.0) -- (-3.9, -10.5) -- (r3_jpeg.west);
+\node[font=\tiny\bfseries\color{failred}, anchor=east] at (-3.12,-10.2318) {Cascade Fallback};
+
+% Direct Tag Bypass (Square Orthogonal Routing)
+\draw[-Latex=3mm, line width=2.5pt, jpgcol] (r3_jpeg.east) -- (4.0, -10.5) -- (4.0, -9.0) -- (10.0, -9.0);
+\node[font=\scriptsize\bfseries\color{textdark}, align=center, anchor=south] at (5.638,-8.9159) {No \texttt{<picture>} Support $\rightarrow$ Direct \texttt{<img>} Tag Bypass};
+
+% Right: Fallback Rendered Output (Universal JPEG Fallback)
+\begin{scope}[shift={(11.5, -9.0)}]
+    \fill[fill=textdark, rounded corners=5pt, blur shadow={shadow opacity=20}] (-1.5, -0.55) rectangle (1.5, 0.55);
+    \fill[top color=jpgcol!12, bottom color=white, rounded corners=3pt] (-1.38, -0.45) rectangle (1.38, 0.45);
+    \fill[textdark, rounded corners=1pt] (-0.35, 0.46) rectangle (0.35, 0.52);
+    \fill[gray!40, rounded corners=0.5pt] (-0.4, -0.48) rectangle (0.4, -0.45);
+    \node[font=\footnotesize\bfseries\color{jpgcol}, fill=jpgcol!15, draw=jpgcol!40, rounded corners=2pt, inner sep=2.5pt] at (-0.0166,0.1331) {\faMobile*\ \faImage \ mobile.jpg};
+    \node[font=\tiny\color{textmuted}] at (0, -0.28) {Default \texttt{<img>} Fallback};
+\end{scope}
+\node[font=\small\color{textmuted}, align=center, text width=6.5cm] at (11.5, -10.8) {(AVIF \& WebP fail checks. \\ Browser defaults to \texttt{<img>} \\ regardless of screen size!)};
+
+
+% ==============================================================================
+% VERTICAL ARCHITECTURE DIVIDERS
+% ==============================================================================
+\draw[dashed, textmuted!30, line width=1pt] (-5.6, 6.0) -- (-5.6, -12.5);
+\draw[dashed, textmuted!30, line width=1pt] (9.0, 6.0) -- (9.0, -12.5);
+
+\end{tikzpicture}
+\end{document}

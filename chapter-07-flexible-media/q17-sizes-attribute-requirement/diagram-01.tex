@@ -1,0 +1,250 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+% Palette Definition
+\definecolor{browserbg}{RGB}{236, 240, 241}
+\definecolor{htmlcolor}{RGB}{227, 79, 38}
+\definecolor{csscolor}{RGB}{41, 128, 185}
+\definecolor{errorred}{RGB}{192, 57, 43}
+\definecolor{darktext}{RGB}{44, 62, 80}
+\definecolor{warningorange}{RGB}{211, 84, 0}
+\definecolor{accentblue}{RGB}{52, 152, 219}
+\definecolor{idebg}{RGB}{30, 32, 38}
+\definecolor{syntaxpurple}{RGB}{189, 147, 249}
+\definecolor{syntaxgreen}{RGB}{80, 250, 123}
+\definecolor{syntaxpink}{RGB}{255, 121, 198}
+\definecolor{syntaxcyan}{RGB}{139, 233, 253}
+\definecolor{syntaxyellow}{RGB}{241, 250, 140}
+\definecolor{amberbg}{RGB}{254, 243, 199}
+
+% Layer Setup
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+\begin{document}
+\begin{tikzpicture}[
+    box/.style={
+        draw=black!15,
+        fill=white,
+        rounded corners=8pt,
+        blur shadow={shadow blur steps=5, shadow opacity=18, shadow xshift=0pt, shadow yshift=-2pt},
+        inner sep=12pt,
+        align=center
+    },
+    arrow/.style={
+        -Stealth=3mm,
+        very thick,
+        darktext!75,
+        rounded corners=4pt
+    },
+    macwindow/.style={
+        fill=idebg,
+        draw=black!90,
+        rounded corners=8pt,
+        blur shadow={shadow blur steps=6, shadow opacity=40, shadow xshift=0pt, shadow yshift=-3pt},
+        inner sep=14pt,
+        font=\ttfamily\small\color{white},
+        align=left
+    }
+]
+
+% -------------------------------------------------------------
+% BACKGROUND LAYER (CANVAS & ZONE CONTAINERS)
+% -------------------------------------------------------------
+\begin{pgfonlayer}{background}
+    % Global Canvas
+    \fill[white] (0, 0) rectangle (24, 22);
+
+    % Left Zone: Browser Preload Scanner Container
+    \draw[
+        draw=accentblue!70,
+        line width=1.5pt,
+        dashed,
+        top color=accentblue!6,
+        bottom color=accentblue!1,
+        rounded corners=12pt
+    ] (0.5, 7.0) rectangle (15.5, 18.5);
+
+    % Right Zone: CSSOM / Layout Engine Container
+    \draw[
+        draw=csscolor!80,
+        line width=1.5pt,
+        fill=gray!4,
+        rounded corners=12pt
+    ] (16.5, 7.0) rectangle (23.5, 18.5);
+\end{pgfonlayer}
+
+% -------------------------------------------------------------
+% MAIN LAYER (STRUCTURAL NODES & CORE CONTENT)
+% -------------------------------------------------------------
+% HEADER & TITLES
+\node[font=\Huge\bfseries\sffamily\color{darktext}, align=center] at (11.9831,21.5227) {The Mathematical Blind Spot in Responsive Images};
+\node[font=\Large\sffamily\color{gray}, text width=20cm, align=center] at (12.0, 19.8) {Architecturally, why \texttt{srcset} using \texttt{w} descriptors is fundamentally crippled without the \texttt{sizes} attribute during the browser's preload scanning phase.};
+
+% LEFT ZONE: PRELOAD SCANNER COMPONENTS
+\node[
+    font=\Large\bfseries\sffamily\color{accentblue},
+    fill=white,
+    draw=accentblue!40,
+    line width=1pt,
+    rounded corners=6pt,
+    inner sep=8pt
+] at (8.0, 17.8) {\faSearch\ Browser Preload Scanner (Early Parse Phase)};
+
+% HTML IDE Window
+\node[macwindow, text width=13.0cm] (htmlcode) at (8.0, 14.5) {
+    \vspace*{26pt}
+    \textcolor{gray!80}{\texttt{<!-- HTML arriving over network stream -->}}\\
+    \textcolor{syntaxpink}{\textbf{<img}} \\
+    \quad \textcolor{syntaxpurple}{src}=\textcolor{syntaxgreen}{"fallback.jpg"}\\
+    \quad \textcolor{syntaxpurple}{srcset}=\textcolor{syntaxgreen}{"small.jpg 400w, med.jpg 800w, large.jpg 1200w"}\\
+    \textcolor{syntaxpink}{\textbf{>}}\\
+    \textcolor{errorred!90}{\textbf{<!-- FATAL FLAW: No 'sizes' defined! -->}}
+};
+
+% Known Variables Panel
+\node[box, text width=6.0cm] (knowledge) at (3.1737,9.1289) {
+    \textbf{\color{accentblue}\faDatabase\ Known Variables}\\[8pt]
+    \faImages\ \textbf{Intrinsic Widths ($W_{img}$)}\\
+    \texttt{[400, 800, 1200]}\\[4pt]
+    {\scriptsize
+    \tikz[baseline=-0.5ex]{
+        \node[draw=accentblue!50, fill=accentblue!10, rounded corners=3pt, font=\ttfamily\tiny, inner sep=3pt] at (0,0) {400w};
+        \node[draw=accentblue!50, fill=accentblue!10, rounded corners=3pt, font=\ttfamily\tiny, inner sep=3pt] at (1.5,0) {800w};
+        \node[draw=accentblue!50, fill=accentblue!10, rounded corners=3pt, font=\ttfamily\tiny, inner sep=3pt] at (3.1,0) {1200w};
+    }}\\[8pt]
+    \faDesktop\ \textbf{Viewport ($V_w$)}\\
+    \texttt{1000px}\\[8pt]
+    \faIcon{compress-arrows-alt}\ \textbf{Device Pixel Ratio ($DPR$)}\\
+    \texttt{2.0x} (High Density) \faSearchPlus
+};
+
+% The Selection Equation
+\node[
+    box,
+    draw=errorred,
+    line width=1.8pt,
+    fill=errorred!5,
+    text width=6.5cm,
+    inner sep=12pt
+] (equation) at (11.0, 9.5) {
+    \textbf{\color{errorred}\faCalculator\ The Selection Equation}\\[8pt]
+    To calculate required intrinsic resolution ($W_{req}$):\\[6pt]
+    {\large $W_{req} = W_{layout} \times DPR$}\\[10pt]
+    {\large $W_{req} = \textbf{\color{errorred}???} \times 2.0$}\\[10pt]
+    \color{errorred}\faQuestionCircle\ \textbf{Unknown: $W_{layout}$}
+};
+
+% THE ARCHITECTURAL WALL
+\draw[
+    line width=8pt,
+    gray!35,
+    blur shadow={shadow blur steps=4, shadow opacity=25}
+] (16.0, 7.0) -- (16.0, 18.5);
+
+\node[
+    fill=white,
+    draw=gray!60,
+    line width=1pt,
+    rounded corners=4pt,
+    rotate=90,
+    font=\bfseries\sffamily\footnotesize,
+    inner sep=4pt
+] at (16.0, 12.75) {\textbf{\color{errorred}\faIcon{shield-alt}\ BLOCKED}};
+
+% RIGHT ZONE: CSSOM / LAYOUT ENGINE COMPONENTS
+\node[
+    font=\large\bfseries\sffamily\color{csscolor},
+    fill=white,
+    draw=csscolor!40,
+    line width=1pt,
+    rounded corners=6pt,
+    inner sep=8pt
+] at (20.0, 17.8) {\faPaintBrush\ CSSOM / Layout};
+
+% CSS IDE Window
+\node[macwindow, text width=5.5cm] (csscode) at (20.0, 14.5) {
+    \vspace*{26pt}
+    \textcolor{syntaxcyan}{\textbf{img}} \textcolor{white}{\{}\\
+    \quad \textcolor{syntaxpurple}{width}: \textcolor{syntaxyellow}{33vw};\\
+    \textcolor{white}{\}}
+};
+
+% CSS Explanation Card
+\node[
+    box,
+    text width=5.5cm,
+    fill=white,
+    draw=csscolor!30,
+    font=\sffamily\small\color{darktext},
+    align=center
+] at (20.0, 9.5) {
+    The Preload Scanner is decoupled from CSS layout. It cannot wait for CSS to download and parse.\\[8pt]
+    \textbf{\color{errorred}\faExclamationTriangle\ Layout width is trapped!}
+};
+
+% BOTTOM CONSEQUENCE ZONE
+\node[
+    box,
+    draw=warningorange,
+    line width=1.5pt,
+    left color=warningorange!12,
+    right color=white,
+    text width=22.0cm,
+    font=\sffamily
+] (consequence) at (12.0, 3.5) {
+    {\Large \textbf{\color{warningorange}\faBomb\ Architectural Consequence: The Default Guess}}\\[6pt]
+    Because the browser has been blinded to the actual layout size ($W_{layout}$), it mathematically must assume the worst-case scenario to avoid serving a blurry image. It assumes \textbf{$W_{layout} = 100vw$} (the entire viewport).\\[5pt]
+    \textbf{Calculation:} $W_{req} = 1000\text{px} \times 2.0 = 2000\text{px}$. \\
+    The browser downloads \textbf{\texttt{large.jpg (1200w)}}. However, the CSS eventually renders the image at \textbf{33vw (330px)}.\\[5pt]
+    \textbf{\color{errorred}\faExclamationCircle\ Result: Wasted bandwidth, memory overhead, and severe performance degradation!}
+};
+
+% -------------------------------------------------------------
+% FOREGROUND LAYER (CONTROLS, ARROWS & OVERLAYS)
+% -------------------------------------------------------------
+\begin{pgfonlayer}{foreground}
+    % HTML IDE Controls & Title
+    \fill[fill=red!75] ([xshift=16pt, yshift=-14pt]htmlcode.north west) circle (3.5pt);
+    \fill[fill=yellow!80!orange] ([xshift=28pt, yshift=-14pt]htmlcode.north west) circle (3.5pt);
+    \fill[fill=green!75!black] ([xshift=40pt, yshift=-14pt]htmlcode.north west) circle (3.5pt);
+    \node[font=\sffamily\scriptsize\color{gray!70}] at ([yshift=-14pt]htmlcode.north) {\faFileCode\ index.html};
+
+    % CSS IDE Controls & Title
+    \fill[fill=red!75] ([xshift=16pt, yshift=-14pt]csscode.north west) circle (3.5pt);
+    \fill[fill=yellow!80!orange] ([xshift=28pt, yshift=-14pt]csscode.north west) circle (3.5pt);
+    \fill[fill=green!75!black] ([xshift=40pt, yshift=-14pt]csscode.north west) circle (3.5pt);
+    \node[font=\sffamily\scriptsize\color{gray!70}] at ([yshift=-14pt]csscode.north) {\faFileCode\ styles.css};
+
+    % Internal Scanner Logic Arrows
+    \draw[arrow] (knowledge.north |- htmlcode.south) -- (knowledge.north);
+    \draw[arrow] (knowledge.east) -- (equation.west);
+
+    % The Failing Arrow & Impact Starburst
+    \draw[-Stealth=3mm, line width=2pt, errorred, dashed] (equation.east) -- (16.0, 9.5) node[midway, above, font=\bfseries\sffamily\small\color{errorred}] {Cannot Access! \faBan};
+    \node[starburst, fill=errorred, draw=white, line width=1pt, inner sep=2pt, scale=0.55] at (16.0, 9.5) {};
+
+    % Vertical Flow Arrow to Consequence Panel (with clean boundary breakout)
+    \draw[arrow, warningorange, line width=2pt, preaction={draw, white, line width=4pt}] (equation.south) -- (equation.south |- consequence.north);
+\end{pgfonlayer}
+
+\end{tikzpicture}
+\end{document}

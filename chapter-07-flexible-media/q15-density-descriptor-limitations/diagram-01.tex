@@ -1,0 +1,252 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+% --- HIGH-END LIGHT MODE PALETTE ---
+\definecolor{canvasbg}{RGB}{255, 255, 255}
+\definecolor{panelbg}{RGB}{248, 250, 252}
+\definecolor{panelborder}{RGB}{226, 232, 240}
+\definecolor{textPrimary}{RGB}{15, 23, 42}
+\definecolor{textSecondary}{RGB}{71, 85, 105}
+\definecolor{accentRed}{RGB}{220, 38, 38}
+\definecolor{accentBlue}{RGB}{37, 99, 235}
+\definecolor{accentYellow}{RGB}{217, 119, 6}
+
+% --- COMPONENT SPECIFIC PALETTE ---
+\definecolor{idebg}{RGB}{241, 245, 249}
+\definecolor{ideborder}{RGB}{203, 213, 225}
+\definecolor{tagBlue}{RGB}{30, 58, 138}
+\definecolor{attrTeal}{RGB}{13, 148, 136}
+\definecolor{strOrange}{RGB}{194, 65, 12}
+\definecolor{cardBgRed}{RGB}{254, 242, 242}
+\definecolor{cardBorderRed}{RGB}{254, 202, 202}
+\definecolor{cardBgYellow}{RGB}{254, 252, 232}
+\definecolor{cardBorderYellow}{RGB}{253, 230, 138}
+\definecolor{slate-100}{RGB}{241, 245, 249}
+\definecolor{slate-300}{RGB}{203, 213, 225}
+\definecolor{slate-400}{RGB}{148, 163, 184}
+\definecolor{slate-500}{RGB}{100, 116, 139}
+\definecolor{slate-700}{RGB}{51, 65, 85}
+\definecolor{slate-800}{RGB}{30, 41, 59}
+\definecolor{amber-500}{RGB}{245, 158, 11}
+
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm, >=Stealth]
+
+    % --- CANVAS BACKGROUND (STRICT WHITE REQUIREMENT) ---
+    \fill[canvasbg] (-15, -6) rectangle (15, 27);
+
+    % --- GLOBAL TITLE SECTION ---
+    \node[text=textPrimary, font=\Huge\bfseries, align=center] at (0.0218,25.4597) {The Mathematical Failure of $x$-Based Resolutions};
+    \node[text=accentRed, font=\Large\bfseries, align=center] at (0.0218,24.4597) {Why purely $x$-descriptors fail completely inside fluid CSS Grid layouts};
+
+    % =========================================================================
+    % --- PANEL 1: THE CORE DISCONNECT ---
+    % =========================================================================
+    \fill[panelbg, draw=panelborder, line width=1pt, rounded corners=12pt, blur shadow={shadow opacity=15, shadow yshift=-2pt, shadow blur radius=6pt}] (-11.5, 14.5) rectangle (11.5, 22.0);
+    \node[text=textPrimary, font=\Large\bfseries] at (0, 21.0) {\faBolt\ The Core Disconnect: Browser Preloader vs. Layout Engine};
+
+    % Code Block: macOS IDE Window (Left) - (-11.0, 15.0) to (-1.0, 19.5)
+    \fill[idebg, draw=ideborder, line width=1pt, rounded corners=6pt] (-11.0, 15.0) rectangle (-1.0, 19.5);
+    % Window Header Bar
+    \fill[panelborder, rounded corners=6pt] (-11.0, 18.7) rectangle (-1.0, 19.5);
+    \fill[panelborder] (-11.0, 18.7) rectangle (-1.0, 18.9);
+    \fill[fill={rgb,255:red,239;green,68;blue,68}] (-10.6, 19.1) circle (2.2pt);
+    \fill[fill={rgb,255:red,245;green,158;blue,11}] (-10.2, 19.1) circle (2.2pt);
+    \fill[fill={rgb,255:red,16;green,185;blue,129}] (-9.8, 19.1) circle (2.2pt);
+    \node[text=textSecondary, font=\scriptsize\ttfamily] at (-6.0, 19.1) {index.html};
+
+    % Syntax Highlighted Code Content - Anchored west at x=-10.6, lines at y=18.0, 17.2, 16.4, 15.6
+    \node[text=textPrimary, font=\small\ttfamily, anchor=west] at (-10.6, 18.0) {\color{tagBlue}{<div} \color{attrTeal}{class=}\color{strOrange}{"css-grid-stretchy-container"}\color{tagBlue}{>}};
+    \node[text=textSecondary, font=\small\ttfamily, anchor=west] at (-10.6, 17.2) {\color{tagBlue}{<img} \color{attrTeal}{src=}\color{strOrange}{"img-1x.jpg"}};
+    \node[text=accentYellow, font=\small\ttfamily, anchor=west] at (-10.6, 16.4) {\color{attrTeal}{srcset=}\color{strOrange}{"img-1x.jpg} \textbf{\color{accentYellow}{1x}}\color{strOrange}{,} \color{strOrange}{img-3x.jpg} \textbf{\color{accentRed}{3x}}\color{strOrange}{"} \color{tagBlue}{/>}};
+    \node[text=textPrimary, font=\small\ttfamily, anchor=west] at (-10.6, 15.6) {\color{tagBlue}{</div>}};
+
+    % The Disconnect: Broken Pipe & Warning Triangle (Center)
+    \draw[line width=6pt, slate-300, line cap=butt] (-1.5, 17.2) -- (-1.0, 17.2);
+    \draw[line width=2pt, slate-500] (-1.0, 16.9) -- (-0.8, 17.2) -- (-1.0, 17.5);
+    \draw[line width=6pt, slate-300, line cap=butt] (1.5, 17.2) -- (1.0, 17.2);
+    \draw[line width=2pt, slate-500] (1.0, 16.9) -- (0.8, 17.2) -- (1.0, 17.5);
+
+    % Warning Sign Centered at (0, 17.5) with Drop Shadow
+    \fill[black!15, rounded corners=2pt] (0.05, 18.35) -- (0.85, 16.95) -- (-0.75, 16.95) -- cycle;
+    \draw[fill={rgb,255:red,251;green,191;blue,36}, draw=textPrimary, line width=1.5pt, rounded corners=2pt] (0, 18.4) -- (0.8, 17.0) -- (-0.8, 17.0) -- cycle;
+    \node[font=\bfseries\Large, text=textPrimary] at (0, 17.5) {!};
+    \node[text=accentRed, font=\bfseries\normalsize, align=center] at (-0.3055,16.4836) {\faTimes\\[2pt]BLIND SPOT};
+
+    % Math Block: Blueprint Node (Right) - Anchor rigid box at (1.0, 15.0) rectangle (11.0, 19.5)
+    \begin{scope}
+        \clip[rounded corners=6pt] (1.0, 15.0) rectangle (11.0, 19.5);
+        \fill[blue!4] (1.0, 15.0) rectangle (11.0, 19.5);
+        \draw[pattern={Lines[distance=3mm, angle=45]}, pattern color=blue!20] (1.0, 15.0) rectangle (11.0, 19.5);
+        \fill[white, opacity=0.85] (1.0, 15.0) rectangle (11.0, 19.5);
+    \end{scope}
+    \draw[blue!30, line width=1pt, rounded corners=6pt] (1.0, 15.0) rectangle (11.0, 19.5);
+
+    \node[text=textPrimary, font=\large\bfseries, align=center, text width=10cm] at (6.0, 18.0) {Mathematical Decision Rule ($x$-descriptors):};
+    \node[text=accentRed, font=\Large\bfseries, align=center, text width=9cm] at (6.0, 17.0) {$\text{Selected File} = f(\text{DPR})$};
+    \node[text=textSecondary, font=\normalsize, align=center, text width=9cm] at (6.0, 16.0) {\small Completely independent of CSS layout width!};
+
+
+    % =========================================================================
+    % --- PANEL 2: SCENARIO A (HIGH DPR / PAYLOAD TRAP) ---
+    % =========================================================================
+    \fill[panelbg, draw=panelborder, line width=1pt, rounded corners=12pt, blur shadow={shadow opacity=15, shadow yshift=-2pt, shadow blur radius=6pt}] (-11.5, -5.0) rectangle (-0.5, 14.0);
+    \node[text=accentBlue, font=\Large\bfseries, align=center, text width=10.5cm, scale=0.8] at (-5.9782,13.5144) {Scenario A: High DPR, Squished Grid Column};
+    \node[text=accentRed, font=\large\bfseries, align=center, text width=10.5cm] at (-6.043,12.8159) {The Enormous Payload Trap (Waste)};
+
+    % Smartphone Bezel & Specs Box - Repositioned to (-11.0, 11.0) rectangle (-0.5, 12.5)
+    \fill[white, draw=slate-300, line width=0.8pt, rounded corners=8pt] (-11.0, 11.0) rectangle (-1.7903,12.519);
+    \fill[slate-400, rounded corners=2pt] (-6.05, 12.38) rectangle (-5.45, 12.48);
+    \node[text=textPrimary, font=\normalsize\bfseries, anchor=west] at (-10.5, 12.0) {\faIcon{mobile-alt}\ \textbf{Device:} High-end Smartphone};
+    \node[text=textSecondary, font=\small, anchor=west] at (-10.5, 11.4) {\textbullet\ Viewport Width: $400\text{px}$ \quad \textbullet\ Device Pixel Ratio: $\mathbf{3.0}$};
+
+    % CSS Grid Specs - Anchor west at x=-11.0, y=10.2 and y=9.6
+    \node[text=textPrimary, font=\normalsize\bfseries, anchor=west] at (-11.0, 10.2) {\faTh\ \textbf{CSS Grid Layout:}};
+    \node[text=textSecondary, font=\small\ttfamily, anchor=west] at (-11.0, 9.6) {\textbullet\ grid-template-columns: repeat(3, 1fr);};
+
+    % Dimension Indicator (1800px Intrinsic Width - Shifted to y=8.8)
+    \draw[|<->|, >=Stealth, line width=1pt, accentRed] (-10.0, 8.8) -- (-2.0, 8.8) node[midway, above=1pt, font=\scriptsize\bfseries, fill=panelbg, inner sep=2pt] {$1800\text{px}$ Intrinsic Width};
+
+    % Heavy Image File Visualization - (-10.5, 5.8) rectangle (-1.5, 8.2)
+    \fill[red!10, draw=red!30, rounded corners=4pt] (-10.2, 5.5) rectangle (-1.8, 7.9);
+    \fill[red!20, draw=red!40, rounded corners=4pt] (-10.35, 5.65) rectangle (-1.65, 8.05);
+    \fill[white, draw=accentRed, line width=1.2pt, rounded corners=4pt] (-10.5, 5.8) rectangle (-1.5, 8.2);
+    \draw[step=0.25cm, red!25, line width=0.4pt] (-10.4, 5.9) grid (-1.6, 8.1);
+
+    \node[text=accentRed, font=\small\bfseries, fill=white, opacity=0.95, text opacity=1, inner sep=3pt, rounded corners=2pt, align=center, text width=8.5cm] at (-6.0, 7.3) {\faFileImage\ Downloaded 3x Image File ($1800\text{px}$ intrinsic width)};
+    \node[text=accentRed!80, font=\scriptsize\bfseries, fill=white, opacity=0.95, text opacity=1, inner sep=3pt, rounded corners=2pt, align=center, text width=8.5cm] at (-6.0, 6.5) {Dense Pixel Payload: $1800 \times 1800 = 3.24\text{M pixels}$};
+
+    % Squish Arrow - Routed from payload bottom center (-6.0, 5.7) to rendered slot top center (-8.0, 4.2)
+    \draw[->, >=Stealth, line width=1.5pt, accentRed, dashed] (-6.0, 5.7) -- (-8.0, 4.2) node[midway, above=2pt, font=\tiny\bfseries, fill=panelbg, inner sep=1pt] {Forcibly Squished};
+
+    % Rendered Slot Visualization - Total width 6cm
+    \draw[slate-400, thick, dashed, rounded corners=3pt] (-9.0, 2.8) rectangle (-3.0, 4.0);
+    \fill[blue!15, draw=accentBlue, line width=1pt, rounded corners=2pt] (-9.0, 2.8) rectangle (-7.0, 4.0);
+    \node[text=textPrimary, font=\tiny\bfseries, align=center] at (-8.0, 3.4) {Rendered\\Slot $120\text{px}$};
+
+    \fill[slate-100, draw=slate-300, dashed] (-7.0, 2.8) rectangle (-5.0, 4.0);
+    \node[text=textSecondary, font=\tiny, align=center] at (-6.0, 3.4) {Empty\\$120\text{px}$};
+
+    \fill[slate-100, draw=slate-300, dashed] (-5.0, 2.8) rectangle (-3.0, 4.0);
+    \node[text=textSecondary, font=\tiny, align=center] at (-4.0, 3.4) {Empty\\$120\text{px}$};
+
+    % Dimension Indicator (120px Rendered Slot at y=2.4)
+    \draw[|<->|, >=Stealth, line width=0.8pt, accentBlue] (-9.0, 2.4) -- (-7.0, 2.4) node[midway, below=1pt, font=\scriptsize\bfseries, fill=panelbg, inner sep=2pt] {$120\text{px}$ Rendered Slot};
+
+    % Browser Logic (Preloader) - Anchored at y=1.8, 1.0, 0.0 with text width=10cm
+    \node[text=textPrimary, font=\small\bfseries, anchor=west, text width=10cm] at (-11.0, 1.8) {Browser Logic (Preloader):};
+    \node[text=accentRed, font=\small, anchor=west, text width=10cm] at (-11.0, 1.0) {1. Sees $3x$ device screen $\rightarrow$ Downloads massive $3x$ image file.};
+    \node[text=textSecondary, font=\small, anchor=west, text width=10cm] at (-11.0, 0.0) {2. CSS later squishes this $1800\text{px}$ image into a tiny $120\text{px}$ slot.};
+
+    % Math & Result Summary Card - (-11.0, -4.5) rectangle (-1.0, -0.8)
+    \fill[cardBgRed, draw=cardBorderRed, line width=1pt, rounded corners=8pt] (-11.0, -4.5) rectangle (-1.0, -0.8);
+    \node[text=accentRed, font=\small, align=center, text width=9.5cm] at (-6.0, -2.65) {
+        $\text{Pixels Downloaded} = 1800^2 = \mathbf{3,240,000\text{ px}}$\\[2pt]
+        $\text{Pixels Required} = (120 \times 3)^2 = \mathbf{129,600\text{ px}}$\\[3pt]
+        \textbf{Result:} $2500\%$ more bandwidth wasted than mathematically necessary!
+    };
+
+
+    % =========================================================================
+    % --- PANEL 3: SCENARIO B (LOW DPR / PIXELATION TRAP) ---
+    % =========================================================================
+    \fill[panelbg, draw=panelborder, line width=1pt, rounded corners=12pt, blur shadow={shadow opacity=15, shadow yshift=-2pt, shadow blur radius=6pt}] (0.5, -5.0) rectangle (11.5, 14.0);
+    \node[text=accentBlue, font=\Large\bfseries, align=center, text width=10.5cm, scale=0.8] at (6,13.4054) {Scenario B: Low DPR, Stretching Grid Column};
+    \node[text=accentYellow, font=\large\bfseries, align=center, text width=10.5cm] at (6,12.6399) {The Extreme Pixelation Trap (Blur)};
+
+    % Desktop Monitor Stand Layered Behind Specs Box: (5.3, 10.3) rectangle (6.7, 11.0)
+    \fill[slate-400, rounded corners=1pt] (5.3, 10.3) rectangle (6.7, 10.5);
+    \fill[slate-300] (5.8, 10.5) rectangle (6.2, 11.0);
+    % Device Box Drawn ON TOP: (1.0, 11.0) rectangle (11.0, 12.5)
+    \fill[white, draw=slate-300, line width=0.8pt, rounded corners=8pt] (1.0, 11.0) rectangle (10.26,12.5379);
+
+    \node[text=textPrimary, font=\normalsize\bfseries, anchor=west] at (1.5, 12.0) {\faDesktop\ \textbf{Device:} Standard Desktop Monitor};
+    \node[text=textSecondary, font=\small, anchor=west] at (1.5, 11.4) {\textbullet\ Viewport Width: $1920\text{px}$ \quad \textbullet\ Device Pixel Ratio: $\mathbf{1.0}$};
+
+    % CSS Grid Specs - Anchor west at x=1.0, cleanly below stand at y=9.8 and y=9.2
+    \node[text=textPrimary, font=\normalsize\bfseries, anchor=west] at (1.0, 9.8) {\faIcon{expand-arrows-alt}\ \textbf{CSS Grid Layout:}};
+    \node[text=textSecondary, font=\small\ttfamily, anchor=west] at (1.0, 9.2) {\textbullet\ grid-template-columns: 1fr; \textnormal{(Wildly stretching)}};
+
+    % Stretching Grid Container Box: (1.5, 5.5) rectangle (10.5, 8.5)
+    \fill[amber-500!8, rounded corners=4pt] (1.5, 5.5) rectangle (10.5, 8.5);
+    \draw[slate-400, thick, dashed, rounded corners=4pt] (1.5, 5.5) rectangle (10.5, 8.5);
+    \node[text=textSecondary, font=\scriptsize\bfseries, anchor=north west] at (1.7, 8.2) {Stretching CSS Grid Column ($\sim 1800\text{px}$)};
+
+    % Downloaded 1x File Box: (4.0, 6.2) rectangle (8.0, 7.8)
+    \fill[white, draw=accentYellow, line width=1.5pt, rounded corners=4pt] (4.0, 6.2) rectangle (8.0, 7.8);
+    \node[text=accentYellow, font=\scriptsize\bfseries, align=center, text width=3.8cm] at (6.0, 7.0) {\faFileImage\ Downloaded 1x File\\($600\text{px}$ intrinsic width)};
+
+    % Stretching Tension Arrows Starting Outside the Orange Box
+    \draw[->, >=Stealth, line width=2.5pt, accentYellow] (3.8, 7.0) -- (1.7, 7.0) node[midway, above=2pt, font=\tiny\bfseries, fill=amber-500!8, inner sep=1pt] {Forced Stretch};
+    \draw[->, >=Stealth, line width=2.5pt, accentYellow] (8.2, 7.0) -- (10.3, 7.0) node[midway, above=2pt, font=\tiny\bfseries, fill=amber-500!8, inner sep=1pt] {Forced Stretch};
+    % 1800px Dimension Indicator at y=5.0
+    \draw[|<->|, >=Stealth, line width=0.8pt, textSecondary] (1.5, 5.0) -- (10.5, 5.0) node[midway, below=1pt, font=\scriptsize\bfseries, fill=panelbg, inner sep=2pt] {$1800\text{px}$ Layout Width};
+
+    % Relocated Magnifying Glass Inspection Area: Centered at (8.5, 3.2), Radius 1.0cm
+    \begin{scope}
+        \clip (8.5, 3.2) circle (1.0cm);
+        \fill[fill={rgb,255:red,254;green,243;blue,199}] (7.3, 2.0) rectangle (9.7, 4.4);
+        \fill[accentYellow!80] (7.3, 3.6) rectangle (7.9, 4.4);
+        \fill[accentYellow!40] (7.9, 3.6) rectangle (8.5, 4.4);
+        \fill[accentYellow] (8.5, 3.6) rectangle (9.1, 4.4);
+        \fill[accentYellow!60] (9.1, 3.6) rectangle (9.7, 4.4);
+
+        \fill[accentYellow!50] (7.3, 3.0) rectangle (7.9, 3.6);
+        \fill[accentYellow] (7.9, 3.0) rectangle (8.5, 3.6);
+        \fill[accentYellow!30] (8.5, 3.0) rectangle (9.1, 3.6);
+        \fill[accentYellow!90] (9.1, 3.0) rectangle (9.7, 3.6);
+
+        \fill[accentYellow!90] (7.3, 2.4) rectangle (7.9, 3.0);
+        \fill[accentYellow!30] (7.9, 2.4) rectangle (8.5, 3.0);
+        \fill[accentYellow!70] (8.5, 2.4) rectangle (9.1, 3.0);
+        \fill[accentYellow!40] (9.1, 2.4) rectangle (9.7, 3.0);
+
+        \fill[accentYellow!40] (7.3, 1.8) rectangle (7.9, 2.4);
+        \fill[accentYellow!80] (7.9, 1.8) rectangle (8.5, 2.4);
+        \fill[accentYellow!50] (8.5, 1.8) rectangle (9.1, 2.4);
+        \fill[accentYellow] (9.1, 1.8) rectangle (9.7, 2.4);
+        \draw[step=0.6cm, white, line width=0.8pt] (7.3, 1.8) grid (9.7, 4.4);
+    \end{scope}
+
+    % Lens Frame, Glass Reflection & Handle
+    \draw[line width=3.5pt, slate-700] (8.5, 3.2) circle (1.0cm);
+    \draw[white, line width=2pt, opacity=0.6] (8.0, 3.9) arc (130:175:0.75cm);
+    \draw[line width=6.5pt, line cap=round, slate-800] (9.2, 2.5) -- (10.1, 1.6);
+    \draw[line width=3pt, line cap=round, slate-500] (9.3, 2.4) -- (9.8, 1.9);
+    % Dashed Callout Line from Amber Box Bottom to Lens
+    \draw[dashed, line width=1pt, accentYellow] (8.5, 5.5) -- (8.5, 4.3);
+    % Inspection Text Safely at (5.5, 3.2)
+    \node[text=accentYellow, font=\tiny\bfseries, align=center, text width=4cm] at (5.5, 3.2) {\faSearchPlus\ Extreme Blur\\(\textbf{0.33 px / display px})};
+
+    % Browser Logic (Preloader) - Anchor west at x=1.0, lines at y=1.8, 1.0, 0.0 with text width=10cm
+    \node[text=textPrimary, font=\small\bfseries, anchor=west, text width=10cm] at (1.0, 1.8) {Browser Logic (Preloader):};
+    \node[text=accentYellow, font=\small, anchor=west, text width=10cm] at (1.0, 1.0) {1. Sees $1x$ device screen $\rightarrow$ Downloads small $1x$ image file.};
+    \node[text=textSecondary, font=\small, anchor=west, text width=10cm] at (1.0, 0.0) {2. CSS later forcibly stretches this $600\text{px}$ image to fill $1800\text{px}$.};
+
+    % Math & Result Summary Card - (1.0, -4.5) rectangle (11.0, -0.8)
+    \fill[cardBgYellow, draw=cardBorderYellow, line width=1pt, rounded corners=8pt] (1.0, -4.5) rectangle (11.0, -0.8);
+    \node[text=accentYellow, font=\small, align=center, text width=9.5cm] at (6.0, -2.65) {
+        $\text{Information Density} = \dfrac{\text{Downloaded Width}}{\text{Rendered Layout Width}}$\\[6pt]
+        $\text{Density} = \dfrac{600\text{px}}{1800\text{px}} = \mathbf{0.33\text{ pixels per display pixel}}$\\[6pt]
+        \textbf{Result:} Image is mathematically blown up $3\times$, resulting in severe blur!
+    };
+
+\end{tikzpicture}
+\end{document}

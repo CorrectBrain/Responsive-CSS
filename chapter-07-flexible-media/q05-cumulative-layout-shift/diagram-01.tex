@@ -1,0 +1,242 @@
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[tikz,border=8pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes,shadows,decorations.pathmorphing,shapes.geometric,backgrounds,decorations.markings,decorations.pathreplacing,decorations.text,fit,shapes.misc,shapes.arrows,matrix,bending,3d,chains,intersections,shapes.symbols,svg.path,shapes.multipart,snakes,shapes.callouts,angles,quotes}
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usetikzlibrary{fadings,shadows.blur,patterns,patterns.meta}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+
+\providecolor{gold}{RGB}{212,175,55}
+\providecolor{silver}{RGB}{192,192,192}
+\providecolor{bronze}{RGB}{205,127,50}
+\providecolor{darkblue}{RGB}{0,0,139}
+\providecolor{lightblue}{RGB}{173,216,230}
+\providecolor{darkgreen}{RGB}{0,100,0}
+\providecolor{lightgreen}{RGB}{144,238,144}
+\providecolor{darkred}{RGB}{139,0,0}
+\providecolor{navy}{RGB}{0,0,128}
+\providecolor{skyblue}{RGB}{135,206,235}
+\providecolor{beige}{RGB}{245,245,220}
+\providecolor{cream}{RGB}{255,253,208}
+
+% --- COLOR PALETTE ---
+\definecolor{themeblue}{RGB}{41, 128, 185}
+\definecolor{themered}{RGB}{231, 76, 60}
+\definecolor{themegreen}{RGB}{39, 174, 96}
+\definecolor{textdark}{RGB}{44, 62, 80}
+\definecolor{codebg}{RGB}{40, 44, 52}
+\definecolor{codetext}{RGB}{171, 178, 191}
+
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm]
+
+% =========================================================
+% GLOBAL CANVAS BACKGROUND
+% =========================================================
+\fill[white] (-1.049,-4.7304) rectangle (33, 16);
+
+% =========================================================
+% GLOBAL CANVAS ELEMENTS
+% =========================================================
+% Main Title & Subtitle
+\node[anchor=center, font=\Huge\bfseries, textdark] at (14.5,14.8197) {The Anatomy of Layout Thrashing (Cumulative Layout Shift)};
+\node[anchor=center, font=\Large, textdark!70] at (14.5, 13.8) {Why fluid images intrinsically caused massive, jarring layout shifts before modern CSS specifications.};
+
+% =========================================================
+% PANEL 1: INITIAL RENDER (t = 50ms) [Base X = 0]
+% =========================================================
+% Render Pipeline Badge
+\node[anchor=south, fill=gray!12, draw=gray!40, rounded corners=3pt, font=\scriptsize\ttfamily\bfseries, text=textdark, inner sep=3pt] at (3.5, 12.3) {[ Render Pipeline: DOM Parsed, CSSOM Ready ]};
+
+% Browser Window Frame
+\filldraw[fill=white, draw=gray!60, rounded corners=8pt, thick, blur shadow={shadow blur steps=5, shadow opacity=15}] (0, 0) rectangle (7, 12);
+
+% Realistic Browser Chrome Header
+\filldraw[top color=gray!10, bottom color=gray!30, draw=gray!60, rounded corners=8pt, thick] (0, 11) rectangle (7, 12);
+\fill[top color=gray!25, bottom color=gray!30, draw=none] (0, 11) rectangle (7, 11.4); % Square bottom of chrome
+\draw[thick, gray!60] (0, 11) -- (7, 11);
+
+% Radial Traffic Light Buttons
+\shade[shading=radial, inner color=themered!70!white, outer color=themered] (0.6, 11.5) circle (0.15);
+\shade[shading=radial, inner color=yellow!70!white, outer color=yellow!80!orange] (1.2, 11.5) circle (0.15);
+\shade[shading=radial, inner color=themegreen!70!white, outer color=themegreen] (1.8, 11.5) circle (0.15);
+
+% URL Bar with Lock Icon
+\filldraw[fill=white, draw=gray!40, rounded corners=3pt, drop shadow={shadow xshift=0.2pt, shadow yshift=-0.4pt, opacity=0.15}] (2.0, 11.2) rectangle (6.5, 11.8);
+\node[font=\tiny, textdark!60] at (2.25, 11.5) {\faLock};
+\node[font=\footnotesize\ttfamily, textdark, anchor=west] at (2.45, 11.5) {mysite.com/article};
+
+% Article Header
+\node[anchor=west, font=\large\bfseries, textdark, text width=6.0cm, align=left] at (0.5, 10.2) {Understanding Flex Media};
+
+% 0px Image Placeholder (Dashed Sliver, 6.0 width)
+\filldraw[fill=themered!10, draw=themered, thick, dashed] (0.5, 9.4) rectangle (6.5, 9.45);
+
+% External Overlap-Free Annotation in Right Margin
+\draw[->, thick, themered] (7.8, 9.425) -- (6.6, 9.425);
+\node[anchor=west, font=\scriptsize\bfseries, themered, text width=2.1cm, align=left] at (7.9, 9.425) {<img> space reserved:\\0px (Unknown Ratio)};
+
+% Text Content (Rigidly separated nodes)
+\node[anchor=north west, text width=6.0cm, inner sep=0pt, font=\small, textdark, align=left] at (0.5, 9.0) {In the early days of responsive web design, making images fluid was a revelation. We simply added \texttt{max-width: 100\%} and \texttt{height: auto}.};
+
+\node[anchor=north west, text width=6.0cm, inner sep=0pt, font=\small, textdark, align=left] at (0.5, 7.2) {However, this created a massive performance and usability flaw. Because the browser had not yet downloaded the image file, it had no idea what the intrinsic dimensions were.};
+
+% Time & State Annotations
+\node (time1) [anchor=center, fill=themeblue, text=white, font=\bfseries, rounded corners=4pt, inner sep=4pt] at (3.5, -0.8) {Time: 50ms (DOM Parsed)};
+\node[anchor=north, fill=codebg, rounded corners=5pt, text width=7.0cm, inner sep=8pt, blur shadow={shadow opacity=20}] at (3.451,-1.5304) {
+    \color{codetext}\footnotesize
+    \texttt{<img src="hero.jpg">}\\[6pt]
+    \texttt{img \{}\\
+    \texttt{~~width: 100\%;}\\
+    \texttt{~~height: auto; /* computes to 0px */}\\
+    \texttt{\}}
+};
+
+% =========================================================
+% PANEL 2: USER ENGAGEMENT (t = 300ms) [Base X = 11]
+% =========================================================
+% Render Pipeline Badge
+\node[anchor=south, fill=gray!12, draw=gray!40, rounded corners=3pt, font=\scriptsize\ttfamily\bfseries, text=textdark, inner sep=3pt] at (14.5, 12.3) {[ Render Pipeline: Paint Complete, Network Active ]};
+
+% Browser Window Frame
+\filldraw[fill=white, draw=gray!60, rounded corners=8pt, thick, blur shadow={shadow blur steps=5, shadow opacity=15}] (11, 0) rectangle (18, 12);
+
+% Realistic Browser Chrome Header
+\filldraw[top color=gray!10, bottom color=gray!30, draw=gray!60, rounded corners=8pt, thick] (11, 11) rectangle (18, 12);
+\fill[top color=gray!25, bottom color=gray!30, draw=none] (11, 11) rectangle (18, 11.4);
+\draw[thick, gray!60] (11, 11) -- (18, 11);
+
+% Radial Traffic Light Buttons
+\shade[shading=radial, inner color=themered!70!white, outer color=themered] (11.6, 11.5) circle (0.15);
+\shade[shading=radial, inner color=yellow!70!white, outer color=yellow!80!orange] (12.2, 11.5) circle (0.15);
+\shade[shading=radial, inner color=themegreen!70!white, outer color=themegreen] (12.8, 11.5) circle (0.15);
+
+% URL Bar with Lock Icon
+\filldraw[fill=white, draw=gray!40, rounded corners=3pt, drop shadow={shadow xshift=0.2pt, shadow yshift=-0.4pt, opacity=0.15}] (13.0, 11.2) rectangle (17.5, 11.8);
+\node[font=\tiny, textdark!60] at (13.25, 11.5) {\faLock};
+\node[font=\footnotesize\ttfamily, textdark, anchor=west] at (13.45, 11.5) {mysite.com/article};
+
+% Article Header
+\node[anchor=west, font=\large\bfseries, textdark, text width=6.0cm, align=left] at (11.5, 10.2) {Understanding Flex Media};
+
+% 0px Image Placeholder (6.0 width)
+\filldraw[fill=themered!10, draw=themered, thick, dashed] (11.5, 9.4) rectangle (17.5, 9.45);
+
+% Text Content (Rigidly separated nodes)
+\node[anchor=north west, text width=6.0cm, inner sep=0pt, font=\small, textdark, align=left] at (11.5, 9.0) {In the early days of responsive web design, making images fluid was a revelation. We simply added \texttt{max-width: 100\%} and \texttt{height: auto}.};
+
+\node[anchor=north west, text width=6.0cm, inner sep=0pt, font=\small, textdark, align=left] at (11.5, 7.2) {However, this created a massive performance and usability flaw. Because the browser had not yet downloaded the image file, it had no idea what the intrinsic dimensions were.};
+
+% User Reading Highlight (Outside Brace on Right Margin)
+\draw[decorate, decoration={brace, amplitude=5pt}, thick, textdark] (18.2, 7.3) -- (18.2, 5.4);
+\node[anchor=west, font=\bfseries, textdark, text width=2.1cm, align=left] at (18.2711,6.35) {\faEye \ User reading};
+
+% Time & State Annotations
+\node (time2) [anchor=center, fill=themeblue, text=white, font=\bfseries, rounded corners=4pt, inner sep=4pt] at (14.5, -0.8) {Time: 300ms (Network Requesting)};
+\node[anchor=north, fill=white, draw=gray!60, rounded corners=5pt, text width=7.0cm, inner sep=8pt, blur shadow={shadow opacity=10}] at (14.451,-1.5304) {
+    \footnotesize\color{textdark}
+    \faSpinner \ The browser is downloading \texttt{hero.jpg} in the background. The user has already begun consuming the text content exactly where it rendered.
+};
+
+% =========================================================
+% PANEL 3: THE LAYOUT THRASH (t = 800ms) [Base X = 22]
+% =========================================================
+% Render Pipeline Badge
+\node[anchor=south, fill=themered!10, draw=themered, rounded corners=3pt, font=\scriptsize\ttfamily\bfseries, text=themered, inner sep=3pt] at (25.5, 12.3) {[ Render Pipeline: Reflow Triggered (Layout Shift) ]};
+
+% Browser Window Frame
+\filldraw[fill=white, draw=gray!60, rounded corners=8pt, thick, blur shadow={shadow blur steps=5, shadow opacity=15}] (22, 0) rectangle (29, 12);
+
+% Realistic Browser Chrome Header
+\filldraw[top color=gray!10, bottom color=gray!30, draw=gray!60, rounded corners=8pt, thick] (22, 11) rectangle (29, 12);
+\fill[top color=gray!25, bottom color=gray!30, draw=none] (22, 11) rectangle (29, 11.4);
+\draw[thick, gray!60] (22, 11) -- (29, 11);
+
+% Radial Traffic Light Buttons
+\shade[shading=radial, inner color=themered!70!white, outer color=themered] (22.6, 11.5) circle (0.15);
+\shade[shading=radial, inner color=yellow!70!white, outer color=yellow!80!orange] (23.2, 11.5) circle (0.15);
+\shade[shading=radial, inner color=themegreen!70!white, outer color=themegreen] (23.8, 11.5) circle (0.15);
+
+% URL Bar with Lock Icon
+\filldraw[fill=white, draw=gray!40, rounded corners=3pt, drop shadow={shadow xshift=0.2pt, shadow yshift=-0.4pt, opacity=0.15}] (24.0, 11.2) rectangle (28.5, 11.8);
+\node[font=\tiny, textdark!60] at (24.25, 11.5) {\faLock};
+\node[font=\footnotesize\ttfamily, textdark, anchor=west] at (24.45, 11.5) {mysite.com/article};
+
+% Article Header
+\node[anchor=west, font=\large\bfseries, textdark, text width=6.0cm, align=left] at (22.5, 10.2) {Understanding Flex Media};
+
+% Loaded Image (Strictly positioned within [22.5 to 28.5] x [5.4 to 9.4])
+\begin{scope}
+  \clip[rounded corners=2pt] (22.5, 5.4) rectangle (28.5, 9.4);
+
+  % Sky Gradient
+  \fill[top color=navy, bottom color=blue!20] (22.5, 5.4) rectangle (28.5, 9.4);
+
+  % Glowing Radial Sun
+  \shade[shading=radial, inner color=gold, outer color=orange] (23.8, 8.4) circle (0.65);
+
+  % Layered Mountain Ridges
+  \fill[darkgreen!40!black] (22.5, 5.4) -- (22.5, 6.8) .. controls (23.3, 7.9) and (24.0, 7.4) .. (25.2, 8.2) .. controls (26.2, 8.8) and (27.2, 7.1) .. (28.5, 7.6) -- (28.5, 5.4) -- cycle;
+  \fill[darkgreen!60!black] (22.5, 5.4) -- (22.5, 6.1) .. controls (23.2, 6.9) and (24.4, 6.3) .. (25.6, 7.3) .. controls (26.8, 7.9) and (27.7, 6.3) .. (28.5, 6.7) -- (28.5, 5.4) -- cycle;
+
+  % Water Reflection at Bottom
+  \fill[top color=navy!60!blue, bottom color=navy!90!black, opacity=0.75] (22.5, 5.4) rectangle (28.5, 5.9);
+  \draw[white, opacity=0.35, line width=0.6pt] (22.8, 5.75) -- (24.2, 5.75) (24.8, 5.65) -- (27.2, 5.65) (23.4, 5.55) -- (26.2, 5.55);
+\end{scope}
+\draw[draw=themeblue, thick, rounded corners=2pt] (22.5, 5.4) rectangle (28.5, 9.4);
+
+% Image Dimensions / Status Badge (Moved outside image frame)
+\node[anchor=south east, fill=black!70, text=white, font=\bfseries\tiny, rounded corners=2pt, inner sep=3pt] at (28.5, 9.5) {IMAGE FULLY LOADED};
+
+% Lost Context Frame (Where user was reading - Mirrored Brace on Left Margin)
+\draw[decorate, decoration={brace, amplitude=5pt}, thick, dashed, themered] (21.7, 5.4) -- (21.7, 7.3);
+
+% Lost Context Solid Opaque Badge
+\node[anchor=east, fill=white, draw=themered, thick, rounded corners=4pt, text=themered, blur shadow={shadow blur steps=4, shadow opacity=20}, font=\Large\bfseries, inner sep=4pt, align=right, scale=0.4] at (21.9317,7.0591) {\faBomb \ LOST CONTEXT!};
+
+% Violently Pushed Down Article Text (Pushed down by exactly 4.0 units)
+\node[anchor=north west, text width=6.0cm, inner sep=0pt, font=\small, textdark, align=left] at (22.5, 5.0) {In the early days of responsive web design, making images fluid was a revelation. We simply added \texttt{max-width: 100\%} and \texttt{height: auto}.};
+
+\node[anchor=north west, text width=6.0cm, inner sep=0pt, font=\small, textdark, align=left] at (22.5, 3.2) {However, this created a massive performance and usability flaw. Because the browser had not yet downloaded the image file, it had no idea what the intrinsic dimensions were.};
+
+% Cumulative Layout Shift Arrow (Outside the browser)
+\draw[->, themered, line width=3pt] (29.6, 9.0) -- (29.6, 5.0);
+
+% Cumulative Layout Shift Label
+\node[anchor=west, font=\bfseries, themered, align=left] at (29.8082,7) {Cumulative\\Layout\\Shift\\($\Delta = 400$px)};
+
+% Time & State Annotations
+\node (time3) [anchor=center, fill=themered, text=white, font=\bfseries, rounded corners=4pt, inner sep=4pt] at (25.5, -0.8) {Time: 800ms (Image Rendered)};
+\node[anchor=north, fill=white, draw=themered, thick, rounded corners=5pt, text width=7.0cm, inner sep=8pt, blur shadow={shadow opacity=10}] at (25.451,-1.5304) {
+    \footnotesize\color{textdark}
+    \faCarCrash \ \textbf{Massive Layout Shift!}\\
+    Image metadata arrives. The browser calculates: $Height = FluidWidth \times AspectRatio$. The new 400px height forces the engine to recalculate and violently shove all subsequent DOM nodes down the page.
+};
+
+% =========================================================
+% GLOBAL TIMELINE AXIS (Topologically Connected)
+% =========================================================
+\begin{scope}[on background layer]
+  \draw[line width=1pt, dashed, gray!40] (time1.east) -- (time2.west);
+  \draw[line width=1pt, dashed, gray!40] (time2.east) -- (time3.west);
+\end{scope}
+
+\end{tikzpicture}
+\end{document}
